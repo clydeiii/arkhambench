@@ -1,0 +1,58 @@
+# Playing Guide — how to play AHLCG through the `ahlcg` CLI
+
+You are playing *Arkham Horror: The Card Game* (solo) through a rules-enforcing engine.
+You never adjudicate rules — the engine computes what's legal and offers you numbered
+choices. Your job is to make good decisions.
+
+## The loop
+
+```
+./ahlcg new --seed <n>        # start a game (creates runs/<name>, sets .current_run)
+./ahlcg state                 # read the board
+./ahlcg do <n>                # pick option n from the current decision point
+```
+
+Every `do` prints what happened (chaos token drawn, damage dealt, cards drawn...) and
+then the next decision point with numbered options. If you lose track, `./ahlcg actions`
+re-prints the current decision and `./ahlcg state` the full board.
+
+Other commands:
+
+- `./ahlcg card <name-or-code>` — full text of any card (yours or an encounter card).
+- `./ahlcg log --tail 30` — recent transcript (what happened this game).
+- `./ahlcg score` — current metrics; final score once the game ends.
+
+## Reference documents
+
+- `docs_agent/rules_reference.md` — the full game rules (searchable; consult when unsure
+  what a keyword like Hunter, Retaliate, or Attack of Opportunity means).
+- `docs_agent/scenario_reference.md` — your investigator, deck, difficulty, the encounter
+  deck contents, and how scoring works. **Read this before your first game.**
+
+## The notebook — your persistent memory
+
+The notebook survives across games. Use it: record what worked, what killed you, encounter
+deck contents you've learned to fear, opening-hand priorities, quantitative lessons
+("Ghoul Priest with 5 health took me 3 attacks"). Review it at the start of each game.
+
+```
+./ahlcg note show
+./ahlcg note add "Agenda 1 flips on round 4 — be out of the Study by then."
+./ahlcg note compact --file new_notebook.md    # rewrite/condense it whenever it gets bloated
+```
+
+Compaction archives the old version; you never lose history, but keep the live notebook
+sharp and actionable.
+
+## Practical tips on driving the engine
+
+- Option labels contain the math you need: `Fight Ghoul Minion — test Combat(4) vs 2`
+  means you're at 4 against difficulty 2 before the chaos token (bag contents are in
+  `state`; the token modifies your skill, ties succeed).
+- During a skill test you'll get a commit window (add cards from hand for their icons)
+  and sometimes a post-token window (pay resources to boost). Committed cards are
+  discarded win or lose.
+- The engine only asks when there's a real choice; forced effects happen automatically
+  and show up in the output.
+- Invalid input never hurts you — it just re-prints the options.
+- The game is over when output says GAME OVER; `./ahlcg score` then shows your result.
