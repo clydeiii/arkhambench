@@ -207,7 +207,7 @@ def resolve_attack(
         return
     damage, horror = enemy_damage_horror(state, enemy_id)
     log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked Roland.", enemy=enemy_id, source=source)
-    after_resume = {"kind": "after_attack", "enemy": enemy_id, "resume": resume or {}}
+    after_resume = {"kind": "after_attack", "enemy": enemy_id, "source": source, "resume": resume or {}}
     start_damage_assignment(
         state,
         events,
@@ -217,7 +217,7 @@ def resolve_attack(
         resume=after_resume,
     )
     if not state.pending_damage and not state.decision_queue:
-        after_attack(state, events, enemy_id, resume or {}, rng=rng)
+        after_attack(state, events, enemy_id, resume or {}, source=source, rng=rng)
 
 
 def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_id: str, rng: Any = None) -> None:
@@ -255,6 +255,7 @@ def after_attack(
     events: list[dict[str, Any]],
     enemy_id: str,
     resume: dict[str, Any] | None = None,
+    source: str = "",
     rng: Any = None,
 ) -> None:
     if enemy_id not in state.enemies and enemy_id not in state.card_instances:
@@ -266,19 +267,26 @@ def after_attack(
     )
     if card_code == "01102":
         place_doom(state, 1, events, source="Silver Twilight Acolyte", rng=rng)
+    if source == "enemy phase" and enemy_id in state.enemies:
+        state.enemies[enemy_id].exhausted = True
+        log_event(events, "enemy_exhausted", f"{enemy_name(state, enemy_id)} exhausted after attacking.", enemy=enemy_id)
     if state.status != "in_progress":
         return
     if state.decision_queue:
         # A decision (e.g. defeat reactions) interposed; defer the interrupted
         # action's continuation instead of dropping it — the phase loop resumes
         # it once the queue empties.
-        if resume and resume.get("kind") == "action":
+        if resume and resume.get("kind") in {"action", "aoo_order"}:
             state.limits["deferred_resume"] = dict(resume)
         return
     if resume and resume.get("kind") == "action":
         from . import actions
 
         actions.execute(state, dict(resume.get("payload", {})), events, rng)
+    elif resume and resume.get("kind") == "aoo_order":
+        from . import actions
+
+        actions.continue_aoo_order(state, events, dict(resume), rng)
 
 
 def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:

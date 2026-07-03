@@ -157,12 +157,21 @@ def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> 
     return True
 
 
-def place_doom(state: GameState, amount: int, events: list[dict[str, Any]], *, source: str, rng: Any = None) -> None:
+def place_doom(
+    state: GameState,
+    amount: int,
+    events: list[dict[str, Any]],
+    *,
+    source: str,
+    rng: Any = None,
+    can_advance: bool = False,
+) -> None:
     if state.agenda is None:
         return
     state.agenda.doom += amount
     log_event(events, "doom_placed", f"Placed {amount} doom on the agenda.", source=source)
-    check_agenda_advance(state, events, rng=rng)
+    if can_advance:
+        check_agenda_advance(state, events, rng=rng)
 
 
 def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: Any = None) -> None:
@@ -174,7 +183,7 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
         the_gathering.check_agenda_advance(state, events, rng=rng)
         return
     while state.agenda.doom >= state.agenda.threshold and state.status == "in_progress":
-        state.agenda.doom = 0
+        clear_all_doom(state)
         state.agenda.stage += 1
         if state.agenda.stage == 2:
             state.agenda.code = "phaseb_agenda_2"
@@ -183,6 +192,15 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
             log_event(events, "agenda_advanced", "Agenda advanced to The House Stirs.")
         else:
             end_game(state, events, "agenda advanced beyond the fixture deck")
+
+
+def clear_all_doom(state: GameState) -> None:
+    if state.agenda is not None:
+        state.agenda.doom = 0
+    for enemy in state.enemies.values():
+        enemy.doom = 0
+    for instance in state.card_instances.values():
+        instance.doom = 0
 
 
 def advance_act(state: GameState, events: list[dict[str, Any]]) -> None:
@@ -326,6 +344,7 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
                 events,
                 str(resume.get("enemy", "")),
                 dict(resume.get("resume", {})),
+                source=str(resume.get("source", "")),
                 rng=rng,
             )
 

@@ -49,8 +49,8 @@ sharp and actionable.
 - Option labels contain the math you need: `Fight Ghoul Minion — test Combat(4) vs 2`
   means you're at 4 against difficulty 2 before the chaos token (bag contents are in
   `state`; the token modifies your skill, ties succeed).
-- During a skill test you'll get a commit window (add cards from hand for their icons)
-  and sometimes a post-token window (pay resources to boost). Committed cards are
+- During a skill test you'll get a commit window (add cards from hand for their icons,
+  or pay resources for eligible boosts before the token is revealed). Committed cards are
   discarded win or lose.
 - At phase boundaries (end of your turn, before enemy attacks, end of mythos) you may get
   a fast-ability window (e.g. Beat Cop's ping) — use it or pass.

@@ -136,17 +136,19 @@ class PhaseCPlayerCardTests(unittest.TestCase):
         self.assertNotIn(rat, s.enemies)
         self.assertEqual(s.card_instances[gun].uses["ammo"], 3)
 
-    def test_physical_training_boosts_in_commit_and_post_reveal_windows(self) -> None:
+    def test_physical_training_boosts_only_before_reveal(self) -> None:
         s = state()
         add_card(s, "01017", "play")
         events = []
         skill_test.start(s, events, skill="willpower", difficulty=6, source="test")
         self.assertTrue(any(o.payload.get("kind") == "skill_boost" for o in s.decision_queue[0].options))
         skill_test.apply_skill_boost(s, {"card_code": "01017", "skill": "willpower"}, events)
+        s.decision_queue = []
         skill_test.finish_commit(s, ArkhamRng(1), events)
-        self.assertEqual(s.decision_queue[0].id, "post-reveal-boosts")
+        self.assertFalse(s.decision_queue)
+        before = s.investigator.resources
         skill_test.apply_skill_boost(s, {"card_code": "01017", "skill": "willpower"}, events)
-        self.assertEqual(s.investigator.resources, 8)
+        self.assertEqual(s.investigator.resources, before)
 
     def test_beat_cop_static_and_discard_damage(self) -> None:
         s = state()

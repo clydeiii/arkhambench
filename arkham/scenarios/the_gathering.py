@@ -475,8 +475,10 @@ def end_enemy_phase(state: GameState, events: list[dict[str, Any]]) -> None:
 def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: ArkhamRng | None = None) -> None:
     if not state.agenda:
         return
+    from ..effects import clear_all_doom
+
     while total_doom(state) >= state.agenda.threshold and state.status == "in_progress" and not state.decision_queue:
-        state.agenda.doom = 0
+        clear_all_doom(state)
         if state.agenda.stage == 1:
             present_agenda_1_choice(state)
             return
@@ -703,20 +705,20 @@ def is_ghoul_card(card_code: str) -> bool:
 
 
 def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
-    token = str(result.get("token"))
+    tokens = [str(result.get("token"))] + [str(token) for token in result.get("extra_tokens", [])]
     failed = not bool(result.get("success"))
-    if token == "cultist" and failed:
+    damage = 0
+    horror = 0
+    if "cultist" in tokens and failed:
+        horror += 1 if state.difficulty in {"easy", "standard"} else 2
+    if "tablet" in tokens and ghouls_at_roland_location(state) > 0:
+        damage += 1
+        horror += 0 if state.difficulty in {"easy", "standard"} else 1
+    if damage or horror:
         from ..effects import start_damage_assignment
 
-        horror = 1 if state.difficulty in {"easy", "standard"} else 2
-        start_damage_assignment(state, events, source="Cultist token", damage=0, horror=horror)
-    elif token == "tablet" and ghouls_at_roland_location(state) > 0:
-        from ..effects import start_damage_assignment
-
-        damage = 1
-        horror = 0 if state.difficulty in {"easy", "standard"} else 1
-        start_damage_assignment(state, events, source="Tablet token", damage=damage, horror=horror)
-    elif token == "skull" and failed and state.difficulty in {"hard", "expert"}:
+        start_damage_assignment(state, events, source="Chaos token", damage=damage, horror=horror)
+    if "skull" in tokens and failed and state.difficulty in {"hard", "expert"} and not state.decision_queue:
         if rng is None:
             from ..errors import EngineError
 

@@ -53,7 +53,7 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
         return
     if code == "01166" or code == "phaseb_ancient_evils":
         discard_encounter(state, instance_id)
-        place_doom(state, 1, events, source=card.get("name", "Ancient Evils"), rng=rng)
+        place_doom(state, 1, events, source=card.get("name", "Ancient Evils"), rng=rng, can_advance=True)
     elif code == "01163" or code == "phaseb_rotting_remains":
         discard_encounter(state, instance_id)
         skill_test.start(

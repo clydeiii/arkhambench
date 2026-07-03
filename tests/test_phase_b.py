@@ -78,7 +78,7 @@ class PhaseBRulesTests(unittest.TestCase):
         self.assertTrue(any(event["type"] == "encounter_reshuffled" for event in events))
 
         s.agenda.doom = 2
-        place_doom(s, 1, events, source="test")
+        place_doom(s, 1, events, source="test", can_advance=True)
         self.assertEqual(s.agenda.stage, 2)
         self.assertEqual(s.agenda.doom, 0)
 

@@ -159,10 +159,23 @@ class Game:
             enemies.cancel_pending_attack(self.state, events, str(payload["card"]), self.rng)
         elif kind == "take_attack":
             enemies.take_pending_attack(self.state, events, self.rng)
+        elif kind == "aoo_attack_order":
+            actions.resolve_ordered_aoo(
+                self.state,
+                events,
+                str(payload["enemy"]),
+                [str(enemy_id) for enemy_id in payload.get("remaining", [])],
+                dict(payload.get("action_payload", {})),
+                self.rng,
+            )
+        elif kind == "enemy_attack_order":
+            phases.resolve_enemy_attack_order(self.state, payload, events, self.rng)
         elif kind == "enemy_defeated_reaction":
             enemies.resolve_enemy_defeated_reaction(self.state, payload, events)
         elif kind == "discard_asset":
             discard_asset_choice(self.state, payload, events)
+        elif kind == "slot_discard":
+            actions.resolve_slot_discard(self.state, payload, events)
         elif kind == "discard_to_size":
             phases.discard_to_size(self.state, payload, events)
         elif kind == "fast_window_pass":

@@ -6,7 +6,7 @@ from typing import Any
 from . import actions, encounter
 from .cards import player as player_cards
 from .effects import draw_player_card, gain_resource, log_event
-from .enemies import attack, engage_ready_enemies_at_roland, move_hunters
+from .enemies import attack, engage_ready_enemies_at_roland, enemy_name, move_hunters
 from .model import DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
@@ -21,7 +21,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             return
         deferred = state.limits.pop("deferred_resume", None)
         if deferred:
-            actions.execute(state, dict(deferred.get("payload", {})), events, rng)
+            if deferred.get("kind") == "aoo_order":
+                actions.continue_aoo_order(state, events, dict(deferred), rng)
+            else:
+                actions.execute(state, dict(deferred.get("payload", {})), events, rng)
             continue
         if state.phase == "Investigation":
             if state.investigator.actions_remaining > 0:
@@ -115,7 +118,17 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
         return
     attacked_key = f"enemy_phase_attacked:{state.round}"
     attacked = set(state.limits.get(attacked_key, []))
-    for enemy_id in list(state.investigator.engaged_enemies):
+    ready_attackers = [
+        enemy_id
+        for enemy_id in list(state.investigator.engaged_enemies)
+        if enemy_id not in attacked
+        and (enemy := state.enemies.get(enemy_id)) is not None
+        and not enemy.exhausted
+    ]
+    if len(ready_attackers) > 1:
+        present_enemy_attack_order(state, ready_attackers)
+        return
+    for enemy_id in ready_attackers:
         if enemy_id in attacked:
             continue
         enemy = state.enemies.get(enemy_id)
@@ -125,6 +138,33 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
             state.limits[attacked_key] = sorted(attacked)
             if state.decision_queue:
                 return
+
+
+def present_enemy_attack_order(state: GameState, attackers: list[str]) -> None:
+    state.decision_queue = [
+        PendingDecision(
+            id="enemy-attack-order",
+            kind="enemy_attack_order",
+            prompt="Choose the next enemy-phase attack.",
+            options=[
+                DecisionOption(
+                    f"Attack next: {enemy_name(state, enemy_id)}",
+                    {"kind": "enemy_attack_order", "enemy": enemy_id},
+                )
+                for enemy_id in attackers
+            ],
+        )
+    ]
+
+
+def resolve_enemy_attack_order(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    enemy_id = str(payload.get("enemy", ""))
+    attacked_key = f"enemy_phase_attacked:{state.round}"
+    attacked = set(state.limits.get(attacked_key, []))
+    if enemy_id in state.enemies and not state.enemies[enemy_id].exhausted and enemy_id not in attacked:
+        attacked.add(enemy_id)
+        state.limits[attacked_key] = sorted(attacked)
+        attack(state, events, enemy_id, source="enemy phase", rng=rng)
 
 
 def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
@@ -140,6 +180,7 @@ def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: Arkham
         for enemy in state.enemies.values():
             enemy.exhausted = False
         log_event(events, "ready_step", "All exhausted cards readied.")
+        engage_ready_enemies_at_roland(state, events)
         draw_player_card(state, events, rng)
         gain_resource(state, 1, events)
         discard_dissonant_voices(state, events)
@@ -186,7 +227,7 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
     doom_key = f"mythos_doom_placed:{state.round}"
     if not state.limits.get(doom_key):
         state.limits[doom_key] = True
-        place_doom(state, 1, events, source="mythos", rng=rng)
+        place_doom(state, 1, events, source="mythos", rng=rng, can_advance=True)
     if state.status != "in_progress" or state.decision_queue:
         return
     encounter_key = f"mythos_encounter_drawn:{state.round}"

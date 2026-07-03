@@ -5,14 +5,14 @@ from typing import Any
 
 from . import data as card_data
 from .cards import encounter_cards, player as player_cards
-from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, spend_clues, start_damage_assignment
+from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, resolve_player_weakness_draw, spend_clues, start_damage_assignment
 from .enemies import attack, damage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
 from .model import DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
-SAFE_FROM_AOO = {"resign", "pass", "advance_act"}
+SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "parley_lita", "resign", "pass", "advance_act"}
 FREE_ACTIONS = {"fast_ability"}
 NON_ACTIONS = {"advance_act", "pass"}
 
@@ -75,6 +75,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
             and not dissonant_blocks(state, instance.card_code)
             and not is_fast_turn_card(instance.card_code)
             and instance.card_code != "01024"
+            and can_enter_play_unique(state, instance.card_code)
         ):
             options.append(DecisionOption(f"Play {card.get('name', instance.card_code)} ({cost} res)", {"kind": "action", "action": "play", "card": instance_id}))
     options.append(DecisionOption("Pass (end turn)", {"kind": "action", "action": "pass"}))
@@ -103,11 +104,12 @@ def fight_targets(state: GameState) -> list[str]:
 def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
     action = str(payload["action"])
     if action not in NON_ACTIONS | FREE_ACTIONS:
+        if not payload.get("cost_paid"):
+            spend_action(state, events, action)
         if not payload.get("skip_aoo"):
             attacks_of_opportunity(state, events, action, payload, rng=rng)
-        if state.decision_queue or state.status != "in_progress":
-            return
-        spend_action(state, events, action)
+            if state.decision_queue or state.status != "in_progress":
+                return
     if action == "investigate":
         loc = state.locations[state.investigator.location_id]
         skill_test.start(state, events, skill="intellect", difficulty=modified_shroud(state, loc.id), source=f"Investigate {loc.name}", on_success={"kind": "investigate"})
@@ -198,34 +200,80 @@ def action_designator(action: str) -> str:
 def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> None:
     if action in SAFE_FROM_AOO:
         return
-    exempt_enemy = targeted_aoo_exempt_enemy(action, payload)
-    for enemy_id in list(state.investigator.engaged_enemies):
-        if enemy_id == exempt_enemy:
-            continue
-        enemy = state.enemies.get(enemy_id)
-        if enemy and not enemy.exhausted:
-            resume_payload = dict(payload)
-            resume_payload["skip_aoo"] = True
-            resume = {"kind": "action", "payload": resume_payload} if aoo_needs_resume(state, enemy_id) else None
-            attack(
-                state,
-                events,
-                enemy_id,
-                source="attack of opportunity",
-                resume=resume,
-                rng=rng,
-            )
-            if state.decision_queue:
-                return
+    attackers = [
+        enemy_id
+        for enemy_id in list(state.investigator.engaged_enemies)
+        if (enemy := state.enemies.get(enemy_id)) is not None and not enemy.exhausted
+    ]
+    if not attackers:
+        return
+    resume_payload = dict(payload)
+    resume_payload["skip_aoo"] = True
+    resume_payload["cost_paid"] = True
+    if len(attackers) > 1:
+        present_aoo_order_decision(state, attackers, resume_payload)
+        return
+    resolve_ordered_aoo(state, events, attackers[0], [], resume_payload, rng=rng)
 
 
-def targeted_aoo_exempt_enemy(action: str, payload: dict[str, Any]) -> str | None:
-    designator = action_designator(action)
-    if designator in {"fight", "evade"}:
-        return str(payload.get("enemy")) if payload.get("enemy") else None
-    if designator == "parley" and payload.get("enemy"):
-        return str(payload.get("enemy"))
-    return None
+def present_aoo_order_decision(state: GameState, attackers: list[str], action_payload: dict[str, Any]) -> None:
+    live = [enemy_id for enemy_id in attackers if enemy_id in state.enemies and not state.enemies[enemy_id].exhausted]
+    if not live:
+        return
+    state.decision_queue = [
+        PendingDecision(
+            id="aoo-attack-order",
+            kind="aoo_attack_order",
+            prompt="Choose the next enemy to make an attack of opportunity.",
+            options=[
+                DecisionOption(
+                    f"Attack next: {enemy_name(state, enemy_id)}",
+                    {
+                        "kind": "aoo_attack_order",
+                        "enemy": enemy_id,
+                        "remaining": [other for other in live if other != enemy_id],
+                        "action_payload": action_payload,
+                    },
+                )
+                for enemy_id in live
+            ],
+        )
+    ]
+
+
+def resolve_ordered_aoo(
+    state: GameState,
+    events: list[dict[str, Any]],
+    enemy_id: str,
+    remaining: list[str],
+    action_payload: dict[str, Any],
+    rng: Any = None,
+) -> None:
+    remaining = [eid for eid in remaining if eid in state.enemies and not state.enemies[eid].exhausted]
+    resume: dict[str, Any] = {}
+    if aoo_needs_resume(state, enemy_id):
+        if remaining:
+            resume = {"kind": "aoo_order", "remaining": remaining, "action_payload": dict(action_payload)}
+        else:
+            resume = {"kind": "action", "payload": dict(action_payload)}
+    attack(state, events, enemy_id, source="attack of opportunity", resume=resume, rng=rng)
+    if state.status != "in_progress" or state.decision_queue:
+        return
+    if remaining:
+        present_aoo_order_decision(state, remaining, action_payload)
+    else:
+        execute(state, dict(action_payload), events, rng)
+
+
+def continue_aoo_order(state: GameState, events: list[dict[str, Any]], resume: dict[str, Any], rng: Any = None) -> None:
+    remaining = [str(enemy_id) for enemy_id in resume.get("remaining", [])]
+    action_payload = dict(resume.get("action_payload", {}))
+    if not remaining:
+        execute(state, action_payload, events, rng)
+    elif len(remaining) == 1:
+        resolve_ordered_aoo(state, events, remaining[0], [], action_payload, rng=rng)
+    else:
+        present_aoo_order_decision(state, remaining, action_payload)
 
 
 def aoo_needs_resume(state: GameState, enemy_id: str) -> bool:
@@ -259,6 +307,14 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]]) 
     card = card_data.cards_by_code().get(instance.card_code, {})
     if dissonant_blocks(state, instance.card_code):
         return
+    if card.get("type_code") == "asset":
+        if not can_enter_play_unique(state, instance.card_code):
+            log_event(events, "play_blocked", f"{card.get('name', instance.card_code)} is unique and already in play.", card=instance_id)
+            return
+        slot_discards = required_slot_discards(state, instance.card_code)
+        if slot_discards:
+            present_slot_discard_decision(state, instance_id, slot_discards)
+            return
     cost = int(card.get("cost") or 0)
     if state.investigator.resources < cost:
         return
@@ -281,6 +337,69 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]]) 
         instance.zone = "discard"
         state.investigator.discard.append(instance_id)
     log_event(events, "card_played", f"Roland played {card.get('name', instance.card_code)}.", card=instance_id)
+
+
+def can_enter_play_unique(state: GameState, card_code: str) -> bool:
+    card = card_data.get_card(card_code)
+    if not card.get("is_unique"):
+        return True
+    title = str(card.get("name", card_code))
+    for instance_id in state.investigator.play_area:
+        other = card_data.get_card(state.card_instances[instance_id].card_code)
+        if other.get("is_unique") and str(other.get("name", "")) == title:
+            return False
+    return True
+
+
+def required_slot_discards(state: GameState, card_code: str) -> list[str]:
+    if card_code == "01117":
+        return []
+    card = card_data.get_card(card_code)
+    slot = str(card.get("slot") or "")
+    if slot == "Ally":
+        allies = [
+            instance_id
+            for instance_id in state.investigator.play_area
+            if state.card_instances[instance_id].card_code != "01117"
+            and card_data.get_card(state.card_instances[instance_id].card_code).get("slot") == "Ally"
+        ]
+        return allies[:1] if len(allies) >= 1 else []
+    if slot == "Hand":
+        hand_assets = [
+            instance_id
+            for instance_id in state.investigator.play_area
+            if card_data.get_card(state.card_instances[instance_id].card_code).get("slot") == "Hand"
+        ]
+        return hand_assets if len(hand_assets) >= 2 else []
+    return []
+
+
+def present_slot_discard_decision(state: GameState, card_id: str, occupants: list[str]) -> None:
+    state.decision_queue = [
+        PendingDecision(
+            id="slot-discard-for-play",
+            kind="slot_discard",
+            prompt=f"Choose a card to discard for {player_cards.card_name(state, card_id)}.",
+            options=[
+                DecisionOption(
+                    f"Discard {player_cards.card_name(state, occupant)}",
+                    {"kind": "slot_discard", "discard": occupant, "play": card_id},
+                )
+                for occupant in occupants
+            ],
+        )
+    ]
+
+
+def resolve_slot_discard(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    discard = str(payload.get("discard", ""))
+    play = str(payload.get("play", ""))
+    if discard in state.investigator.play_area:
+        name = player_cards.card_name(state, discard)
+        player_cards.discard_from_play(state, discard)
+        log_event(events, "asset_discarded", f"{name} was discarded for slot capacity.", card=discard)
+    if play in state.investigator.hand:
+        play_card(state, play, events)
 
 
 def has_threat(state: GameState, code: str) -> bool:
@@ -310,6 +429,8 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
             if state.investigator.resources < cost or dissonant_blocks(state, code):
                 continue
             if code == "01030":
+                if not can_enter_play_unique(state, code):
+                    continue
                 options.append(DecisionOption("Play Magnifying Glass (fast)", {"kind": "action", "action": "fast_ability", "ability": "play_fast_asset", "card": card_id}))
             elif code == "01036":
                 options.append(DecisionOption("Play Mind over Matter", {"kind": "action", "action": "fast_ability", "ability": "mind_over_matter", "card": card_id}))
@@ -496,6 +617,7 @@ def resolve_old_book_choice(
     rng.shuffle(state.investigator.deck)
     card = card_data.get_card(state.card_instances[chosen].card_code)
     log_event(events, "card_drawn", f"Roland drew {card['name']}.", card=chosen)
+    resolve_player_weakness_draw(state, events, chosen)
 
 
 def dynamite_blast(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:

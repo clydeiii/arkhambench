@@ -50,3 +50,14 @@ The engine was updated after your last game. Notes above may be stale:
 - Weapon fight options now show the full test math (effective combat vs enemy fight).
 - Defeat trauma was double-counting; it now applies once.
 
+## [ENGINE CHANGELOG — 2026-07-03 rules-conformance audit]
+
+The engine was audited line-by-line against the Rules Reference. Play-relevant changes:
+- AoO now matches paper rules: fight, evade, parley, and resign actions NEVER provoke attacks of opportunity (fighting enemy A no longer provokes enemy B). Engage, move, investigate, draw, resource, play, and other activated abilities provoke from EVERY engaged ready enemy.
+- There is NO boost window after the chaos token is revealed. Physical Training / Hyperawareness must be used before the reveal. Plan tests with the full bag in mind.
+- Autofail counts your skill value as 0: failing Grasping Hands/Rotting Remains via autofail deals the FULL test difficulty in damage/horror. Autofail is much more dangerous now.
+- Enemies exhaust after their enemy-phase attack. You choose attack/AoO order when engaged with multiple enemies.
+- Silver Twilight Acolyte's doom no longer advances the agenda instantly — doom advances only at the mythos check (or Ancient Evils). Agenda advance removes ALL doom in play.
+- Exhausted enemies at your location engage you the moment they ready in upkeep.
+- Slots are now enforced (2 hands, 1 ally — playing over a full slot discards the occupant).
+

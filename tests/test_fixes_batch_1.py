@@ -93,15 +93,15 @@ class FixBatch1Tests(unittest.TestCase):
         self.assertIn("minion", state.enemies)
         self.assertNotIn("rat", state.enemies)
 
-    def test_aoo_exempts_only_targeted_fight_enemy_and_engage_provokes(self) -> None:
+    def test_aoo_exemption_is_by_action_type_and_engage_provokes(self) -> None:
         state = engine_state()
         first = add_enemy(state, "01159", "rat_a")
         second = add_enemy(state, "01159", "rat_b")
         events = []
 
         actions.execute(state, {"action": "fight", "enemy": first}, events)
-        self.assertEqual(state.investigator.damage, 1)
-        self.assertEqual([event["data"]["enemy"] for event in events if event["type"] == "enemy_attack"], [second])
+        self.assertEqual(state.investigator.damage, 0)
+        self.assertEqual([event["data"]["enemy"] for event in events if event["type"] == "enemy_attack"], [])
         self.assertIsNotNone(state.active_skill_test)
 
         state = engine_state()
@@ -110,8 +110,31 @@ class FixBatch1Tests(unittest.TestCase):
         add_enemy(state, "01159", "rat_c", engaged=False)
         events = []
         actions.execute(state, {"action": "engage", "enemy": "rat_c"}, events)
+        self.assertEqual(state.investigator.actions_remaining, 2)
+        self.assertEqual(state.decision_queue[0].id, "aoo-attack-order")
+        action_payload = dict(state.decision_queue[0].options[0].payload["action_payload"])
+        state.decision_queue = []
+        actions.resolve_ordered_aoo(state, events, "rat_b", ["rat_a"], action_payload, ArkhamRng(1))
+        if state.decision_queue:
+            payload = state.decision_queue[0].options[0].payload
+            state.decision_queue = []
+            actions.resolve_ordered_aoo(state, events, str(payload["enemy"]), list(payload["remaining"]), dict(payload["action_payload"]), ArkhamRng(1))
         self.assertEqual(state.investigator.damage, 2)
         self.assertIn("rat_c", state.investigator.engaged_enemies)
+        self.assertEqual([event["data"]["enemy"] for event in events if event["type"] == "enemy_attack"], ["rat_b", "rat_a"])
+
+    def test_aoo_happens_after_action_cost_before_effect(self) -> None:
+        state = engine_state()
+        add_enemy(state, "01159", "rat")
+        events = []
+
+        actions.execute(state, {"action": "draw"}, events, ArkhamRng(1))
+
+        spent = next(i for i, event in enumerate(events) if event["type"] == "action_spent")
+        attack = next(i for i, event in enumerate(events) if event["type"] == "enemy_attack")
+        drawn = next(i for i, event in enumerate(events) if event["type"] == "deck_empty" or event["type"] == "card_drawn")
+        self.assertLess(spent, attack)
+        self.assertLess(attack, drawn)
 
     def test_frozen_in_fear_makes_unaffordable_actions_illegal_and_guarded(self) -> None:
         state = engine_state()
@@ -133,12 +156,12 @@ class FixBatch1Tests(unittest.TestCase):
         the_gathering.check_agenda_advance(state, [])
 
         self.assertEqual(state.agenda.doom, 0)
-        self.assertEqual(state.enemies[acolyte].doom, 1)
+        self.assertEqual(state.enemies[acolyte].doom, 0)
         self.assertEqual(state.decision_queue[0].id, "agenda1-back")
 
         fixture = engine_state()
         fixture.agenda.doom = 2
-        place_doom(fixture, 2, [], source="test")
+        place_doom(fixture, 2, [], source="test", can_advance=True)
         self.assertEqual(fixture.agenda.stage, 2)
         self.assertEqual(fixture.agenda.doom, 0)
 
@@ -167,6 +190,7 @@ class FixBatch1Tests(unittest.TestCase):
         skill_test.finish_commit(state, ArkhamRng(1), events)
 
         self.assertEqual(state.limits["last_skill_test"]["margin"], 0)
+        self.assertEqual(state.limits["last_skill_test"]["value"], 0)
         self.assertTrue(any("failure (autofail) by 0" in event["message"] for event in events))
 
     def test_state_rendering_uses_card_names_and_enemy_ally_status(self) -> None:

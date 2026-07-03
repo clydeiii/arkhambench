@@ -111,12 +111,11 @@ def commit_card(state: GameState, payload: dict[str, Any], events: list[dict[str
 def apply_skill_boost(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     if not state.active_skill_test:
         return
+    if state.active_skill_test.get("token") is not None:
+        return
     if player_cards.apply_boost(state, str(payload["card_code"]), str(payload["skill"])):
         log_event(events, "skill_boost", f"Spent 1 resource for +1 {payload['skill']}.", card_code=payload["card_code"])
-    if state.active_skill_test.get("token") is None:
-        present_commit_decision(state)
-    else:
-        present_post_reveal_decision(state)
+    present_commit_decision(state)
 
 
 def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
@@ -126,22 +125,21 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
     token = draw_token(state, rng)
     modifier, autofail = token_modifier(state, token)
     extra_tokens: list[str] = []
-    if state.scenario == "the_gathering" and state.difficulty in {"hard", "expert"} and token == "cultist":
+    current = token
+    while state.scenario == "the_gathering" and state.difficulty in {"hard", "expert"} and current == "cultist":
         extra = draw_token(state, rng)
         extra_modifier, extra_autofail = token_modifier(state, extra)
         modifier += extra_modifier
         autofail = autofail or extra_autofail
         extra_tokens.append(extra)
+        current = extra
     test["token"] = token
     test["extra_tokens"] = extra_tokens
     test["modifier"] = modifier
     test["autofail"] = autofail
     suffix = f" then {', '.join(extra_tokens)}" if extra_tokens else ""
     log_event(events, "chaos_token", f"Revealed {token}{suffix}.", token=token, modifier=modifier, extra_tokens=extra_tokens)
-    if player_cards.boost_options(state):
-        present_post_reveal_decision(state)
-    else:
-        resolve(state, events, rng)
+    resolve(state, events, rng)
 
 
 def present_post_reveal_decision(state: GameState) -> None:
@@ -169,6 +167,8 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
     committed = sum(icon_count(cards[state.card_instances[instance_id].card_code], skill) for instance_id in test["committed"])
     boosts = player_cards.boost_total(test)
     value = max(0, int(test["base"]) + committed + boosts + int(test["modifier"]))
+    if bool(test["autofail"]):
+        value = 0
     difficulty = int(test["difficulty"])
     success = value >= difficulty and not bool(test["autofail"])
     margin = value - difficulty if success else max(0, difficulty - value)
@@ -180,6 +180,7 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
         "committed_icons": committed,
         "boosts": boosts,
         "token": test["token"],
+        "extra_tokens": list(test.get("extra_tokens", [])),
         "modifier": test["modifier"],
         "value": value,
         "success": success,
