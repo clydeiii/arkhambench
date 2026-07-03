@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -53,9 +54,10 @@ class Game:
         init_events: list[dict[str, Any]] = RuleEventList(state)
         phases.advance_until_decision(state, rng, init_events)
         game.save()
-        game._append_rule_events(init_events)
+        rendered_events = game._append_rule_events(init_events)
         if state.decision_queue:
             game._append_decision_presented()
+        game._append_timeline(chose=None, events=rendered_events)
         return game
 
     @classmethod
@@ -118,10 +120,15 @@ class Game:
         self._dispatch_payload(option.payload, rule_events)
         if not self.state.decision_queue and self.state.status == "in_progress":
             phases.advance_until_decision(self.state, self.rng, rule_events)
-        events.extend(self._append_rule_events(rule_events))
+        rendered_events = self._append_rule_events(rule_events)
+        events.extend(rendered_events)
         if self.state.status == "in_progress" and self.state.decision_queue:
             events.append(self._append_decision_presented())
         self.save()
+        self._append_timeline(
+            chose={"decision_id": decision.id, "option": option_index, "label": option.label},
+            events=rendered_events,
+        )
         return events
 
     def _append_decision_presented(self) -> dict[str, Any]:
@@ -223,6 +230,29 @@ class Game:
             )
         return rendered
 
+    def _append_timeline(self, *, chose: dict[str, Any] | None, events: list[dict[str, Any]]) -> None:
+        try:
+            path = self.run_dir / "timeline.jsonl"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            line = {
+                "i": _next_timeline_index(path),
+                "round": self.state.round,
+                "phase": self.state.phase,
+                "status": status_line(self.state),
+                "chose": chose,
+                "events": [_timeline_event(event) for event in events],
+                "pending": _timeline_pending(self.current_decision()),
+                "state": self.state.public_dict(),
+            }
+            payload = (json.dumps(line, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
+            fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o666)
+            try:
+                os.write(fd, payload)
+            finally:
+                os.close(fd)
+        except OSError as exc:
+            print(f"warning: failed to append timeline: {exc}", file=sys.stderr)
+
     def _initialize_files(
         self,
         *,
@@ -256,3 +286,34 @@ class Game:
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def _next_timeline_index(path: Path) -> int:
+    if not path.exists():
+        return 0
+    index = 0
+    with path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            if line.strip():
+                index += 1
+    return index
+
+
+def _timeline_pending(decision: PendingDecision | None) -> dict[str, Any] | None:
+    if decision is None:
+        return None
+    return {
+        "id": decision.id,
+        "prompt": decision.prompt,
+        "options": [option.label for option in decision.options],
+    }
+
+
+def _timeline_event(event: dict[str, Any]) -> dict[str, Any]:
+    data = event.get("data", {})
+    message = data.get("message") if isinstance(data, dict) else None
+    if message is None:
+        message = event.get("message")
+    if message is None and isinstance(data, dict):
+        message = data.get("summary")
+    return {"type": str(event.get("type", "event")), "message": str(message or "")}
