@@ -198,12 +198,13 @@ play is actually legal; otherwise it auto-passes silently. Forced effects auto-r
    legal fast abilities (Physical Training, Hyperawareness pumps). Ends with "Done".
 3. Reveal chaos token (seeded draw, with replacement — token returned at end of test).
 4. Apply token effect (scenario-defined, §12; autofail ⇒ test fails regardless).
-   **Post-reveal window**: fast abilities again legal (you may pump after seeing the token),
-   surfaced only if any are legal.
+   **No player window exists after the reveal** (RR timing chart: windows only before
+   ST.3) — boosts must be committed before seeing the token.
 5. Compute modified skill value = base + committed icons + active boosts + token modifier
-   (min 0).
+   (min 0). **Autofail: total skill value is considered 0** (RR ST.6).
 6. Success iff modified value ≥ modified difficulty (ties succeed) and token ≠ autofail.
-   Record success margin (needed for Grasping Hands / Rotting Remains "per point").
+   Record success margin (needed for Grasping Hands / Rotting Remains "per point";
+   on autofail the fail-by margin is computed from value 0).
 7. Apply results (action-specific + committed-card riders like Vicious Blow/Deduction/
    Guts/Manual Dexterity draw riders, elder-sign effect already applied as modifier in 5;
    Roland's elder sign: +1 per clue on your location).
@@ -246,7 +247,8 @@ play is actually legal; otherwise it auto-passes silently. Forced effects auto-r
   Agenda 3 forced: end of enemy phase, unengaged Ghouls move 1 toward the Parlor
   (Barricade still blocks non-Elite).
 - **Enemy attacks** (enemy phase): each ready engaged enemy attacks: deal its damage/horror
-  (assignment decision). Then it does NOT exhaust (enemies don't exhaust from attacking).
+  (assignment decision), then the enemy EXHAUSTS (RR 3.3; AoO and retaliate attacks do
+  not exhaust). With multiple attackers, the attacked investigator chooses the order.
 - **Defeat**: enemy damage ≥ health → defeated → victory display if it has Victory X, else
   encounter discard. Roland reaction (defeat an enemy → discover 1 clue, 1/round) and
   Evidence! window trigger here.
@@ -371,10 +373,12 @@ agendas 01105–01107, acts 01108–01110, locations 01111–01115.)
   unengaged Ghoul moves 1 toward Parlor. Forced end of round — +1 doom per Ghoul in
   Hallway or Parlor. On doom full: if Act 1 or 2 → **R3**; if Act 3 → Roland (if not
   resigned) defeated + 1 physical trauma → treat as no-resolution outcome for log/score.
-- **Doom check**: agenda advances when doom on agenda + doom on other cards ≥ threshold
-  (Acolyte adds doom to agenda directly; Ancient Evils to agenda; "current agenda advances
-  when threshold met during mythos placement or via Ancient Evils / Acolyte forced" —
-  implement check after any doom placement).
+- **Doom check** (RR 1.3): the threshold compares TOTAL doom in play (agenda + all other
+  cards); on advance, remove ALL doom from play. The agenda advances ONLY at mythos step
+  1.3, or when a doom-placing card explicitly permits it (Ancient Evils: "This effect can
+  cause the current agenda to advance"). Silver Twilight Acolyte's forced doom and Agenda
+  3's end-of-round doom do NOT advance the agenda immediately — they wait for the next
+  mythos check.
 - **Outcomes**:
   - **R1** (chose burn): record: house burned down; Lita earned; lead suffers 1 mental
     trauma; XP = victory display + 2 bonus.
