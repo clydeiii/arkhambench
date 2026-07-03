@@ -52,6 +52,8 @@ sharp and actionable.
 - During a skill test you'll get a commit window (add cards from hand for their icons)
   and sometimes a post-token window (pay resources to boost). Committed cards are
   discarded win or lose.
+- At phase boundaries (end of your turn, before enemy attacks, end of mythos) you may get
+  a fast-ability window (e.g. Beat Cop's ping) — use it or pass.
 - The engine only asks when there's a real choice; forced effects happen automatically
   and show up in the output.
 - Invalid input never hurts you — it just re-prints the options.

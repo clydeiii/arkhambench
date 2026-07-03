@@ -30,3 +30,11 @@ WINNING LINE (score 4, repeatable): R1 Study: MagGlass, investigate x2, advance 
 
 SCORE CEILING ~9: Attic 1 + Cellar 1 + Priest 2 + Flesh-Eater 1 + Icy Ghoul 1 + R2 bonus 3, minus trauma. VP enemies: Flesh-Eater spawns Attic, Icy Ghoul spawns Cellar (mine spawned at Cellar the round AFTER I advanced act 2 — too late to kill safely since game ends the instant Priest dies; don't chase VP ghouls while engaged with Priest at low sanity, each fight vs another enemy = Priest AoO 2dmg+2horror). Agenda1 flip choice: take random discard over 2 horror. Rotting Remains (Will 3, 3 copies) is the main horror drain — Physical Training also pumps willpower, keep 2+ res spare during mythos.
 
+## [2026-07-03T18:11:24+00:00] Run gpt55-demo-1 · Round 17
+
+GAME gpt55-demo-1: no_resolution at R17, score 5 (XP 6, physical trauma 1). VP earned: Flesh-Eater + Icy Ghoul plus cleared Attic/Cellar likely; Ghoul Priest was at 4/5 damage when agenda 3 defeated Roland. Cover Up fully cleared, no mental trauma.
+
+## [2026-07-03T18:11:32+00:00] Run gpt55-demo-1 · Round 17
+
+LESSONS from gpt55-demo-1: (1) Beat Cop fast damage must be used from the action menu BEFORE spending the last action; after a successful last-action attack the engine went straight to enemy phase and did not offer Beat Cop. Priest line should be: Machete hit, Machete hit, then immediately choose 'Discard Beat Cop to deal 1 damage' while an action menu/fast window exists. (2) Do not advance Act 2 with agenda 3 at 9+ doom unless the Priest kill is guaranteed that same turn; agenda 3 defeated Roland at upkeep before another turn. (3) If Priest first attack autofails, two remaining Machete hits can still put him at 4 damage, but you must have a fast ping/damage already usable before enemy/upkeep or you lose to agenda. (4) Evidence!/Roland reaction ordering: choosing Roland first on a kill led to Cover Up replacement and the engine did NOT return to Evidence!, so if trying to use both, test Evidence! first or expect only one reaction.
+

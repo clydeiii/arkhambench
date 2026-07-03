@@ -5,11 +5,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-def resolve_notebook(path: str | None = None) -> Path:
+def resolve_notebook(path: str | None = None, run_dir: Path | None = None) -> Path:
+    """Precedence: --notebook flag > AHLCG_NOTEBOOK env > run meta.json > ./notebook.md."""
     if path:
         return Path(path)
     if os.environ.get("AHLCG_NOTEBOOK"):
         return Path(os.environ["AHLCG_NOTEBOOK"])
+    if run_dir is not None:
+        meta_path = Path(run_dir) / "meta.json"
+        if meta_path.exists():
+            import json
+
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                meta = {}
+            if meta.get("notebook"):
+                return Path(meta["notebook"])
     return Path.cwd() / "notebook.md"
 
 

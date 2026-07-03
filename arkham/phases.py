@@ -25,6 +25,8 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             else:
                 if start_frozen_end_turn_test(state, events):
                     return
+                if present_fast_window(state, "inv_end", during_turn=True):
+                    return
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
         elif state.phase == "Enemy":
@@ -58,11 +60,15 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("frozen_end_turn:")
                     and not str(key).startswith("mythos_")
                     and not str(key).startswith("upkeep_done:")
+                    and not str(key).startswith("fastwin:")
+                    and not str(key).startswith("hunters_moved:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":
             run_mythos_phase(state, rng, events)
             if not state.decision_queue and state.status == "in_progress":
+                if present_fast_window(state, "mythos_end", during_turn=False):
+                    return
                 state.phase = "Investigation"
                 state.investigator.actions_remaining = 3
                 state.turn.action_index = 0
@@ -71,8 +77,38 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             state.phase = "Investigation"
 
 
+def present_fast_window(state: GameState, boundary: str, *, during_turn: bool) -> bool:
+    """Offer legal fast abilities at a phase boundary. Returns True if a decision
+    was queued. The window closes when the player passes (guard key set) and is
+    re-offered after each use while more fast abilities remain legal."""
+    key = f"fastwin:{boundary}:{state.round}"
+    if state.limits.get(key):
+        return False
+    options: list[DecisionOption] = []
+    actions.add_fast_options(state, options, during_turn=during_turn)
+    if not options:
+        state.limits[key] = True
+        return False
+    options.append(DecisionOption("Pass (continue)", {"kind": "fast_window_pass", "key": key}))
+    state.decision_queue = [
+        PendingDecision(
+            id=f"fast-window-{boundary}",
+            kind="fast_window",
+            prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Fast-ability window — use a fast ability or pass:",
+            options=options,
+        )
+    ]
+    return True
+
+
 def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
-    move_hunters(state, events)
+    # Hunters move once per round even if the phase is interrupted by decisions.
+    hunters_key = f"hunters_moved:{state.round}"
+    if not state.limits.get(hunters_key):
+        state.limits[hunters_key] = True
+        move_hunters(state, events)
+    if present_fast_window(state, "enemy_pre", during_turn=False):
+        return
     attacked_key = f"enemy_phase_attacked:{state.round}"
     attacked = set(state.limits.get(attacked_key, []))
     for enemy_id in list(state.investigator.engaged_enemies):

@@ -39,6 +39,7 @@ class Game:
         difficulty: str,
         deck_path: str | Path | None,
         run_dir: str | Path,
+        notebook: str | Path | None = None,
     ) -> "Game":
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
@@ -48,7 +49,7 @@ class Game:
 
         state = build_gathering_state(difficulty=difficulty, rng=rng, deck_path=deck_path)
         game = cls(run_path, state, rng)
-        game._initialize_files(seed=seed, difficulty=difficulty, deck_path=deck_path)
+        game._initialize_files(seed=seed, difficulty=difficulty, deck_path=deck_path, notebook=notebook)
         init_events: list[dict[str, Any]] = RuleEventList(state)
         phases.advance_until_decision(state, rng, init_events)
         game.save()
@@ -164,6 +165,8 @@ class Game:
             discard_asset_choice(self.state, payload, events)
         elif kind == "discard_to_size":
             phases.discard_to_size(self.state, payload, events)
+        elif kind == "fast_window_pass":
+            self.state.limits[str(payload["key"])] = True
         elif kind == "cover_up_choice":
             resolve_cover_up_choice(self.state, payload, events)
         elif kind == "old_book_choice":
@@ -196,7 +199,12 @@ class Game:
         return rendered
 
     def _initialize_files(
-        self, *, seed: int, difficulty: str, deck_path: str | Path | None
+        self,
+        *,
+        seed: int,
+        difficulty: str,
+        deck_path: str | Path | None,
+        notebook: str | Path | None = None,
     ) -> None:
         self.run_dir.mkdir(parents=True, exist_ok=True)
         meta = {
@@ -207,6 +215,8 @@ class Game:
             "engine_version": __version__,
             "status": self.state.status,
         }
+        if notebook is not None:
+            meta["notebook"] = str(Path(notebook).resolve())
         atomic_write_json(self.run_dir / "meta.json", meta)
         for path in (self.run_dir / "log.jsonl", self.run_dir / "log.md"):
             if not path.exists():

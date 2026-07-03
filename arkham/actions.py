@@ -298,20 +298,23 @@ def is_fast_turn_card(card_code: str) -> bool:
     return card_code in {"01022", "01023", "01030", "01036", "01037"}
 
 
-def add_fast_options(state: GameState, options: list[DecisionOption]) -> None:
-    for card_id in list(state.investigator.hand):
-        instance = state.card_instances[card_id]
-        code = instance.card_code
-        card = card_data.get_card(code)
-        cost = int(card.get("cost") or 0)
-        if state.investigator.resources < cost or dissonant_blocks(state, code):
-            continue
-        if code == "01030":
-            options.append(DecisionOption("Play Magnifying Glass (fast)", {"kind": "action", "action": "fast_ability", "ability": "play_fast_asset", "card": card_id}))
-        elif code == "01036":
-            options.append(DecisionOption("Play Mind over Matter", {"kind": "action", "action": "fast_ability", "ability": "mind_over_matter", "card": card_id}))
-        elif code == "01037" and state.locations[state.investigator.location_id].clues > 0:
-            options.append(DecisionOption("Play Working a Hunch", {"kind": "action", "action": "fast_ability", "ability": "working_hunch", "card": card_id}))
+def add_fast_options(state: GameState, options: list[DecisionOption], *, during_turn: bool = True) -> None:
+    # Fast card PLAYS are only legal during the investigator's own turn;
+    # triggered fast abilities on in-play cards (Beat Cop) work in any window.
+    if during_turn:
+        for card_id in list(state.investigator.hand):
+            instance = state.card_instances[card_id]
+            code = instance.card_code
+            card = card_data.get_card(code)
+            cost = int(card.get("cost") or 0)
+            if state.investigator.resources < cost or dissonant_blocks(state, code):
+                continue
+            if code == "01030":
+                options.append(DecisionOption("Play Magnifying Glass (fast)", {"kind": "action", "action": "fast_ability", "ability": "play_fast_asset", "card": card_id}))
+            elif code == "01036":
+                options.append(DecisionOption("Play Mind over Matter", {"kind": "action", "action": "fast_ability", "ability": "mind_over_matter", "card": card_id}))
+            elif code == "01037" and state.locations[state.investigator.location_id].clues > 0:
+                options.append(DecisionOption("Play Working a Hunch", {"kind": "action", "action": "fast_ability", "ability": "working_hunch", "card": card_id}))
     for beat_cop in player_cards.play_area_ids(state, "01018"):
         enemies = fight_targets(state)
         if enemies:

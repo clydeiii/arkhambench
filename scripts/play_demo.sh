@@ -11,7 +11,10 @@ AGENT="${1:?agent: claude model id or 'codex'}"
 RUN="${2:?run name}"
 SEED="${3:-$RANDOM}"
 
-./ahlcg new --run "runs/$RUN" --seed "$SEED" >/dev/null
+# Each agent gets its own persistent notebook, bound to the run via meta.json.
+SAFE_AGENT="$(printf '%s' "$AGENT" | tr -c 'A-Za-z0-9._-' '_')"
+mkdir -p notebooks
+./ahlcg new --run "runs/$RUN" --seed "$SEED" --notebook "notebooks/$SAFE_AGENT.md" >/dev/null
 PROMPT="$(cat docs_agent/mission.md)
 
 Your game has already been created: it is the current run (runs/$RUN). Do not create a

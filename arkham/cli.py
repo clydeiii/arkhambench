@@ -34,6 +34,7 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
     new.add_argument("--deck", default=None)
     new.add_argument("--run", dest="run", default=None)
+    new.add_argument("--notebook", dest="notebook", default=None, help="persistent notebook bound to this run (recorded in meta.json)")
     new.set_defaults(func=cmd_new)
 
     state = sub.add_parser("state")
@@ -103,6 +104,7 @@ def cmd_new(args: argparse.Namespace) -> int:
         difficulty=args.difficulty,
         deck_path=args.deck,
         run_dir=run_dir,
+        notebook=args.notebook,
     )
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
     print(f"Created run: {run_dir}")
@@ -177,7 +179,6 @@ def cmd_score(args: argparse.Namespace) -> int:
 
 
 def cmd_note_add(args: argparse.Namespace) -> int:
-    notebook_path = resolve_notebook(args.notebook)
     run_name = None
     round_number = None
     run_dir = None
@@ -188,6 +189,7 @@ def cmd_note_add(args: argparse.Namespace) -> int:
         round_number = game.state.round
     except EngineError:
         pass
+    notebook_path = resolve_notebook(args.notebook, run_dir=run_dir)
     add_note(notebook_path, args.text, run_name=run_name, round_number=round_number)
     if run_name is not None and run_dir is not None:
         from .log import EventLog
@@ -202,8 +204,15 @@ def cmd_note_add(args: argparse.Namespace) -> int:
     return 0
 
 
+def _notebook_run_dir(run_arg: str | None) -> Path | None:
+    try:
+        return resolve_run_dir(run_arg)
+    except EngineError:
+        return None
+
+
 def cmd_note_show(args: argparse.Namespace) -> int:
-    print(show(resolve_notebook(args.notebook)), end="")
+    print(show(resolve_notebook(args.notebook, run_dir=_notebook_run_dir(None))), end="")
     return 0
 
 
@@ -212,7 +221,7 @@ def cmd_note_compact(args: argparse.Namespace) -> int:
         body = sys.stdin.read()
     else:
         body = Path(args.file).read_text(encoding="utf-8")
-    archive = compact(resolve_notebook(args.notebook), body)
+    archive = compact(resolve_notebook(args.notebook, run_dir=_notebook_run_dir(None)), body)
     print(f"archived previous notebook: {archive}")
     return 0
 
