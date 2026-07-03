@@ -28,7 +28,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
         elif state.phase == "Enemy":
-            run_enemy_phase(state, events)
+            run_enemy_phase(state, events, rng)
             if not state.decision_queue and state.status == "in_progress":
                 if state.scenario == "the_gathering":
                     from .scenarios import the_gathering
@@ -70,7 +70,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             state.phase = "Investigation"
 
 
-def run_enemy_phase(state: GameState, events: list[dict[str, Any]]) -> None:
+def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
     move_hunters(state, events)
     attacked_key = f"enemy_phase_attacked:{state.round}"
     attacked = set(state.limits.get(attacked_key, []))
@@ -79,7 +79,7 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]]) -> None:
             continue
         enemy = state.enemies.get(enemy_id)
         if enemy and not enemy.exhausted:
-            attack(state, events, enemy_id, source="enemy phase")
+            attack(state, events, enemy_id, source="enemy phase", rng=rng)
             attacked.add(enemy_id)
             state.limits[attacked_key] = sorted(attacked)
             if state.decision_queue:
@@ -139,7 +139,7 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
     doom_key = f"mythos_doom_placed:{state.round}"
     if not state.limits.get(doom_key):
         state.limits[doom_key] = True
-        place_doom(state, 1, events, source="mythos")
+        place_doom(state, 1, events, source="mythos", rng=rng)
     if state.status != "in_progress" or state.decision_queue:
         return
     encounter_key = f"mythos_encounter_drawn:{state.round}"

@@ -455,16 +455,20 @@ def end_enemy_phase(state: GameState, events: list[dict[str, Any]]) -> None:
             move_enemy_to(state, events, enemy_id, step)
 
 
-def check_agenda_advance(state: GameState, events: list[dict[str, Any]]) -> None:
+def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: ArkhamRng | None = None) -> None:
     if not state.agenda:
         return
     while total_doom(state) >= state.agenda.threshold and state.status == "in_progress" and not state.decision_queue:
-        state.agenda.doom = max(0, state.agenda.doom - state.agenda.threshold)
+        state.agenda.doom = 0
         if state.agenda.stage == 1:
             present_agenda_1_choice(state)
             return
         if state.agenda.stage == 2:
-            advance_agenda_2(state, events)
+            if rng is None:
+                from ..errors import EngineError
+
+                raise EngineError("agenda 2 advancement requires the game RNG")
+            advance_agenda_2(state, events, rng)
             continue
         if state.agenda.stage == 3:
             agenda_3_doom_out(state, events)
@@ -518,8 +522,11 @@ def finish_mythos_after_agenda_choice(state: GameState, events: list[dict[str, A
     from ..enemies import engage_ready_enemies_at_roland
 
     state.limits[f"mythos_doom_placed:{state.round}"] = True
-    state.limits[f"mythos_encounter_drawn:{state.round}"] = True
-    encounter.draw_encounter(state, rng, events)
+    encounter_key = f"mythos_encounter_drawn:{state.round}"
+    encounter_already_drawn = bool(state.limits.get(encounter_key))
+    state.limits[encounter_key] = True
+    if not encounter_already_drawn:
+        encounter.draw_encounter(state, rng, events)
     engage_ready_enemies_at_roland(state, events)
     if state.status == "in_progress" and not state.decision_queue:
         state.phase = "Investigation"
@@ -528,16 +535,14 @@ def finish_mythos_after_agenda_choice(state: GameState, events: list[dict[str, A
         log_event(events, "phase_started", "Investigation phase began.")
 
 
-def advance_agenda_2(state: GameState, events: list[dict[str, Any]]) -> None:
+def advance_agenda_2(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
     from ..effects import log_event
     from ..encounter import resolve_revelation
-    from ..rng import ArkhamRng
 
     state.encounter_deck.extend(state.encounter_discard)
     state.encounter_discard = []
     for card_id in state.encounter_deck:
         state.card_instances[card_id].zone = "encounter_deck"
-    rng = ArkhamRng(int(state.limits.get("agenda_rng_seed", state.round * 1000 + 7)))
     rng.shuffle(state.encounter_deck)
     drawn: str | None = None
     while state.encounter_deck:
@@ -669,7 +674,7 @@ def is_ghoul_card(card_code: str) -> bool:
     return "Ghoul" in str(card_data.get_card(card_code).get("traits", ""))
 
 
-def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any]) -> None:
+def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
     token = str(result.get("token"))
     failed = not bool(result.get("success"))
     if token == "cultist" and failed:
@@ -684,14 +689,16 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
         horror = 0 if state.difficulty in {"easy", "standard"} else 1
         start_damage_assignment(state, events, source="Tablet token", damage=damage, horror=horror)
     elif token == "skull" and failed and state.difficulty in {"hard", "expert"}:
-        search_and_draw_ghoul(state, events)
+        if rng is None:
+            from ..errors import EngineError
+
+            raise EngineError("skull ghoul search requires the game RNG")
+        search_and_draw_ghoul(state, events, rng)
 
 
-def search_and_draw_ghoul(state: GameState, events: list[dict[str, Any]]) -> None:
+def search_and_draw_ghoul(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
     from ..encounter import resolve_revelation
-    from ..rng import ArkhamRng
 
-    rng = ArkhamRng(state.round * 2000 + 13)
     combined = list(state.encounter_deck) + list(state.encounter_discard)
     found = next(
         (

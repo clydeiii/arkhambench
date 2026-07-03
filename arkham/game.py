@@ -14,7 +14,7 @@ from .model import GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
 from . import actions, enemies, phases, skill_test
-from .effects import assign_damage_choice, discard_asset_choice, resolve_cover_up_choice
+from .effects import RuleEventList, assign_damage_choice, discard_asset_choice, resolve_cover_up_choice
 
 
 CHAOS_BAGS: dict[str, list[str]] = {
@@ -49,7 +49,7 @@ class Game:
         state = build_gathering_state(difficulty=difficulty, rng=rng, deck_path=deck_path)
         game = cls(run_path, state, rng)
         game._initialize_files(seed=seed, difficulty=difficulty, deck_path=deck_path)
-        init_events: list[dict[str, Any]] = []
+        init_events: list[dict[str, Any]] = RuleEventList(state)
         phases.advance_until_decision(state, rng, init_events)
         game.save()
         game._append_rule_events(init_events)
@@ -113,7 +113,7 @@ class Game:
             )
         )
         self.state.decision_queue.pop(0)
-        rule_events: list[dict[str, Any]] = []
+        rule_events: list[dict[str, Any]] = RuleEventList(self.state)
         self._dispatch_payload(option.payload, rule_events)
         if not self.state.decision_queue and self.state.status == "in_progress":
             phases.advance_until_decision(self.state, self.rng, rule_events)
@@ -126,7 +126,7 @@ class Game:
     def _dispatch_payload(self, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
         kind = payload.get("kind")
         if kind == "action":
-            actions.execute(self.state, payload, events)
+            actions.execute(self.state, payload, events, self.rng)
         elif kind == "commit_card":
             skill_test.commit_card(self.state, payload, events)
         elif kind == "commit_done":
@@ -134,17 +134,17 @@ class Game:
         elif kind == "skill_boost":
             skill_test.apply_skill_boost(self.state, payload, events)
         elif kind == "post_reveal_done":
-            skill_test.resolve(self.state, events)
+            skill_test.resolve(self.state, events, self.rng)
         elif kind == "assign_damage":
             resume = dict(self.state.pending_damage.get("resume", {})) if self.state.pending_damage else {}
-            assign_damage_choice(self.state, payload, events)
+            assign_damage_choice(self.state, payload, events, self.rng)
             if (
                 self.state.status == "in_progress"
                 and self.state.pending_damage is None
                 and not self.state.decision_queue
                 and resume.get("kind") == "action"
             ):
-                actions.execute(self.state, dict(resume.get("payload", {})), events)
+                actions.execute(self.state, dict(resume.get("payload", {})), events, self.rng)
             elif (
                 self.state.status == "in_progress"
                 and self.state.pending_damage is None
@@ -155,9 +155,9 @@ class Game:
 
                 the_gathering.resolve_scenario_choice(self.state, dict(resume), events, self.rng)
         elif kind == "dodge_attack":
-            enemies.cancel_pending_attack(self.state, events, str(payload["card"]))
+            enemies.cancel_pending_attack(self.state, events, str(payload["card"]), self.rng)
         elif kind == "take_attack":
-            enemies.take_pending_attack(self.state, events)
+            enemies.take_pending_attack(self.state, events, self.rng)
         elif kind == "enemy_defeated_reaction":
             enemies.resolve_enemy_defeated_reaction(self.state, payload, events)
         elif kind == "discard_asset":
@@ -185,7 +185,14 @@ class Game:
             data["message"] = message
             if event_type == "game_end":
                 data["summary"] = message
-            rendered.append(log.append(round=self.state.round, phase=self.state.phase, type=event_type, data=data))
+            rendered.append(
+                log.append(
+                    round=int(event.get("round", self.state.round)),
+                    phase=str(event.get("phase", self.state.phase)),
+                    type=event_type,
+                    data=data,
+                )
+            )
         return rendered
 
     def _initialize_files(

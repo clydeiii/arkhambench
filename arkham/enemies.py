@@ -154,6 +154,7 @@ def attack(
     *,
     source: str,
     resume: dict[str, Any] | None = None,
+    rng: Any = None,
 ) -> None:
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
         return
@@ -183,7 +184,7 @@ def attack(
             )
         ]
         return
-    resolve_attack(state, events, enemy_id, source=source, resume=resume)
+    resolve_attack(state, events, enemy_id, source=source, resume=resume, rng=rng)
 
 
 def legal_dodge_card(state: GameState) -> str | None:
@@ -200,6 +201,7 @@ def resolve_attack(
     *,
     source: str,
     resume: dict[str, Any] | None = None,
+    rng: Any = None,
 ) -> None:
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
         return
@@ -215,10 +217,10 @@ def resolve_attack(
         resume=after_resume,
     )
     if not state.pending_damage and not state.decision_queue:
-        after_attack(state, events, enemy_id, resume or {})
+        after_attack(state, events, enemy_id, resume or {}, rng=rng)
 
 
-def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_id: str) -> None:
+def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_id: str, rng: Any = None) -> None:
     pending = dict(state.limits.pop("pending_attack", {}))
     if not pending:
         return
@@ -231,10 +233,10 @@ def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_i
     if resume.get("kind") == "action":
         from . import actions
 
-        actions.execute(state, dict(resume.get("payload", {})), events)
+        actions.execute(state, dict(resume.get("payload", {})), events, rng)
 
 
-def take_pending_attack(state: GameState, events: list[dict[str, Any]]) -> None:
+def take_pending_attack(state: GameState, events: list[dict[str, Any]], rng: Any = None) -> None:
     pending = dict(state.limits.pop("pending_attack", {}))
     if not pending:
         return
@@ -244,6 +246,7 @@ def take_pending_attack(state: GameState, events: list[dict[str, Any]]) -> None:
         str(pending["enemy"]),
         source=str(pending.get("source", "attack")),
         resume=dict(pending.get("resume", {})),
+        rng=rng,
     )
 
 
@@ -252,6 +255,7 @@ def after_attack(
     events: list[dict[str, Any]],
     enemy_id: str,
     resume: dict[str, Any] | None = None,
+    rng: Any = None,
 ) -> None:
     if enemy_id not in state.enemies and enemy_id not in state.card_instances:
         return
@@ -261,13 +265,13 @@ def after_attack(
         else state.card_instances[enemy_id].card_code
     )
     if card_code == "01102":
-        place_doom(state, 1, events, source="Silver Twilight Acolyte")
+        place_doom(state, 1, events, source="Silver Twilight Acolyte", rng=rng)
     if state.status != "in_progress" or state.decision_queue:
         return
     if resume and resume.get("kind") == "action":
         from . import actions
 
-        actions.execute(state, dict(resume.get("payload", {})), events)
+        actions.execute(state, dict(resume.get("payload", {})), events, rng)
 
 
 def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:

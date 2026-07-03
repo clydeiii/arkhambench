@@ -244,14 +244,24 @@ def render_state(state: GameState, *, full: bool = False) -> str:
     for location in state.locations.values():
         reveal = "revealed" if location.revealed else "unrevealed"
         shroud = "?" if location.shroud is None else str(location.shroud)
-        lines.append(
-            f"- {location.name} ({reveal}) shroud {shroud}, clues {location.clues}, connections {', '.join(location.connections) or '-'}"
-        )
+        details = [
+            f"{location.name} ({reveal}) shroud {shroud}",
+            f"clues {location.clues}",
+            f"connections {', '.join(location.connections) or '-'}",
+        ]
+        if location.attached_instance_ids:
+            details.append("attachments " + ", ".join(card_label(state, card_id) for card_id in location.attached_instance_ids))
+        if location.enemy_ids:
+            details.append("enemies " + ", ".join(enemy_label(state, enemy_id) for enemy_id in location.enemy_ids if enemy_id in state.enemies))
+        lines.append("- " + "; ".join(details))
     lines.append(
         f"Roland: {investigator.damage}/{investigator.health} damage, {investigator.horror}/{investigator.sanity} horror, "
         f"{investigator.resources} resources, {investigator.clues} clues, hand {len(investigator.hand)}, deck {len(investigator.deck)}"
     )
-    lines.append("Play area: " + (", ".join(investigator.play_area) or "-"))
+    if investigator.engaged_enemies:
+        lines.append("Engaged enemies: " + ", ".join(enemy_label(state, enemy_id) for enemy_id in investigator.engaged_enemies if enemy_id in state.enemies))
+    lines.append("Play area: " + (", ".join(play_area_label(state, card_id) for card_id in investigator.play_area) or "-"))
+    lines.append("Threat area: " + (", ".join(threat_label(state, card_id) for card_id in investigator.threat_area) or "-"))
     lines.append("Hand:")
     if investigator.hand:
         cards = card_data.cards_by_code()
@@ -259,11 +269,11 @@ def render_state(state: GameState, *, full: bool = False) -> str:
             instance = state.card_instances[instance_id]
             card = cards.get(instance.card_code, {})
             cost = card.get("cost", "-")
-            lines.append(f"- {instance_id}: {card.get('name', instance.card_code)} (cost {cost})")
+            lines.append(f"- {card_label(state, instance_id)} (cost {cost})")
     else:
         lines.append("- empty")
     lines.append("Chaos bag: " + ", ".join(state.chaos_bag.tokens))
-    lines.append("Victory display: " + (", ".join(state.victory_display) or "-"))
+    lines.append("Victory display: " + (", ".join(zone_label(state, item_id) for item_id in state.victory_display) or "-"))
     lines.append(f"Discards: player {len(investigator.discard)}, encounter {len(state.encounter_discard)}")
     if full:
         cards = card_data.cards_by_code()
@@ -272,13 +282,84 @@ def render_state(state: GameState, *, full: bool = False) -> str:
             for instance_id in investigator.discard:
                 instance = state.card_instances[instance_id]
                 card = cards.get(instance.card_code, {})
-                lines.append(f"- {card.get('name', instance.card_code)}")
+                lines.append(f"- {card_label(state, instance_id)}")
         if state.encounter_discard:
             lines.append("Encounter discard:")
             for instance_id in state.encounter_discard:
                 instance = state.card_instances.get(instance_id)
                 code = instance.card_code if instance else instance_id
                 card = cards.get(code, {})
-                lines.append(f"- {card.get('name', code)}")
+                lines.append(f"- {card.get('name', code)} ({instance_id})")
     lines.append(f"Deck counts: player {len(investigator.deck)}")
     return "\n".join(lines)
+
+
+def card_label(state: GameState, instance_id: str) -> str:
+    instance = state.card_instances.get(instance_id)
+    if instance is None:
+        return instance_id
+    card = card_data.cards_by_code().get(instance.card_code, {})
+    return f"{card.get('name', instance.card_code)} ({instance_id})"
+
+
+def zone_label(state: GameState, item_id: str) -> str:
+    if item_id in state.card_instances:
+        return card_label(state, item_id)
+    if item_id in state.locations:
+        return state.locations[item_id].name
+    return item_id
+
+
+def play_area_label(state: GameState, instance_id: str) -> str:
+    label = card_label(state, instance_id)
+    instance = state.card_instances.get(instance_id)
+    if instance is None:
+        return label
+    card = card_data.cards_by_code().get(instance.card_code, {})
+    parts: list[str] = []
+    if instance.uses:
+        parts.extend(f"{key} {value}" for key, value in sorted(instance.uses.items()))
+    if card.get("slot") == "Ally" or instance.card_code == "01117":
+        health = int(card.get("health") or 0)
+        sanity = int(card.get("sanity") or 0)
+        if health or sanity:
+            parts.append(f"{instance.damage}/{health} dmg")
+            parts.append(f"{instance.horror}/{sanity} horror")
+    if instance.exhausted:
+        parts.append("exhausted")
+    if instance.attachments:
+        parts.append("attachments " + ", ".join(card_label(state, card_id) for card_id in instance.attachments))
+    return f"{label} [{', '.join(parts)}]" if parts else label
+
+
+def threat_label(state: GameState, instance_id: str) -> str:
+    label = card_label(state, instance_id)
+    instance = state.card_instances.get(instance_id)
+    if instance is None:
+        return label
+    parts: list[str] = []
+    if instance.clues:
+        parts.append(f"{instance.clues} clues")
+    if instance.doom:
+        parts.append(f"{instance.doom} doom")
+    if instance.damage:
+        parts.append(f"{instance.damage} damage")
+    if instance.horror:
+        parts.append(f"{instance.horror} horror")
+    return f"{label} [{', '.join(parts)}]" if parts else label
+
+
+def enemy_label(state: GameState, enemy_id: str) -> str:
+    enemy = state.enemies[enemy_id]
+    card = card_data.cards_by_code().get(enemy.card_code, {})
+    health = int(card.get("enemy_health") or card.get("health") or 0)
+    parts = [f"{enemy.damage}/{health} dmg" if health else f"{enemy.damage} dmg"]
+    if enemy.doom:
+        parts.append(f"{enemy.doom} doom")
+    if enemy.exhausted:
+        parts.append("exhausted")
+    if enemy.engaged_with:
+        parts.append("engaged")
+    if enemy.attachments:
+        parts.append("attachments " + ", ".join(card_label(state, card_id) for card_id in enemy.attachments))
+    return f"{card.get('name', enemy.card_code)} [{', '.join(parts)}]"

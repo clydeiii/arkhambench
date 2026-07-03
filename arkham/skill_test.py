@@ -141,7 +141,7 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
     if player_cards.boost_options(state):
         present_post_reveal_decision(state)
     else:
-        resolve(state, events)
+        resolve(state, events, rng)
 
 
 def present_post_reveal_decision(state: GameState) -> None:
@@ -160,7 +160,7 @@ def present_post_reveal_decision(state: GameState) -> None:
     ]
 
 
-def resolve(state: GameState, events: list[dict[str, Any]]) -> None:
+def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
     test = state.active_skill_test
     if not test:
         return
@@ -171,7 +171,7 @@ def resolve(state: GameState, events: list[dict[str, Any]]) -> None:
     value = max(0, int(test["base"]) + committed + boosts + int(test["modifier"]))
     difficulty = int(test["difficulty"])
     success = value >= difficulty and not bool(test["autofail"])
-    margin = value - difficulty if success else difficulty - value
+    margin = value - difficulty if success else max(0, difficulty - value)
     result = {
         "source": test["source"],
         "skill": skill,
@@ -186,15 +186,16 @@ def resolve(state: GameState, events: list[dict[str, Any]]) -> None:
         "margin": margin,
     }
     state.limits["last_skill_test"] = result
-    log_event(events, "skill_test_result", f"{test['source']}: {'success' if success else 'failure'} by {margin}.", **result)
+    label = "failure (autofail)" if test["autofail"] and not success else ("success" if success else "failure")
+    log_event(events, "skill_test_result", f"{test['source']}: {label} by {margin}.", **result)
     callback = test["on_success"] if success else test["on_failure"]
     committed_ids = list(test["committed"])
     for instance_id in test["committed"]:
         state.investigator.discard.append(instance_id)
         state.card_instances[instance_id].zone = "discard"
     state.active_skill_test = None
-    apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids)
-    apply_scenario_token_aftermath(state, events, result)
+    apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
+    apply_scenario_token_aftermath(state, events, result, rng)
 
 
 def apply_callback(
@@ -205,6 +206,7 @@ def apply_callback(
     success: bool,
     margin: int,
     committed: list[str] | None = None,
+    rng: ArkhamRng | None = None,
 ) -> None:
     committed = committed or []
     kind = callback.get("kind")
@@ -236,7 +238,7 @@ def apply_callback(
                 log_event(events, "lita_reaction", "Lita Chantler added 1 damage against a Monster.")
             damage_enemy(state, events, enemy_id, damage)
         elif not success and enemy_id in state.enemies and has_retaliate(state, enemy_id) and not state.enemies[enemy_id].exhausted:
-            attack(state, events, enemy_id, source="retaliate")
+            attack(state, events, enemy_id, source="retaliate", rng=rng)
     elif kind == "evade":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
@@ -301,12 +303,12 @@ def apply_callback(
             draw_player_card(state, events)
 
 
-def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any]) -> None:
+def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
     if state.scenario != "the_gathering" or state.status != "in_progress" or state.decision_queue:
         return
     from .scenarios import the_gathering
 
-    the_gathering.apply_token_aftermath(state, events, result)
+    the_gathering.apply_token_aftermath(state, events, result, rng)
 
 
 def discard_obscuring_fog_at_roland(state: GameState, events: list[dict[str, Any]]) -> None:

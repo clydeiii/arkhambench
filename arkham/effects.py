@@ -8,8 +8,19 @@ from .cards import player as player_cards
 from .model import CardInstance, DecisionOption, GameState, PendingDecision
 
 
+class RuleEventList(list[dict[str, Any]]):
+    def __init__(self, state: GameState) -> None:
+        super().__init__()
+        self.state = state
+
+
 def log_event(events: list[dict[str, Any]], event_type: str, message: str, **data: Any) -> None:
-    events.append({"type": event_type, "message": message, "data": data})
+    event = {"type": event_type, "message": message, "data": data}
+    state = getattr(events, "state", None)
+    if state is not None:
+        event["round"] = state.round
+        event["phase"] = state.phase
+    events.append(event)
 
 
 def draw_player_card(state: GameState, events: list[dict[str, Any]]) -> str | None:
@@ -130,24 +141,24 @@ def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> 
     return True
 
 
-def place_doom(state: GameState, amount: int, events: list[dict[str, Any]], *, source: str) -> None:
+def place_doom(state: GameState, amount: int, events: list[dict[str, Any]], *, source: str, rng: Any = None) -> None:
     if state.agenda is None:
         return
     state.agenda.doom += amount
     log_event(events, "doom_placed", f"Placed {amount} doom on the agenda.", source=source)
-    check_agenda_advance(state, events)
+    check_agenda_advance(state, events, rng=rng)
 
 
-def check_agenda_advance(state: GameState, events: list[dict[str, Any]]) -> None:
+def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: Any = None) -> None:
     if state.agenda is None or state.agenda.threshold <= 0:
         return
     if state.scenario == "the_gathering":
         from .scenarios import the_gathering
 
-        the_gathering.check_agenda_advance(state, events)
+        the_gathering.check_agenda_advance(state, events, rng=rng)
         return
     while state.agenda.doom >= state.agenda.threshold and state.status == "in_progress":
-        state.agenda.doom -= state.agenda.threshold
+        state.agenda.doom = 0
         state.agenda.stage += 1
         if state.agenda.stage == 2:
             state.agenda.code = "phaseb_agenda_2"
@@ -249,7 +260,7 @@ def present_damage_decision(state: GameState) -> None:
     ]
 
 
-def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
     pending = state.pending_damage
     if pending is None:
         return
@@ -296,6 +307,7 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
                 events,
                 str(resume.get("enemy", "")),
                 dict(resume.get("resume", {})),
+                rng=rng,
             )
 
 

@@ -5,14 +5,16 @@ from typing import Any
 
 from . import data as card_data
 from .cards import encounter_cards, player as player_cards
-from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, log_event, spend_clues, start_damage_assignment
-from .enemies import attack, damage_enemy, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, move_engaged_enemies_with_roland
+from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, spend_clues, start_damage_assignment
+from .enemies import attack, damage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, legal_dodge_card, move_engaged_enemies_with_roland
+from .errors import EngineError
 from .model import DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
-SAFE_FROM_AOO = {"fight", "evade", "engage", "parley", "resign", "pass", "advance_act"}
+SAFE_FROM_AOO = {"resign", "pass", "advance_act"}
 FREE_ACTIONS = {"fast_ability"}
+NON_ACTIONS = {"advance_act", "pass"}
 
 
 def present_action_decision(state: GameState) -> None:
@@ -76,7 +78,20 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         ):
             options.append(DecisionOption(f"Play {card.get('name', instance.card_code)} ({cost} res)", {"kind": "action", "action": "play", "card": instance_id}))
     options.append(DecisionOption("Pass (end turn)", {"kind": "action", "action": "pass"}))
-    return options
+    return affordable_actions(state, options)
+
+
+def affordable_actions(state: GameState, options: list[DecisionOption]) -> list[DecisionOption]:
+    affordable: list[DecisionOption] = []
+    for option in options:
+        payload = option.payload
+        if payload.get("kind") != "action":
+            affordable.append(option)
+            continue
+        action = str(payload.get("action", ""))
+        if action in FREE_ACTIONS or action in NON_ACTIONS or effective_action_cost(state, action) <= state.investigator.actions_remaining:
+            affordable.append(option)
+    return affordable
 
 
 def fight_targets(state: GameState) -> list[str]:
@@ -85,11 +100,11 @@ def fight_targets(state: GameState) -> list[str]:
     return sorted(enemy_id for enemy_id in ids if enemy_id in state.enemies)
 
 
-def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
     action = str(payload["action"])
-    if action not in {"advance_act"} | FREE_ACTIONS:
+    if action not in NON_ACTIONS | FREE_ACTIONS:
         if not payload.get("skip_aoo"):
-            attacks_of_opportunity(state, events, action, payload)
+            attacks_of_opportunity(state, events, action, payload, rng=rng)
         if state.decision_queue or state.status != "in_progress":
             return
         spend_action(state, events, action)
@@ -146,41 +161,78 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
 
 
 def spend_action(state: GameState, events: list[dict[str, Any]], action: str) -> None:
-    cost = 1
-    designator = action_designator(action)
-    key = f"frozen:{state.round}:move_fight_evade"
-    if designator in {"move", "fight", "evade"} and has_threat(state, "01164") and not state.limits.get(key):
-        cost += 1
-        state.limits[key] = True
-    state.investigator.actions_remaining = max(0, state.investigator.actions_remaining - cost)
+    cost = effective_action_cost(state, action)
+    if cost > state.investigator.actions_remaining:
+        raise EngineError(f"cannot spend {cost} actions with only {state.investigator.actions_remaining} remaining")
+    mark_action_cost_paid(state, action, cost)
+    state.investigator.actions_remaining -= cost
     state.turn.action_index += cost
     state.limits["actions_taken"] = int(state.limits.get("actions_taken", 0)) + cost
     log_event(events, "action_spent", f"Spent {cost} action on {action}.", action=action, cost=cost)
 
 
+def effective_action_cost(state: GameState, action: str) -> int:
+    cost = 1
+    designator = action_designator(action)
+    key = f"frozen:{state.round}:move_fight_evade"
+    if designator in {"move", "fight", "evade"} and has_threat(state, "01164") and not state.limits.get(key):
+        cost += 1
+    return cost
+
+
+def mark_action_cost_paid(state: GameState, action: str, cost: int) -> None:
+    designator = action_designator(action)
+    key = f"frozen:{state.round}:move_fight_evade"
+    if cost > 1 and designator in {"move", "fight", "evade"}:
+        state.limits[key] = True
+
+
 def action_designator(action: str) -> str:
     if action == "asset_fight":
         return "fight"
+    if action == "parley_lita":
+        return "parley"
     return action
 
 
-def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any]) -> None:
+def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> None:
     if action in SAFE_FROM_AOO:
         return
+    exempt_enemy = targeted_aoo_exempt_enemy(action, payload)
     for enemy_id in list(state.investigator.engaged_enemies):
+        if enemy_id == exempt_enemy:
+            continue
         enemy = state.enemies.get(enemy_id)
         if enemy and not enemy.exhausted:
             resume_payload = dict(payload)
             resume_payload["skip_aoo"] = True
+            resume = {"kind": "action", "payload": resume_payload} if aoo_needs_resume(state, enemy_id) else None
             attack(
                 state,
                 events,
                 enemy_id,
                 source="attack of opportunity",
-                resume={"kind": "action", "payload": resume_payload},
+                resume=resume,
+                rng=rng,
             )
             if state.decision_queue:
                 return
+
+
+def targeted_aoo_exempt_enemy(action: str, payload: dict[str, Any]) -> str | None:
+    designator = action_designator(action)
+    if designator in {"fight", "evade"}:
+        return str(payload.get("enemy")) if payload.get("enemy") else None
+    if designator == "parley" and payload.get("enemy"):
+        return str(payload.get("enemy"))
+    return None
+
+
+def aoo_needs_resume(state: GameState, enemy_id: str) -> bool:
+    if legal_dodge_card(state) is not None:
+        return True
+    damage, horror = enemy_damage_horror(state, enemy_id)
+    return (damage > 0 or horror > 0) and bool(legal_soak_targets(state))
 
 
 def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:
