@@ -151,27 +151,27 @@ class CliTests(unittest.TestCase):
             check=False,
         )
 
-    def test_cli_stub_round_trip_new_actions_do_log(self) -> None:
+    def test_cli_phase_b_round_trip_new_actions_do_log(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             cwd = Path(tmp)
             run_dir = cwd / "runs" / "stub"
 
             new = self.run_cli("new", "--seed", "7", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(new.returncode, 0, new.stderr)
-            self.assertIn("stub decision", new.stdout)
+            self.assertIn("Choose an action", new.stdout)
 
             actions = self.run_cli("actions", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(actions.returncode, 0, actions.stderr)
-            self.assertIn("1. Option A", actions.stdout)
+            self.assertIn("1. Investigate", actions.stdout)
 
             do = self.run_cli("do", "1", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(do.returncode, 0, do.stderr)
             self.assertIn("Decision made", do.stdout)
-            self.assertIn("1. Option A", do.stdout)
+            self.assertIn("Commit", do.stdout)
 
             log = self.run_cli("log", "--run", str(run_dir), "--tail", "10", cwd=cwd)
             self.assertEqual(log.returncode, 0, log.stderr)
-            self.assertIn("Stub option A resolved", log.stdout)
+            self.assertIn("Started intellect test", log.stdout)
 
     def test_card_lookup_by_code_and_name(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

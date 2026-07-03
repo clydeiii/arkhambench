@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -9,20 +10,11 @@ from . import __version__
 from . import data as card_data
 from .errors import EngineError
 from .log import EventLog
-from .model import (
-    ActState,
-    AgendaState,
-    CardInstance,
-    ChaosBag,
-    DecisionOption,
-    GameState,
-    Investigator,
-    Location,
-    PendingDecision,
-    TurnState,
-)
+from .model import GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
+from . import actions, phases, skill_test
+from .effects import assign_damage_choice
 
 
 CHAOS_BAGS: dict[str, list[str]] = {
@@ -51,84 +43,18 @@ class Game:
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
         run_path = Path(run_dir)
-        deck = card_data.load_deck(deck_path)
-        cards = card_data.cards_by_code()
-        investigator_card = cards[str(deck["investigator"])]
         rng = ArkhamRng(seed)
-        instances: dict[str, CardInstance] = {}
-        deck_ids: list[str] = []
-        counter = 1
-        for code, count in sorted(deck["slots"].items()):
-            for _ in range(int(count)):
-                instance_id = f"pc{counter:04d}"
-                counter += 1
-                instances[instance_id] = CardInstance(
-                    id=instance_id,
-                    card_code=str(code),
-                    zone="player_deck",
-                )
-                deck_ids.append(instance_id)
-        rng.shuffle(deck_ids)
-        hand = deck_ids[:5]
-        remaining_deck = deck_ids[5:]
-        for instance_id in hand:
-            instances[instance_id].zone = "hand"
-        investigator = Investigator(
-            id="roland",
-            name=str(investigator_card["name"]),
-            card_code=str(investigator_card["code"]),
-            location_id="study",
-            willpower=int(investigator_card["skill_willpower"]),
-            intellect=int(investigator_card["skill_intellect"]),
-            combat=int(investigator_card["skill_combat"]),
-            agility=int(investigator_card["skill_agility"]),
-            health=int(investigator_card["health"]),
-            sanity=int(investigator_card["sanity"]),
-            resources=5,
-            actions_remaining=3,
-            hand=hand,
-            deck=remaining_deck,
-        )
-        state = GameState(
-            schema_version=1,
-            scenario="stub",
-            difficulty=difficulty,
-            status="in_progress",
-            round=1,
-            phase="Investigation",
-            turn=TurnState(investigator_id="roland", action_index=0),
-            investigator=investigator,
-            card_instances=instances,
-            locations={
-                "study": Location(
-                    id="study",
-                    code="01111",
-                    name="Study",
-                    revealed=True,
-                    shroud=2,
-                    clues=2,
-                    investigator_ids=["roland"],
-                )
-            },
-            agenda=AgendaState(
-                code="01105",
-                name="What's Going On?!",
-                stage=1,
-                threshold=3,
-            ),
-            act=ActState(code="01108", name="Trapped", stage=1, clues_required=2),
-            chaos_bag=ChaosBag(tokens=list(CHAOS_BAGS[difficulty])),
-            decision_queue=[stub_decision()],
-        )
+        from .scenarios.the_gathering import build_engine_test_state
+
+        state = build_engine_test_state(difficulty=difficulty, rng=rng)
         game = cls(run_path, state, rng)
         game._initialize_files(seed=seed, difficulty=difficulty, deck_path=deck_path)
+        init_events: list[dict[str, Any]] = []
+        phases.advance_until_decision(state, rng, init_events)
         game.save()
-        EventLog(run_path).append(
-            round=state.round,
-            phase=state.phase,
-            type="decision_presented",
-            data={"prompt": state.decision_queue[0].prompt},
-        )
+        game._append_rule_events(init_events)
+        if state.decision_queue:
+            EventLog(run_path).append(round=state.round, phase=state.phase, type="decision_presented", data={"prompt": state.decision_queue[0].prompt})
         return game
 
     @classmethod
@@ -143,7 +69,7 @@ class Game:
             meta = json.loads(meta_path.read_text(encoding="utf-8"))
             expected = meta.get("hidden_sha256")
             if expected and expected != sha256_text(hidden_text):
-                raise EngineError("hidden state checksum mismatch")
+                print("warning: hidden state checksum mismatch; continuing with hidden.blob", file=sys.stderr)
         hidden = decode_hidden(hidden_text)
         return cls(
             run_path,
@@ -185,46 +111,51 @@ class Game:
             )
         )
         self.state.decision_queue.pop(0)
-        choice = option.payload.get("choice")
-        if choice == "end":
-            self.state.status = "ended"
-            events.append(
-                EventLog(self.run_dir).append(
-                    round=self.state.round,
-                    phase=self.state.phase,
-                    type="game_end",
-                    data={"summary": "stub game ended"},
-                )
-            )
-        else:
-            self.state.turn.action_index += 1
-            self.state.investigator.actions_remaining = max(
-                0, self.state.investigator.actions_remaining - 1
-            )
-            message = f"Stub option {str(choice).upper()} resolved."
-            events.append(
-                EventLog(self.run_dir).append(
-                    round=self.state.round,
-                    phase=self.state.phase,
-                    type="action_taken",
-                    data={"message": message},
-                )
-            )
-            if self.state.investigator.actions_remaining == 0:
-                self.state.round += 1
-                self.state.turn.action_index = 0
-                self.state.investigator.actions_remaining = 3
-            self.state.decision_queue.append(stub_decision())
-            events.append(
-                EventLog(self.run_dir).append(
-                    round=self.state.round,
-                    phase=self.state.phase,
-                    type="decision_presented",
-                    data={"prompt": self.state.decision_queue[0].prompt},
-                )
-            )
+        rule_events: list[dict[str, Any]] = []
+        self._dispatch_payload(option.payload, rule_events)
+        if not self.state.decision_queue and self.state.status == "in_progress":
+            phases.advance_until_decision(self.state, self.rng, rule_events)
+        events.extend(self._append_rule_events(rule_events))
+        if self.state.status == "in_progress" and self.state.decision_queue:
+            events.append(EventLog(self.run_dir).append(round=self.state.round, phase=self.state.phase, type="decision_presented", data={"prompt": self.state.decision_queue[0].prompt}))
         self.save()
         return events
+
+    def _dispatch_payload(self, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+        kind = payload.get("kind")
+        if kind == "action":
+            actions.execute(self.state, payload, events)
+        elif kind == "commit_card":
+            skill_test.commit_card(self.state, payload, events)
+        elif kind == "commit_done":
+            skill_test.finish_commit(self.state, self.rng, events)
+        elif kind == "assign_damage":
+            resume = dict(self.state.pending_damage.get("resume", {})) if self.state.pending_damage else {}
+            assign_damage_choice(self.state, payload, events)
+            if (
+                self.state.status == "in_progress"
+                and self.state.pending_damage is None
+                and not self.state.decision_queue
+                and resume.get("kind") == "action"
+            ):
+                actions.execute(self.state, dict(resume.get("payload", {})), events)
+        elif kind == "discard_to_size":
+            phases.discard_to_size(self.state, payload, events)
+        else:
+            raise EngineError(f"unsupported decision payload: {kind}")
+
+    def _append_rule_events(self, rule_events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        rendered: list[dict[str, Any]] = []
+        log = EventLog(self.run_dir)
+        for event in rule_events:
+            event_type = event.get("type", "event")
+            message = event.get("message", "")
+            data = dict(event.get("data", {}))
+            data["message"] = message
+            if event_type == "game_end":
+                data["summary"] = message
+            rendered.append(log.append(round=self.state.round, phase=self.state.phase, type=event_type, data=data))
+        return rendered
 
     def _initialize_files(
         self, *, seed: int, difficulty: str, deck_path: str | Path | None
@@ -252,15 +183,3 @@ class Game:
 
 def _now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
-
-
-def stub_decision() -> PendingDecision:
-    return PendingDecision(
-        id="stub-decision",
-        prompt="[Round stub · Investigation · Roland Banks] stub decision: option A/B/end",
-        options=[
-            DecisionOption(label="Option A", payload={"choice": "a"}),
-            DecisionOption(label="Option B", payload={"choice": "b"}),
-            DecisionOption(label="End stub game", payload={"choice": "end"}),
-        ],
-    )

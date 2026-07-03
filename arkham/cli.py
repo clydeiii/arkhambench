@@ -137,7 +137,8 @@ def cmd_do(args: argparse.Namespace) -> int:
     for event in events:
         print(render_event(event))
     if game.state.status == "ended":
-        print("GAME OVER — stub game ended")
+        summary = game.state.result.get("outcome", "game ended") if game.state.result else "game ended"
+        print(f"GAME OVER — {summary}")
     else:
         print(render_decision(game.current_decision()))
     return 0
@@ -145,7 +146,7 @@ def cmd_do(args: argparse.Namespace) -> int:
 
 def cmd_log(args: argparse.Namespace) -> int:
     run_dir = resolve_run_dir(args.run)
-    text = read_markdown(run_dir, args.tail) if args.md else read_markdown(run_dir, args.tail)
+    text = read_markdown(run_dir, args.tail) if args.md else read_jsonl(run_dir, args.tail)
     print(text)
     return 0
 
@@ -162,8 +163,11 @@ def cmd_card(args: argparse.Namespace) -> int:
 
 
 def cmd_score(args: argparse.Namespace) -> int:
-    Game.load(resolve_run_dir(args.run))
-    print("game in progress")
+    game = Game.load(resolve_run_dir(args.run))
+    if game.state.result:
+        print(game.state.result.get("outcome", "game ended"))
+    else:
+        print("game in progress")
     return 0
 
 

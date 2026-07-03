@@ -25,10 +25,12 @@ class PendingDecision:
     id: str
     prompt: str
     options: list[DecisionOption] = field(default_factory=list)
+    kind: str = "choose_option"
 
     def to_dict(self) -> JsonDict:
         return {
             "id": self.id,
+            "kind": self.kind,
             "prompt": self.prompt,
             "options": [option.to_dict() for option in self.options],
         }
@@ -37,6 +39,7 @@ class PendingDecision:
     def from_dict(cls, data: JsonDict) -> "PendingDecision":
         return cls(
             id=str(data["id"]),
+            kind=str(data.get("kind", "choose_option")),
             prompt=str(data["prompt"]),
             options=[DecisionOption.from_dict(item) for item in data.get("options", [])],
         )
@@ -213,8 +216,14 @@ class GameState:
     chaos_bag: ChaosBag = field(default_factory=ChaosBag)
     victory_display: list[str] = field(default_factory=list)
     decision_queue: list[PendingDecision] = field(default_factory=list)
+    encounter_deck: list[str] = field(default_factory=list)
     encounter_discard: list[str] = field(default_factory=list)
     removed_from_game: list[str] = field(default_factory=list)
+    active_skill_test: JsonDict | None = None
+    pending_damage: JsonDict | None = None
+    limits: JsonDict = field(default_factory=dict)
+    trauma: JsonDict = field(default_factory=dict)
+    result: JsonDict | None = None
 
     def to_dict(self) -> JsonDict:
         return {
@@ -238,8 +247,14 @@ class GameState:
             "chaos_bag": self.chaos_bag.to_dict(),
             "victory_display": list(self.victory_display),
             "decision_queue": [decision.to_dict() for decision in self.decision_queue],
+            "encounter_deck": list(self.encounter_deck),
             "encounter_discard": list(self.encounter_discard),
             "removed_from_game": list(self.removed_from_game),
+            "active_skill_test": self.active_skill_test,
+            "pending_damage": self.pending_damage,
+            "limits": dict(self.limits),
+            "trauma": dict(self.trauma),
+            "result": self.result,
         }
 
     @classmethod
@@ -272,8 +287,14 @@ class GameState:
             decision_queue=[
                 PendingDecision.from_dict(item) for item in data.get("decision_queue", [])
             ],
+            encounter_deck=list(data.get("encounter_deck", [])),
             encounter_discard=list(data.get("encounter_discard", [])),
             removed_from_game=list(data.get("removed_from_game", [])),
+            active_skill_test=data.get("active_skill_test"),
+            pending_damage=data.get("pending_damage"),
+            limits=dict(data.get("limits", {})),
+            trauma=dict(data.get("trauma", {})),
+            result=data.get("result"),
         )
 
     def public_dict(self) -> JsonDict:
@@ -281,6 +302,8 @@ class GameState:
         investigator = dict(data["investigator"])
         investigator.pop("deck", None)
         investigator["deck_count"] = len(self.investigator.deck)
+        data["encounter_deck"] = []
+        data["encounter_deck_count"] = len(self.encounter_deck)
         visible_ids = set(investigator["hand"])
         visible_ids.update(investigator["discard"])
         visible_ids.update(investigator["play_area"])

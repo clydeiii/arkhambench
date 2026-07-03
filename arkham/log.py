@@ -34,6 +34,8 @@ def render_event(event: dict[str, Any]) -> str:
         return f"{prefix} — Note added."
     if event_type == "game_end":
         return f"{prefix} — GAME OVER: {data.get('summary', '')}"
+    if data.get("message"):
+        return f"{prefix} — {data.get('message')}"
     return f"{prefix} — {event_type}: {data}"
 
 

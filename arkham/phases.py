@@ -1,1 +1,120 @@
 """Phase structure placeholders for phase B."""
+from __future__ import annotations
+
+from typing import Any
+
+from . import actions, encounter
+from .effects import draw_player_card, gain_resource, log_event
+from .enemies import attack, engage_ready_enemies_at_roland, move_hunters
+from .model import DecisionOption, GameState, PendingDecision
+from .rng import ArkhamRng
+
+
+def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
+    guard = 0
+    while state.status == "in_progress" and not state.decision_queue:
+        guard += 1
+        if guard > 100:
+            raise RuntimeError("phase loop did not reach a decision")
+        if state.active_skill_test or state.pending_damage:
+            return
+        if state.phase == "Investigation":
+            if state.investigator.actions_remaining > 0:
+                actions.present_action_decision(state)
+            else:
+                state.phase = "Enemy"
+                log_event(events, "phase_started", "Enemy phase began.")
+        elif state.phase == "Enemy":
+            run_enemy_phase(state, events)
+            if not state.decision_queue and state.status == "in_progress":
+                state.phase = "Upkeep"
+                log_event(events, "phase_started", "Upkeep phase began.")
+        elif state.phase == "Upkeep":
+            run_upkeep_phase(state, events)
+            if not state.decision_queue and state.status == "in_progress":
+                state.round += 1
+                state.phase = "Mythos"
+                state.limits = {
+                    key: value
+                    for key, value in state.limits.items()
+                    if not str(key).startswith("frozen:") and not str(key).startswith("enemy_phase_attacked:")
+                }
+                log_event(events, "round_started", f"Round {state.round} began.")
+        elif state.phase == "Mythos":
+            run_mythos_phase(state, rng, events)
+            if not state.decision_queue and state.status == "in_progress":
+                state.phase = "Investigation"
+                state.investigator.actions_remaining = 3
+                state.turn.action_index = 0
+                log_event(events, "phase_started", "Investigation phase began.")
+        else:
+            state.phase = "Investigation"
+
+
+def run_enemy_phase(state: GameState, events: list[dict[str, Any]]) -> None:
+    move_hunters(state, events)
+    attacked_key = f"enemy_phase_attacked:{state.round}"
+    attacked = set(state.limits.get(attacked_key, []))
+    for enemy_id in list(state.investigator.engaged_enemies):
+        if enemy_id in attacked:
+            continue
+        enemy = state.enemies.get(enemy_id)
+        if enemy and not enemy.exhausted:
+            attack(state, events, enemy_id, source="enemy phase")
+            attacked.add(enemy_id)
+            state.limits[attacked_key] = sorted(attacked)
+            if state.decision_queue:
+                return
+
+
+def run_upkeep_phase(state: GameState, events: list[dict[str, Any]]) -> None:
+    state.investigator.exhausted = False
+    for instance in state.card_instances.values():
+        instance.exhausted = False
+    for enemy in state.enemies.values():
+        enemy.exhausted = False
+    log_event(events, "ready_step", "All exhausted cards readied.")
+    draw_player_card(state, events)
+    gain_resource(state, 1, events)
+    if len(state.investigator.hand) > 8:
+        present_discard_to_size(state)
+
+
+def present_discard_to_size(state: GameState) -> None:
+    cards = __import__("arkham.data", fromlist=["cards_by_code"]).cards_by_code()
+    options = []
+    for instance_id in state.investigator.hand:
+        card = cards.get(state.card_instances[instance_id].card_code, {})
+        options.append(DecisionOption(f"Discard {card.get('name', instance_id)}", {"kind": "discard_to_size", "card": instance_id}))
+    state.decision_queue = [
+        PendingDecision(
+            id="discard-to-size",
+            kind="choose_option",
+            prompt=f"[Round {state.round} · Upkeep · Roland Banks] Discard to hand size 8.",
+            options=options,
+        )
+    ]
+
+
+def discard_to_size(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    instance_id = str(payload["card"])
+    if instance_id in state.investigator.hand:
+        state.investigator.hand.remove(instance_id)
+        state.investigator.discard.append(instance_id)
+        state.card_instances[instance_id].zone = "discard"
+        log_event(events, "card_discarded", f"Discarded {instance_id} to hand size.", card=instance_id)
+    if len(state.investigator.hand) > 8:
+        present_discard_to_size(state)
+
+
+def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
+    if state.round == 1:
+        log_event(events, "mythos_skipped", "Mythos phase skipped in round 1.")
+        return
+    from .effects import place_doom
+
+    place_doom(state, 1, events, source="mythos")
+    if state.status != "in_progress":
+        return
+    encounter.draw_encounter(state, rng, events)
+    engage_ready_enemies_at_roland(state, events)
