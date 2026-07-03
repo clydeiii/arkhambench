@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from . import data as card_data
+from .cards import encounter_cards
 from .effects import log_event, place_doom, start_damage_assignment
 from .enemies import spawn_enemy
 from .model import GameState
@@ -38,11 +39,17 @@ def reshuffle(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) ->
 def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]], instance_id: str) -> None:
     instance = state.card_instances[instance_id]
     card = card_data.cards_by_code().get(instance.card_code, {})
+    code = instance.card_code
     type_code = card.get("type_code")
     if type_code == "enemy":
+        if code == "01118":
+            spawn_enemy(state, events, instance_id=instance_id, location_id="attic")
+            return
+        if code == "01119":
+            spawn_enemy(state, events, instance_id=instance_id, location_id="cellar")
+            return
         spawn_enemy(state, events, instance_id=instance_id)
         return
-    code = instance.card_code
     if code == "01166" or code == "phaseb_ancient_evils":
         discard_encounter(state, instance_id)
         place_doom(state, 1, events, source=card.get("name", "Ancient Evils"))
@@ -56,6 +63,16 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
             source=card.get("name", "Rotting Remains"),
             on_failure={"kind": "horror_per_fail", "source": card.get("name", "Rotting Remains")},
         )
+    elif code == "01162":
+        discard_encounter(state, instance_id)
+        skill_test.start(
+            state,
+            events,
+            skill="agility",
+            difficulty=3,
+            source=card.get("name", "Grasping Hands"),
+            on_failure={"kind": "damage_per_fail", "source": card.get("name", "Grasping Hands")},
+        )
     elif code == "phaseb_direct_damage":
         discard_encounter(state, instance_id)
         start_damage_assignment(state, events, source="Direct Damage", damage=1, horror=0)
@@ -63,6 +80,29 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
         state.investigator.threat_area.append(instance_id)
         instance.zone = "threat"
         log_event(events, "treachery_threat", "Frozen in Fear entered Roland's threat area.", card=instance_id)
+    elif code == "01165":
+        state.investigator.threat_area.append(instance_id)
+        instance.zone = "threat"
+        log_event(events, "treachery_threat", "Dissonant Voices entered Roland's threat area.", card=instance_id)
+    elif code == "01167":
+        discard_encounter(state, instance_id)
+        skill_test.start(
+            state,
+            events,
+            skill="willpower",
+            difficulty=4,
+            source=card.get("name", "Crypt Chill"),
+            on_failure={"kind": "crypt_chill"},
+        )
+    elif code == "01168":
+        attach_to_location_or_discard(state, events, instance_id, state.investigator.location_id, limit_code="01168")
+    elif code == "01174":
+        location_id = locked_door_target(state)
+        if location_id is None:
+            discard_encounter(state, instance_id)
+            log_event(events, "treachery_discarded", "Locked Door had no legal location.", card=instance_id)
+        else:
+            attach_to_location_or_discard(state, events, instance_id, location_id)
     else:
         discard_encounter(state, instance_id)
         log_event(events, "treachery_discarded", f"{card.get('name', code)} had no placeholder effect.", card=instance_id)
@@ -72,3 +112,32 @@ def discard_encounter(state: GameState, instance_id: str) -> None:
     state.card_instances[instance_id].zone = "encounter_discard"
     if instance_id not in state.encounter_discard:
         state.encounter_discard.append(instance_id)
+
+
+def attach_to_location_or_discard(
+    state: GameState,
+    events: list[dict[str, Any]],
+    instance_id: str,
+    location_id: str,
+    *,
+    limit_code: str | None = None,
+) -> None:
+    if limit_code and encounter_cards.location_has_attachment(state, location_id, limit_code):
+        discard_encounter(state, instance_id)
+        log_event(events, "treachery_discarded", f"{card_data.get_card(state.card_instances[instance_id].card_code)['name']} had no legal attachment target.", card=instance_id)
+        return
+    state.card_instances[instance_id].zone = "attachment"
+    state.locations[location_id].attached_instance_ids.append(instance_id)
+    log_event(events, "treachery_attached", f"{card_data.get_card(state.card_instances[instance_id].card_code)['name']} attached to {state.locations[location_id].name}.", card=instance_id, location=location_id)
+
+
+def locked_door_target(state: GameState) -> str | None:
+    candidates = [
+        location
+        for location in state.locations.values()
+        if location.revealed and not encounter_cards.location_has_attachment(state, location.id, "01174")
+    ]
+    if not candidates:
+        return None
+    candidates.sort(key=lambda loc: (-loc.clues, loc.code, loc.id))
+    return candidates[0].id

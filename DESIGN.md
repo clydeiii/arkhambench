@@ -270,8 +270,8 @@ Player deck (data/decks/roland_ltp.json, 33 cards):
 | Code | Card | Notes |
 |---|---|---|
 |01001|Roland Banks|9/5, 3/3/4/2. Reaction (optional, 1/round): after you defeat an enemy → discover 1 clue at your location. Elder sign: +1 per clue on your location.|
-|01006|Roland's .38 Special|Asset, hand, 4 ammo. Action, 1 ammo: Fight +1 combat, +1 damage; +3 combat instead if a Cultist enemy at your location.|
-|01007|Cover Up|Weakness treachery. Revelation: threat area, 3 clues. Reaction (optional... **Forced?** text says [reaction] — it is OPTIONAL): when you would discover clues at your location → remove that many from Cover Up instead. Forced, game end: if ≥1 clue on it → 1 mental trauma. When last clue removed → discard it.|
+|01006|Roland's .38 Special|Asset, hand, 4 ammo. Action, 1 ammo: Fight +1 combat (+3 combat instead if ≥1 clue on your location), +1 damage.|
+|01007|Cover Up|Weakness treachery. Revelation: threat area, 3 clues. OPTIONAL reaction (player chooses each time): when you would discover clues at your location → discard that many from Cover Up instead. Forced, game end: if ≥1 clue on it → 1 mental trauma. When last clue removed → discard it.|
 |01102|Silver Twilight Acolyte|Weakness enemy 2/3/2? (read JSON: fight/health/evade, dmg/horror). Prey: bearer only. Hunter. Forced after it attacks: +1 doom on agenda. Spawns engaged with Roland on draw.|
 |01016|.45 Automatic|Hand, 4 ammo. Action, 1 ammo: Fight +1 combat, +1 damage.|
 |01017|Physical Training|Talent, no slot. Fast, 1 resource: +1 willpower this test; or +1 combat this test.|
@@ -284,7 +284,7 @@ Player deck (data/decks/roland_ltp.json, 33 cards):
 |01024|Dynamite Blast|Event, action: choose your or connecting location: 3 damage to EACH enemy and EACH investigator there (Roland can hit himself — warn in option label).|
 |01025|Vicious Blow|Skill (+1 combat icon): if test successful during an attack → +1 damage.|
 |01030|Magnifying Glass|Fast asset, hand. +1 intellect while investigating.|
-|01031|Old Book of Lore|Tome, hand. Action, exhaust: investigator at your location draws 1.|
+|01031|Old Book of Lore|Tome, hand. Action, exhaust: investigator at your location searches top 3 cards of deck, draws 1, shuffles rest back.|
 |01032|Research Librarian|Ally 1/1. Reaction on enter play (optional): search deck for a Tome, add to hand, shuffle.|
 |01033|Dr. Milan Christopher|Ally ✦ 1/2. +1 intellect. Reaction (optional) after you successfully investigate: gain 1 resource.|
 |01034|Hyperawareness|Talent. Fast, 1 resource: +1 intellect or +1 agility this test.|
@@ -303,7 +303,7 @@ Encounter cards (§12 lists set composition):
 | Code | Card | Notes |
 |---|---|---|
 |01116|Ghoul Priest|4/5/4, 2/2 dmg/horror, Hunter, Retaliate, Elite, Victory 2. Prey highest combat (solo: n/a).|
-|01117|Lita Chantler|Story ally (no slot), 3 health. Uncontrolled at Parlor: grants Parley action (Intellect(4) → take control). Controlled: +1 combat to investigators at your location; optional reaction: +1 damage when investigator at your location successfully attacks a Monster.|
+|01117|Lita Chantler|Story ally (no slot), 3 health / 3 sanity (soaks both). Uncontrolled at Parlor: grants Parley action (Intellect(4) → take control). Controlled: +1 combat to investigators at your location; optional reaction: +1 damage when investigator at your location successfully attacks a Monster.|
 |01118|Flesh-Eater|4/4/1, 1/2, Victory 1. Spawn: Attic.|
 |01119|Icy Ghoul|3/4/4, 2/1, Victory 1. Spawn: Cellar.|
 |01159|Swarm of Rats ×3|1/1/3, 1/0. Hunter.|

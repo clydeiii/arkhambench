@@ -13,8 +13,8 @@ from .log import EventLog
 from .model import GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
-from . import actions, phases, skill_test
-from .effects import assign_damage_choice
+from . import actions, enemies, phases, skill_test
+from .effects import assign_damage_choice, discard_asset_choice
 
 
 CHAOS_BAGS: dict[str, list[str]] = {
@@ -129,6 +129,10 @@ class Game:
             skill_test.commit_card(self.state, payload, events)
         elif kind == "commit_done":
             skill_test.finish_commit(self.state, self.rng, events)
+        elif kind == "skill_boost":
+            skill_test.apply_skill_boost(self.state, payload, events)
+        elif kind == "post_reveal_done":
+            skill_test.resolve(self.state, events)
         elif kind == "assign_damage":
             resume = dict(self.state.pending_damage.get("resume", {})) if self.state.pending_damage else {}
             assign_damage_choice(self.state, payload, events)
@@ -139,6 +143,14 @@ class Game:
                 and resume.get("kind") == "action"
             ):
                 actions.execute(self.state, dict(resume.get("payload", {})), events)
+        elif kind == "dodge_attack":
+            enemies.cancel_pending_attack(self.state, events, str(payload["card"]))
+        elif kind == "take_attack":
+            enemies.take_pending_attack(self.state, events)
+        elif kind == "enemy_defeated_reaction":
+            enemies.resolve_enemy_defeated_reaction(self.state, payload, events)
+        elif kind == "discard_asset":
+            discard_asset_choice(self.state, payload, events)
         elif kind == "discard_to_size":
             phases.discard_to_size(self.state, payload, events)
         else:

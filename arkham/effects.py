@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from . import data as card_data
+from .cards import player as player_cards
 from .model import CardInstance, DecisionOption, GameState, PendingDecision
 
 
@@ -21,7 +22,25 @@ def draw_player_card(state: GameState, events: list[dict[str, Any]]) -> str | No
     state.card_instances[instance_id].zone = "hand"
     card = card_data.get_card(state.card_instances[instance_id].card_code)
     log_event(events, "card_drawn", f"Roland drew {card['name']}.", card=instance_id)
+    resolve_player_weakness_draw(state, events, instance_id)
     return instance_id
+
+
+def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]], instance_id: str) -> None:
+    instance = state.card_instances[instance_id]
+    if instance.card_code == "01007":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        instance.zone = "threat"
+        instance.clues = 3
+        state.investigator.threat_area.append(instance_id)
+        log_event(events, "weakness_revealed", "Cover Up entered Roland's threat area with 3 clues.", card=instance_id)
+    elif instance.card_code == "01102":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        from .enemies import spawn_enemy
+
+        spawn_enemy(state, events, instance_id=instance_id, location_id=state.investigator.location_id, engaged=True)
 
 
 def gain_resource(state: GameState, amount: int, events: list[dict[str, Any]]) -> None:
@@ -34,10 +53,41 @@ def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -
     count = min(amount, location.clues)
     if count <= 0:
         return 0
+    redirected = redirect_cover_up(state, count, events)
+    count -= redirected
+    if count <= 0:
+        return 0
     location.clues -= count
     state.investigator.clues += count
     log_event(events, "clue_discovered", f"Roland discovered {count} clue.", amount=count)
     return count
+
+
+def redirect_cover_up(state: GameState, amount: int, events: list[dict[str, Any]]) -> int:
+    redirected = 0
+    for instance_id in list(state.investigator.threat_area):
+        instance = state.card_instances[instance_id]
+        if instance.card_code != "01007" or instance.clues <= 0:
+            continue
+        remove = min(amount - redirected, instance.clues)
+        if remove <= 0:
+            break
+        instance.clues -= remove
+        redirected += remove
+        log_event(
+            events,
+            "cover_up_redirect",
+            f"Cover Up redirected {remove} clue discovery.",
+            card=instance_id,
+            amount=remove,
+            remaining=instance.clues,
+        )
+        if instance.clues == 0:
+            player_cards.discard_from_threat(state, instance_id)
+            log_event(events, "card_discarded", "Cover Up was discarded.", card=instance_id)
+        if redirected >= amount:
+            break
+    return redirected
 
 
 def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> bool:
@@ -110,6 +160,8 @@ def start_damage_assignment(
         "direct": direct,
         "resume": resume or {},
     }
+    if resume and resume.get("kind") == "after_attack":
+        state.pending_damage["attack_enemy_id"] = resume.get("enemy")
     present_damage_decision(state)
 
 
@@ -119,6 +171,8 @@ def legal_soak_targets(state: GameState) -> list[str]:
     for instance_id in state.investigator.play_area:
         card = cards.get(state.card_instances[instance_id].card_code, {})
         if card.get("slot") == "Ally" and (card.get("health") or card.get("sanity")):
+            targets.append(instance_id)
+        elif state.card_instances[instance_id].card_code == "01117" and card.get("health"):
             targets.append(instance_id)
     return targets
 
@@ -141,6 +195,8 @@ def present_damage_decision(state: GameState) -> None:
         for target in legal_soak_targets(state):
             instance = state.card_instances[target]
             card = cards.get(instance.card_code, {})
+            if instance.card_code == "01117":
+                continue
             if instance.horror < int(card.get("sanity") or 0):
                 options.append(DecisionOption(f"Assign 1 horror to {card.get('name', target)}", {"kind": "assign_damage", "type": "horror", "target": target}))
     state.decision_queue = [
@@ -172,6 +228,13 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         instance = state.card_instances[target]
         if point_type == "damage":
             instance.damage += 1
+            if instance.card_code == "01021" and pending.get("attack_enemy_id"):
+                from .enemies import damage_enemy
+
+                enemy_id = str(pending["attack_enemy_id"])
+                if enemy_id in state.enemies:
+                    damage_enemy(state, events, enemy_id, 1)
+                    log_event(events, "guard_dog_reaction", "Guard Dog dealt 1 damage to the attacking enemy.", enemy=enemy_id)
         else:
             instance.horror += 1
     log_event(events, "damage_assigned", f"Assigned 1 {point_type} to {target}.", target=target)
@@ -184,6 +247,16 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         present_damage_decision(state)
     else:
         state.pending_damage = None
+        resume = dict(pending.get("resume", {}))
+        if resume.get("kind") == "after_attack":
+            from .enemies import after_attack
+
+            after_attack(
+                state,
+                events,
+                str(resume.get("enemy", "")),
+                dict(resume.get("resume", {})),
+            )
 
 
 def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> None:
@@ -193,6 +266,8 @@ def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> N
         card = cards.get(instance.card_code, {})
         health = int(card.get("health") or 0)
         sanity = int(card.get("sanity") or 0)
+        if instance.card_code == "01117":
+            sanity = 0
         if (health and instance.damage >= health) or (sanity and instance.horror >= sanity):
             state.investigator.play_area.remove(instance_id)
             state.investigator.discard.append(instance_id)
@@ -210,7 +285,41 @@ def check_investigator_defeat(state: GameState, events: list[dict[str, Any]]) ->
 
 
 def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> None:
+    apply_cover_up_trauma(state, events)
     state.status = "ended"
     state.decision_queue = []
     state.result = {"outcome": summary, "round": state.round, "trauma": dict(state.trauma)}
     log_event(events, "game_end", summary)
+
+
+def apply_cover_up_trauma(state: GameState, events: list[dict[str, Any]]) -> None:
+    key = "cover_up_trauma_applied"
+    if state.limits.get(key):
+        return
+    remaining = 0
+    for instance_id in state.investigator.threat_area:
+        instance = state.card_instances[instance_id]
+        if instance.card_code == "01007":
+            remaining += instance.clues
+    if remaining > 0:
+        state.trauma["mental"] = int(state.trauma.get("mental", 0)) + 1
+        state.limits[key] = True
+        log_event(events, "cover_up_trauma", "Cover Up caused 1 mental trauma.", remaining=remaining)
+
+
+def heal_roland(state: GameState, events: list[dict[str, Any]], *, damage: int = 0, horror: int = 0) -> None:
+    if damage > 0 and state.investigator.damage > 0:
+        state.investigator.damage = max(0, state.investigator.damage - damage)
+        log_event(events, "damage_healed", f"Roland healed {damage} damage.", amount=damage)
+    if horror > 0 and state.investigator.horror > 0:
+        state.investigator.horror = max(0, state.investigator.horror - horror)
+        log_event(events, "horror_healed", f"Roland healed {horror} horror.", amount=horror)
+
+
+def discard_asset_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    instance_id = str(payload["card"])
+    if instance_id not in state.investigator.play_area:
+        return
+    name = player_cards.card_name(state, instance_id)
+    player_cards.discard_from_play(state, instance_id)
+    log_event(events, "asset_discarded", f"{name} was discarded.", card=instance_id)

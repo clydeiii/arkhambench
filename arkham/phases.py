@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from . import actions, encounter
+from .cards import player as player_cards
 from .effects import draw_player_card, gain_resource, log_event
 from .enemies import attack, engage_ready_enemies_at_roland, move_hunters
 from .model import DecisionOption, GameState, PendingDecision
@@ -22,6 +23,8 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             if state.investigator.actions_remaining > 0:
                 actions.present_action_decision(state)
             else:
+                if start_frozen_end_turn_test(state, events):
+                    return
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
         elif state.phase == "Enemy":
@@ -37,7 +40,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                 state.limits = {
                     key: value
                     for key, value in state.limits.items()
-                    if not str(key).startswith("frozen:") and not str(key).startswith("enemy_phase_attacked:")
+                    if not str(key).startswith("frozen:")
+                    and not str(key).startswith("enemy_phase_attacked:")
+                    and not str(key).startswith("mind_over_matter:")
+                    and not str(key).startswith("frozen_end_turn:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":
@@ -76,6 +82,7 @@ def run_upkeep_phase(state: GameState, events: list[dict[str, Any]]) -> None:
     log_event(events, "ready_step", "All exhausted cards readied.")
     draw_player_card(state, events)
     gain_resource(state, 1, events)
+    discard_dissonant_voices(state, events)
     if len(state.investigator.hand) > 8:
         present_discard_to_size(state)
 
@@ -118,3 +125,29 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
         return
     encounter.draw_encounter(state, rng, events)
     engage_ready_enemies_at_roland(state, events)
+
+
+def start_frozen_end_turn_test(state: GameState, events: list[dict[str, Any]]) -> bool:
+    if state.limits.get(f"frozen_end_turn:{state.round}"):
+        return False
+    frozen = player_cards.threat_ids(state, "01164")
+    if not frozen:
+        return False
+    state.limits[f"frozen_end_turn:{state.round}"] = True
+    from . import skill_test
+
+    skill_test.start(
+        state,
+        events,
+        skill="willpower",
+        difficulty=3,
+        source="Frozen in Fear",
+        on_success={"kind": "discard_threat_on_success", "card_code": "01164"},
+    )
+    return True
+
+
+def discard_dissonant_voices(state: GameState, events: list[dict[str, Any]]) -> None:
+    for instance_id in list(player_cards.threat_ids(state, "01165")):
+        player_cards.discard_from_threat(state, instance_id)
+        log_event(events, "treachery_discarded", "Dissonant Voices was discarded at end of round.", card=instance_id)

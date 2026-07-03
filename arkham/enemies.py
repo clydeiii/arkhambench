@@ -5,8 +5,9 @@ from collections import deque
 from typing import Any
 
 from . import data as card_data
-from .effects import log_event, start_damage_assignment
-from .model import EnemyInstance, GameState
+from .cards import player as player_cards
+from .effects import discover_clue, log_event, place_doom, start_damage_assignment
+from .model import DecisionOption, EnemyInstance, GameState, PendingDecision
 
 
 def enemy_card(state: GameState, enemy_id: str) -> dict[str, Any]:
@@ -156,9 +157,117 @@ def attack(
 ) -> None:
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
         return
+    dodge = legal_dodge_card(state)
+    if dodge:
+        state.limits["pending_attack"] = {
+            "enemy": enemy_id,
+            "source": source,
+            "resume": resume or {},
+            "dodge": dodge,
+        }
+        state.decision_queue = [
+            PendingDecision(
+                id="enemy-attack",
+                kind="enemy_attack",
+                prompt=f"{enemy_name(state, enemy_id)} is attacking Roland.",
+                options=[
+                    DecisionOption(
+                        f"Play Dodge to cancel {enemy_name(state, enemy_id)}'s attack",
+                        {"kind": "dodge_attack", "card": dodge},
+                    ),
+                    DecisionOption(
+                        "Take the attack",
+                        {"kind": "take_attack"},
+                    ),
+                ],
+            )
+        ]
+        return
+    resolve_attack(state, events, enemy_id, source=source, resume=resume)
+
+
+def legal_dodge_card(state: GameState) -> str | None:
+    if state.investigator.resources < 1:
+        return None
+    ids = player_cards.hand_ids(state, "01023")
+    return ids[0] if ids else None
+
+
+def resolve_attack(
+    state: GameState,
+    events: list[dict[str, Any]],
+    enemy_id: str,
+    *,
+    source: str,
+    resume: dict[str, Any] | None = None,
+) -> None:
+    if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
+        return
     damage, horror = enemy_damage_horror(state, enemy_id)
     log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked Roland.", enemy=enemy_id, source=source)
-    start_damage_assignment(state, events, source=enemy_name(state, enemy_id), damage=damage, horror=horror, resume=resume)
+    after_resume = {"kind": "after_attack", "enemy": enemy_id, "resume": resume or {}}
+    start_damage_assignment(
+        state,
+        events,
+        source=enemy_name(state, enemy_id),
+        damage=damage,
+        horror=horror,
+        resume=after_resume,
+    )
+    if not state.pending_damage and not state.decision_queue:
+        after_attack(state, events, enemy_id, resume or {})
+
+
+def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_id: str) -> None:
+    pending = dict(state.limits.pop("pending_attack", {}))
+    if not pending:
+        return
+    if card_id in state.investigator.hand:
+        state.investigator.resources -= 1
+        player_cards.discard_from_hand(state, card_id)
+    enemy_id = str(pending.get("enemy", ""))
+    log_event(events, "attack_canceled", f"Dodge canceled {enemy_name(state, enemy_id)}'s attack.", enemy=enemy_id, card=card_id)
+    resume = dict(pending.get("resume", {}))
+    if resume.get("kind") == "action":
+        from . import actions
+
+        actions.execute(state, dict(resume.get("payload", {})), events)
+
+
+def take_pending_attack(state: GameState, events: list[dict[str, Any]]) -> None:
+    pending = dict(state.limits.pop("pending_attack", {}))
+    if not pending:
+        return
+    resolve_attack(
+        state,
+        events,
+        str(pending["enemy"]),
+        source=str(pending.get("source", "attack")),
+        resume=dict(pending.get("resume", {})),
+    )
+
+
+def after_attack(
+    state: GameState,
+    events: list[dict[str, Any]],
+    enemy_id: str,
+    resume: dict[str, Any] | None = None,
+) -> None:
+    if enemy_id not in state.enemies and enemy_id not in state.card_instances:
+        return
+    card_code = (
+        state.enemies[enemy_id].card_code
+        if enemy_id in state.enemies
+        else state.card_instances[enemy_id].card_code
+    )
+    if card_code == "01102":
+        place_doom(state, 1, events, source="Silver Twilight Acolyte")
+    if state.status != "in_progress" or state.decision_queue:
+        return
+    if resume and resume.get("kind") == "action":
+        from . import actions
+
+        actions.execute(state, dict(resume.get("payload", {})), events)
 
 
 def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
@@ -177,6 +286,7 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         state.encounter_discard.append(enemy_id)
         state.card_instances[enemy_id].zone = "encounter_discard"
     log_event(events, "enemy_defeated", f"{card.get('name', enemy_id)} was defeated.", enemy=enemy_id)
+    present_enemy_defeat_reactions(state, events, enemy_id)
 
 
 def damage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str, amount: int) -> None:
@@ -185,3 +295,52 @@ def damage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str, 
     log_event(events, "enemy_damaged", f"{enemy_name(state, enemy_id)} took {amount} damage.", enemy=enemy_id)
     if enemy.damage >= enemy_health(state, enemy_id):
         defeat_enemy(state, events, enemy_id)
+
+
+def present_enemy_defeat_reactions(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
+    if state.status != "in_progress":
+        return
+    options: list[DecisionOption] = []
+    location = state.locations[state.investigator.location_id]
+    roland_key = f"roland_reaction:{state.round}"
+    if location.clues > 0 and not state.limits.get(roland_key):
+        options.append(
+            DecisionOption(
+                "Use Roland Banks reaction to discover 1 clue",
+                {"kind": "enemy_defeated_reaction", "reaction": "roland", "enemy": enemy_id},
+            )
+        )
+    evidence = player_cards.hand_ids(state, "01022")
+    if evidence and state.investigator.resources >= 1 and location.clues > 0:
+        options.append(
+            DecisionOption(
+                "Play Evidence! to discover 1 clue",
+                {"kind": "enemy_defeated_reaction", "reaction": "evidence", "card": evidence[0], "enemy": enemy_id},
+            )
+        )
+    if not options:
+        return
+    options.append(DecisionOption("Done", {"kind": "enemy_defeated_reaction", "reaction": "done"}))
+    state.decision_queue = [
+        PendingDecision(
+            id="enemy-defeated-reactions",
+            kind="enemy_defeated_reaction",
+            prompt="Choose reactions after defeating an enemy.",
+            options=options,
+        )
+    ]
+
+
+def resolve_enemy_defeated_reaction(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    reaction = str(payload.get("reaction"))
+    if reaction == "roland":
+        state.limits[f"roland_reaction:{state.round}"] = True
+        discover_clue(state, 1, events)
+        log_event(events, "roland_reaction", "Roland discovered 1 clue after defeating an enemy.")
+    elif reaction == "evidence":
+        card_id = str(payload.get("card"))
+        if card_id in state.investigator.hand and state.investigator.resources >= 1:
+            state.investigator.resources -= 1
+            player_cards.discard_from_hand(state, card_id)
+            discover_clue(state, 1, events)
+            log_event(events, "event_played", "Roland played Evidence!.", card=card_id)
