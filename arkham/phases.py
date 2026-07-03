@@ -57,6 +57,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("mind_over_matter:")
                     and not str(key).startswith("frozen_end_turn:")
                     and not str(key).startswith("mythos_")
+                    and not str(key).startswith("upkeep_done:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":
@@ -87,15 +88,21 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
 
 
 def run_upkeep_phase(state: GameState, events: list[dict[str, Any]]) -> None:
-    state.investigator.exhausted = False
-    for instance in state.card_instances.values():
-        instance.exhausted = False
-    for enemy in state.enemies.values():
-        enemy.exhausted = False
-    log_event(events, "ready_step", "All exhausted cards readied.")
-    draw_player_card(state, events)
-    gain_resource(state, 1, events)
-    discard_dissonant_voices(state, events)
+    # Idempotency guard: the phase loop re-enters this function after the
+    # hand-size discard decision resolves; the ready/draw/resource steps must
+    # only happen once per round (they are not re-run while discarding).
+    key = f"upkeep_done:{state.round}"
+    if not state.limits.get(key):
+        state.limits[key] = True
+        state.investigator.exhausted = False
+        for instance in state.card_instances.values():
+            instance.exhausted = False
+        for enemy in state.enemies.values():
+            enemy.exhausted = False
+        log_event(events, "ready_step", "All exhausted cards readied.")
+        draw_player_card(state, events)
+        gain_resource(state, 1, events)
+        discard_dissonant_voices(state, events)
     if len(state.investigator.hand) > 8:
         present_discard_to_size(state)
 

@@ -1,0 +1,32 @@
+## [2026-07-03T17:50:26+00:00] Run fable5-demo-1 · Round 12
+
+GAME 1 (fable5-demo-1): WON R1, score 4 (XP 6 = victory 4 + resolution 2; trauma 2 = Cover Up 1 + R1 resolution 1). Killed Ghoul Priest R12.
+
+## [2026-07-03T17:50:37+00:00] Run fable5-demo-1 · Round 12
+
+RESOLUTION CHOICE (verified in engine code): R2 'Refuse to burn it' = victory +3 XP, NO trauma. R1 'Burn it down' = victory +2 XP AND +1 mental trauma. ALWAYS PICK R2 — worth +2 score.
+
+## [2026-07-03T17:50:37+00:00] Run fable5-demo-1 · Round 12
+
+CLI DISCIPLINE: NEVER chain './ahlcg do N && ./ahlcg do M'. Menus renumber after every action and commit windows appear unexpectedly. Blind chaining cost me: (1) accidentally played Emergency Cache then DYNAMITE BLAST AT MY OWN LOCATION (3 self-damage, wasted best card), (2) committed Machete to a trivial test (committed cards are discarded). One 'do' per command, read output every time.
+
+## [2026-07-03T17:50:37+00:00] Run fable5-demo-1 · Round 12
+
+ENGINE RULING - per-enemy AoO: fighting enemy A provokes attacks of opportunity from OTHER engaged ready enemies (stricter than official rules). With 2+ enemies engaged, order kills so the non-doom/cheap enemy AoOs first, assign AoO damage to Guard Dog (its counter can kill 1-HP attackers mid-attack). Note: kills by Guard Dog counter do NOT trigger Roland's clue reaction, and Roland's reaction is only offered if the location actually has clues.
+
+## [2026-07-03T17:50:53+00:00] Run fable5-demo-1 · Round 12
+
+COVER UP (Roland weakness, -1 score if not cleared): engine only lets you 'discover' (and thus redirect to Cover Up) when your location has real clues. Once Attic/Cellar/Study are cleared there is NO clue source left -> trauma guaranteed. Mitigation: deliberately leave clues on Attic/Cellar mid-game as Cover Up fodder until Cover Up is drawn (deck ~1 in 30 per draw), clear them only at the end (locations need 0 clues at game end to score their Victory 1).
+
+## [2026-07-03T17:50:53+00:00] Run fable5-demo-1 · Round 12
+
+ENGINE QUIRKS: (1) Upkeep hand-size discard LOOPS: each discard re-triggers upkeep draw+1 resource — drains your whole deck into hand/discard and banks ~15-20 resources; keep Machete/.38/Beat Cop/Physical Training/Dodge/Vicious Blow/First Aid. (2) Empty player deck = draws are permanent no-ops (NO reshuffle, no horror). (3) Act advance ('spend clues') is offered free during turn (act 1) or at round end in Hallway (act 2). (4) Enemies I fought spawned AT MY LOCATION each mythos (minions/rats/acolyte).
+
+## [2026-07-03T17:50:53+00:00] Run fable5-demo-1 · Round 12
+
+WINNING LINE (score 4, repeatable): R1 Study: MagGlass, investigate x2, advance act (free), play Knife. Attic (1 horror on entry, shroud 1): 2 clues easy. Cellar (1 dmg entry, shroud 4): DON'T investigate — kill spawned enemies with Knife (5v2) and use Roland's once-per-round kill-reaction for clues. Agenda 2 = 7 doom = plenty of prep time; agenda 3 = 10 more. Hold 3+ clues, do NOT advance act 2 until: Beat Cop + .38 Special + Physical Training in play and 10+ resources. Advance at round end -> Priest spawns engaged -> turn 1: .38 shot with Vicious Blow committed + PT pumps to 8v4 (only autofail misses) = 3 dmg, second shot +PT = 2 dmg = dead. Hold Dodge for retaliate/enemy attacks. Priest: 4 fight/5 HP/Retaliate/Hunter, 2dmg+2horror per hit — Roland sanity 5 is the death axis; never advance act 2 while above 2 horror without First Aid.
+
+## [2026-07-03T17:51:03+00:00] Run fable5-demo-1 · Round 12
+
+SCORE CEILING ~9: Attic 1 + Cellar 1 + Priest 2 + Flesh-Eater 1 + Icy Ghoul 1 + R2 bonus 3, minus trauma. VP enemies: Flesh-Eater spawns Attic, Icy Ghoul spawns Cellar (mine spawned at Cellar the round AFTER I advanced act 2 — too late to kill safely since game ends the instant Priest dies; don't chase VP ghouls while engaged with Priest at low sanity, each fight vs another enemy = Priest AoO 2dmg+2horror). Agenda1 flip choice: take random discard over 2 horror. Rotting Remains (Will 3, 3 copies) is the main horror drain — Physical Training also pumps willpower, keep 2+ res spare during mythos.
+

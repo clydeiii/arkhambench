@@ -21,6 +21,13 @@ it is your only memory from past playthroughs. Use it well:
 4. **Finish the game.** Play until GAME OVER, then run `./ahlcg score`, record your
    final lessons in the notebook, and report your result.
 
+**Integrity rules (mandatory):** interact with the game ONLY through the `./ahlcg` CLI
+and the two docs above plus `docs_agent/rules_reference.md`. Do not read the engine
+source code (`arkham/`), the card data files (`data/`), test files, specs, or any
+`hidden.blob` / `state.json` / `log.jsonl` inside run directories — that is the game's
+hidden information and reading it is cheating. Your session transcript is audited. If you
+believe the engine misbehaved, note it in your notebook and play on.
+
 Start a new game with:
 
 ```

@@ -22,7 +22,8 @@ if [ "$AGENT" = "codex" ]; then
   codex exec -s workspace-write "$PROMPT" 2>&1 | tee "logs/$RUN.agent.log"
 else
   claude -p "$PROMPT" --model "$AGENT" \
-    --allowedTools "Bash(./ahlcg:*) Read" \
+    --allowedTools "Bash(./ahlcg:*),Read(docs_agent/**),Read(notebook.md),Read(runs/$RUN/log.md)" \
+    --disallowedTools "Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Read(runs/**/hidden.blob),Read(runs/**/state.json),Read(runs/**/log.jsonl)" \
     --max-turns 400 2>&1 | tee "logs/$RUN.agent.log"
 fi
 
