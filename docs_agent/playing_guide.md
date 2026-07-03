@@ -41,6 +41,14 @@ deck contents you've learned to fear, opening-hand priorities, quantitative less
 ./ahlcg note compact --file new_notebook.md    # rewrite/condense it whenever it gets bloated
 ```
 
+If you cannot write files, compact via stdin instead:
+
+```
+./ahlcg note compact -f - <<'EOF'
+(the new, condensed notebook content)
+EOF
+```
+
 Compaction archives the old version; you never lose history, but keep the live notebook
 sharp and actionable.
 

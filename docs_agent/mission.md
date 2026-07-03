@@ -2,8 +2,8 @@
 
 You are playing *Arkham Horror: The Card Game* — solo scenario "The Gathering" — through
 the `./ahlcg` CLI in this repository. You are Roland Banks. Your goal is to finish the
-scenario with the **highest score** you can. Score = experience earned − trauma suffered
-(details in `docs_agent/scenario_reference.md`).
+scenario with the **highest score** you can. Score = XP earned − trauma suffered, plus a
++3 bonus if you earn Lita Chantler (details in `docs_agent/scenario_reference.md`).
 
 This is also a learning exercise: you (and other agents) will play this scenario many
 times across sessions. A persistent notebook (`./ahlcg note ...`) survives between games —
@@ -27,6 +27,8 @@ source code (`arkham/`), the card data files (`data/`), test files, specs, or an
 `hidden.blob` / `state.json` / `log.jsonl` inside run directories — that is the game's
 hidden information and reading it is cheating. Your session transcript is audited. If you
 believe the engine misbehaved, note it in your notebook and play on.
+
+<!-- standalone-only: everything below this marker is stripped for benchmark runs -->
 
 Start a new game with:
 

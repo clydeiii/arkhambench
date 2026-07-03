@@ -9,7 +9,7 @@ from typing import Any
 from . import __version__
 from . import data as card_data
 from .errors import EngineError
-from .log import EventLog
+from .log import EventLog, status_line
 from .model import GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
@@ -55,7 +55,7 @@ class Game:
         game.save()
         game._append_rule_events(init_events)
         if state.decision_queue:
-            EventLog(run_path).append(round=state.round, phase=state.phase, type="decision_presented", data={"prompt": state.decision_queue[0].prompt})
+            game._append_decision_presented()
         return game
 
     @classmethod
@@ -120,9 +120,19 @@ class Game:
             phases.advance_until_decision(self.state, self.rng, rule_events)
         events.extend(self._append_rule_events(rule_events))
         if self.state.status == "in_progress" and self.state.decision_queue:
-            events.append(EventLog(self.run_dir).append(round=self.state.round, phase=self.state.phase, type="decision_presented", data={"prompt": self.state.decision_queue[0].prompt}))
+            events.append(self._append_decision_presented())
         self.save()
         return events
+
+    def _append_decision_presented(self) -> dict[str, Any]:
+        return EventLog(self.run_dir).append(
+            round=self.state.round,
+            phase=self.state.phase,
+            type="decision_presented",
+            data={"prompt": self.state.decision_queue[0].prompt},
+            status=status_line(self.state),
+            status_in_jsonl=True,
+        )
 
     def _dispatch_payload(self, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
         kind = payload.get("kind")
@@ -201,12 +211,14 @@ class Game:
             data["message"] = message
             if event_type == "game_end":
                 data["summary"] = message
+            status = status_line(self.state) if event_type == "game_end" else None
             rendered.append(
                 log.append(
                     round=int(event.get("round", self.state.round)),
                     phase=str(event.get("phase", self.state.phase)),
                     type=event_type,
                     data=data,
+                    status=status,
                 )
             )
         return rendered

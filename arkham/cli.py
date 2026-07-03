@@ -8,7 +8,7 @@ from pathlib import Path
 from . import data as card_data
 from .errors import EngineError
 from .game import Game
-from .log import read_jsonl, read_markdown, render_event
+from .log import read_jsonl, read_markdown, render_event, status_line
 from .model import GameState
 from .notebook import add_note, compact, resolve_notebook, show
 
@@ -109,7 +109,7 @@ def cmd_new(args: argparse.Namespace) -> int:
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
     print(f"Created run: {run_dir}")
     print(render_state(game.state))
-    print(render_decision(game.current_decision()))
+    print(render_decision(game.current_decision(), game.state))
     return 0
 
 
@@ -121,7 +121,7 @@ def cmd_state(args: argparse.Namespace) -> int:
 
 def cmd_actions(args: argparse.Namespace) -> int:
     game = Game.load(resolve_run_dir(args.run))
-    print(render_decision(game.current_decision()))
+    print(render_decision(game.current_decision(), game.state))
     return 0
 
 
@@ -129,20 +129,25 @@ def cmd_do(args: argparse.Namespace) -> int:
     game = Game.load(resolve_run_dir(args.run))
     decision = game.current_decision()
     if decision is None:
+        if game.state.status == "ended":
+            print(status_line(game.state))
+            print("GAME OVER")
+            return 0
         print("GAME OVER" if game.state.status == "ended" else "No available actions.")
         return 0
     if args.option < 1 or args.option > len(decision.options):
         print("error: invalid option", file=sys.stderr)
-        print(render_decision(decision), file=sys.stderr)
+        print(render_decision(decision, game.state), file=sys.stderr)
         return 2
     events = game.apply(args.option)
     for event in events:
         print(render_event(event))
     if game.state.status == "ended":
         summary = game.state.result.get("outcome", "game ended") if game.state.result else "game ended"
+        print(status_line(game.state))
         print(f"GAME OVER — {summary}")
     else:
-        print(render_decision(game.current_decision()))
+        print(render_decision(game.current_decision(), game.state))
     return 0
 
 
@@ -226,11 +231,14 @@ def cmd_note_compact(args: argparse.Namespace) -> int:
     return 0
 
 
-def render_decision(decision: object | None) -> str:
+def render_decision(decision: object | None, state: GameState | None = None) -> str:
     if decision is None:
         return "No current decision."
     prompt = decision.prompt  # type: ignore[attr-defined]
-    lines = [prompt]
+    lines = []
+    if state is not None:
+        lines.append(status_line(state))
+    lines.append(prompt)
     for index, option in enumerate(decision.options, start=1):  # type: ignore[attr-defined]
         lines.append(f"{index}. {option.label}")
     return "\n".join(lines)
