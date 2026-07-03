@@ -636,11 +636,18 @@ def finalize_result(
 
 
 def campaign_log(state: GameState, outcome: str, lita_earned: bool) -> dict[str, Any]:
-    priest_alive = any(instance.card_code == "01116" for instance in state.enemies.values())
+    # The Ghoul Priest is "still alive" unless it was defeated (in the victory
+    # display) — including when it never spawned (still set aside). The campaign
+    # guide records this on the no-resolution and R3 outcomes.
+    priest_defeated = any(
+        state.card_instances[card_id].card_code == "01116"
+        for card_id in state.victory_display
+        if card_id in state.card_instances
+    )
     return {
         "house": "burned_down" if outcome == "R1" else "standing",
         "lita": "earned" if lita_earned else "seeking_others",
-        "ghoul_priest_still_alive": priest_alive if outcome == "no_resolution" else False,
+        "ghoul_priest_still_alive": (not priest_defeated) if outcome in ("no_resolution", "R3") else False,
     }
 
 
