@@ -14,7 +14,7 @@ from .model import GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
 from . import actions, enemies, phases, skill_test
-from .effects import assign_damage_choice, discard_asset_choice
+from .effects import assign_damage_choice, discard_asset_choice, resolve_cover_up_choice
 
 
 CHAOS_BAGS: dict[str, list[str]] = {
@@ -44,9 +44,9 @@ class Game:
             raise EngineError(f"unknown difficulty: {difficulty}")
         run_path = Path(run_dir)
         rng = ArkhamRng(seed)
-        from .scenarios.the_gathering import build_engine_test_state
+        from .scenarios.the_gathering import build_gathering_state
 
-        state = build_engine_test_state(difficulty=difficulty, rng=rng)
+        state = build_gathering_state(difficulty=difficulty, rng=rng, deck_path=deck_path)
         game = cls(run_path, state, rng)
         game._initialize_files(seed=seed, difficulty=difficulty, deck_path=deck_path)
         init_events: list[dict[str, Any]] = []
@@ -82,6 +82,8 @@ class Game:
         public = self.state.public_dict()
         hidden_text = encode_hidden({"state": self.state.to_dict(), "rng": self.rng.to_dict()})
         atomic_write_json(self.run_dir / "state.json", public)
+        if self.state.result:
+            atomic_write_json(self.run_dir / "result.json", self.state.result)
         atomic_write_text(self.run_dir / "hidden.blob", hidden_text)
         meta = self._read_meta()
         meta["hidden_sha256"] = sha256_text(hidden_text)
@@ -143,6 +145,15 @@ class Game:
                 and resume.get("kind") == "action"
             ):
                 actions.execute(self.state, dict(resume.get("payload", {})), events)
+            elif (
+                self.state.status == "in_progress"
+                and self.state.pending_damage is None
+                and not self.state.decision_queue
+                and resume.get("kind") == "scenario"
+            ):
+                from .scenarios import the_gathering
+
+                the_gathering.resolve_scenario_choice(self.state, dict(resume), events, self.rng)
         elif kind == "dodge_attack":
             enemies.cancel_pending_attack(self.state, events, str(payload["card"]))
         elif kind == "take_attack":
@@ -153,6 +164,14 @@ class Game:
             discard_asset_choice(self.state, payload, events)
         elif kind == "discard_to_size":
             phases.discard_to_size(self.state, payload, events)
+        elif kind == "cover_up_choice":
+            resolve_cover_up_choice(self.state, payload, events)
+        elif kind == "old_book_choice":
+            actions.resolve_old_book_choice(self.state, payload, events, self.rng)
+        elif kind == "scenario":
+            from .scenarios import the_gathering
+
+            the_gathering.resolve_scenario_choice(self.state, payload, events, self.rng)
         else:
             raise EngineError(f"unsupported decision payload: {kind}")
 

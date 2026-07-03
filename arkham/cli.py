@@ -165,7 +165,12 @@ def cmd_card(args: argparse.Namespace) -> int:
 def cmd_score(args: argparse.Namespace) -> int:
     game = Game.load(resolve_run_dir(args.run))
     if game.state.result:
-        print(game.state.result.get("outcome", "game ended"))
+        result = game.state.result
+        print(f"outcome: {result.get('outcome', 'game ended')}")
+        print(f"resolution: {result.get('resolution', '-')}")
+        print(f"xp: {result.get('xp', 0)}")
+        print(f"score: {result.get('score', 0)}")
+        print(f"trauma: {result.get('trauma', {})}")
     else:
         print("game in progress")
     return 0

@@ -18,6 +18,17 @@ def token_modifier(state: GameState, token: str) -> tuple[int, bool]:
     if token == "eldersign":
         location = state.locations[state.investigator.location_id]
         return (location.clues, False)
+    if state.scenario == "the_gathering":
+        if token == "skull":
+            if state.difficulty in {"easy", "standard"}:
+                from .scenarios import the_gathering
+
+                return (-the_gathering.ghouls_at_roland_location(state), False)
+            return (-2, False)
+        if token == "cultist":
+            return (-1 if state.difficulty in {"easy", "standard"} else 0, False)
+        if token == "tablet":
+            return (-2 if state.difficulty in {"easy", "standard"} else -4, False)
     if token in {"skull", "cultist", "tablet", "elderthing"}:
         modifiers = {"skull": -1, "cultist": -2, "tablet": -3, "elderthing": -4}
         return (modifiers[token], False)

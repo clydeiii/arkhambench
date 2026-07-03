@@ -125,10 +125,19 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
         return
     token = draw_token(state, rng)
     modifier, autofail = token_modifier(state, token)
+    extra_tokens: list[str] = []
+    if state.scenario == "the_gathering" and state.difficulty in {"hard", "expert"} and token == "cultist":
+        extra = draw_token(state, rng)
+        extra_modifier, extra_autofail = token_modifier(state, extra)
+        modifier += extra_modifier
+        autofail = autofail or extra_autofail
+        extra_tokens.append(extra)
     test["token"] = token
+    test["extra_tokens"] = extra_tokens
     test["modifier"] = modifier
     test["autofail"] = autofail
-    log_event(events, "chaos_token", f"Revealed {token}.", token=token, modifier=modifier)
+    suffix = f" then {', '.join(extra_tokens)}" if extra_tokens else ""
+    log_event(events, "chaos_token", f"Revealed {token}{suffix}.", token=token, modifier=modifier, extra_tokens=extra_tokens)
     if player_cards.boost_options(state):
         present_post_reveal_decision(state)
     else:
@@ -185,6 +194,7 @@ def resolve(state: GameState, events: list[dict[str, Any]]) -> None:
         state.card_instances[instance_id].zone = "discard"
     state.active_skill_test = None
     apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids)
+    apply_scenario_token_aftermath(state, events, result)
 
 
 def apply_callback(
@@ -200,9 +210,11 @@ def apply_callback(
     kind = callback.get("kind")
     if kind == "investigate":
         if success:
-            discover_clue(state, 1, events)
+            clue_count = 1
             if any(state.card_instances[instance_id].card_code == "01039" for instance_id in committed):
-                discover_clue(state, 1, events)
+                clue_count += 1
+            discover_clue(state, clue_count, events)
+            if clue_count > 1:
                 log_event(events, "deduction", "Deduction discovered 1 additional clue.")
             discard_obscuring_fog_at_roland(state, events)
             if player_cards.controls_code(state, "01033"):
@@ -287,6 +299,14 @@ def apply_callback(
         code = state.card_instances[instance_id].card_code
         if success and code in {"01089", "01092"}:
             draw_player_card(state, events)
+
+
+def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any]) -> None:
+    if state.scenario != "the_gathering" or state.status != "in_progress" or state.decision_queue:
+        return
+    from .scenarios import the_gathering
+
+    the_gathering.apply_token_aftermath(state, events, result)
 
 
 def discard_obscuring_fog_at_roland(state: GameState, events: list[dict[str, Any]]) -> None:

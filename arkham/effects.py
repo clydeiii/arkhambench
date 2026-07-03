@@ -53,8 +53,16 @@ def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -
     count = min(amount, location.clues)
     if count <= 0:
         return 0
-    redirected = redirect_cover_up(state, count, events)
-    count -= redirected
+    cover = active_cover_up(state)
+    if cover is not None:
+        present_cover_up_decision(state, count, cover)
+        return 0
+    return actually_discover_clues(state, count, events)
+
+
+def actually_discover_clues(state: GameState, count: int, events: list[dict[str, Any]]) -> int:
+    location = state.locations[state.investigator.location_id]
+    count = min(count, location.clues)
     if count <= 0:
         return 0
     location.clues -= count
@@ -63,31 +71,55 @@ def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -
     return count
 
 
-def redirect_cover_up(state: GameState, amount: int, events: list[dict[str, Any]]) -> int:
-    redirected = 0
+def active_cover_up(state: GameState) -> str | None:
     for instance_id in list(state.investigator.threat_area):
         instance = state.card_instances[instance_id]
-        if instance.card_code != "01007" or instance.clues <= 0:
-            continue
-        remove = min(amount - redirected, instance.clues)
-        if remove <= 0:
-            break
+        if instance.card_code == "01007" and instance.clues > 0:
+            return instance_id
+    return None
+
+
+def present_cover_up_decision(state: GameState, amount: int, cover: str) -> None:
+    remove = min(amount, state.card_instances[cover].clues)
+    state.decision_queue = [
+        PendingDecision(
+            id="cover-up-reaction",
+            kind="cover_up",
+            prompt=f"Cover Up may replace discovering {amount} clue.",
+            options=[
+                DecisionOption(
+                    f"Discard {remove} clue from Cover Up instead",
+                    {"kind": "cover_up_choice", "choice": "redirect", "amount": amount, "cover": cover},
+                ),
+                DecisionOption(
+                    f"Discover {amount} clue",
+                    {"kind": "cover_up_choice", "choice": "discover", "amount": amount, "cover": cover},
+                ),
+            ],
+        )
+    ]
+
+
+def resolve_cover_up_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    amount = int(payload.get("amount", 0))
+    cover = str(payload.get("cover", ""))
+    if payload.get("choice") == "redirect" and cover in state.investigator.threat_area:
+        instance = state.card_instances[cover]
+        remove = min(amount, instance.clues)
         instance.clues -= remove
-        redirected += remove
         log_event(
             events,
             "cover_up_redirect",
             f"Cover Up redirected {remove} clue discovery.",
-            card=instance_id,
+            card=cover,
             amount=remove,
             remaining=instance.clues,
         )
         if instance.clues == 0:
-            player_cards.discard_from_threat(state, instance_id)
-            log_event(events, "card_discarded", "Cover Up was discarded.", card=instance_id)
-        if redirected >= amount:
-            break
-    return redirected
+            player_cards.discard_from_threat(state, cover)
+            log_event(events, "card_discarded", "Cover Up was discarded.", card=cover)
+    else:
+        actually_discover_clues(state, amount, events)
 
 
 def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> bool:
@@ -109,6 +141,11 @@ def place_doom(state: GameState, amount: int, events: list[dict[str, Any]], *, s
 def check_agenda_advance(state: GameState, events: list[dict[str, Any]]) -> None:
     if state.agenda is None or state.agenda.threshold <= 0:
         return
+    if state.scenario == "the_gathering":
+        from .scenarios import the_gathering
+
+        the_gathering.check_agenda_advance(state, events)
+        return
     while state.agenda.doom >= state.agenda.threshold and state.status == "in_progress":
         state.agenda.doom -= state.agenda.threshold
         state.agenda.stage += 1
@@ -123,6 +160,11 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]]) -> None
 
 def advance_act(state: GameState, events: list[dict[str, Any]]) -> None:
     if state.act is None:
+        return
+    if state.scenario == "the_gathering":
+        from .scenarios import the_gathering
+
+        the_gathering.advance_act(state, events)
         return
     state.act.stage += 1
     if state.act.stage == 2:
@@ -195,8 +237,6 @@ def present_damage_decision(state: GameState) -> None:
         for target in legal_soak_targets(state):
             instance = state.card_instances[target]
             card = cards.get(instance.card_code, {})
-            if instance.card_code == "01117":
-                continue
             if instance.horror < int(card.get("sanity") or 0):
                 options.append(DecisionOption(f"Assign 1 horror to {card.get('name', target)}", {"kind": "assign_damage", "type": "horror", "target": target}))
     state.decision_queue = [
@@ -266,8 +306,6 @@ def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> N
         card = cards.get(instance.card_code, {})
         health = int(card.get("health") or 0)
         sanity = int(card.get("sanity") or 0)
-        if instance.card_code == "01117":
-            sanity = 0
         if (health and instance.damage >= health) or (sanity and instance.horror >= sanity):
             state.investigator.play_area.remove(instance_id)
             state.investigator.discard.append(instance_id)
@@ -289,6 +327,10 @@ def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> No
     state.status = "ended"
     state.decision_queue = []
     state.result = {"outcome": summary, "round": state.round, "trauma": dict(state.trauma)}
+    if state.scenario == "the_gathering":
+        from .scenarios import the_gathering
+
+        the_gathering.finalize_result(state, events, outcome="no_resolution", summary=summary)
     log_event(events, "game_end", summary)
 
 

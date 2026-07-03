@@ -21,6 +21,7 @@ def draw_encounter(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]
     instance = state.card_instances[instance_id]
     card = card_data.cards_by_code().get(instance.card_code, {})
     log_event(events, "encounter_drawn", f"Roland drew encounter card {card.get('name', instance.card_code)}.", card=instance_id)
+    state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
     resolve_revelation(state, rng, events, instance_id)
     return instance_id
 

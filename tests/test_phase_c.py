@@ -4,7 +4,7 @@ import unittest
 
 from arkham import actions, encounter, enemies, phases, skill_test
 from arkham.cards.registry import REGISTRY
-from arkham.effects import discover_clue, draw_player_card, end_game, start_damage_assignment
+from arkham.effects import discover_clue, draw_player_card, end_game, resolve_cover_up_choice, start_damage_assignment
 from arkham.model import CardInstance, EnemyInstance
 from arkham.rng import ArkhamRng
 from arkham.scenarios.the_gathering import build_engine_test_state
@@ -89,24 +89,29 @@ class PhaseCPlayerCardTests(unittest.TestCase):
         self.assertEqual(s.investigator.clues, 1)
         self.assertTrue(s.limits["roland_reaction:1"])
 
-    def test_rolands_38_special_uses_cultist_bonus_and_ammo(self) -> None:
+    def test_rolands_38_special_uses_location_clue_bonus_and_ammo(self) -> None:
         s = state()
         gun = add_card(s, "01006", "play")
-        cultist = add_enemy(s, "01102")
+        enemy = add_enemy(s, "01159")
+        s.locations["study"].clues = 1
         events = []
-        actions.execute(s, {"action": "asset_fight", "asset": gun, "enemy": cultist, "boost": 3, "damage": 2}, events)
+        actions.execute(s, {"action": "asset_fight", "asset": gun, "enemy": enemy, "boost": 3, "damage": 2}, events)
         self.assertEqual(s.card_instances[gun].uses["ammo"], 3)
         self.assertEqual(s.active_skill_test["base"], 7)
 
-    def test_cover_up_redirects_discovery_and_adds_game_end_trauma(self) -> None:
+    def test_cover_up_optionally_redirects_discovery_and_adds_game_end_trauma(self) -> None:
         s = state()
         cover = add_card(s, "01007", "threat")
         s.card_instances[cover].clues = 2
         s.locations["study"].clues = 3
         events = []
         discover_clue(s, 3, events)
-        self.assertEqual(s.investigator.clues, 1)
+        self.assertEqual(s.decision_queue[0].kind, "cover_up")
+        resolve_cover_up_choice(s, s.decision_queue[0].options[0].payload, events)
+        self.assertEqual(s.investigator.clues, 0)
         self.assertNotIn(cover, s.investigator.threat_area)
+        discover_clue(s, 1, events)
+        self.assertEqual(s.investigator.clues, 1)
         cover2 = add_card(s, "01007", "threat")
         s.card_instances[cover2].clues = 1
         end_game(s, events, "test end")
@@ -232,11 +237,15 @@ class PhaseCPlayerCardTests(unittest.TestCase):
         self.assertEqual(actions.player_cards.effective_base_skill(s, "intellect", "Investigate Study"), 4)
         self.assertEqual(actions.player_cards.effective_base_skill(s, "intellect", "Medical Texts"), 3)
 
-    def test_old_book_of_lore_exhausts_and_draws(self) -> None:
+    def test_old_book_of_lore_searches_top_three_and_draws_choice(self) -> None:
         s = state()
         book = add_card(s, "01031", "play")
         card = add_card(s, "01088", "deck")
+        add_card(s, "01086", "deck")
+        add_card(s, "01087", "deck")
         actions.old_book_of_lore(s, {"asset": book}, [])
+        self.assertEqual(len(s.decision_queue[0].options), 3)
+        actions.resolve_old_book_choice(s, s.decision_queue[0].options[0].payload, [], ArkhamRng(1))
         self.assertIn(card, s.investigator.hand)
         self.assertTrue(s.card_instances[book].exhausted)
 
@@ -375,6 +384,12 @@ class PhaseCEncounterCardTests(unittest.TestCase):
         skill_test.start(s, events, skill="intellect", difficulty=0, source="Parley", on_success={"kind": "lita_parley", "lita": lita})
         resolve_current_test(s, events)
         self.assertIn(lita, s.investigator.play_area)
+        start_damage_assignment(s, events, source="test", damage=0, horror=1)
+        horror_option = next(option for option in s.decision_queue[0].options if option.payload["target"] == lita)
+        from arkham.effects import assign_damage_choice
+
+        assign_damage_choice(s, horror_option.payload, events)
+        self.assertEqual(s.card_instances[lita].horror, 1)
         self.assertEqual(actions.player_cards.effective_base_skill(s, "combat", "Fight"), 5)
         ghoul = add_enemy(s, "01160")
         skill_test.start(s, events, skill="combat", difficulty=0, source="Fight", on_success={"kind": "fight", "enemy": ghoul, "damage": 1})

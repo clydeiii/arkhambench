@@ -30,11 +30,23 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
         elif state.phase == "Enemy":
             run_enemy_phase(state, events)
             if not state.decision_queue and state.status == "in_progress":
+                if state.scenario == "the_gathering":
+                    from .scenarios import the_gathering
+
+                    the_gathering.end_enemy_phase(state, events)
+                if state.decision_queue or state.status != "in_progress":
+                    return
                 state.phase = "Upkeep"
                 log_event(events, "phase_started", "Upkeep phase began.")
         elif state.phase == "Upkeep":
             run_upkeep_phase(state, events)
             if not state.decision_queue and state.status == "in_progress":
+                if state.scenario == "the_gathering":
+                    from .scenarios import the_gathering
+
+                    the_gathering.end_round(state, events)
+                if state.decision_queue or state.status != "in_progress":
+                    return
                 state.round += 1
                 state.phase = "Mythos"
                 state.limits = {
@@ -44,6 +56,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("enemy_phase_attacked:")
                     and not str(key).startswith("mind_over_matter:")
                     and not str(key).startswith("frozen_end_turn:")
+                    and not str(key).startswith("mythos_")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":
@@ -116,14 +129,25 @@ def discard_to_size(state: GameState, payload: dict[str, Any], events: list[dict
 
 def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
     if state.round == 1:
-        log_event(events, "mythos_skipped", "Mythos phase skipped in round 1.")
+        key = f"mythos_skipped:{state.round}"
+        if not state.limits.get(key):
+            state.limits[key] = True
+            log_event(events, "mythos_skipped", "Mythos phase skipped in round 1.")
         return
     from .effects import place_doom
 
-    place_doom(state, 1, events, source="mythos")
-    if state.status != "in_progress":
+    doom_key = f"mythos_doom_placed:{state.round}"
+    if not state.limits.get(doom_key):
+        state.limits[doom_key] = True
+        place_doom(state, 1, events, source="mythos")
+    if state.status != "in_progress" or state.decision_queue:
         return
-    encounter.draw_encounter(state, rng, events)
+    encounter_key = f"mythos_encounter_drawn:{state.round}"
+    if not state.limits.get(encounter_key):
+        state.limits[encounter_key] = True
+        encounter.draw_encounter(state, rng, events)
+    if state.status != "in_progress" or state.decision_queue:
+        return
     engage_ready_enemies_at_roland(state, events)
 
 

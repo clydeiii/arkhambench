@@ -35,17 +35,11 @@
 
 - `DESIGN.md` has no `## 11` heading in this checkout; phase C work used `DESIGN.md` §10,
   the adjacent scenario notes in §12 where relevant, and `specs/phase_c.md`.
-- Roland's .38 Special JSON says the +3 combat condition is "1 or more clues on your
-  location"; DESIGN/phase C says to use a Cultist enemy at Roland's location. Implemented
-  the DESIGN/phase C Cultist condition and tested it with Silver Twilight Acolyte.
-- Lita Chantler JSON has 3 sanity, but phase C explicitly says "3 health, no sanity —
-  cannot soak horror." Implemented the phase C version and prevented horror assignment to
-  Lita.
-- Old Book of Lore JSON searches the top 3 cards and draws one; DESIGN §10 notes simplify
-  it to "draws 1." Implemented the DESIGN simplification.
-- Cover Up JSON is an optional reaction, but phase C cross-cutting requirements require the
-  redirect to apply to clue discoveries. Implemented automatic redirect so every discovery
-  source is covered consistently.
+- Phase D adjudication resolved the four phase C conflicts in favor of card JSON:
+  Roland's .38 Special now checks for 1 or more clues on Roland's location; Lita Chantler
+  has 3 health and 3 sanity and can soak horror; Old Book of Lore searches the top 3 cards
+  and presents a draw choice; Cover Up presents an optional redirect reaction instead of
+  auto-redirecting clue discoveries.
 
 ## Verification
 

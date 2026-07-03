@@ -286,6 +286,11 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         state.encounter_discard.append(enemy_id)
         state.card_instances[enemy_id].zone = "encounter_discard"
     log_event(events, "enemy_defeated", f"{card.get('name', enemy_id)} was defeated.", enemy=enemy_id)
+    if state.scenario == "the_gathering":
+        from .scenarios import the_gathering
+
+        if the_gathering.after_enemy_defeated(state, events, enemy_id):
+            return
     present_enemy_defeat_reactions(state, events, enemy_id)
 
 

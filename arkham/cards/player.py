@@ -230,6 +230,10 @@ def lita_uncontrolled_at_location(state: GameState, location_id: str) -> str | N
     return None
 
 
+def roland_location_has_clues(state: GameState) -> bool:
+    return state.locations[state.investigator.location_id].clues > 0
+
+
 def has_cultist_at_roland_location(state: GameState) -> bool:
     location = state.locations[state.investigator.location_id]
     for enemy_id in location.enemy_ids:

@@ -1,10 +1,11 @@
-"""The Gathering scenario implementation will be added in later phases."""
+"""The Gathering scenario and the small phase-B engine fixture."""
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 from .. import data as card_data
-from ..model import ActState, AgendaState, CardInstance, ChaosBag, GameState, Investigator, Location, PendingDecision, TurnState
+from ..model import ActState, AgendaState, CardInstance, ChaosBag, DecisionOption, GameState, Investigator, Location, PendingDecision, TurnState
 from ..rng import ArkhamRng
 
 
@@ -14,6 +15,702 @@ CHAOS_BAGS: dict[str, list[str]] = {
     "hard": ["0", "0", "0", "-1", "-1", "-2", "-2", "-3", "-3", "-4", "-5", "skull", "skull", "cultist", "tablet", "autofail", "eldersign"],
     "expert": ["0", "-1", "-1", "-2", "-2", "-3", "-3", "-4", "-4", "-5", "-6", "-8", "skull", "skull", "cultist", "tablet", "autofail", "eldersign"],
 }
+
+PLAYER_WEAKNESSES = {"01007", "01102"}
+LOCATION_INFO = {
+    "hallway": ("01112", "Hallway", 1, 0, ["attic", "cellar", "parlor"]),
+    "attic": ("01113", "Attic", 1, 2, ["hallway"]),
+    "cellar": ("01114", "Cellar", 4, 2, ["hallway"]),
+    "parlor": ("01115", "Parlor", 2, 0, ["hallway"]),
+}
+ENCOUNTER_COUNTS = {
+    "01118": 1,
+    "01119": 1,
+    "01159": 3,
+    "01160": 3,
+    "01161": 1,
+    "01162": 3,
+    "01163": 3,
+    "01164": 2,
+    "01165": 2,
+    "01166": 3,
+    "01167": 2,
+    "01168": 2,
+    "01174": 2,
+}
+
+
+def build_gathering_state(
+    *,
+    difficulty: str,
+    rng: ArkhamRng,
+    deck_path: str | Path | None = None,
+) -> GameState:
+    cards = card_data.cards_by_code()
+    investigator_card = cards["01001"]
+    instances: dict[str, CardInstance] = {}
+
+    player_deck = build_player_deck(instances, deck_path)
+    rng.shuffle(player_deck)
+    hand, player_deck = draw_opening_hand_without_weaknesses(instances, player_deck, rng)
+
+    encounter_deck = build_encounter_deck(instances)
+    rng.shuffle(encounter_deck)
+    ghoul_priest = "setaside_ghoul_priest"
+    lita = "setaside_lita"
+    instances[ghoul_priest] = CardInstance(id=ghoul_priest, card_code="01116", zone="set_aside")
+    instances[lita] = CardInstance(id=lita, card_code="01117", zone="set_aside")
+
+    investigator = Investigator(
+        id="roland",
+        name=str(investigator_card["name"]),
+        card_code=str(investigator_card["code"]),
+        location_id="study",
+        willpower=int(investigator_card["skill_willpower"]),
+        intellect=int(investigator_card["skill_intellect"]),
+        combat=int(investigator_card["skill_combat"]),
+        agility=int(investigator_card["skill_agility"]),
+        health=int(investigator_card["health"]),
+        sanity=int(investigator_card["sanity"]),
+        resources=5,
+        actions_remaining=3,
+        hand=hand,
+        deck=player_deck,
+    )
+    state = GameState(
+        schema_version=2,
+        scenario="the_gathering",
+        difficulty=difficulty,
+        status="in_progress",
+        round=1,
+        phase="Investigation",
+        turn=TurnState(investigator_id="roland", action_index=0),
+        investigator=investigator,
+        card_instances=instances,
+        locations={
+            "study": Location(id="study", code="01111", name="Study", revealed=True, shroud=2, clues=2, connections=[], investigator_ids=["roland"]),
+        },
+        agenda=AgendaState(code="01105", name="What's Going On?!", stage=1, threshold=3),
+        act=ActState(code="01108", name="Trapped", stage=1, clues_required=2),
+        chaos_bag=ChaosBag(tokens=list(CHAOS_BAGS[difficulty])),
+        encounter_deck=encounter_deck,
+    )
+    state.limits["mulligan_available"] = list(hand)
+    present_mulligan_decision(state)
+    return state
+
+
+def build_player_deck(instances: dict[str, CardInstance], deck_path: str | Path | None) -> list[str]:
+    deck = card_data.load_deck(deck_path)
+    deck_ids: list[str] = []
+    index = 1
+    for code, count in deck["slots"].items():
+        for _ in range(int(count)):
+            instance_id = f"pc{index:04d}"
+            instances[instance_id] = CardInstance(id=instance_id, card_code=str(code), zone="player_deck")
+            deck_ids.append(instance_id)
+            index += 1
+    return deck_ids
+
+
+def draw_opening_hand_without_weaknesses(
+    instances: dict[str, CardInstance],
+    deck: list[str],
+    rng: ArkhamRng,
+) -> tuple[list[str], list[str]]:
+    hand: list[str] = []
+    set_aside: list[str] = []
+    while len(hand) < 5 and deck:
+        card_id = deck.pop(0)
+        if instances[card_id].card_code in PLAYER_WEAKNESSES:
+            set_aside.append(card_id)
+        else:
+            instances[card_id].zone = "hand"
+            hand.append(card_id)
+    deck.extend(set_aside)
+    rng.shuffle(deck)
+    return hand, deck
+
+
+def present_mulligan_decision(state: GameState) -> None:
+    cards = card_data.cards_by_code()
+    available = set(state.limits.get("mulligan_available", state.investigator.hand))
+    options = [DecisionOption("Keep opening hand", {"kind": "scenario", "choice": "keep_hand"})]
+    for card_id in state.investigator.hand:
+        if card_id not in available:
+            continue
+        card = cards[state.card_instances[card_id].card_code]
+        options.append(DecisionOption(f"Mulligan {card.get('name', card_id)}", {"kind": "scenario", "choice": "mulligan_card", "card": card_id}))
+    state.decision_queue = [
+        PendingDecision(
+            id="opening-mulligan",
+            kind="scenario",
+            prompt="Choose opening hand mulligan.",
+            options=options,
+        )
+    ]
+
+
+def build_encounter_deck(instances: dict[str, CardInstance]) -> list[str]:
+    ids: list[str] = []
+    index = 1
+    for code, count in ENCOUNTER_COUNTS.items():
+        for _ in range(count):
+            instance_id = f"ec{index:04d}"
+            instances[instance_id] = CardInstance(id=instance_id, card_code=code, zone="encounter_deck")
+            ids.append(instance_id)
+            index += 1
+    return ids
+
+
+def resolve_scenario_choice(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+) -> None:
+    choice = str(payload.get("choice"))
+    if choice == "keep_hand":
+        from ..effects import log_event
+
+        state.limits.pop("mulligan_available", None)
+        log_event(events, "setup_complete", "Roland kept his opening hand.")
+    elif choice == "mulligan_card":
+        mulligan_card(state, str(payload.get("card")), events, rng)
+        present_mulligan_decision(state)
+    elif choice == "agenda1_discard":
+        agenda1_discard(state, events, rng)
+        set_agenda_2(state, events)
+        finish_mythos_after_agenda_choice(state, events, rng)
+    elif choice == "agenda1_horror":
+        from ..effects import start_damage_assignment
+
+        set_agenda_2(state, events)
+        start_damage_assignment(
+            state,
+            events,
+            source="What's Going On?!",
+            damage=0,
+            horror=2,
+            resume={"kind": "scenario", "choice": "finish_mythos_after_agenda"},
+        )
+        if state.status == "in_progress" and not state.pending_damage and not state.decision_queue:
+            finish_mythos_after_agenda_choice(state, events, rng)
+    elif choice == "finish_mythos_after_agenda":
+        finish_mythos_after_agenda_choice(state, events, rng)
+    elif choice == "act2_advance":
+        from ..effects import spend_clues
+
+        if state.act and spend_clues(state, 3, events):
+            advance_act(state, events)
+        start_next_round_after_end_round_choice(state, events)
+    elif choice == "act2_wait":
+        from ..effects import log_event
+
+        log_event(events, "act_objective_declined", "Roland did not advance The Barrier.")
+        start_next_round_after_end_round_choice(state, events)
+    elif choice == "resolution_r1":
+        from ..effects import log_event
+
+        state.trauma["mental"] = int(state.trauma.get("mental", 0)) + 1
+        finalize_result(state, events, outcome="R1", resolution="R1", summary="R1: the house burned down")
+        log_event(events, "game_end", "R1: the house burned down")
+    elif choice == "resolution_r2":
+        from ..effects import log_event
+
+        finalize_result(state, events, outcome="R2", resolution="R2", summary="R2: the house still stands")
+        log_event(events, "game_end", "R2: the house still stands")
+
+
+def mulligan_card(state: GameState, card_id: str, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    from ..effects import log_event
+
+    if card_id not in state.investigator.hand:
+        return
+    available = list(state.limits.get("mulligan_available", []))
+    if card_id not in available:
+        return
+    available.remove(card_id)
+    state.limits["mulligan_available"] = available
+    state.investigator.hand.remove(card_id)
+    state.card_instances[card_id].zone = "player_deck"
+    replacement = draw_one_nonweakness(state.card_instances, state.investigator.deck, rng)
+    if replacement:
+        state.investigator.hand.append(replacement)
+    state.investigator.deck.append(card_id)
+    rng.shuffle(state.investigator.deck)
+    log_event(events, "mulligan", "Roland mulliganed 1 card.")
+
+
+def draw_one_nonweakness(
+    instances: dict[str, CardInstance],
+    deck: list[str],
+    rng: ArkhamRng,
+) -> str | None:
+    set_aside: list[str] = []
+    found: str | None = None
+    while deck and found is None:
+        card_id = deck.pop(0)
+        if instances[card_id].card_code in PLAYER_WEAKNESSES:
+            set_aside.append(card_id)
+        else:
+            instances[card_id].zone = "hand"
+            found = card_id
+    deck.extend(set_aside)
+    rng.shuffle(deck)
+    return found
+
+
+def reveal_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:
+    from ..effects import log_event
+
+    location = state.locations[location_id]
+    if location.revealed:
+        return
+    location.revealed = True
+    _, _, shroud, clues, _ = LOCATION_INFO[location_id]
+    location.shroud = shroud
+    location.clues = clues
+    log_event(events, "location_revealed", f"{location.name} was revealed.", location=location_id)
+
+
+def after_enter_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:
+    reveal_location(state, events, location_id)
+    if location_id == "attic":
+        from ..effects import start_damage_assignment
+
+        start_damage_assignment(state, events, source="Attic", damage=0, horror=1)
+    elif location_id == "cellar":
+        from ..effects import start_damage_assignment
+
+        start_damage_assignment(state, events, source="Cellar", damage=1, horror=0)
+
+
+def advance_act(state: GameState, events: list[dict[str, Any]]) -> None:
+    if state.act is None:
+        return
+    if state.act.stage == 1:
+        advance_act_1(state, events)
+    elif state.act.stage == 2:
+        advance_act_2(state, events)
+    elif state.act.stage == 3:
+        present_final_resolution(state)
+
+
+def advance_act_1(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+
+    for location_id, (code, name, _shroud, _clues, connections) in LOCATION_INFO.items():
+        state.locations[location_id] = Location(
+            id=location_id,
+            code=code,
+            name=name,
+            revealed=False,
+            shroud=None,
+            clues=0,
+            connections=list(connections),
+        )
+    discard_enemies_at_location(state, "study", events)
+    discard_location_attachments(state, "study", events)
+    if "study" in state.locations and "roland" in state.locations["study"].investigator_ids:
+        state.locations["study"].investigator_ids.remove("roland")
+    state.investigator.location_id = "hallway"
+    state.locations["hallway"].investigator_ids.append("roland")
+    reveal_location(state, events, "hallway")
+    state.removed_from_game.append("study")
+    state.locations.pop("study", None)
+    state.act = ActState(code="01109", name="The Barrier", stage=2, clues_required=3)
+    log_event(events, "act_advanced", "Act advanced to The Barrier.")
+
+
+def discard_enemies_at_location(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+
+    location = state.locations.get(location_id)
+    if not location:
+        return
+    for enemy_id in list(location.enemy_ids):
+        enemy = state.enemies.pop(enemy_id, None)
+        if not enemy:
+            continue
+        if enemy_id in state.investigator.engaged_enemies:
+            state.investigator.engaged_enemies.remove(enemy_id)
+        for attachment in list(enemy.attachments):
+            state.card_instances[attachment].zone = "discard"
+            state.investigator.discard.append(attachment)
+        location.enemy_ids.remove(enemy_id)
+        state.card_instances[enemy_id].zone = "encounter_discard"
+        state.encounter_discard.append(enemy_id)
+        log_event(events, "enemy_discarded", f"{card_data.get_card(enemy.card_code)['name']} was discarded.", enemy=enemy_id)
+
+
+def discard_location_attachments(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+
+    location = state.locations.get(location_id)
+    if not location:
+        return
+    for attachment in list(location.attached_instance_ids):
+        location.attached_instance_ids.remove(attachment)
+        state.card_instances[attachment].zone = "discard"
+        state.investigator.discard.append(attachment)
+        log_event(events, "attachment_discarded", "An attachment was discarded.", card=attachment)
+
+
+def advance_act_2(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+    from ..enemies import engage_ready_enemies_at_roland, spawn_enemy
+
+    reveal_location(state, events, "parlor")
+    lita = next((card_id for card_id, instance in state.card_instances.items() if instance.card_code == "01117"), None)
+    if lita:
+        state.card_instances[lita].zone = "story"
+        state.locations["parlor"].attached_instance_ids.append(lita)
+    priest = next((card_id for card_id, instance in state.card_instances.items() if instance.card_code == "01116"), None)
+    if priest:
+        spawn_enemy(state, events, instance_id=priest, location_id="hallway", engaged=False)
+        engage_ready_enemies_at_roland(state, events)
+    state.act = ActState(code="01110", name="What Have You Done?", stage=3, clues_required=None)
+    log_event(events, "act_advanced", "Act advanced to What Have You Done?.")
+
+
+def present_final_resolution(state: GameState) -> None:
+    state.decision_queue = [
+        PendingDecision(
+            id="final-resolution",
+            kind="scenario",
+            prompt="The Ghoul Priest is defeated. Choose a resolution.",
+            options=[
+                DecisionOption("Burn it down (R1)", {"kind": "scenario", "choice": "resolution_r1"}),
+                DecisionOption("Refuse to burn it (R2)", {"kind": "scenario", "choice": "resolution_r2"}),
+            ],
+        )
+    ]
+
+
+def after_enemy_defeated(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> bool:
+    state.limits["enemies_defeated"] = int(state.limits.get("enemies_defeated", 0)) + 1
+    if state.card_instances[enemy_id].card_code == "01116" and state.act and state.act.stage == 3:
+        advance_act(state, events)
+        return True
+    return False
+
+
+def end_round(state: GameState, events: list[dict[str, Any]]) -> None:
+    if state.act and state.act.stage == 2 and state.investigator.location_id == "hallway" and state.investigator.clues >= 3:
+        state.decision_queue = [
+            PendingDecision(
+                id="act2-objective",
+                kind="scenario",
+                prompt="Spend 3 clues to advance The Barrier?",
+                options=[
+                    DecisionOption("Spend 3 clues and advance", {"kind": "scenario", "choice": "act2_advance"}),
+                    DecisionOption("Do not advance", {"kind": "scenario", "choice": "act2_wait"}),
+                ],
+            )
+        ]
+        return
+    if state.agenda and state.agenda.stage == 3:
+        from ..effects import place_doom
+
+        count = sum(
+            1
+            for enemy in state.enemies.values()
+            if is_ghoul_card(enemy.card_code) and enemy.location_id in {"hallway", "parlor"}
+        )
+        if count:
+            place_doom(state, count, events, source="They're Getting Out!")
+
+
+def start_next_round_after_end_round_choice(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+
+    if state.status != "in_progress":
+        return
+    state.round += 1
+    state.phase = "Mythos"
+    state.limits = {
+        key: value
+        for key, value in state.limits.items()
+        if not str(key).startswith("frozen:")
+        and not str(key).startswith("enemy_phase_attacked:")
+        and not str(key).startswith("mind_over_matter:")
+        and not str(key).startswith("frozen_end_turn:")
+        and not str(key).startswith("mythos_")
+    }
+    log_event(events, "round_started", f"Round {state.round} began.")
+
+
+def end_enemy_phase(state: GameState, events: list[dict[str, Any]]) -> None:
+    if not state.agenda or state.agenda.stage != 3 or "parlor" not in state.locations:
+        return
+    from ..enemies import move_enemy_to, next_step_toward
+
+    for enemy_id in sorted(state.enemies):
+        enemy = state.enemies[enemy_id]
+        if enemy.engaged_with is not None or not is_ghoul_card(enemy.card_code):
+            continue
+        step = next_step_toward(state, enemy.location_id, "parlor", enemy_id)
+        if step:
+            move_enemy_to(state, events, enemy_id, step)
+
+
+def check_agenda_advance(state: GameState, events: list[dict[str, Any]]) -> None:
+    if not state.agenda:
+        return
+    while total_doom(state) >= state.agenda.threshold and state.status == "in_progress" and not state.decision_queue:
+        state.agenda.doom = max(0, state.agenda.doom - state.agenda.threshold)
+        if state.agenda.stage == 1:
+            present_agenda_1_choice(state)
+            return
+        if state.agenda.stage == 2:
+            advance_agenda_2(state, events)
+            continue
+        if state.agenda.stage == 3:
+            agenda_3_doom_out(state, events)
+            return
+
+
+def total_doom(state: GameState) -> int:
+    agenda = state.agenda.doom if state.agenda else 0
+    enemies = sum(enemy.doom for enemy in state.enemies.values())
+    cards = sum(instance.doom for instance in state.card_instances.values())
+    return agenda + enemies + cards
+
+
+def present_agenda_1_choice(state: GameState) -> None:
+    state.decision_queue = [
+        PendingDecision(
+            id="agenda1-back",
+            kind="scenario",
+            prompt="Agenda 1 advanced. Choose the back effect.",
+            options=[
+                DecisionOption("Discard 1 random card from hand", {"kind": "scenario", "choice": "agenda1_discard"}),
+                DecisionOption("Take 2 horror", {"kind": "scenario", "choice": "agenda1_horror"}),
+            ],
+        )
+    ]
+
+
+def agenda1_discard(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    from ..cards import player as player_cards
+    from ..effects import log_event
+
+    if not state.investigator.hand:
+        return
+    card_id = rng.choice(state.investigator.hand)
+    player_cards.discard_from_hand(state, card_id)
+    log_event(events, "card_discarded", "Roland discarded 1 random card for Agenda 1.", card=card_id)
+
+
+def set_agenda_2(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+
+    state.agenda = AgendaState(code="01106", name="Rise of the Ghouls", stage=2, threshold=7)
+    log_event(events, "agenda_advanced", "Agenda advanced to Rise of the Ghouls.")
+
+
+def finish_mythos_after_agenda_choice(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    if state.status != "in_progress" or state.phase != "Mythos":
+        return
+    from .. import encounter
+    from ..effects import log_event
+    from ..enemies import engage_ready_enemies_at_roland
+
+    state.limits[f"mythos_doom_placed:{state.round}"] = True
+    state.limits[f"mythos_encounter_drawn:{state.round}"] = True
+    encounter.draw_encounter(state, rng, events)
+    engage_ready_enemies_at_roland(state, events)
+    if state.status == "in_progress" and not state.decision_queue:
+        state.phase = "Investigation"
+        state.investigator.actions_remaining = 3
+        state.turn.action_index = 0
+        log_event(events, "phase_started", "Investigation phase began.")
+
+
+def advance_agenda_2(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+    from ..encounter import resolve_revelation
+    from ..rng import ArkhamRng
+
+    state.encounter_deck.extend(state.encounter_discard)
+    state.encounter_discard = []
+    for card_id in state.encounter_deck:
+        state.card_instances[card_id].zone = "encounter_deck"
+    rng = ArkhamRng(int(state.limits.get("agenda_rng_seed", state.round * 1000 + 7)))
+    rng.shuffle(state.encounter_deck)
+    drawn: str | None = None
+    while state.encounter_deck:
+        card_id = state.encounter_deck.pop(0)
+        code = state.card_instances[card_id].card_code
+        if is_ghoul_card(code) and card_data.get_card(code).get("type_code") == "enemy":
+            drawn = card_id
+            break
+        state.card_instances[card_id].zone = "encounter_discard"
+        state.encounter_discard.append(card_id)
+    state.agenda = AgendaState(code="01107", name="They're Getting Out!", stage=3, threshold=10)
+    log_event(events, "agenda_advanced", "Agenda advanced to They're Getting Out!.")
+    if drawn:
+        state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
+        log_event(events, "encounter_drawn", f"Roland drew encounter card {card_data.get_card(state.card_instances[drawn].card_code)['name']}.", card=drawn)
+        resolve_revelation(state, rng, events, drawn)
+
+
+def agenda_3_doom_out(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import apply_cover_up_trauma, end_game, log_event
+
+    if state.act and state.act.stage <= 2:
+        apply_cover_up_trauma(state, events)
+        finalize_result(state, events, outcome="R3", resolution="R3", summary="R3: Roland was killed")
+        log_event(events, "game_end", "R3: Roland was killed")
+        return
+    state.trauma["physical"] = int(state.trauma.get("physical", 0)) + 1
+    end_game(state, events, "Roland was defeated by agenda 3")
+
+
+def resign(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import end_game
+
+    end_game(state, events, "Roland resigned")
+
+
+def finalize_result(
+    state: GameState,
+    events: list[dict[str, Any]],
+    *,
+    outcome: str,
+    summary: str,
+    resolution: str | None = None,
+) -> None:
+    from ..effects import apply_cover_up_trauma
+
+    apply_cover_up_trauma(state, events)
+    add_victory_locations(state)
+    victory_points = calculate_victory_points(state)
+    if outcome == "R3":
+        xp = 0
+        score = 0
+        lita_earned = False
+    elif outcome == "R2":
+        xp = victory_points + 3
+        lita_earned = True
+        score = max(0, xp - total_trauma(state))
+    else:
+        xp = victory_points + 2
+        lita_earned = True
+        score = max(0, xp - total_trauma(state))
+    state.status = "ended"
+    state.decision_queue = []
+    state.result = {
+        "outcome": outcome,
+        "resolution": resolution or outcome,
+        "summary": summary,
+        "rounds_played": state.round,
+        "actions_taken": int(state.limits.get("actions_taken", state.turn.action_index)),
+        "damage_taken": state.investigator.damage,
+        "horror_taken": state.investigator.horror,
+        "trauma": dict(state.trauma),
+        "victory_points": victory_points,
+        "xp": xp,
+        "score": score,
+        "ghoul_priest_defeated": any(
+            state.card_instances[card_id].card_code == "01116"
+            for card_id in state.victory_display
+            if card_id in state.card_instances
+        ),
+        "lita_recruited": any(
+            state.card_instances[card_id].card_code == "01117"
+            for card_id in state.investigator.play_area
+            if card_id in state.card_instances
+        ),
+        "lita_earned": lita_earned,
+        "encounter_cards_drawn": int(state.limits.get("encounter_cards_drawn", 0)),
+        "enemies_defeated": int(state.limits.get("enemies_defeated", 0)),
+        "campaign_log": campaign_log(state, outcome, lita_earned),
+    }
+
+
+def campaign_log(state: GameState, outcome: str, lita_earned: bool) -> dict[str, Any]:
+    priest_alive = any(instance.card_code == "01116" for instance in state.enemies.values())
+    return {
+        "house": "burned_down" if outcome == "R1" else "standing",
+        "lita": "earned" if lita_earned else "seeking_others",
+        "ghoul_priest_still_alive": priest_alive if outcome == "no_resolution" else False,
+    }
+
+
+def add_victory_locations(state: GameState) -> None:
+    for location_id in ("attic", "cellar"):
+        location = state.locations.get(location_id)
+        if location and location.revealed and location.clues == 0 and location_id not in state.victory_display:
+            state.victory_display.append(location_id)
+
+
+def calculate_victory_points(state: GameState) -> int:
+    total = 0
+    for item_id in state.victory_display:
+        if item_id in state.card_instances:
+            total += int(card_data.get_card(state.card_instances[item_id].card_code).get("victory") or 0)
+        elif item_id in state.locations:
+            total += int(card_data.get_card(state.locations[item_id].code).get("victory") or 0)
+    return total
+
+
+def total_trauma(state: GameState) -> int:
+    return sum(int(value) for value in state.trauma.values())
+
+
+def ghouls_at_roland_location(state: GameState) -> int:
+    location = state.locations[state.investigator.location_id]
+    return sum(1 for enemy_id in location.enemy_ids if enemy_id in state.enemies and is_ghoul_card(state.enemies[enemy_id].card_code))
+
+
+def is_ghoul_card(card_code: str) -> bool:
+    return "Ghoul" in str(card_data.get_card(card_code).get("traits", ""))
+
+
+def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any]) -> None:
+    token = str(result.get("token"))
+    failed = not bool(result.get("success"))
+    if token == "cultist" and failed:
+        from ..effects import start_damage_assignment
+
+        horror = 1 if state.difficulty in {"easy", "standard"} else 2
+        start_damage_assignment(state, events, source="Cultist token", damage=0, horror=horror)
+    elif token == "tablet" and ghouls_at_roland_location(state) > 0:
+        from ..effects import start_damage_assignment
+
+        damage = 1
+        horror = 0 if state.difficulty in {"easy", "standard"} else 1
+        start_damage_assignment(state, events, source="Tablet token", damage=damage, horror=horror)
+    elif token == "skull" and failed and state.difficulty in {"hard", "expert"}:
+        search_and_draw_ghoul(state, events)
+
+
+def search_and_draw_ghoul(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..encounter import resolve_revelation
+    from ..rng import ArkhamRng
+
+    rng = ArkhamRng(state.round * 2000 + 13)
+    combined = list(state.encounter_deck) + list(state.encounter_discard)
+    found = next(
+        (
+            card_id
+            for card_id in combined
+            if is_ghoul_card(state.card_instances[card_id].card_code)
+            and card_data.get_card(state.card_instances[card_id].card_code).get("type_code") == "enemy"
+        ),
+        None,
+    )
+    if not found:
+        return
+    if found in state.encounter_deck:
+        state.encounter_deck.remove(found)
+    if found in state.encounter_discard:
+        state.encounter_discard.remove(found)
+    rng.shuffle(state.encounter_deck)
+    state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
+    resolve_revelation(state, rng, events, found)
 
 
 ENGINE_TEST_PLAYER_CODES = [

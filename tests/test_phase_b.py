@@ -152,8 +152,9 @@ class PhaseBDeterminismTests(unittest.TestCase):
         run_dir.parent.mkdir(parents=True, exist_ok=True)
         script = [
             ("new", "--seed", "99", "--run", str(run_dir)),
-            ("do", "4", "--run", str(run_dir)),
-            ("do", "10", "--run", str(run_dir)),
+            ("do", "1", "--run", str(run_dir)),
+            ("do", "1", "--run", str(run_dir)),
+            ("do", "1", "--run", str(run_dir)),
         ]
         for args in script:
             env = os.environ.copy()

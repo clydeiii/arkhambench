@@ -30,13 +30,20 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     investigator = state.investigator
     location = state.locations[investigator.location_id]
     options: list[DecisionOption] = []
-    if state.act and state.act.clues_required is not None and investigator.clues >= state.act.clues_required:
+    if (
+        state.act
+        and state.act.clues_required is not None
+        and investigator.clues >= state.act.clues_required
+        and not (state.scenario == "the_gathering" and state.act.stage == 2)
+    ):
         options.append(DecisionOption(f"Advance act by spending {state.act.clues_required} clues", {"kind": "action", "action": "advance_act"}))
     if location.revealed and location.shroud is not None and not location_locked(state, location.id):
         shroud = modified_shroud(state, location.id)
         intellect = player_cards.effective_base_skill(state, "intellect", f"Investigate {location.name}")
         options.append(DecisionOption(f"Investigate {location.name} (shroud {shroud}) — test Intellect({intellect}) vs {shroud}", {"kind": "action", "action": "investigate"}))
     for target in sorted(location.connections, key=lambda loc: (state.locations[loc].code, loc)):
+        if state.scenario == "the_gathering" and target == "parlor" and not state.locations[target].revealed:
+            continue
         options.append(DecisionOption(f"Move to {state.locations[target].name}", {"kind": "action", "action": "move", "location": target}))
     for enemy_id in fight_targets(state):
         card = enemy_card(state, enemy_id)
@@ -54,6 +61,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     add_asset_action_options(state, options)
     add_locked_door_options(state, options)
     add_lita_parley_option(state, options)
+    add_resign_option(state, options)
     add_fast_options(state, options)
     for instance_id in investigator.hand:
         instance = state.card_instances[instance_id]
@@ -131,6 +139,10 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
     elif action == "pass":
         state.investigator.actions_remaining = 0
         log_event(events, "turn_passed", "Roland ended his turn.")
+    elif action == "resign":
+        from .scenarios import the_gathering
+
+        the_gathering.resign(state, events)
 
 
 def spend_action(state: GameState, events: list[dict[str, Any]], action: str) -> None:
@@ -142,6 +154,7 @@ def spend_action(state: GameState, events: list[dict[str, Any]], action: str) ->
         state.limits[key] = True
     state.investigator.actions_remaining = max(0, state.investigator.actions_remaining - cost)
     state.turn.action_index += cost
+    state.limits["actions_taken"] = int(state.limits.get("actions_taken", 0)) + cost
     log_event(events, "action_spent", f"Spent {cost} action on {action}.", action=action, cost=cost)
 
 
@@ -180,6 +193,10 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
     state.locations[location_id].investigator_ids.append(state.investigator.id)
     move_engaged_enemies_with_roland(state, events, location_id)
     log_event(events, "investigator_moved", f"Roland moved to {state.locations[location_id].name}.", location=location_id)
+    if state.scenario == "the_gathering":
+        from .scenarios import the_gathering
+
+        the_gathering.after_enter_location(state, events, location_id)
     engage_ready_enemies_at_roland(state, events)
 
 
@@ -255,7 +272,7 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
         code = instance.card_code
         if code in {"01006", "01016"} and instance.uses.get("ammo", 0) > 0:
             for enemy_id in fight_targets(state):
-                boost = 3 if code == "01006" and player_cards.has_cultist_at_roland_location(state) else 1
+                boost = 3 if code == "01006" and player_cards.roland_location_has_clues(state) else 1
                 options.append(DecisionOption(f"Fight with {player_cards.card_name(state, asset_id)} ({instance.uses['ammo']} ammo, +{boost} combat, +1 damage)", {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": boost, "damage": 2}))
         elif code == "01020":
             for enemy_id in fight_targets(state):
@@ -298,6 +315,14 @@ def add_lita_parley_option(state: GameState, options: list[DecisionOption]) -> N
     lita = player_cards.lita_uncontrolled_at_location(state, state.investigator.location_id)
     if lita:
         options.append(DecisionOption("Parley with Lita Chantler (Intellect 4)", {"kind": "action", "action": "parley_lita", "lita": lita}))
+
+
+def add_resign_option(state: GameState, options: list[DecisionOption]) -> None:
+    if state.scenario != "the_gathering":
+        return
+    location = state.locations[state.investigator.location_id]
+    if location.id == "parlor" and location.revealed:
+        options.append(DecisionOption("Resign", {"kind": "action", "action": "resign"}))
 
 
 def location_locked(state: GameState, location_id: str) -> bool:
@@ -363,7 +388,47 @@ def old_book_of_lore(state: GameState, payload: dict[str, Any], events: list[dic
     if asset_id not in state.investigator.play_area or state.card_instances[asset_id].exhausted:
         return
     state.card_instances[asset_id].exhausted = True
-    draw_player_card(state, events)
+    candidates = list(state.investigator.deck[:3])
+    if not candidates:
+        log_event(events, "old_book_empty", "Old Book of Lore found no cards.")
+        return
+    cards = card_data.cards_by_code()
+    state.decision_queue = [
+        PendingDecision(
+            id="old-book-of-lore",
+            kind="old_book",
+            prompt="Choose 1 card to draw with Old Book of Lore.",
+            options=[
+                DecisionOption(
+                    f"Draw {cards[state.card_instances[card_id].card_code].get('name', card_id)}",
+                    {"kind": "old_book_choice", "card": card_id, "candidates": candidates},
+                )
+                for card_id in candidates
+            ],
+        )
+    ]
+
+
+def resolve_old_book_choice(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: Any,
+) -> None:
+    chosen = str(payload["card"])
+    candidates = [str(card_id) for card_id in payload.get("candidates", [])]
+    candidates = [card_id for card_id in candidates if card_id in state.investigator.deck]
+    if chosen not in candidates:
+        return
+    for card_id in candidates:
+        state.investigator.deck.remove(card_id)
+    state.investigator.hand.append(chosen)
+    state.card_instances[chosen].zone = "hand"
+    rest = [card_id for card_id in candidates if card_id != chosen]
+    state.investigator.deck.extend(rest)
+    rng.shuffle(state.investigator.deck)
+    card = card_data.get_card(state.card_instances[chosen].card_code)
+    log_event(events, "card_drawn", f"Roland drew {card['name']}.", card=chosen)
 
 
 def dynamite_blast(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:

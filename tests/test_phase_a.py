@@ -158,15 +158,19 @@ class CliTests(unittest.TestCase):
 
             new = self.run_cli("new", "--seed", "7", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(new.returncode, 0, new.stderr)
-            self.assertIn("Choose an action", new.stdout)
+            self.assertIn("Choose opening hand mulligan", new.stdout)
 
             actions = self.run_cli("actions", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(actions.returncode, 0, actions.stderr)
-            self.assertIn("1. Investigate", actions.stdout)
+            self.assertIn("Keep opening hand", actions.stdout)
 
             do = self.run_cli("do", "1", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(do.returncode, 0, do.stderr)
             self.assertIn("Decision made", do.stdout)
+            self.assertIn("Choose an action", do.stdout)
+
+            do = self.run_cli("do", "1", "--run", str(run_dir), cwd=cwd)
+            self.assertEqual(do.returncode, 0, do.stderr)
             self.assertIn("Commit", do.stdout)
 
             log = self.run_cli("log", "--run", str(run_dir), "--tail", "10", cwd=cwd)
