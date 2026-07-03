@@ -6,8 +6,12 @@ from typing import Any
 
 from .. import data as card_data
 from ..model import ActState, AgendaState, CardInstance, ChaosBag, DecisionOption, GameState, Investigator, Location, PendingDecision, TurnState
+from ..cards.player import card_name
 from ..rng import ArkhamRng
 
+
+# Campaign-equity value of earning Lita Chantler, added to the benchmark score.
+LITA_SCORE_VALUE = 3
 
 CHAOS_BAGS: dict[str, list[str]] = {
     "easy": ["+1", "+1", "0", "0", "0", "-1", "-1", "-1", "-2", "-2", "skull", "skull", "cultist", "tablet", "autofail", "eldersign"],
@@ -141,11 +145,12 @@ def present_mulligan_decision(state: GameState) -> None:
             continue
         card = cards[state.card_instances[card_id].card_code]
         options.append(DecisionOption(f"Mulligan {card.get('name', card_id)}", {"kind": "scenario", "choice": "mulligan_card", "card": card_id}))
+    hand_names = ", ".join(cards[state.card_instances[cid].card_code].get("name", cid) for cid in state.investigator.hand)
     state.decision_queue = [
         PendingDecision(
             id="opening-mulligan",
             kind="scenario",
-            prompt="Choose opening hand mulligan.",
+            prompt=f"Opening hand: {hand_names}. Choose cards to mulligan (one at a time; weaknesses are never dealt into your opening hand), then keep.",
             options=options,
         )
     ]
@@ -174,7 +179,14 @@ def resolve_scenario_choice(
         from ..effects import log_event
 
         state.limits.pop("mulligan_available", None)
-        log_event(events, "setup_complete", "Roland kept his opening hand.")
+        aside = state.limits.pop("mulliganed_aside", [])
+        for aside_id in aside:
+            state.card_instances[str(aside_id)].zone = "player_deck"
+            state.investigator.deck.append(str(aside_id))
+        if aside:
+            rng.shuffle(state.investigator.deck)
+        final_hand = ", ".join(card_name(state, cid) for cid in state.investigator.hand)
+        log_event(events, "setup_complete", f"Opening hand finalized: {final_hand}.")
     elif choice == "mulligan_card":
         mulligan_card(state, str(payload.get("card")), events, rng)
         present_mulligan_decision(state)
@@ -233,13 +245,18 @@ def mulligan_card(state: GameState, card_id: str, events: list[dict[str, Any]], 
     available.remove(card_id)
     state.limits["mulligan_available"] = available
     state.investigator.hand.remove(card_id)
-    state.card_instances[card_id].zone = "player_deck"
+    # RAW: mulliganed cards are set aside and only shuffled back after the
+    # opening hand is finalized — you cannot redraw a card you just tossed.
+    state.card_instances[card_id].zone = "aside"
+    aside = list(state.limits.get("mulliganed_aside", []))
+    aside.append(card_id)
+    state.limits["mulliganed_aside"] = aside
     replacement = draw_one_nonweakness(state.card_instances, state.investigator.deck, rng)
     if replacement:
         state.investigator.hand.append(replacement)
-    state.investigator.deck.append(card_id)
-    rng.shuffle(state.investigator.deck)
-    log_event(events, "mulligan", "Roland mulliganed 1 card.")
+    out_name = card_name(state, card_id)
+    in_name = card_name(state, replacement) if replacement else "nothing (deck empty)"
+    log_event(events, "mulligan", f"Mulliganed {out_name}, drew {in_name}.", out=card_id, drew=replacement)
 
 
 def draw_one_nonweakness(
@@ -592,18 +609,22 @@ def finalize_result(
     apply_cover_up_trauma(state, events)
     add_victory_locations(state)
     victory_points = calculate_victory_points(state)
+    # Lita Chantler is earned on R1 and no-resolution (she follows you out of the
+    # house) but NOT on R2 (you kicked her out; "she doesn't seem to trust you")
+    # or R3. Score values her at 3 XP of campaign equity — she is the real prize
+    # of this scenario, which is why experienced players burn the house down.
     if outcome == "R3":
         xp = 0
         score = 0
         lita_earned = False
     elif outcome == "R2":
         xp = victory_points + 3
-        lita_earned = True
+        lita_earned = False
         score = max(0, xp - total_trauma(state))
     else:
         xp = victory_points + 2
         lita_earned = True
-        score = max(0, xp - total_trauma(state))
+        score = max(0, xp - total_trauma(state) + LITA_SCORE_VALUE)
     state.status = "ended"
     state.decision_queue = []
     state.result = {

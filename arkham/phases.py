@@ -19,6 +19,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             raise RuntimeError("phase loop did not reach a decision")
         if state.active_skill_test or state.pending_damage:
             return
+        deferred = state.limits.pop("deferred_resume", None)
+        if deferred:
+            actions.execute(state, dict(deferred.get("payload", {})), events, rng)
+            continue
         if state.phase == "Investigation":
             if state.investigator.actions_remaining > 0:
                 actions.present_action_decision(state)
@@ -41,7 +45,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                 state.phase = "Upkeep"
                 log_event(events, "phase_started", "Upkeep phase began.")
         elif state.phase == "Upkeep":
-            run_upkeep_phase(state, events)
+            run_upkeep_phase(state, events, rng)
             if not state.decision_queue and state.status == "in_progress":
                 if state.scenario == "the_gathering":
                     from .scenarios import the_gathering
@@ -123,7 +127,7 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
                 return
 
 
-def run_upkeep_phase(state: GameState, events: list[dict[str, Any]]) -> None:
+def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
     # Idempotency guard: the phase loop re-enters this function after the
     # hand-size discard decision resolves; the ready/draw/resource steps must
     # only happen once per round (they are not re-run while discarding).
@@ -136,7 +140,7 @@ def run_upkeep_phase(state: GameState, events: list[dict[str, Any]]) -> None:
         for enemy in state.enemies.values():
             enemy.exhausted = False
         log_event(events, "ready_step", "All exhausted cards readied.")
-        draw_player_card(state, events)
+        draw_player_card(state, events, rng)
         gain_resource(state, 1, events)
         discard_dissonant_voices(state, events)
     if len(state.investigator.hand) > 8:

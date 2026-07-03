@@ -38,3 +38,15 @@ GAME gpt55-demo-1: no_resolution at R17, score 5 (XP 6, physical trauma 1). VP e
 
 LESSONS from gpt55-demo-1: (1) Beat Cop fast damage must be used from the action menu BEFORE spending the last action; after a successful last-action attack the engine went straight to enemy phase and did not offer Beat Cop. Priest line should be: Machete hit, Machete hit, then immediately choose 'Discard Beat Cop to deal 1 damage' while an action menu/fast window exists. (2) Do not advance Act 2 with agenda 3 at 9+ doom unless the Priest kill is guaranteed that same turn; agenda 3 defeated Roland at upkeep before another turn. (3) If Priest first attack autofails, two remaining Machete hits can still put him at 4 damage, but you must have a fast ping/damage already usable before enemy/upkeep or you lose to agenda. (4) Evidence!/Roland reaction ordering: choosing Roland first on a kill led to Cover Up replacement and the engine did NOT return to Evidence!, so if trying to use both, test Evidence! first or expect only one reaction.
 
+## [ENGINE CHANGELOG — 2026-07-03, appended by the benchmark maintainers]
+
+The engine was updated after your last game. Notes above may be stale:
+- SCORING CHANGED: score = XP − trauma + 3 if you earn Lita Chantler (min 0). Advice based on the old "XP − trauma" formula (e.g. "always pick R2") should be re-derived: Lita is only earned in SOME outcomes.
+- Lita is NOT earned on R2 (she is on R1 and on no-resolution).
+- FIXED: upkeep discard loop no longer re-draws (the deck-cycling trick is gone).
+- FIXED: drawing from an empty deck now reshuffles your discard into the deck and costs 1 horror (per the real rules).
+- FIXED: Guard Dog / Beat Cop kills now trigger the defeat-reaction window; Roland's reaction AND Evidence! can both be used off one kill.
+- FIXED: fast-ability windows now open at phase boundaries (end of turn, before enemy attacks, end of mythos).
+- Weapon fight options now show the full test math (effective combat vs enemy fight).
+- Defeat trauma was double-counting; it now applies once.
+

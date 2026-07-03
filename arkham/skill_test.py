@@ -300,7 +300,7 @@ def apply_callback(
     for instance_id in committed:
         code = state.card_instances[instance_id].card_code
         if success and code in {"01089", "01092"}:
-            draw_player_card(state, events)
+            draw_player_card(state, events, rng)
 
 
 def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:

@@ -24,14 +24,40 @@ python3 -m arkham.fuzz --games 100        # random-agent crash/invariant fuzz
 scripts/play_demo.sh claude-sonnet-5 my-demo 7   # let an agent play a full game
 ```
 
+## Scoring
+
+Reported per run in `result.json`, alongside the raw dimensions (track them all —
+composite score is for the benchmark's single number, the dimensions are for analysis):
+
+- **XP** — per the campaign guide: victory display total + resolution bonuses
+  (+2 insight in most outcomes; +1 extra for the lead in R2; 0 if killed by agenda-out
+  at act ≤ 2).
+- **Trauma** — defeat trauma (physical/mental by cause), resolution trauma (R1's burned
+  house), Cover Up's game-end trauma.
+- **Lita Chantler earned?** — she joins the campaign deck in some outcomes (R1,
+  no-resolution) but not others (R2, R3).
+- **Resolution reached**, victory points, rounds, damage/horror per round, tests
+  passed/failed, etc.
+
+**Score = max(0, XP − trauma + 3·Lita)** — the +3 approximates Lita's campaign equity
+(she is arguably the strongest card in the Core Set era), so the R1-vs-R2 choice prices
+in the real prize the way an experienced player would, instead of rewarding trauma-dodging.
+
 ## Demo results (2026-07-03, one game each, harness-validation runs — not a controlled comparison)
 
-| Agent (harness) | Seed | Outcome | Score |
-|---|---|---|---|
-| GPT-5.5 (codex) | 23 | Defeated by agenda 3 at Act 3, Priest at 4/5 dmg | **5** (XP 6 − 1 trauma) |
-| Fable 5 (claude) | 11 | **Won — R1**, Ghoul Priest slain R12 | **4** (XP 6 − 2 trauma) |
-| Opus 4.8 (claude) | 31 | Defeated by horror R11 (two hunters stacked) | **2** (XP 4 − 2 trauma) |
-| Sonnet 5 (claude) | 47 | Defeated by horror R4 (AoO while engaged) | **0** (XP 2 − 2 trauma) |
+Scores recomputed under the current formula (the runs were played under an earlier
+`XP − trauma` formula, and a defeat-trauma double-count inflated opus48/sonnet5 trauma by 1):
+
+| Agent (harness) | Seed | Outcome | XP | Trauma | Lita | Score |
+|---|---|---|---|---|---|---|
+| GPT-5.5 (codex) | 23 | Defeated by agenda 3 at Act 3, Priest at 4/5 dmg | 6 | 1 | yes | **8** |
+| Fable 5 (claude) | 11 | **Won — R1**, Ghoul Priest slain R12 | 6 | 2 | yes | **7** |
+| Opus 4.8 (claude) | 31 | Defeated by horror R11 (two hunters stacked) | 4 | 1 | yes | **6** |
+| Sonnet 5 (claude) | 47 | Defeated by horror R4 (AoO while engaged) | 2 | 1 | yes | **4** |
+
+(The Gathering's no-resolution outcome is canonically forgiving — you escape with Lita
+and your victory display — so defeat is punished mainly through trauma and lost tempo.
+The score spread between careful and careless play comes from VP banked and trauma.)
 
 Caveats: different seeds; GPT-5.5 read the notebook Fable 5 wrote (shared notebook in the
 first two runs — per-agent notebooks were added afterward). Full transcripts in

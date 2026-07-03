@@ -124,7 +124,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
     elif action == "engage":
         engage_enemy(state, events, str(payload["enemy"]))
     elif action == "draw":
-        draw_player_card(state, events)
+        draw_player_card(state, events, rng)
     elif action == "resource":
         gain_resource(state, 1, events)
     elif action == "play":
@@ -328,16 +328,17 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
         if code in {"01006", "01016"} and instance.uses.get("ammo", 0) > 0:
             for enemy_id in fight_targets(state):
                 boost = 3 if code == "01006" and player_cards.roland_location_has_clues(state) else 1
-                options.append(DecisionOption(f"Fight with {player_cards.card_name(state, asset_id)} ({instance.uses['ammo']} ammo, +{boost} combat, +1 damage)", {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": boost, "damage": 2}))
+                label = _weapon_fight_label(state, enemy_id, player_cards.card_name(state, asset_id), boost, 2, extra=f"{instance.uses['ammo']} ammo")
+                options.append(DecisionOption(label, {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": boost, "damage": 2}))
         elif code == "01020":
             for enemy_id in fight_targets(state):
                 only = len([eid for eid in state.investigator.engaged_enemies if eid in state.enemies]) == 1 and enemy_id in state.investigator.engaged_enemies
                 damage = 2 if only else 1
-                options.append(DecisionOption(f"Fight with Machete (+1 combat, {damage} damage)", {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 1, "damage": damage}))
+                options.append(DecisionOption(_weapon_fight_label(state, enemy_id, "Machete", 1, damage), {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 1, "damage": damage}))
         elif code == "01086":
             for enemy_id in fight_targets(state):
-                options.append(DecisionOption("Fight with Knife (+1 combat)", {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 1, "damage": 1}))
-                options.append(DecisionOption("Throw Knife (+2 combat, +1 damage, discard Knife)", {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 2, "damage": 2, "discard_asset": True}))
+                options.append(DecisionOption(_weapon_fight_label(state, enemy_id, "Knife", 1, 1), {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 1, "damage": 1}))
+                options.append(DecisionOption(_weapon_fight_label(state, enemy_id, "Knife (throw, discards it)", 2, 2), {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 2, "damage": 2, "discard_asset": True}))
         elif code == "01087" and instance.uses.get("supplies", 0) > 0 and not location_locked(state, state.investigator.location_id):
             options.append(DecisionOption(f"Investigate with Flashlight ({instance.uses['supplies']} supplies, shroud -2)", {"kind": "action", "action": "flashlight", "asset": asset_id}))
         elif code == "01019" and instance.uses.get("supplies", 0) > 0:
@@ -356,6 +357,17 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
                 if location_id == state.investigator.location_id:
                     label += " (hits Roland)"
                 options.append(DecisionOption(label, {"kind": "action", "action": "dynamite", "card": card_id, "location": location_id}))
+
+
+def _weapon_fight_label(state: GameState, enemy_id: str, weapon: str, boost: int, damage: int, extra: str | None = None) -> str:
+    # Show the effective test math so agents don't have to add the weapon boost
+    # themselves: base combat (incl. statics) + weapon boost vs enemy fight.
+    effective = player_cards.effective_base_skill(state, "combat", f"Fight {enemy_name(state, enemy_id)}") + boost
+    fight = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+    parts = f"Fight {enemy_name(state, enemy_id)} with {weapon}"
+    if extra:
+        parts += f" ({extra})"
+    return f"{parts} — test Combat({effective}) vs {fight}, {damage} dmg"
 
 
 def add_locked_door_options(state: GameState, options: list[DecisionOption]) -> None:

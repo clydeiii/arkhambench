@@ -100,13 +100,15 @@ def assert_unique_cards(state) -> None:
         for attachment in location.attached_instance_ids:
             add(attachment, f"attachment:{location.id}")
     for card_id, instance in state.card_instances.items():
-        if instance.zone in {"set_aside", "removed"}:
+        if instance.zone in {"set_aside", "removed", "aside"}:
             seen.setdefault(card_id, instance.zone)
+    for card_id in state.limits.get("mulliganed_aside", []):
+        seen.setdefault(str(card_id), "mulliganed_aside")
     missing = set(state.card_instances) - set(seen)
     allowed_missing = {
         card_id
         for card_id, instance in state.card_instances.items()
-        if instance.zone in {"story", "attachment", "enemy", "set_aside"}
+        if instance.zone in {"story", "attachment", "enemy", "set_aside", "aside"}
     }
     if missing - allowed_missing:
         raise AssertionError(f"cards missing from zones: {sorted(missing - allowed_missing)[:5]}")

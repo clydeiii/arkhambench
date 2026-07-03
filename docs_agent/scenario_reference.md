@@ -65,8 +65,14 @@ weaknesses drawn during setup are set aside and redrawn).
 
 ## Scoring
 
-At game end you earn experience (XP) = total Victory X in the victory display + any
-resolution bonuses. Your benchmark score = **XP − trauma suffered** (minimum 0). Getting
-killed or letting the agenda deck run out while trapped scores 0. Resigning early is safe
-but forfeits un-earned victory points — and any clues left on *Cover Up* cost you a
-mental trauma at game end.
+At game end you earn experience (XP) = total Victory X in the victory display (defeated
+Victory enemies; revealed, clueless Victory locations) + any resolution bonuses.
+
+**Benchmark score = XP − trauma suffered + 3 if you earned Lita Chantler** (minimum 0).
+
+The +3 reflects Lita's campaign value: she is a powerful story ally that joins your deck
+for the rest of the campaign in some outcomes but not others — which outcomes is yours to
+discover. Trauma is permanent campaign damage: defeat causes it (physical if by damage,
+mental if by horror), some resolution choices cause it, and any clues left on *Cover Up*
+cost 1 mental trauma at game end. Getting killed by the agenda while still trapped in the
+house scores 0. Resigning is safe but forfeits unearned victory points.

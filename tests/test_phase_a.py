@@ -158,7 +158,7 @@ class CliTests(unittest.TestCase):
 
             new = self.run_cli("new", "--seed", "7", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(new.returncode, 0, new.stderr)
-            self.assertIn("Choose opening hand mulligan", new.stdout)
+            self.assertIn("Choose cards to mulligan", new.stdout)
 
             actions = self.run_cli("actions", "--run", str(run_dir), cwd=cwd)
             self.assertEqual(actions.returncode, 0, actions.stderr)

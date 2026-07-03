@@ -5,6 +5,7 @@ from typing import Any
 
 from . import data as card_data
 from .cards import player as player_cards
+from .errors import EngineError
 from .model import CardInstance, DecisionOption, GameState, PendingDecision
 
 
@@ -23,17 +24,32 @@ def log_event(events: list[dict[str, Any]], event_type: str, message: str, **dat
     events.append(event)
 
 
-def draw_player_card(state: GameState, events: list[dict[str, Any]]) -> str | None:
+def draw_player_card(state: GameState, events: list[dict[str, Any]], rng: Any = None) -> str | None:
     investigator = state.investigator
+    reshuffled = False
     if not investigator.deck:
-        log_event(events, "deck_empty", "Roland attempted to draw from an empty deck.")
-        return None
+        # RR: an investigator who must draw from an empty deck shuffles his
+        # discard pile into his deck, draws, and takes 1 horror after the draw.
+        if not investigator.discard:
+            log_event(events, "deck_empty", "Roland's deck and discard are both empty; no card drawn.")
+            return None
+        if rng is None:
+            raise EngineError("deck reshuffle requires the game RNG")
+        investigator.deck = list(investigator.discard)
+        investigator.discard = []
+        for instance_id in investigator.deck:
+            state.card_instances[instance_id].zone = "deck"
+        rng.shuffle(investigator.deck)
+        reshuffled = True
+        log_event(events, "deck_reshuffled", "Roland shuffled his discard pile into his deck (he will take 1 horror).")
     instance_id = investigator.deck.pop(0)
     investigator.hand.append(instance_id)
     state.card_instances[instance_id].zone = "hand"
     card = card_data.get_card(state.card_instances[instance_id].card_code)
     log_event(events, "card_drawn", f"Roland drew {card['name']}.", card=instance_id)
     resolve_player_weakness_draw(state, events, instance_id)
+    if reshuffled and state.status == "in_progress":
+        start_damage_assignment(state, events, source="empty-deck reshuffle", damage=0, horror=1)
     return instance_id
 
 
@@ -250,6 +266,9 @@ def present_damage_decision(state: GameState) -> None:
             card = cards.get(instance.card_code, {})
             if instance.horror < int(card.get("sanity") or 0):
                 options.append(DecisionOption(f"Assign 1 horror to {card.get('name', target)}", {"kind": "assign_damage", "type": "horror", "target": target}))
+    # Keep any other queued decisions (e.g. defeat reactions queued when Guard
+    # Dog's counter kills the attacker mid-assignment) behind the assignment.
+    others = [d for d in state.decision_queue if d.id != "assign-damage"]
     state.decision_queue = [
         PendingDecision(
             id="assign-damage",
@@ -257,7 +276,7 @@ def present_damage_decision(state: GameState) -> None:
             prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Assign damage/horror from {pending['source']}.",
             options=options,
         )
-    ]
+    ] + others
 
 
 def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
@@ -326,9 +345,14 @@ def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> N
 
 
 def check_investigator_defeat(state: GameState, events: list[dict[str, Any]]) -> None:
+    # Guarded: this is called from every damage/horror sink; the defeat trauma
+    # must apply exactly once (it double-counted in the opus48/sonnet5 demos).
+    if state.status != "in_progress" or state.limits.get("defeat_trauma_applied"):
+        return
     physical = state.investigator.damage >= state.investigator.health
     mental = state.investigator.horror >= state.investigator.sanity
     if physical or mental:
+        state.limits["defeat_trauma_applied"] = True
         state.trauma["physical"] = int(state.trauma.get("physical", 0)) + (1 if physical else 0)
         state.trauma["mental"] = int(state.trauma.get("mental", 0)) + (1 if mental else 0)
         end_game(state, events, "Roland was defeated")

@@ -266,7 +266,14 @@ def after_attack(
     )
     if card_code == "01102":
         place_doom(state, 1, events, source="Silver Twilight Acolyte", rng=rng)
-    if state.status != "in_progress" or state.decision_queue:
+    if state.status != "in_progress":
+        return
+    if state.decision_queue:
+        # A decision (e.g. defeat reactions) interposed; defer the interrupted
+        # action's continuation instead of dropping it — the phase loop resumes
+        # it once the queue empties.
+        if resume and resume.get("kind") == "action":
+            state.limits["deferred_resume"] = dict(resume)
         return
     if resume and resume.get("kind") == "action":
         from . import actions
@@ -330,14 +337,17 @@ def present_enemy_defeat_reactions(state: GameState, events: list[dict[str, Any]
     if not options:
         return
     options.append(DecisionOption("Done", {"kind": "enemy_defeated_reaction", "reaction": "done"}))
-    state.decision_queue = [
-        PendingDecision(
-            id="enemy-defeated-reactions",
-            kind="enemy_defeated_reaction",
-            prompt="Choose reactions after defeating an enemy.",
-            options=options,
-        )
-    ]
+    decision = PendingDecision(
+        id="enemy-defeated-reactions",
+        kind="enemy_defeated_reaction",
+        prompt="Choose reactions after defeating an enemy.",
+        options=options,
+    )
+    # Append rather than replace: the kill may happen while another decision is
+    # in flight (damage assignment, Cover Up choice) — the window waits its turn.
+    if any(d.id == "enemy-defeated-reactions" for d in state.decision_queue):
+        return
+    state.decision_queue.append(decision)
 
 
 def resolve_enemy_defeated_reaction(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -353,3 +363,7 @@ def resolve_enemy_defeated_reaction(state: GameState, payload: dict[str, Any], e
             player_cards.discard_from_hand(state, card_id)
             discover_clue(state, 1, events)
             log_event(events, "event_played", "Roland played Evidence!.", card=card_id)
+    # Multiple reactions may trigger off the same defeat (Roland's ability AND
+    # Evidence!) — re-offer whatever is still legal until the player is Done.
+    if reaction in ("roland", "evidence") and state.status == "in_progress":
+        present_enemy_defeat_reactions(state, events, str(payload.get("enemy", "")))
