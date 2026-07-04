@@ -907,3 +907,47 @@
 **R15 · Investigation** — Assigned 1 damage to Agnes Baker.
 [R15·Investigation a2/3 | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
 **R15 · Investigation** — Decision presented: [Round 15 · Investigation · Agnes Baker] Use Agnes Baker reaction after horror was placed?
+**R15 · Investigation** — Decision made: Deal 1 damage to Swarm of Rats
+**R15 · Investigation** — Kills the 1hp rat before its own AoO resolves
+**R15 · Investigation** — Swarm of Rats took 1 damage.
+**R15 · Investigation** — Swarm of Rats was defeated.
+**R15 · Investigation** — Agnes dealt 1 damage after horror was placed.
+[R15·Investigation a2/3 | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Investigation** — Decision presented: [Round 15 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R15 · Investigation** — Move action canceled after AoO resolved: R15, engaged with Ghoul Priest + Swarm of Rats in Hallway, I chose 'Move to Parlor'. Engine charged the action, resolved the Priest's attack of opportunity (I took 2 dmg/2 horror, and used Agnes's reaction to kill the Swarm of Rats mid-sequence before its AoO), then returned me to the action menu STILL IN HALLWAY with 2 actions left — the move never completed. Rules reference: an attack of opportunity resolves when the action is initiated, BEFORE the action's effects; the move should then complete (AoOs do not cancel the provoking action). Likely trigger: the second queued AoO attacker (the rat) died mid-queue and the engine dropped the move continuation. Consequence is game-deciding: completing the move would have let me resign at Parlor; instead I paid 1 action + 2dmg/2hor for nothing and am now in a near-unwinnable position at 7/8 horror.
+**R15 · Investigation** — Decision made: Evade Ghoul Priest (evade 4) — test Agility(3)
+**R15 · Investigation** — Only free action: evade fail costs nothing; success (+1 or ES=+7) reopens the Parlor line
+**R15 · Investigation** — Spent 1 action: Evade Ghoul Priest.
+**R15 · Investigation** — Started agility test 3 vs 4.
+[R15·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Investigation** — Decision presented: [Round 15 · Investigation · Agnes Baker] Commit cards to Evade Ghoul Priest (agility vs 4).
+**R15 · Investigation** — Decision made: Done
+**R15 · Investigation** — No agility icons in hand; pray for +1 or elder sign
+**R15 · Investigation** — Revealed autofail.
+**R15 · Investigation** — Evade Ghoul Priest: failure (autofail) by 4 - autofail (skill value 0) vs 4.
+[R15·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Investigation** — Decision presented: [Round 15 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R15 · Investigation** — Decision made: Evade Ghoul Priest (evade 4) — test Agility(3)
+**R15 · Investigation** — All other actions provoke or pass into a lethal attack; evade fail is free
+**R15 · Investigation** — Spent 1 action: Evade Ghoul Priest.
+**R15 · Investigation** — Started agility test 3 vs 4.
+[R15·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Investigation** — Decision presented: [Round 15 · Investigation · Agnes Baker] Commit cards to Evade Ghoul Priest (agility vs 4).
+**R15 · Investigation** — Decision made: Done
+**R15 · Investigation** — Last roll
+**R15 · Investigation** — Revealed -1.
+**R15 · Investigation** — Evade Ghoul Priest: failure by 2 - agility 3 + committed 0 + boosts 0 + token -1 = 2 vs 4.
+[R15·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Investigation** — Decision presented: [Round 15 · Investigation · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R15 · Investigation** — Decision made: Pass (continue)
+**R15 · Investigation** — Nothing changes the outcome; take the enemy phase
+**R15 · Enemy** — Enemy phase began.
+[R15·Enemy | Agnes Baker 01004 | Hallway | clu1 res1 | dmg3/6 hor7/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Enemy** — Decision presented: [Round 15 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R15 · Enemy** — Decision made: Pass (continue)
+**R15 · Enemy** — Accept the attack
+**R15 · Enemy** — Ghoul Priest attacked Agnes Baker.
+**R15 · Enemy** — Agnes Baker took 2 damage and 2 horror.
+[R15·Enemy | Agnes Baker 01004 | Hallway | clu1 res1 | dmg5/6 hor9/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
+**R15 · Enemy** — GAME OVER: Agnes Baker was defeated
+**R15 · Enemy** — Ghoul Priest exhausted after attacking.

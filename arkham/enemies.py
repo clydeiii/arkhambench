@@ -175,6 +175,17 @@ def attack(
     rng: Any = None,
 ) -> None:
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
+        # The attacker died or exhausted mid-queue (e.g. Agnes's reaction killed
+        # the next AoO attacker) — its attack fizzles, but the interrupted
+        # action's continuation must still run: AoOs never cancel the action.
+        if resume and resume.get("kind") == "action":
+            from . import actions
+
+            actions.execute(state, dict(resume.get("payload", {})), events, rng)
+        elif resume and resume.get("kind") == "aoo_order":
+            from . import actions
+
+            actions.continue_aoo_order(state, events, dict(resume), rng)
         return
     if not can_attack_investigator(state, enemy_id):
         log_event(events, "enemy_attack_suppressed", f"{enemy_name(state, enemy_id)} could not attack.", enemy=enemy_id, source=source)

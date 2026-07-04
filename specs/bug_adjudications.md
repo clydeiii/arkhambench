@@ -80,3 +80,13 @@ reporting channel works; the claims just didn't survive the source texts.
    (Consequence: a Priest spawned by advancing at that window does not tick until
    the next round's end — answering the reporter's timing question.) Regression
    test: EndRoundOrderingTests. Credit: Fable 5, game 4, R15.
+
+8. **"Move action canceled after AoO resolved — paid the action and the attack,
+   never moved."** **CONFIRMED BUG — fifth verified find, the worst of the run.**
+   When a queued AoO attacker died mid-sequence (Agnes's reaction killed the Swarm
+   of Rats between the Priest's attack and the rat's), `attack()` early-returned on
+   the dead enemy and dropped the interrupted action's continuation. AoOs never
+   cancel the provoking action (RR); the dead/exhausted branch now runs the resume
+   like the suppressed-attack branch does. In the reporter's game this cost a
+   resign line and likely the scenario. Regression test:
+   DeadAooAttackerResumeTests. Credit: Fable 5, game 4, R15.

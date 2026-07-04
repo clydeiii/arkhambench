@@ -341,3 +341,22 @@ class EndRoundOrderingTests(unittest.TestCase):
         tg.end_round(s, [])
         self.assertEqual(s.agenda.doom, doom_before + 1)  # forced tick applied first
         self.assertTrue(s.decision_queue and s.decision_queue[0].id == "act2-objective")
+
+
+class DeadAooAttackerResumeTests(unittest.TestCase):
+    def test_move_completes_when_queued_aoo_attacker_died(self) -> None:
+        from arkham import enemies as enemies_mod
+
+        s = return_state(seed=6)
+        tg.reveal_location(s, [], "guest_hall")
+        rat = add_enemy(s, "01159", "study")  # engaged attacker queued for an AoO
+        # The rat dies before its queued attack resolves (e.g. Agnes's reaction).
+        s.locations["study"].enemy_ids.remove(rat)
+        s.investigator.engaged_enemies.remove(rat)
+        del s.enemies[rat]
+        resume = {
+            "kind": "action",
+            "payload": {"kind": "action", "action": "move", "location": "guest_hall", "skip_aoo": True, "cost_paid": True},
+        }
+        enemies_mod.attack(s, [], rat, source="attack of opportunity", resume=resume, rng=ArkhamRng(2))
+        self.assertEqual(s.investigator.location_id, "guest_hall")
