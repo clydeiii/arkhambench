@@ -16,6 +16,11 @@ def token_modifier(state: GameState, token: str) -> tuple[int, bool]:
     if token == "autofail":
         return (0, True)
     if token == "eldersign":
+        if any(
+            state.card_instances[instance_id].card_code == "01009"
+            for instance_id in state.investigator.threat_area
+        ):
+            return (0, True)
         code = state.investigator.card_code
         if code == "01001":
             location = state.locations[state.investigator.location_id]

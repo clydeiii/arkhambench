@@ -88,6 +88,16 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
         instance.zone = "threat"
         state.investigator.threat_area.append(instance_id)
         log_event(events, "weakness_revealed", "Haunted entered the threat area.", card=instance_id)
+    elif instance.card_code == "01009":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        instance.zone = "threat"
+        instance.horror = 3
+        state.investigator.threat_area.append(instance_id)
+        log_event(events, "weakness_revealed", "The Necronomicon entered Daisy's threat area with 3 horror.", card=instance_id)
+        from . import actions
+
+        actions.enforce_slot_capacity(state, events)
     elif card_data.get_card(instance.card_code).get("type_code") == "enemy" and str(card_data.get_card(instance.card_code).get("subtype_code", "")) in {"weakness", "basicweakness"}:
         if instance_id in state.investigator.hand:
             state.investigator.hand.remove(instance_id)
@@ -539,3 +549,6 @@ def discard_asset_choice(state: GameState, payload: dict[str, Any], events: list
     name = player_cards.card_name(state, instance_id)
     player_cards.discard_from_play(state, instance_id)
     log_event(events, "asset_discarded", f"{name} was discarded.", card=instance_id)
+    from . import actions
+
+    actions.enforce_slot_capacity(state, events)

@@ -322,6 +322,7 @@ def finalize_resolution(
     margin = int(result["margin"])
     label = "failure (autofail)" if test["autofail"] and not success else ("success" if success else "failure")
     log_event(events, "skill_test_result", f"{test['source']}: {label} by {margin}.", **result)
+    apply_blinding_light_symbol_loss(state, events, test, result)
     apply_elder_sign_success(state, events, result, rng)
     callback = test["on_success"] if success else test["on_failure"]
     committed_ids = list(test["committed"])
@@ -378,6 +379,12 @@ def apply_callback(
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
             disengage_enemy(state, events, enemy_id, exhaust=True)
+    elif kind == "blinding_light":
+        enemy_id = str(callback["enemy"])
+        if success and enemy_id in state.enemies:
+            disengage_enemy(state, events, enemy_id, exhaust=True)
+            if enemy_id in state.enemies:
+                damage_enemy(state, events, enemy_id, 1)
     elif kind == "horror_per_fail":
         if not success and margin > 0:
             start_damage_assignment(state, events, source=str(callback.get("source", "treachery")), damage=0, horror=margin)
@@ -436,6 +443,22 @@ def apply_callback(
         code = state.card_instances[instance_id].card_code
         if success and code in {"01089", "01090", "01091", "01092"}:
             draw_player_card(state, events, rng)
+
+
+def apply_blinding_light_symbol_loss(
+    state: GameState,
+    events: list[dict[str, Any]],
+    test: dict[str, Any],
+    result: dict[str, Any],
+) -> None:
+    if not test.get("blinding_light"):
+        return
+    tokens = [str(result.get("token"))] + [str(token) for token in result.get("extra_tokens", [])]
+    if not any(token in {"skull", "cultist", "tablet", "elderthing", "elder_thing", "autofail"} for token in tokens):
+        return
+    before = state.investigator.actions_remaining
+    state.investigator.actions_remaining = max(0, before - 1)
+    log_event(events, "action_lost", "Blinding Light caused Daisy to lose 1 action.", before=before, after=state.investigator.actions_remaining)
 
 
 def apply_elder_sign_success(

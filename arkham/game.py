@@ -233,6 +233,8 @@ class Game:
             resolve_cover_up_choice(self.state, payload, events)
         elif kind == "old_book_choice":
             actions.resolve_old_book_choice(self.state, payload, events, self.rng)
+        elif kind == "scrying_order":
+            actions.resolve_scrying_order(self.state, payload, events)
         elif kind == "scenario":
             self._resolve_scenario_choice(payload, events)
         else:

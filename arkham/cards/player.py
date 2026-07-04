@@ -14,6 +14,8 @@ PLAYER_CARD_CODES = [
     "01003",
     "01004",
     "01005",
+    "01008",
+    "01009",
     "01006",
     "01007",
     "01102",
@@ -37,7 +39,9 @@ PLAYER_CARD_CODES = [
     "01037",
     "01038",
     "01039",
+    "01061",
     "01065",
+    "01066",
     "01080",
     "01086",
     "01087",
@@ -113,6 +117,8 @@ def setup_uses(instance: CardInstance) -> None:
         instance.uses["supplies"] = 3
     elif instance.card_code == "01019":
         instance.uses["supplies"] = 3
+    elif instance.card_code == "01061":
+        instance.uses["charges"] = 3
 
 
 def discard_from_play(state: GameState, instance_id: str) -> None:
@@ -256,6 +262,11 @@ def controlled_tome_count(state: GameState) -> int:
         if card.get("type_code") == "asset" and "Tome" in str(card.get("traits", "")):
             count += 1
     return count
+
+
+def is_tome_asset_code(card_code: str) -> bool:
+    card = card_data.get_card(card_code)
+    return card.get("type_code") == "asset" and "Tome" in str(card.get("traits", ""))
 
 
 def has_cultist_at_roland_location(state: GameState) -> bool:

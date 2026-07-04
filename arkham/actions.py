@@ -1,6 +1,7 @@
 """Action generation and execution placeholders for phase B."""
 from __future__ import annotations
 
+from itertools import permutations
 from typing import Any
 
 from . import data as card_data
@@ -12,7 +13,7 @@ from .model import DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
-SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "parley_lita", "parley_mob", "resign", "pass", "advance_act"}
+SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "blinding_light", "parley_lita", "parley_mob", "resign", "pass", "advance_act"}
 FREE_ACTIONS = {"fast_ability"}
 NON_ACTIONS = {"advance_act", "pass"}
 
@@ -77,6 +78,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
             and not dissonant_blocks(state, instance.card_code)
             and not is_fast_turn_card(instance.card_code)
             and instance.card_code != "01024"
+            and instance.card_code != "01066"
             and can_enter_play_unique(state, instance.card_code)
         ):
             options.append(DecisionOption(f"Play {card.get('name', instance.card_code)} ({cost} res)", {"kind": "action", "action": "play", "card": instance_id}))
@@ -145,6 +147,12 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         old_book_of_lore(state, payload, events)
     elif action == "medical_texts":
         skill_test.start(state, events, skill="intellect", difficulty=2, source="Medical Texts", on_success={"kind": "medical_texts"}, on_failure={"kind": "medical_texts"})
+    elif action == "necronomicon":
+        necronomicon_action(state, payload, events)
+    elif action == "scrying":
+        scrying_action(state, payload, events)
+    elif action == "blinding_light":
+        blinding_light(state, payload, events)
     elif action == "discard_haunted":
         discard_haunted(state, payload, events)
     elif action == "locked_door":
@@ -195,16 +203,18 @@ def mark_action_cost_paid(state: GameState, action: str, cost: int) -> None:
     key = f"frozen:{state.round}:move_fight_evade"
     if cost > 1 and designator in {"move", "fight", "evade"}:
         state.limits[key] = True
-    if state.investigator.card_code == "01002" and action in {"old_book", "medical_texts"}:
+    if state.investigator.card_code == "01002" and action in {"old_book", "medical_texts", "necronomicon"}:
         state.limits[f"daisy_tome:{state.round}"] = True
 
 
 def action_designator(action: str) -> str:
     if action == "asset_fight":
         return "fight"
+    if action == "blinding_light":
+        return "evade"
     if action in {"parley_lita", "parley_mob"}:
         return "parley"
-    if action == "discard_haunted":
+    if action in {"discard_haunted", "necronomicon", "scrying"}:
         return "activate"
     return action
 
@@ -219,10 +229,9 @@ def only_daisy_tome_action_remains(state: GameState) -> bool:
 
 def is_tome_action(state: GameState, payload: dict[str, Any]) -> bool:
     asset_id = str(payload.get("asset", ""))
-    if asset_id not in state.investigator.play_area:
+    if asset_id not in state.investigator.play_area and asset_id not in state.investigator.threat_area:
         return False
-    card = card_data.get_card(state.card_instances[asset_id].card_code)
-    return card.get("type_code") == "asset" and "Tome" in str(card.get("traits", ""))
+    return player_cards.is_tome_asset_code(state.card_instances[asset_id].card_code)
 
 
 def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> None:
@@ -339,7 +348,7 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]]) 
         if not can_enter_play_unique(state, instance.card_code):
             log_event(events, "play_blocked", f"{card.get('name', instance.card_code)} is unique and already in play.", card=instance_id)
             return
-        slot_discards = required_slot_discards(state, instance.card_code)
+        slot_discards = required_slot_discards(state, instance_id)
         if slot_discards:
             present_slot_discard_decision(state, instance_id, slot_discards)
             return
@@ -365,6 +374,8 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]]) 
         instance.zone = "discard"
         state.investigator.discard.append(instance_id)
     log_event(events, "card_played", f"Roland played {card.get('name', instance.card_code)}.", card=instance_id)
+    if card.get("type_code") == "asset":
+        enforce_slot_capacity(state, events)
 
 
 def can_enter_play_unique(state: GameState, card_code: str) -> bool:
@@ -379,26 +390,20 @@ def can_enter_play_unique(state: GameState, card_code: str) -> bool:
     return True
 
 
-def required_slot_discards(state: GameState, card_code: str) -> list[str]:
+def required_slot_discards(state: GameState, card_id: str) -> list[str]:
+    card_code = state.card_instances[card_id].card_code
     if card_code == "01117":
         return []
     card = card_data.get_card(card_code)
-    slot = str(card.get("slot") or "")
-    if slot == "Ally":
-        allies = [
-            instance_id
-            for instance_id in state.investigator.play_area
-            if state.card_instances[instance_id].card_code != "01117"
-            and card_data.get_card(state.card_instances[instance_id].card_code).get("slot") == "Ally"
-        ]
-        return allies[:1] if len(allies) >= 1 else []
-    if slot == "Hand":
-        hand_assets = [
-            instance_id
-            for instance_id in state.investigator.play_area
-            if card_data.get_card(state.card_instances[instance_id].card_code).get("slot") == "Hand"
-        ]
-        return hand_assets if len(hand_assets) >= 2 else []
+    slot = slot_type(card)
+    if slot is None:
+        return []
+    occupants = slotted_asset_ids(state, slot, include=card_id)
+    if slot_fits(state, slot, occupants):
+        return []
+    choices = discard_choices_for_slot_overflow(state, slot, occupants, candidate_id=card_id)
+    if choices:
+        return choices
     return []
 
 
@@ -426,8 +431,110 @@ def resolve_slot_discard(state: GameState, payload: dict[str, Any], events: list
         name = player_cards.card_name(state, discard)
         player_cards.discard_from_play(state, discard)
         log_event(events, "asset_discarded", f"{name} was discarded for slot capacity.", card=discard)
+    elif discard in state.investigator.threat_area and can_discard_for_slots(state, discard):
+        name = player_cards.card_name(state, discard)
+        player_cards.discard_from_threat(state, discard)
+        log_event(events, "asset_discarded", f"{name} was discarded for slot capacity.", card=discard)
     if play in state.investigator.hand:
         play_card(state, play, events)
+    elif not state.decision_queue:
+        enforce_slot_capacity(state, events)
+
+
+def enforce_slot_capacity(state: GameState, events: list[dict[str, Any]]) -> bool:
+    for slot in ("Ally", "Hand", "Arcane"):
+        occupants = slotted_asset_ids(state, slot)
+        if slot_fits(state, slot, occupants):
+            continue
+        choices = discard_choices_for_slot_overflow(state, slot, occupants)
+        if not choices:
+            log_event(events, "slot_overflow_blocked", f"No legal discard can resolve {slot} slot overflow.")
+            return False
+        state.decision_queue = [
+            PendingDecision(
+                id="slot-overflow-discard",
+                kind="slot_discard",
+                prompt=f"Choose a {slot} asset to discard for slot capacity.",
+                options=[
+                    DecisionOption(
+                        f"Discard {player_cards.card_name(state, occupant)}",
+                        {"kind": "slot_discard", "discard": occupant},
+                    )
+                    for occupant in choices
+                ],
+            )
+        ]
+        return True
+    return False
+
+
+def slot_type(card: dict[str, Any]) -> str | None:
+    slot = str(card.get("slot") or "")
+    if "Hand" in slot:
+        return "Hand"
+    if "Ally" in slot:
+        return "Ally"
+    if "Arcane" in slot:
+        return "Arcane"
+    return None
+
+
+def slotted_asset_ids(state: GameState, slot: str, *, include: str | None = None) -> list[str]:
+    ids = list(state.investigator.play_area) + list(state.investigator.threat_area)
+    if include is not None:
+        ids.append(include)
+    result: list[str] = []
+    for instance_id in ids:
+        if instance_id not in state.card_instances:
+            continue
+        if instance_id == include or instance_id in state.investigator.play_area or instance_id in state.investigator.threat_area:
+            card = card_data.get_card(state.card_instances[instance_id].card_code)
+            if state.card_instances[instance_id].card_code == "01117":
+                continue
+            if card.get("type_code") == "asset" and slot_type(card) == slot:
+                result.append(instance_id)
+    return result
+
+
+def slot_fits(state: GameState, slot: str, occupants: list[str]) -> bool:
+    if slot == "Ally":
+        return len(occupants) <= 1
+    if slot == "Arcane":
+        return len(occupants) <= 2
+    if slot != "Hand":
+        return True
+    tome_slots = 2 if any(state.card_instances[asset_id].card_code == "01008" for asset_id in state.investigator.play_area) else 0
+    tomes = sum(1 for asset_id in occupants if player_cards.is_tome_asset_code(state.card_instances[asset_id].card_code))
+    non_tomes = len(occupants) - tomes
+    tomes_in_regular_slots = max(0, tomes - tome_slots)
+    return non_tomes <= 2 and non_tomes + tomes_in_regular_slots <= 2
+
+
+def discard_choices_for_slot_overflow(
+    state: GameState,
+    slot: str,
+    occupants: list[str],
+    *,
+    candidate_id: str | None = None,
+) -> list[str]:
+    candidates = [
+        asset_id
+        for asset_id in occupants
+        if asset_id != candidate_id and can_discard_for_slots(state, asset_id)
+    ]
+    valid = [
+        asset_id
+        for asset_id in candidates
+        if slot_fits(state, slot, [other for other in occupants if other != asset_id])
+    ]
+    return valid or candidates
+
+
+def can_discard_for_slots(state: GameState, asset_id: str) -> bool:
+    instance = state.card_instances.get(asset_id)
+    if not instance:
+        return False
+    return not (instance.card_code == "01009" and instance.horror > 0)
 
 
 def has_threat(state: GameState, code: str) -> bool:
@@ -510,6 +617,11 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
             options.append(DecisionOption("Use Old Book of Lore", {"kind": "action", "action": "old_book", "asset": asset_id}))
         elif code == "01035":
             options.append(DecisionOption("Use Medical Texts", {"kind": "action", "action": "medical_texts", "asset": asset_id}))
+        elif code == "01061" and not instance.exhausted and instance.uses.get("charges", 0) > 0:
+            if state.investigator.deck:
+                options.append(DecisionOption(f"Use Scrying on Daisy's deck ({instance.uses['charges']} charges)", {"kind": "action", "action": "scrying", "asset": asset_id, "target": "investigator"}))
+            if state.encounter_deck:
+                options.append(DecisionOption(f"Use Scrying on the encounter deck ({instance.uses['charges']} charges)", {"kind": "action", "action": "scrying", "asset": asset_id, "target": "encounter"}))
     for card_id in list(state.investigator.hand):
         if state.card_instances[card_id].card_code == "01024" and state.investigator.resources >= 5 and not dissonant_blocks(state, "01024"):
             for location_id in [state.investigator.location_id, *state.locations[state.investigator.location_id].connections]:
@@ -517,6 +629,12 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
                 if location_id == state.investigator.location_id:
                     label += " (hits Roland)"
                 options.append(DecisionOption(label, {"kind": "action", "action": "dynamite", "card": card_id, "location": location_id}))
+        if state.card_instances[card_id].card_code == "01066" and state.investigator.resources >= 2 and not dissonant_blocks(state, "01066"):
+            for enemy_id in list(state.investigator.engaged_enemies):
+                if enemy_id in state.enemies:
+                    willpower = player_cards.effective_base_skill(state, "willpower", f"Blinding Light {enemy_name(state, enemy_id)}")
+                    evade = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+                    options.append(DecisionOption(f"Play Blinding Light to evade {enemy_name(state, enemy_id)} — test Willpower({willpower}) vs {evade}", {"kind": "action", "action": "blinding_light", "card": card_id, "enemy": enemy_id}))
 
 
 def _weapon_fight_label(state: GameState, enemy_id: str, weapon: str, boost: int, damage: int, extra: str | None = None) -> str:
@@ -546,6 +664,15 @@ def add_threat_action_options(state: GameState, options: list[DecisionOption]) -
                 {"kind": "action", "action": "discard_haunted", "card": instance_id},
             )
         )
+    for instance_id in player_cards.threat_ids(state, "01009"):
+        instance = state.card_instances[instance_id]
+        if instance.horror > 0:
+            options.append(
+                DecisionOption(
+                    f"Move 1 horror from The Necronomicon to Daisy ({instance.horror} horror on it)",
+                    {"kind": "action", "action": "necronomicon", "asset": instance_id},
+                )
+            )
 
 
 def add_mob_enforcer_options(state: GameState, options: list[DecisionOption]) -> None:
@@ -631,6 +758,107 @@ def first_aid(state: GameState, payload: dict[str, Any], events: list[dict[str, 
     if asset.uses.get("supplies", 0) <= 0:
         player_cards.discard_from_play(state, asset_id)
         log_event(events, "asset_discarded", "First Aid was discarded with no supplies.", card=asset_id)
+
+
+def necronomicon_action(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    from .effects import check_investigator_defeat, present_after_horror_reaction
+
+    asset_id = str(payload.get("asset", ""))
+    if asset_id not in state.investigator.threat_area:
+        return
+    instance = state.card_instances[asset_id]
+    if instance.card_code != "01009" or instance.horror <= 0:
+        return
+    instance.horror -= 1
+    state.investigator.horror += 1
+    log_event(events, "horror_moved", "Moved 1 horror from The Necronomicon to Daisy Walker.", card=asset_id)
+    check_investigator_defeat(state, events)
+    if state.status == "in_progress":
+        present_after_horror_reaction(state, events)
+    if instance.horror <= 0:
+        player_cards.discard_from_threat(state, asset_id)
+        log_event(events, "weakness_discarded", "The Necronomicon was discarded.", card=asset_id)
+        enforce_slot_capacity(state, events)
+
+
+def scrying_action(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    asset_id = str(payload.get("asset", ""))
+    target = str(payload.get("target", ""))
+    if asset_id not in state.investigator.play_area:
+        return
+    instance = state.card_instances[asset_id]
+    if instance.card_code != "01061" or instance.exhausted or instance.uses.get("charges", 0) <= 0:
+        return
+    deck = state.investigator.deck if target == "investigator" else state.encounter_deck
+    top = list(deck[:3])
+    if not top:
+        return
+    instance.exhausted = True
+    instance.uses["charges"] -= 1
+    present_scrying_order_decision(state, target, top)
+    log_event(events, "scrying_peek", f"Scrying looked at the top {len(top)} cards of the {target} deck.", card=asset_id, target=target)
+
+
+def present_scrying_order_decision(state: GameState, target: str, top: list[str]) -> None:
+    seen: set[tuple[str, ...]] = set()
+    options: list[DecisionOption] = []
+    for order_tuple in permutations(top):
+        if order_tuple in seen:
+            continue
+        seen.add(order_tuple)
+        labels = [player_cards.card_name(state, card_id) for card_id in order_tuple]
+        options.append(
+            DecisionOption(
+                " / ".join(labels) + " (top first)",
+                {"kind": "scrying_order", "target": target, "cards": list(top), "order": list(order_tuple)},
+            )
+        )
+    names = ", ".join(player_cards.card_name(state, card_id) for card_id in top)
+    state.decision_queue = [
+        PendingDecision(
+            id="scrying-order",
+            kind="scrying_order",
+            prompt=f"Scrying saw: {names}. Choose the return order (first listed is topmost).",
+            options=options,
+        )
+    ]
+
+
+def resolve_scrying_order(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    target = str(payload.get("target", ""))
+    cards = [str(card_id) for card_id in payload.get("cards", [])]
+    order = [str(card_id) for card_id in payload.get("order", [])]
+    if sorted(cards) != sorted(order):
+        return
+    deck = state.investigator.deck if target == "investigator" else state.encounter_deck
+    if deck[: len(cards)] != cards:
+        return
+    deck[: len(cards)] = order
+    log_event(events, "scrying_ordered", f"Scrying reordered the top {len(order)} cards of the {target} deck.", target=target)
+
+
+def blinding_light(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    card_id = str(payload.get("card", ""))
+    enemy_id = str(payload.get("enemy", ""))
+    if card_id not in state.investigator.hand or enemy_id not in state.investigator.engaged_enemies:
+        return
+    if enemy_id not in state.enemies or state.investigator.resources < 2:
+        return
+    state.investigator.resources -= 2
+    player_cards.discard_from_hand(state, card_id)
+    difficulty = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+    skill_test.start(
+        state,
+        events,
+        skill="willpower",
+        difficulty=difficulty,
+        source=f"Blinding Light {enemy_name(state, enemy_id)}",
+        on_success={"kind": "blinding_light", "enemy": enemy_id},
+        on_failure={"kind": "blinding_light", "enemy": enemy_id},
+    )
+    if state.active_skill_test:
+        state.active_skill_test["blinding_light"] = True
+    log_event(events, "event_played", "Played Blinding Light.", card=card_id)
 
 
 def discard_haunted(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:

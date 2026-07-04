@@ -79,8 +79,9 @@ class PhaseV1Tests(unittest.TestCase):
             self.assertEqual(len(s.investigator.hand) + len(s.investigator.deck), 33)
 
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaisesRegex(EngineError, "01008"):
-                Game.new(seed=1, difficulty="standard", deck_path=None, run_dir=Path(tmp) / "run", investigator="daisy")
+            game = Game.new(seed=1, difficulty="standard", deck_path=None, run_dir=Path(tmp) / "run", investigator="daisy")
+            self.assertEqual(game.state.investigator.id, "daisy")
+            self.assertEqual(game.state.investigator.card_code, "01002")
 
     def test_wendy_cancel_returns_token_to_bag_and_is_once_per_test(self) -> None:
         s = state()
