@@ -6,8 +6,8 @@ from typing import Any
 
 from . import data as card_data
 from .cards import encounter_cards, player as player_cards
-from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, resolve_player_weakness_draw, spend_clues, start_damage_assignment
-from .enemies import attack, can_attack_investigator, damage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, legal_dodge_card, move_engaged_enemies_with_roland
+from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
+from .enemies import attack, can_attack_investigator, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
 from .model import DecisionOption, GameState, PendingDecision
 from . import skill_test
@@ -108,6 +108,14 @@ def fight_targets(state: GameState) -> list[str]:
     return sorted(enemy_id for enemy_id in ids if enemy_id in state.enemies)
 
 
+def enemies_at_location(state: GameState) -> list[str]:
+    return sorted(
+        enemy_id
+        for enemy_id in state.locations[state.investigator.location_id].enemy_ids
+        if enemy_id in state.enemies
+    )
+
+
 def exhausted_enemies_at_location(state: GameState) -> list[str]:
     location = state.locations[state.investigator.location_id]
     return sorted(
@@ -154,7 +162,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
     elif action == "resource":
         gain_resource(state, 1, events)
     elif action == "play":
-        play_card(state, str(payload["card"]), events)
+        play_card(state, str(payload["card"]), events, rng)
     elif action == "asset_fight":
         asset_fight(state, payload, events)
     elif action == "flashlight":
@@ -360,7 +368,7 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
     engage_ready_enemies_at_roland(state, events)
 
 
-def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]]) -> None:
+def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]], rng: Any = None) -> None:
     if instance_id not in state.investigator.hand:
         return
     instance = state.card_instances[instance_id]
@@ -386,19 +394,37 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]]) 
         player_cards.setup_uses(instance)
         if instance.card_code == "01032":
             research_librarian_search(state, events)
+        elif instance.card_code == "01063":
+            instance.doom += 1
+            log_event(events, "doom_placed", "Placed 1 doom on Arcane Initiate.", card=instance_id)
     else:
         if instance.card_code == "01088":
             gain_resource(state, 3, events)
+        elif instance.card_code == "01013":
+            place_doom(state, 1, events, source="Dark Memory", rng=rng, can_advance=True)
         elif instance.card_code == "01038":
             instance.zone = "attachment"
             state.locations[state.investigator.location_id].attached_instance_ids.append(instance_id)
             log_event(events, "event_attached", "Barricade attached to Roland's location.", card=instance_id, location=state.investigator.location_id)
+            queue_heirloom_reaction(state, instance_id)
             return
+        elif instance.card_code == "01064":
+            if rng is None:
+                raise EngineError("Drawn to the Flame requires the game RNG")
+            from . import encounter
+
+            state.limits["after_encounter_draw"] = {"kind": "drawn_to_the_flame"}
+            encounter.draw_encounter(state, rng, events)
         instance.zone = "discard"
         state.investigator.discard.append(instance_id)
     log_event(events, "card_played", f"Roland played {card.get('name', instance.card_code)}.", card=instance_id)
     if card.get("type_code") == "asset":
         enforce_slot_capacity(state, events)
+    queue_heirloom_reaction(state, instance_id)
+    if state.limits.get("after_encounter_draw") and not state.decision_queue and not state.active_skill_test and not state.pending_damage:
+        from . import encounter
+
+        encounter.resolve_after_encounter_draw(state, events)
 
 
 def can_enter_play_unique(state: GameState, card_code: str) -> bool:
@@ -465,7 +491,7 @@ def resolve_slot_discard(state: GameState, payload: dict[str, Any], events: list
 
 
 def enforce_slot_capacity(state: GameState, events: list[dict[str, Any]]) -> bool:
-    for slot in ("Ally", "Hand", "Arcane"):
+    for slot in ("Ally", "Hand", "Arcane", "Accessory", "Body"):
         occupants = slotted_asset_ids(state, slot)
         if slot_fits(state, slot, occupants):
             continue
@@ -499,6 +525,10 @@ def slot_type(card: dict[str, Any]) -> str | None:
         return "Ally"
     if "Arcane" in slot:
         return "Arcane"
+    if "Accessory" in slot:
+        return "Accessory"
+    if "Body" in slot:
+        return "Body"
     return None
 
 
@@ -524,13 +554,26 @@ def slot_fits(state: GameState, slot: str, occupants: list[str]) -> bool:
         return len(occupants) <= 1
     if slot == "Arcane":
         return len(occupants) <= 2
+    if slot == "Accessory":
+        return len(occupants) <= 1
+    if slot == "Body":
+        return len(occupants) <= 1
     if slot != "Hand":
         return True
     tome_slots = 2 if any(state.card_instances[asset_id].card_code == "01008" for asset_id in state.investigator.play_area) else 0
-    tomes = sum(1 for asset_id in occupants if player_cards.is_tome_asset_code(state.card_instances[asset_id].card_code))
-    non_tomes = len(occupants) - tomes
-    tomes_in_regular_slots = max(0, tomes - tome_slots)
-    return non_tomes <= 2 and non_tomes + tomes_in_regular_slots <= 2
+    tomes = [asset_id for asset_id in occupants if player_cards.is_tome_asset_code(state.card_instances[asset_id].card_code)]
+    non_tomes = [asset_id for asset_id in occupants if asset_id not in tomes]
+    tome_regular_width = sum(slot_width(state, asset_id) for asset_id in tomes[max(0, tome_slots):])
+    non_tome_width = sum(slot_width(state, asset_id) for asset_id in non_tomes)
+    return non_tome_width <= 2 and non_tome_width + tome_regular_width <= 2
+
+
+def slot_width(state: GameState, asset_id: str) -> int:
+    card = card_data.get_card(state.card_instances[asset_id].card_code)
+    slot = str(card.get("slot") or "")
+    if "x2" in slot:
+        return 2
+    return 1
 
 
 def discard_choices_for_slot_overflow(
@@ -627,6 +670,32 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
         enemies = fight_targets(state)
         if enemies:
             options.append(DecisionOption("Discard Beat Cop to deal 1 damage", {"kind": "action", "action": "fast_ability", "ability": "beat_cop", "card": beat_cop, "enemy": enemies[0]}))
+    for knowledge in player_cards.play_area_ids(state, "01058"):
+        instance = state.card_instances[knowledge]
+        if not instance.exhausted and instance.uses.get("secrets", 0) > 0:
+            options.append(
+                DecisionOption(
+                    f"Use Forbidden Knowledge ({instance.uses['secrets']} secrets)",
+                    {"kind": "action", "action": "fast_ability", "ability": "forbidden_knowledge", "card": knowledge},
+                )
+            )
+    for initiate in player_cards.play_area_ids(state, "01063"):
+        if not state.card_instances[initiate].exhausted and state.investigator.deck:
+            options.append(
+                DecisionOption(
+                    "Use Arcane Initiate",
+                    {"kind": "action", "action": "fast_ability", "ability": "arcane_initiate", "card": initiate},
+                )
+            )
+    for cat in player_cards.play_area_ids(state, "01076"):
+        for enemy_id in enemies_at_location(state):
+            if not is_elite(state, enemy_id):
+                options.append(
+                    DecisionOption(
+                        f"Discard Stray Cat to evade {enemy_name(state, enemy_id)}",
+                        {"kind": "action", "action": "fast_ability", "ability": "stray_cat", "card": cat, "enemy": enemy_id},
+                    )
+                )
 
 
 def add_asset_action_options(state: GameState, options: list[DecisionOption]) -> None:
@@ -651,6 +720,20 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
                 only = len([eid for eid in state.investigator.engaged_enemies if eid in state.enemies]) == 1 and enemy_id in state.investigator.engaged_enemies
                 damage = 2 if only else 1
                 options.append(DecisionOption(_weapon_fight_label(state, enemy_id, "Machete", 1, damage), {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 1, "damage": damage}))
+        elif code == "01060" and instance.uses.get("charges", 0) > 0:
+            for enemy_id in fight_targets(state):
+                willpower = player_cards.effective_base_skill(state, "willpower", f"Shrivelling {enemy_name(state, enemy_id)}")
+                fight = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+                options.append(
+                    DecisionOption(
+                        f"Fight {enemy_name(state, enemy_id)} with Shrivelling ({instance.uses['charges']} charges) — test Willpower({willpower}) vs {fight}, 2 dmg",
+                        {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "damage": 2, "skill": "willpower", "spend_use": "charges", "symbol_horror": True},
+                    )
+                )
+        elif code == "01074":
+            for enemy_id in fight_targets(state):
+                label = _weapon_fight_label(state, enemy_id, "Baseball Bat", 2, 2)
+                options.append(DecisionOption(label, {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 2, "damage": 2, "bat_discard_symbols": True}))
         elif code == "01086":
             for enemy_id in fight_targets(state):
                 options.append(DecisionOption(_weapon_fight_label(state, enemy_id, "Knife", 1, 1), {"kind": "action", "action": "asset_fight", "asset": asset_id, "enemy": enemy_id, "boost": 1, "damage": 1}))
@@ -782,6 +865,11 @@ def asset_fight(state: GameState, payload: dict[str, Any], events: list[dict[str
         if asset.uses.get("ammo", 0) <= 0:
             return
         asset.uses["ammo"] -= 1
+    if payload.get("spend_use"):
+        use = str(payload.get("spend_use"))
+        if asset.uses.get(use, 0) <= 0:
+            return
+        asset.uses[use] -= 1
     difficulty = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
     boost = int(payload.get("boost", 0))
     state.limits[f"temp_skill_boost:{asset_id}"] = boost
@@ -789,9 +877,14 @@ def asset_fight(state: GameState, payload: dict[str, Any], events: list[dict[str
     if payload.get("succeed_by") is not None:
         on_success["succeed_by"] = int(payload.get("succeed_by", 0))
         on_success["bonus_damage"] = int(payload.get("bonus_damage", 0))
-    skill_test.start(state, events, skill="combat", difficulty=difficulty, source=f"Fight with {player_cards.card_name(state, asset_id)}", on_success=on_success, on_failure={"kind": "fight", "enemy": enemy_id})
+    skill = str(payload.get("skill", "combat"))
+    skill_test.start(state, events, skill=skill, difficulty=difficulty, source=f"Fight with {player_cards.card_name(state, asset_id)}", on_success=on_success, on_failure={"kind": "fight", "enemy": enemy_id})
     if state.active_skill_test:
         state.active_skill_test["base"] += boost
+        if payload.get("symbol_horror"):
+            state.active_skill_test["symbol_horror"] = {"asset": asset_id}
+        if payload.get("bat_discard_symbols"):
+            state.active_skill_test["bat_discard_symbols"] = {"asset": asset_id}
     if payload.get("discard_asset"):
         player_cards.discard_from_play(state, asset_id)
 
@@ -942,6 +1035,7 @@ def blinding_light(state: GameState, payload: dict[str, Any], events: list[dict[
     if state.active_skill_test:
         state.active_skill_test["blinding_light"] = True
     log_event(events, "event_played", "Played Blinding Light.", card=card_id)
+    queue_heirloom_reaction(state, card_id)
 
 
 def discard_haunted(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -1060,8 +1154,6 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
         player_cards.discard_from_hand(state, card_id)
         for enemy_id in list(state.investigator.engaged_enemies):
             if enemy_id in state.enemies:
-                from .enemies import disengage_enemy
-
                 disengage_enemy(state, events, enemy_id, exhaust=False)
         if destination:
             move_without_engaged_enemies(state, destination, events)
@@ -1082,6 +1174,27 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
             player_cards.discard_from_play(state, card_id)
             damage_enemy(state, events, enemy_id, 1)
             log_event(events, "beat_cop_ability", "Beat Cop dealt 1 damage.", enemy=enemy_id)
+    elif ability == "forbidden_knowledge":
+        if card_id in state.investigator.play_area:
+            asset = state.card_instances[card_id]
+            if asset.card_code == "01058" and not asset.exhausted and asset.uses.get("secrets", 0) > 0:
+                asset.exhausted = True
+                start_damage_assignment(state, events, source="Forbidden Knowledge", damage=0, horror=1)
+                asset.uses["secrets"] -= 1
+                state.investigator.resources += 1
+                log_event(events, "forbidden_knowledge", "Forbidden Knowledge moved 1 secret to the resource pool.", card=card_id)
+                if asset.uses.get("secrets", 0) <= 0:
+                    player_cards.discard_from_play(state, card_id)
+                    log_event(events, "asset_discarded", "Forbidden Knowledge was discarded with no secrets.", card=card_id)
+    elif ability == "arcane_initiate":
+        arcane_initiate_action(state, card_id, events)
+    elif ability == "stray_cat":
+        enemy_id = str(payload.get("enemy", ""))
+        if card_id in state.investigator.play_area and state.card_instances[card_id].card_code == "01076":
+            if enemy_id in enemies_at_location(state) and not is_elite(state, enemy_id):
+                player_cards.discard_from_play(state, card_id)
+                disengage_enemy(state, events, enemy_id, exhaust=True)
+                log_event(events, "stray_cat", f"Stray Cat automatically evaded {enemy_name(state, enemy_id)}.", enemy=enemy_id)
     elif ability == "skids_action":
         key = f"skids_action:{state.round}"
         if state.investigator.card_code == "01003" and state.investigator.resources >= 2 and not state.limits.get(key):
@@ -1089,6 +1202,111 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
             state.investigator.actions_remaining += 1
             state.limits[key] = True
             log_event(events, "skids_ability", '"Skids" spent 2 resources to gain 1 action.')
+
+
+def arcane_initiate_action(state: GameState, asset_id: str, events: list[dict[str, Any]]) -> None:
+    if asset_id not in state.investigator.play_area:
+        return
+    asset = state.card_instances[asset_id]
+    if asset.card_code != "01063" or asset.exhausted:
+        return
+    candidates = list(state.investigator.deck[:3])
+    if not candidates:
+        return
+    asset.exhausted = True
+    cards = card_data.cards_by_code()
+    found = [
+        card_id
+        for card_id in candidates
+        if cards[state.card_instances[card_id].card_code].get("type_code") in {"asset", "event"}
+        and "Spell" in str(cards[state.card_instances[card_id].card_code].get("traits", ""))
+    ]
+    names = ", ".join(player_cards.card_name(state, card_id) for card_id in candidates)
+    log_event(events, "arcane_initiate_search", f"Arcane Initiate searched: {names}.", card=asset_id)
+    options = [
+        DecisionOption(
+            f"Draw {player_cards.card_name(state, card_id)}",
+            {"kind": "arcane_initiate_choice", "card": card_id, "candidates": candidates},
+        )
+        for card_id in found
+    ]
+    options.append(
+        DecisionOption(
+            "Draw no Spell",
+            {"kind": "arcane_initiate_choice", "card": "", "candidates": candidates},
+        )
+    )
+    state.decision_queue = [
+        PendingDecision(
+            id="arcane-initiate-search",
+            kind="arcane_initiate",
+            prompt=f"Arcane Initiate saw: {names}. Choose a Spell to draw.",
+            options=options,
+        )
+    ]
+
+
+def resolve_arcane_initiate_choice(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: Any,
+) -> None:
+    chosen = str(payload.get("card", ""))
+    candidates = [str(card_id) for card_id in payload.get("candidates", [])]
+    candidates = [card_id for card_id in candidates if card_id in state.investigator.deck]
+    if chosen and chosen not in candidates:
+        return
+    for card_id in candidates:
+        state.investigator.deck.remove(card_id)
+    if chosen:
+        state.investigator.hand.append(chosen)
+        state.card_instances[chosen].zone = "hand"
+        log_event(events, "card_drawn", f"Arcane Initiate drew {player_cards.card_name(state, chosen)}.", card=chosen)
+        resolve_player_weakness_draw(state, events, chosen)
+    rest = [card_id for card_id in candidates if card_id != chosen]
+    state.investigator.deck.extend(rest)
+    rng.shuffle(state.investigator.deck)
+
+
+def queue_heirloom_reaction(state: GameState, played_id: str) -> None:
+    if played_id not in state.card_instances:
+        return
+    played = state.card_instances[played_id]
+    card = card_data.get_card(played.card_code)
+    if "Spell" not in str(card.get("traits", "")):
+        return
+    heirlooms = player_cards.play_area_ids(state, "01012")
+    if not heirlooms:
+        return
+    state.decision_queue.append(
+        PendingDecision(
+            id="heirloom-reaction",
+            kind="heirloom_reaction",
+            prompt=f"[Round {state.round} · {state.phase} · Agnes Baker] Use Heirloom of Hyperborea after playing {card.get('name', played.card_code)}?",
+            options=[
+                DecisionOption(
+                    "Draw 1 card",
+                    {"kind": "heirloom_reaction", "choice": "draw", "heirloom": heirlooms[0]},
+                ),
+                DecisionOption(
+                    "Pass",
+                    {"kind": "heirloom_reaction", "choice": "pass", "heirloom": heirlooms[0]},
+                ),
+            ],
+        )
+    )
+
+
+def resolve_heirloom_reaction(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: Any,
+) -> None:
+    if payload.get("choice") == "draw" and str(payload.get("heirloom", "")) in state.investigator.play_area:
+        draw_player_card(state, events, rng)
+        log_event(events, "heirloom_reaction", "Heirloom of Hyperborea drew 1 card.")
 
 
 def move_without_engaged_enemies(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:

@@ -19,6 +19,9 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             raise RuntimeError("phase loop did not reach a decision")
         if state.active_skill_test or state.pending_damage:
             return
+        if state.limits.get("after_encounter_draw"):
+            encounter.resolve_after_encounter_draw(state, events)
+            continue
         deferred = state.limits.pop("deferred_resume", None)
         if deferred:
             if deferred.get("kind") == "aoo_order":
@@ -30,6 +33,8 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             if state.investigator.actions_remaining > 0:
                 actions.present_action_decision(state)
             else:
+                if resolve_dark_memory_end_turn(state, events):
+                    return
                 if start_frozen_end_turn_test(state, events):
                     return
                 if present_fast_window(state, "inv_end", during_turn=True):
@@ -74,6 +79,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("hunters_moved:")
                     and not str(key).startswith("on_the_lam:")
                     and not str(key).startswith("hospital_debts:")
+                    and not str(key).startswith("dark_memory_end_turn:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":
@@ -250,6 +256,21 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
 
 def starting_actions(state: GameState) -> int:
     return 4 if state.investigator.card_code == "01002" else 3
+
+
+def resolve_dark_memory_end_turn(state: GameState, events: list[dict[str, Any]]) -> bool:
+    key = f"dark_memory_end_turn:{state.round}"
+    if state.limits.get(key):
+        return False
+    memories = player_cards.hand_ids(state, "01013")
+    if not memories:
+        return False
+    state.limits[key] = True
+    from .effects import log_event, start_damage_assignment
+
+    log_event(events, "dark_memory_revealed", "Dark Memory was revealed from hand at end of turn.", card=memories[0])
+    start_damage_assignment(state, events, source="Dark Memory", damage=0, horror=2)
+    return bool(state.decision_queue or state.pending_damage or state.status != "in_progress")
 
 
 def start_frozen_end_turn_test(state: GameState, events: list[dict[str, Any]]) -> bool:

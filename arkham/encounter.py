@@ -29,6 +29,18 @@ def draw_encounter(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]
     return instance_id
 
 
+def resolve_after_encounter_draw(state: GameState, events: list[dict[str, Any]]) -> None:
+    pending = dict(state.limits.get("after_encounter_draw", {}))
+    if not pending or state.decision_queue or state.active_skill_test or state.pending_damage:
+        return
+    state.limits.pop("after_encounter_draw", None)
+    if pending.get("kind") == "drawn_to_the_flame":
+        from .effects import discover_clue
+
+        discover_clue(state, 2, events)
+        log_event(events, "drawn_to_the_flame", "Drawn to the Flame discovered 2 clues.")
+
+
 def present_revelation_cancel(state: GameState, instance_id: str) -> bool:
     instance = state.card_instances[instance_id]
     card = card_data.get_card(instance.card_code)
@@ -75,6 +87,9 @@ def resolve_ward_revelation(
             discard_encounter(state, treachery)
             log_event(events, "revelation_canceled", "Ward of Protection canceled the revelation effect.", card=treachery, ward=ward)
             start_damage_assignment(state, events, source="Ward of Protection", damage=0, horror=1)
+            from . import actions
+
+            actions.queue_heirloom_reaction(state, ward)
             return
     resolve_revelation(state, rng, events, treachery)
 

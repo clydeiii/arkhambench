@@ -336,9 +336,7 @@ def legal_soak_targets(state: GameState) -> list[str]:
     cards = card_data.cards_by_code()
     for instance_id in state.investigator.play_area:
         card = cards.get(state.card_instances[instance_id].card_code, {})
-        if card.get("slot") == "Ally" and (card.get("health") or card.get("sanity")):
-            targets.append(instance_id)
-        elif state.card_instances[instance_id].card_code == "01117" and card.get("health"):
+        if card.get("type_code") == "asset" and (card.get("health") or card.get("sanity")):
             targets.append(instance_id)
     return targets
 

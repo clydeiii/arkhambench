@@ -235,6 +235,10 @@ class Game:
             actions.resolve_old_book_choice(self.state, payload, events, self.rng)
         elif kind == "scrying_order":
             actions.resolve_scrying_order(self.state, payload, events)
+        elif kind == "arcane_initiate_choice":
+            actions.resolve_arcane_initiate_choice(self.state, payload, events, self.rng)
+        elif kind == "heirloom_reaction":
+            actions.resolve_heirloom_reaction(self.state, payload, events, self.rng)
         elif kind == "scenario":
             self._resolve_scenario_choice(payload, events)
         else:

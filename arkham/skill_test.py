@@ -337,6 +337,7 @@ def finalize_resolution(
             state.card_instances[instance_id].zone = "discard"
     state.active_skill_test = None
     apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
+    apply_post_attack_symbol_effects(state, events, test, result)
     apply_scenario_token_aftermath(state, events, result, rng)
 
 
@@ -459,6 +460,8 @@ def apply_callback(
         code = state.card_instances[instance_id].card_code
         if success and code in {"01089", "01090", "01091", "01092"}:
             draw_player_card(state, events, rng)
+        if success and code == "01067":
+            heal_roland(state, events, horror=1)
 
 
 def apply_blinding_light_symbol_loss(
@@ -475,6 +478,29 @@ def apply_blinding_light_symbol_loss(
     before = state.investigator.actions_remaining
     state.investigator.actions_remaining = max(0, before - 1)
     log_event(events, "action_lost", "Blinding Light caused Daisy to lose 1 action.", before=before, after=state.investigator.actions_remaining)
+
+
+def revealed_symbol(result: dict[str, Any], symbols: set[str]) -> bool:
+    tokens = [str(result.get("token"))] + [str(token) for token in result.get("extra_tokens", [])]
+    normalized = {"elderthing" if token == "elder_thing" else token for token in tokens}
+    wanted = {"elderthing" if token == "elder_thing" else token for token in symbols}
+    return any(token in wanted for token in normalized)
+
+
+def apply_post_attack_symbol_effects(
+    state: GameState,
+    events: list[dict[str, Any]],
+    test: dict[str, Any],
+    result: dict[str, Any],
+) -> None:
+    if test.get("symbol_horror") and revealed_symbol(result, {"skull", "cultist", "tablet", "elderthing", "elder_thing", "autofail"}):
+        start_damage_assignment(state, events, source="Shrivelling", damage=0, horror=1)
+    bat = dict(test.get("bat_discard_symbols", {}))
+    if bat and revealed_symbol(result, {"skull", "autofail"}):
+        asset_id = str(bat.get("asset", ""))
+        if asset_id in state.investigator.play_area:
+            player_cards.discard_from_play(state, asset_id)
+            log_event(events, "asset_discarded", "Baseball Bat was discarded after the attack.", card=asset_id)
 
 
 def apply_elder_sign_success(

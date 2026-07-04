@@ -16,6 +16,8 @@ PLAYER_CARD_CODES = [
     "01005",
     "01008",
     "01009",
+    "01012",
+    "01013",
     "01006",
     "01007",
     "01102",
@@ -48,9 +50,19 @@ PLAYER_CARD_CODES = [
     "01050",
     "01052",
     "01053",
+    "01058",
+    "01059",
+    "01060",
     "01061",
+    "01062",
+    "01063",
+    "01064",
     "01065",
     "01066",
+    "01067",
+    "01072",
+    "01074",
+    "01076",
     "01080",
     "01086",
     "01087",
@@ -128,6 +140,10 @@ def setup_uses(instance: CardInstance) -> None:
         instance.uses["supplies"] = 3
     elif instance.card_code == "01019":
         instance.uses["supplies"] = 3
+    elif instance.card_code == "01058":
+        instance.uses["secrets"] = 4
+    elif instance.card_code == "01060":
+        instance.uses["charges"] = 4
     elif instance.card_code == "01061":
         instance.uses["charges"] = 3
 
@@ -167,6 +183,9 @@ def static_skill_bonus(state: GameState, skill: str, source: str) -> int:
             bonus += 1
         if lita_controlled_at_roland_location(state):
             bonus += 1
+    if skill == "willpower":
+        if controls_code(state, "01059"):
+            bonus += 1
     if skill == "intellect":
         if controls_code(state, "01033"):
             bonus += 1
@@ -200,6 +219,13 @@ def boost_options(state: GameState) -> list[DecisionOption]:
                 {"kind": "skill_boost", "card_code": "01017", "skill": skill},
             )
         )
+    if controls_code(state, "01062") and skill in {"willpower", "intellect"}:
+        options.append(
+            DecisionOption(
+                f"Spend 1 resource with Arcane Studies (+1 {skill})",
+                {"kind": "skill_boost", "card_code": "01062", "skill": skill},
+            )
+        )
     if controls_code(state, "01034") and skill in {"intellect", "agility"}:
         options.append(
             DecisionOption(
@@ -224,6 +250,8 @@ def apply_boost(state: GameState, card_code: str, skill: str) -> bool:
     if str(test["skill"]) != skill:
         return False
     if card_code == "01017" and skill not in {"willpower", "combat"}:
+        return False
+    if card_code == "01062" and skill not in {"willpower", "intellect"}:
         return False
     if card_code == "01034" and skill not in {"intellect", "agility"}:
         return False

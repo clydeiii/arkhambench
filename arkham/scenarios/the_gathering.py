@@ -495,6 +495,7 @@ def start_next_round_after_end_round_choice(state: GameState, events: list[dict[
         and not str(key).startswith("mythos_")
         and not str(key).startswith("on_the_lam:")
         and not str(key).startswith("hospital_debts:")
+        and not str(key).startswith("dark_memory_end_turn:")
     }
     log_event(events, "round_started", f"Round {state.round} began.")
 
