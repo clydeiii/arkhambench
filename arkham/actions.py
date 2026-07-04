@@ -18,6 +18,13 @@ SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "backstab", "cunning_distracti
 FREE_ACTIONS = {"fast_ability"}
 NON_ACTIONS = {"advance_act", "pass"}
 
+# Events playable only through their own dedicated windows/actions, never as a
+# generic "Play X" action: Dynamite Blast (01024), Backstab (01051), Sneak
+# Attack (01052), Ward of Protection (01065, revelation-cancel window only),
+# Blinding Light (01066), Cunning Distraction (01078), "Look what I found!"
+# (01079, after-fail window only), Lucky! (01080, would-fail window only).
+SPECIAL_WINDOW_PLAYS = {"01024", "01051", "01052", "01065", "01066", "01078", "01079", "01080"}
+
 
 def present_action_decision(state: GameState) -> None:
     state.decision_queue = [
@@ -82,12 +89,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
             and investigator.resources >= cost
             and not dissonant_blocks(state, instance.card_code)
             and not is_fast_turn_card(instance.card_code)
-            and instance.card_code != "01024"
-            and instance.card_code != "01051"
-            and instance.card_code != "01052"
-            and instance.card_code != "01066"
-            and instance.card_code != "01078"
-            and instance.card_code != "01079"
+            and instance.card_code not in SPECIAL_WINDOW_PLAYS
             and can_enter_play_unique(state, instance.card_code)
             and (not from_discard or player_cards.can_play_from_discard_with_amulet(state, instance_id))
         ):

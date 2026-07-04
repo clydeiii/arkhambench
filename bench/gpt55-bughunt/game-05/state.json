@@ -1,19 +1,97 @@
 {
   "act": {
     "clues_required": 3,
-    "code": "50012",
-    "name": "Mysterious Gateway",
-    "stage": 1
+    "code": "01109",
+    "name": "The Barrier",
+    "stage": 2
   },
   "active_skill_test": null,
   "agenda": {
-    "code": "01105",
-    "doom": 0,
-    "name": "What's Going On?!",
-    "stage": 1,
-    "threshold": 3
+    "code": "01106",
+    "doom": 3,
+    "name": "Rise of the Ghouls",
+    "stage": 2,
+    "threshold": 7
   },
   "card_instances": {
+    "ec0010": {
+      "attachments": [],
+      "card_code": "50040",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0010",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0014": {
+      "attachments": [],
+      "card_code": "01163",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0014",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0025": {
+      "attachments": [],
+      "card_code": "01168",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0025",
+      "owner": "roland",
+      "uses": {},
+      "zone": "attachment"
+    },
+    "pc0001": {
+      "attachments": [],
+      "card_code": "01014",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0001",
+      "owner": "wendy",
+      "uses": {},
+      "zone": "play"
+    },
+    "pc0003": {
+      "attachments": [],
+      "card_code": "01046",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0003",
+      "owner": "wendy",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0006": {
+      "attachments": [],
+      "card_code": "01048",
+      "clues": 0,
+      "damage": 1,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 2,
+      "id": "pc0006",
+      "owner": "wendy",
+      "uses": {},
+      "zone": "discard"
+    },
     "pc0008": {
       "attachments": [],
       "card_code": "01051",
@@ -25,33 +103,33 @@
       "id": "pc0008",
       "owner": "wendy",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
-    "pc0009": {
+    "pc0013": {
       "attachments": [],
-      "card_code": "01073",
+      "card_code": "01077",
       "clues": 0,
       "damage": 0,
       "doom": 0,
       "exhausted": false,
       "horror": 0,
-      "id": "pc0009",
+      "id": "pc0013",
       "owner": "wendy",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
-    "pc0020": {
+    "pc0016": {
       "attachments": [],
-      "card_code": "01080",
+      "card_code": "01078",
       "clues": 0,
       "damage": 0,
       "doom": 0,
       "exhausted": false,
       "horror": 0,
-      "id": "pc0020",
+      "id": "pc0016",
       "owner": "wendy",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0023": {
       "attachments": [],
@@ -64,7 +142,35 @@
       "id": "pc0023",
       "owner": "wendy",
       "uses": {},
+      "zone": "discard"
+    },
+    "pc0025": {
+      "attachments": [],
+      "card_code": "01087",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0025",
+      "owner": "wendy",
+      "uses": {},
       "zone": "hand"
+    },
+    "pc0026": {
+      "attachments": [],
+      "card_code": "01087",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0026",
+      "owner": "wendy",
+      "uses": {
+        "supplies": 0
+      },
+      "zone": "play"
     },
     "pc0027": {
       "attachments": [],
@@ -75,6 +181,32 @@
       "exhausted": false,
       "horror": 0,
       "id": "pc0027",
+      "owner": "wendy",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0031": {
+      "attachments": [],
+      "card_code": "01092",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0031",
+      "owner": "wendy",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0032": {
+      "attachments": [],
+      "card_code": "01092",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0032",
       "owner": "wendy",
       "uses": {},
       "zone": "hand"
@@ -102,107 +234,173 @@
   },
   "decision_queue": [
     {
-      "id": "opening-mulligan",
-      "kind": "scenario",
+      "id": "choose-action",
+      "kind": "choose_action",
       "options": [
         {
-          "label": "Keep opening hand",
+          "label": "Investigate Ghoul Pits (shroud 4) \u2014 test Intellect(3) vs 4",
           "payload": {
-            "choice": "keep_hand",
-            "kind": "scenario"
+            "action": "investigate",
+            "kind": "action"
           }
         },
         {
-          "label": "Mulligan Knife",
+          "label": "Move to Cellar",
           "payload": {
-            "card": "pc0023",
-            "choice": "mulligan_card",
-            "kind": "scenario"
+            "action": "move",
+            "kind": "action",
+            "location": "cellar"
           }
         },
         {
-          "label": "Mulligan Scavenging",
+          "label": "Draw 1 card",
           "payload": {
-            "card": "pc0009",
-            "choice": "mulligan_card",
-            "kind": "scenario"
+            "action": "draw",
+            "kind": "action"
           }
         },
         {
-          "label": "Mulligan Emergency Cache",
+          "label": "Take resource (gain 1)",
           "payload": {
-            "card": "pc0027",
-            "choice": "mulligan_card",
-            "kind": "scenario"
+            "action": "resource",
+            "kind": "action"
           }
         },
         {
-          "label": "Mulligan Backstab",
+          "label": "Pass (end turn)",
           "payload": {
-            "card": "pc0008",
-            "choice": "mulligan_card",
-            "kind": "scenario"
-          }
-        },
-        {
-          "label": "Mulligan Lucky!",
-          "payload": {
-            "card": "pc0020",
-            "choice": "mulligan_card",
-            "kind": "scenario"
+            "action": "pass",
+            "kind": "action"
           }
         }
       ],
-      "prompt": "Opening hand: Knife, Scavenging, Emergency Cache, Backstab, Lucky!. Choose cards to mulligan (one at a time; weaknesses are never dealt into your opening hand), then keep."
+      "prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"
     }
   ],
   "difficulty": "standard",
   "encounter_deck": [],
-  "encounter_deck_count": 32,
-  "encounter_discard": [],
-  "enemies": {},
+  "encounter_deck_count": 26,
+  "encounter_discard": [
+    "ec0014",
+    "ec0010"
+  ],
+  "enemies": {
+    "ec0006": {
+      "attachments": [],
+      "card_code": "50038",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0006",
+      "location_id": "cellar"
+    },
+    "ec0029": {
+      "attachments": [],
+      "card_code": "50022",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0029",
+      "location_id": "guest_hall"
+    },
+    "ec0030": {
+      "attachments": [],
+      "card_code": "50023",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0030",
+      "location_id": "bathroom"
+    }
+  },
   "investigator": {
     "actions_remaining": 3,
     "agility": 4,
     "card_code": "01005",
-    "clues": 0,
+    "clues": 2,
     "combat": 1,
     "damage": 0,
-    "deck_count": 28,
-    "discard": [],
+    "deck_count": 21,
+    "discard": [
+      "pc0027",
+      "pc0008",
+      "pc0016",
+      "pc0006",
+      "pc0031",
+      "pc0023",
+      "pc0003",
+      "pc0013"
+    ],
     "engaged_enemies": [],
     "exhausted": false,
     "hand": [
-      "pc0023",
-      "pc0009",
-      "pc0027",
-      "pc0008",
-      "pc0020"
+      "pc0032",
+      "pc0025"
     ],
     "health": 7,
     "horror": 0,
     "id": "wendy",
     "intellect": 3,
-    "location_id": "study",
+    "location_id": "ghoul_pits",
     "name": "Wendy Adams",
-    "play_area": [],
-    "resources": 5,
+    "play_area": [
+      "pc0026",
+      "pc0001"
+    ],
+    "resources": 1,
     "sanity": 7,
     "threat_area": [],
     "willpower": 4
   },
   "limits": {
-    "mulligan_available": [
-      "pc0023",
-      "pc0009",
-      "pc0027",
-      "pc0008",
-      "pc0020"
-    ],
+    "actions_taken": 21,
+    "encounter_cards_drawn": 6,
+    "fastwin:mythos_end:7": true,
+    "last_skill_test": {
+      "auto_success": false,
+      "base": 4,
+      "boosts": 0,
+      "callback_kind": null,
+      "committed_icons": 1,
+      "difficulty": 3,
+      "extra_tokens": [],
+      "margin": 3,
+      "modifier": 1,
+      "skill": "willpower",
+      "source": "Chill from Below",
+      "success": true,
+      "token": "+1",
+      "value": 6
+    },
+    "mythos_doom_placed:7": true,
+    "mythos_encounter_drawn:7": true,
     "return_variant:attic": "return",
     "return_variant:cellar": "return"
   },
   "locations": {
+    "attic": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50018",
+      "connections": [
+        "hallway"
+      ],
+      "enemy_ids": [],
+      "id": "attic",
+      "investigator_ids": [],
+      "name": "Attic",
+      "revealed": false,
+      "shroud": null
+    },
     "bathroom": {
       "attached_instance_ids": [],
       "clues": 0,
@@ -210,12 +408,14 @@
       "connections": [
         "guest_hall"
       ],
-      "enemy_ids": [],
+      "enemy_ids": [
+        "ec0030"
+      ],
       "id": "bathroom",
       "investigator_ids": [],
       "name": "Bathroom",
-      "revealed": false,
-      "shroud": null
+      "revealed": true,
+      "shroud": 1
     },
     "bedroom": {
       "attached_instance_ids": [],
@@ -228,37 +428,104 @@
       "id": "bedroom",
       "investigator_ids": [],
       "name": "Bedroom",
-      "revealed": false,
-      "shroud": null
+      "revealed": true,
+      "shroud": 2
+    },
+    "cellar": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50020",
+      "connections": [
+        "hallway",
+        "ghoul_pits"
+      ],
+      "enemy_ids": [
+        "ec0006"
+      ],
+      "id": "cellar",
+      "investigator_ids": [],
+      "name": "Cellar",
+      "revealed": true,
+      "shroud": 2
+    },
+    "ghoul_pits": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50021",
+      "connections": [
+        "cellar"
+      ],
+      "enemy_ids": [],
+      "id": "ghoul_pits",
+      "investigator_ids": [
+        "wendy"
+      ],
+      "name": "Ghoul Pits",
+      "revealed": true,
+      "shroud": 4
     },
     "guest_hall": {
-      "attached_instance_ids": [],
+      "attached_instance_ids": [
+        "ec0025"
+      ],
       "clues": 0,
       "code": "50014",
       "connections": [
         "study",
         "bedroom",
-        "bathroom"
+        "bathroom",
+        "hallway"
       ],
-      "enemy_ids": [],
+      "enemy_ids": [
+        "ec0029"
+      ],
       "id": "guest_hall",
       "investigator_ids": [],
       "name": "Guest Hall",
+      "revealed": true,
+      "shroud": 1
+    },
+    "hallway": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50017",
+      "connections": [
+        "guest_hall",
+        "attic",
+        "cellar",
+        "parlor"
+      ],
+      "enemy_ids": [],
+      "id": "hallway",
+      "investigator_ids": [],
+      "name": "Hallway",
+      "revealed": true,
+      "shroud": 1
+    },
+    "parlor": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "01115",
+      "connections": [
+        "hallway"
+      ],
+      "enemy_ids": [],
+      "id": "parlor",
+      "investigator_ids": [],
+      "name": "Parlor",
       "revealed": false,
       "shroud": null
     },
     "study": {
       "attached_instance_ids": [],
-      "clues": 1,
+      "clues": 0,
       "code": "50013",
       "connections": [
         "guest_hall"
       ],
       "enemy_ids": [],
       "id": "study",
-      "investigator_ids": [
-        "wendy"
-      ],
+      "investigator_ids": [],
       "name": "Study (Aberrant Gateway)",
       "revealed": true,
       "shroud": 3
@@ -268,7 +535,7 @@
   "phase": "Investigation",
   "removed_from_game": [],
   "result": null,
-  "round": 1,
+  "round": 7,
   "scenario": "return_to_the_gathering",
   "schema_version": 2,
   "status": "in_progress",

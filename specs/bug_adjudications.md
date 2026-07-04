@@ -117,3 +117,13 @@ reporting channel works; the claims just didn't survive the source texts.
     action; effects stack absent a limit. `effective_action_cost` used a boolean
     has_threat check — now sums copies in the threat area. Regression test:
     FrozenInFearStackTests. Credit: GPT-5.5, game 3, R11.
+
+## gpt55-bughunt game-05 (Wendy, Return, seed 1005) — 2026-07-04
+
+12. **"Lucky! is offered as a normal play action (incl. via Wendy's Amulet) outside
+    its 'when you would fail' window."** **CONFIRMED BUG — and it generalized:**
+    Ward of Protection had the same hole (offerable as a generic play outside its
+    revelation-cancel window). Both were missing from the generic-play exclusion
+    list since their respective phases (V1). Replaced the ad-hoc code!=... chain
+    with a named SPECIAL_WINDOW_PLAYS set including 01065 and 01080. Regression
+    test: ReactionOnlyPlayTests. Credit: GPT-5.5, game 5, R6.

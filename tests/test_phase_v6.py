@@ -383,3 +383,15 @@ class FrozenInFearStackTests(unittest.TestCase):
         self.assertEqual(actions.effective_action_cost(s, "move"), 3)
         actions.mark_action_cost_paid(s, "move", 3)
         self.assertEqual(actions.effective_action_cost(s, "move"), 1)  # only the first each round
+
+
+class ReactionOnlyPlayTests(unittest.TestCase):
+    def test_lucky_and_ward_never_offered_as_normal_plays(self) -> None:
+        s = return_state(seed=9)
+        for code in ("01080", "01065"):
+            cid = f"react_{code}"
+            s.card_instances[cid] = CardInstance(id=cid, card_code=code, zone="hand", owner=s.investigator.id)
+            s.investigator.hand.append(cid)
+        s.investigator.resources = 5
+        labels = [o.label for o in actions.legal_actions(s) if "Lucky" in o.label or "Ward" in o.label]
+        self.assertEqual(labels, [])
