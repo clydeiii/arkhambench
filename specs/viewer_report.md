@@ -81,4 +81,35 @@
 - Attempted a local `python3 -m http.server 8765` fetch smoke test, but this sandbox
   denied localhost socket access with `PermissionError: [Errno 1] Operation not permitted`.
 
+## Viewer v2 Implemented
+
+- Added Roland's investigator card thumbnail to the player board summary row; it opens the
+  standard card modal.
+- Updated card modals to render front and back images side by side when the back image is
+  available, using the existing local-cache -> ArkhamDB -> fallback image chain.
+- Added the optional `meta.scenario_card` token-effects reference to the scenario panel,
+  including the Easy/Standard vs Hard/Expert side note from `meta.difficulty`.
+- Resolved committed skill-test instance ids to card names, with a run-wide fallback for
+  older exports where committed/discarded cards have left the current snapshot.
+- Added safety-net instance-id replacement in event messages and decision prompt/options
+  for known `pcNNNN`/`ecNNNN` ids.
+- Made the location map, event ticker, decision panel, scenario panel, and player board
+  natively resizable with scroll overflow and minimum sizes.
+- Condensed the player board: investigator/stats/deck/discard share one summary row, and
+  Play Area, Threat, and Hand render as three columns in one flex row.
+
+## Viewer v2 Verification
+
+- `node --check viewer/app.js`
+  - passed.
+- Validated checked-in `viewer/data/*.json` exports against the v2 viewer assumptions:
+  - investigator `card_code` values resolve to bundled cards.
+  - optional `meta.scenario_card` resolves when present.
+  - committed skill-test ids resolve through current or run-wide instance data.
+- `python3 -m unittest discover -s tests`
+  - 92 tests passed.
+- Attempted `python3 -m http.server 8765 --directory .` for a local viewer smoke test,
+  but this sandbox denied socket binding with `PermissionError: [Errno 1] Operation not
+  permitted`.
+
 No git commit was made, per instruction.

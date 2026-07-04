@@ -155,9 +155,13 @@ class FixBatch1Tests(unittest.TestCase):
 
         the_gathering.check_agenda_advance(state, [])
 
+        # Doom stays visible (3/3) while the flip choice is pending...
+        self.assertEqual(state.agenda.doom, 2)
+        self.assertEqual(state.decision_queue[0].id, "agenda1-back")
+        # ...and ALL doom in play clears when the flip resolves.
+        the_gathering.set_agenda_2(state, [])
         self.assertEqual(state.agenda.doom, 0)
         self.assertEqual(state.enemies[acolyte].doom, 0)
-        self.assertEqual(state.decision_queue[0].id, "agenda1-back")
 
         fixture = engine_state()
         fixture.agenda.doom = 2

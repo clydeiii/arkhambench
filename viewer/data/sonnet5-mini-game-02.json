@@ -432,6 +432,33 @@
       "type_code": "skill",
       "victory": null
     },
+    "01104": {
+      "clues": null,
+      "cost": null,
+      "doom": null,
+      "enemy_damage": null,
+      "enemy_evade": null,
+      "enemy_fight": null,
+      "enemy_horror": null,
+      "faction_code": "mythos",
+      "health": null,
+      "icons": {
+        "agility": 0,
+        "combat": 0,
+        "intellect": 0,
+        "wild": 0,
+        "willpower": 0
+      },
+      "is_unique": null,
+      "name": "The Gathering",
+      "sanity": null,
+      "shroud": null,
+      "slot": null,
+      "text": "Easy / Standard\n[skull] -X. X is the number of [[Ghoul]] enemies at your location.\n[cultist] -1. If you fail, take 1 horror.\n[tablet] -2. If there is a [[Ghoul]] enemy at your location, take 1 damage.\n",
+      "traits": null,
+      "type_code": "scenario",
+      "victory": null
+    },
     "01105": {
       "clues": null,
       "cost": null,
@@ -870,9 +897,11 @@
     "difficulty": "standard",
     "divergence_step": null,
     "engine_version": "0.1.0-phase-a",
-    "exported_at": "2026-07-03T23:27:42+00:00",
+    "exported_at": "2026-07-04T01:20:14+00:00",
     "name": "sonnet5-mini-game-02",
     "run_dir": "bench/sonnet5-mini/game-02",
+    "scenario": "the_gathering",
+    "scenario_card": "01104",
     "seed": 1002
   },
   "result": {
@@ -7397,7 +7426,7 @@
         "active_skill_test": null,
         "agenda": {
           "code": "01105",
-          "doom": 0,
+          "doom": 3,
           "name": "What's Going On?!",
           "stage": 1,
           "threshold": 3
@@ -7735,7 +7764,7 @@
         },
         "victory_display": []
       },
-      "status": "[R4\u00b7Mythos | Hallway | clu2 res2 | dmg0/9 hor1/5 | h5 d24 x1 | Act2 Agd1 doom0/3]"
+      "status": "[R4\u00b7Mythos | Hallway | clu2 res2 | dmg0/9 hor1/5 | h5 d24 x1 | Act2 Agd1 doom3/3]"
     },
     {
       "decision": {
@@ -8129,7 +8158,7 @@
       },
       "events": [
         {
-          "message": "Assigned 1 horror to roland.",
+          "message": "Assigned 1 horror to Roland.",
           "type": "damage_assigned"
         }
       ],
@@ -8509,7 +8538,7 @@
       },
       "events": [
         {
-          "message": "Assigned 1 horror to roland.",
+          "message": "Assigned 1 horror to Roland.",
           "type": "damage_assigned"
         },
         {
@@ -9317,7 +9346,7 @@
       },
       "events": [
         {
-          "message": "Assigned 1 damage to roland.",
+          "message": "Assigned 1 damage to Roland.",
           "type": "damage_assigned"
         },
         {
@@ -10158,7 +10187,7 @@
       },
       "events": [
         {
-          "message": "Assigned 1 damage to roland.",
+          "message": "Assigned 1 damage to Roland.",
           "type": "damage_assigned"
         }
       ],
@@ -17829,7 +17858,7 @@
       },
       "events": [
         {
-          "message": "Assigned 1 horror to pc0017.",
+          "message": "Assigned 1 horror to Dr. Milan Christopher.",
           "type": "damage_assigned"
         }
       ],
@@ -18322,7 +18351,7 @@
       },
       "events": [
         {
-          "message": "Assigned 1 horror to pc0017.",
+          "message": "Assigned 1 horror to Dr. Milan Christopher.",
           "type": "damage_assigned"
         },
         {

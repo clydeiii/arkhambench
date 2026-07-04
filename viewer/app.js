@@ -318,7 +318,7 @@ function renderScenario(step, prev) {
   const act = snapshot.act || {};
   const victory = snapshot.victory_display || [];
   el.scenario.innerHTML = "";
-  el.scenario.append(
+  const rows = [
     scenarioCardArt("agenda", agenda, prev),
     panelButton("agenda", `${agenda.name || "Agenda"} ${agenda.doom ?? 0}/${agenda.threshold ?? "?"} doom`, () =>
       openEntityModal(resolveCode(agenda.code, "Agenda"))
@@ -328,12 +328,14 @@ function renderScenario(step, prev) {
       openEntityModal(resolveCode(act.code, "Act"))
     ),
     tokenBlock(snapshot.chaos_bag?.tokens || []),
+    scenarioReferenceCard(),
     panelButton("victory", `victory display ${victory.length}`, () => openPile("Victory Display", victory, snapshot)),
     countLine("encounter deck", snapshot.encounter_deck_count ?? snapshot.encounter_deck?.length ?? 0, prev, "encounter_deck_count"),
     panelButton("encounter discard", `encounter discard ${(snapshot.encounter_discard || []).length}`, () =>
       openPile("Encounter Discard", snapshot.encounter_discard || [], snapshot)
     )
-  );
+  ];
+  el.scenario.append(...rows.filter(Boolean));
 }
 
 function scenarioCardArt(kind, cardState, prev) {
@@ -387,8 +389,36 @@ function tokenBlock(tokens) {
   return wrap;
 }
 
+function scenarioReferenceCard() {
+  const code = state.run?.meta?.scenario_card;
+  if (!code) return null;
+  const difficulty = String(state.run?.meta?.difficulty || "").toLowerCase();
+  const usesBack = difficulty === "hard" || difficulty === "expert";
+  const card = cardByCode(code);
+  const wrap = document.createElement("div");
+  wrap.className = "token-reference";
+
+  const label = document.createElement("div");
+  label.className = "mini-title";
+  label.textContent = "token effects";
+
+  const button = codeThumb(code, {
+    className: "token-reference-thumb",
+    imageBack: usesBack,
+    title: card.name || "Token effects",
+  });
+
+  const note = document.createElement("div");
+  note.className = "token-reference-note";
+  note.textContent = usesBack ? "Hard/Expert side applies" : "Easy/Standard side applies";
+
+  wrap.append(label, button, note);
+  return wrap;
+}
+
 function renderEvents(step) {
   el.events.innerHTML = "";
+  const snapshot = step.state;
   const events = step.events || [];
   if (!events.length) {
     el.events.textContent = "No events since previous step.";
@@ -397,7 +427,8 @@ function renderEvents(step) {
   for (const event of events) {
     const line = document.createElement("div");
     line.className = "event-line";
-    line.innerHTML = `<span>${escapeHtml(event.type || "event")}</span> ${escapeHtml(event.message || JSON.stringify(event))}`;
+    const message = replaceInstanceTokens(event.message || JSON.stringify(event), snapshot);
+    line.innerHTML = `<span>${escapeHtml(event.type || "event")}</span> ${escapeHtml(message)}`;
     el.events.append(line);
   }
 }
@@ -407,7 +438,9 @@ function renderSkillTest(step) {
   el.skillTest.hidden = !test;
   el.skillTest.innerHTML = "";
   if (!test) return;
-  const committed = test.committed?.length ? test.committed.join(", ") : "none";
+  const committed = test.committed?.length
+    ? test.committed.map((id) => instanceDisplayName(id, step.state) || id).join(", ")
+    : "none";
   el.skillTest.innerHTML = `
     <b>${escapeHtml(test.skill || "skill")} test</b>
     <span>base ${escapeHtml(String(test.base ?? "?"))}</span>
@@ -420,6 +453,7 @@ function renderSkillTest(step) {
 
 function renderDecision(step) {
   el.decision.innerHTML = "";
+  const snapshot = step.state;
   if (!step.decision) {
     const done = document.createElement("div");
     done.className = "no-decision";
@@ -432,7 +466,7 @@ function renderDecision(step) {
   }
   const prompt = document.createElement("div");
   prompt.className = "decision-prompt";
-  prompt.textContent = step.decision.prompt;
+  prompt.textContent = replaceInstanceTokens(step.decision.prompt, snapshot);
   const list = document.createElement("ol");
   list.className = "decision-options";
   step.decision.options.forEach((option, index) => {
@@ -440,7 +474,7 @@ function renderDecision(step) {
     const item = document.createElement("li");
     const chosen = step.decision.chosen === number;
     item.className = chosen ? "chosen" : "declined";
-    item.textContent = String(option);
+    item.textContent = replaceInstanceTokens(option, snapshot);
     if (chosen) {
       const mark = document.createElement("span");
       mark.className = "check";
@@ -473,6 +507,20 @@ function renderPlayer(step, prev) {
   const snapshot = step.state;
   const investigator = snapshot.investigator || {};
   el.player.innerHTML = "";
+  const summary = document.createElement("div");
+  summary.className = "player-summary";
+
+  if (investigator.card_code) {
+    const investigatorCard = codeThumb(investigator.card_code, {
+      className: "investigator-card",
+      title: investigator.name || "Investigator",
+    });
+    summary.append(investigatorCard);
+  }
+
+  const summaryLines = document.createElement("div");
+  summaryLines.className = "player-summary-lines";
+
   const stats = document.createElement("div");
   stats.className = "player-stats";
   stats.append(
@@ -502,19 +550,25 @@ function renderPlayer(step, prev) {
     statPill("W/I/C/A", `${investigator.willpower}/${investigator.intellect}/${investigator.combat}/${investigator.agility}`)
   );
 
-  const play = zoneSection("play area", investigator.play_area || [], snapshot, prev, "play_area");
-  const threatIds = [...(investigator.threat_area || []), ...(investigator.engaged_enemies || [])];
-  const threat = zoneSection("threat", unique(threatIds), snapshot, prev, "threat_area", { includeEnemies: true });
-  const hand = zoneSection("hand", investigator.hand || [], snapshot, prev, "hand", {
-    onHeader: () => openPile("Hand", investigator.hand || [], snapshot),
-  });
   const counts = document.createElement("div");
   counts.className = "pile-counts";
   counts.append(
     pileCount("deck", investigator.deck_count ?? 0),
     pileCount("discard", (investigator.discard || []).length, () => openPile("Player Discard", investigator.discard || [], snapshot), prev, "state.investigator.discard.length")
   );
-  el.player.append(stats, play, threat, hand, counts);
+  summaryLines.append(stats, counts);
+  summary.append(summaryLines);
+
+  const play = zoneSection("play area", investigator.play_area || [], snapshot, prev, "play_area");
+  const threatIds = [...(investigator.threat_area || []), ...(investigator.engaged_enemies || [])];
+  const threat = zoneSection("threat", unique(threatIds), snapshot, prev, "threat_area", { includeEnemies: true });
+  const hand = zoneSection("hand", investigator.hand || [], snapshot, prev, "hand", {
+    onHeader: () => openPile("Hand", investigator.hand || [], snapshot),
+  });
+  const zones = document.createElement("div");
+  zones.className = "player-zones";
+  zones.append(play, threat, hand);
+  el.player.append(summary, zones);
 }
 
 function statPill(label, value, prev = null, path = "", compareValue = value) {
@@ -589,6 +643,29 @@ function cardThumb(id, snapshot, options = {}) {
   return button;
 }
 
+function codeThumb(code, options = {}) {
+  const card = cardByCode(code);
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = options.className || "card-thumb";
+  button.title = options.title || card.name || code;
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    openEntityModal(resolveCode(code, card.name || code));
+  });
+
+  const img = document.createElement("img");
+  img.alt = card.name || code;
+  img.loading = "lazy";
+  setCardImage(img, code, () => button.classList.add("image-error"), options.imageBack === true);
+
+  const fallback = document.createElement("span");
+  fallback.className = "thumb-fallback";
+  fallback.innerHTML = `<b>${escapeHtml(card.name || code)}</b><small>${escapeHtml(cardSummary(card))}</small>`;
+  button.append(img, fallback);
+  return button;
+}
+
 function enemyCardThumb(id, snapshot, prev, zoneKey) {
   const entity = resolveEnemy(id, snapshot);
   const enemy = entity.enemy || {};
@@ -641,14 +718,15 @@ function openEntityModal(entity) {
   el.modalBody.innerHTML = "";
 
   const imageWrap = document.createElement("div");
-  imageWrap.className = "modal-image";
-  const img = document.createElement("img");
-  img.alt = card.name || entity.code || "";
-  setCardImage(img, entity.code, () => imageWrap.classList.add("image-error"), entity.showBack === true);
+  imageWrap.className = "modal-images";
+  imageWrap.append(
+    modalImageSide(entity.code, false, "Front", card),
+    modalImageSide(entity.code, true, "Back", card, { optional: true })
+  );
   const fallback = document.createElement("div");
   fallback.className = "large-fallback";
   fallback.innerHTML = `<b>${escapeHtml(card.name || entity.code || "Unknown")}</b><span>${escapeHtml(cardSummary(card))}</span>`;
-  imageWrap.append(img, fallback);
+  imageWrap.append(fallback);
 
   const data = document.createElement("div");
   data.className = "modal-data";
@@ -658,6 +736,25 @@ function openEntityModal(entity) {
   `;
   el.modalBody.append(imageWrap, data);
   el.modalBackdrop.hidden = false;
+}
+
+function modalImageSide(code, back, label, card, options = {}) {
+  const side = document.createElement("figure");
+  side.className = "modal-image-side";
+  const img = document.createElement("img");
+  img.alt = `${card.name || code || "Card"} ${label.toLowerCase()}`;
+  const caption = document.createElement("figcaption");
+  caption.textContent = label;
+  setCardImage(img, code, () => {
+    if (options.optional) {
+      side.remove();
+      return;
+    }
+    side.classList.add("image-error");
+    side.closest(".modal-images")?.classList.add("image-error");
+  }, back);
+  side.append(img, caption);
+  return side;
 }
 
 function closeModal() {
@@ -694,6 +791,24 @@ function resolveCode(code, label) {
 
 function cardByCode(code) {
   return state.run?.cards?.[code] || {};
+}
+
+function replaceInstanceTokens(text, snapshot) {
+  return String(text ?? "").replace(/\b[pe]c\d{4}\b/g, (id) => {
+    const name = instanceDisplayName(id, snapshot);
+    return name ? `${name} (${id})` : id;
+  });
+}
+
+function instanceDisplayName(id, snapshot) {
+  const direct = snapshot.card_instances?.[id] || snapshot.enemies?.[id];
+  if (direct?.card_code) return cardByCode(direct.card_code).name || "";
+  for (const step of state.run?.steps || []) {
+    const stepState = step.state || {};
+    const seen = stepState.card_instances?.[id] || stepState.enemies?.[id];
+    if (seen?.card_code) return cardByCode(seen.card_code).name || "";
+  }
+  return "";
 }
 
 function cardImageUrl(code, back = false) {

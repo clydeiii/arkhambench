@@ -478,10 +478,14 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
     from ..effects import clear_all_doom
 
     while total_doom(state) >= state.agenda.threshold and state.status == "in_progress" and not state.decision_queue:
-        clear_all_doom(state)
         if state.agenda.stage == 1:
+            # Keep the doom visible (e.g. 3/3) while the flip choice is pending;
+            # it is cleared when the choice resolves (set_agenda_2) — clearing it
+            # here made the panel read "0/3 What's Going On?!" mid-flip, which
+            # looked like the agenda advanced early.
             present_agenda_1_choice(state)
             return
+        clear_all_doom(state)
         if state.agenda.stage == 2:
             if rng is None:
                 from ..errors import EngineError
@@ -527,8 +531,9 @@ def agenda1_discard(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
 
 
 def set_agenda_2(state: GameState, events: list[dict[str, Any]]) -> None:
-    from ..effects import log_event
+    from ..effects import clear_all_doom, log_event
 
+    clear_all_doom(state)
     state.agenda = AgendaState(code="01106", name="Rise of the Ghouls", stage=2, threshold=7)
     log_event(events, "agenda_advanced", "Agenda advanced to Rise of the Ghouls.")
 

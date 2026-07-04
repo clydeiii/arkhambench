@@ -325,7 +325,12 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
                     log_event(events, "guard_dog_reaction", "Guard Dog dealt 1 damage to the attacking enemy.", enemy=enemy_id)
         else:
             instance.horror += 1
-    log_event(events, "damage_assigned", f"Assigned 1 {point_type} to {target}.", target=target)
+    if target == "roland":
+        target_name = "Roland"
+    else:
+        target_card = card_data.cards_by_code().get(state.card_instances[target].card_code, {})
+        target_name = str(target_card.get("name", target))
+    log_event(events, "damage_assigned", f"Assigned 1 {point_type} to {target_name}.", target=target)
     destroy_defeated_assets(state, events)
     check_investigator_defeat(state, events)
     if state.status != "in_progress":

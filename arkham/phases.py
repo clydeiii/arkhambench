@@ -210,7 +210,10 @@ def discard_to_size(state: GameState, payload: dict[str, Any], events: list[dict
         state.investigator.hand.remove(instance_id)
         state.investigator.discard.append(instance_id)
         state.card_instances[instance_id].zone = "discard"
-        log_event(events, "card_discarded", f"Discarded {instance_id} to hand size.", card=instance_id)
+        from . import data as card_data
+
+        card_name = card_data.cards_by_code().get(state.card_instances[instance_id].card_code, {}).get("name", instance_id)
+        log_event(events, "card_discarded", f"Discarded {card_name} to hand size.", card=instance_id)
     if len(state.investigator.hand) > 8:
         present_discard_to_size(state)
 

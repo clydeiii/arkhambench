@@ -94,9 +94,11 @@ class RulesAuditRegressionTests(unittest.TestCase):
         self.assertEqual(s.agenda.stage, 1)
 
         the_gathering.check_agenda_advance(s, [])
+        self.assertEqual(s.decision_queue[0].id, "agenda1-back")
+        self.assertEqual(s.agenda.doom, 3)  # visible until the flip resolves
+        the_gathering.set_agenda_2(s, [])
         self.assertEqual(s.agenda.doom, 0)
         self.assertEqual(s.enemies[acolyte].doom, 0)
-        self.assertEqual(s.decision_queue[0].id, "agenda1-back")
 
     def test_upkeep_ready_engages_exhausted_enemy_at_rolands_location(self) -> None:
         s = state()

@@ -114,6 +114,12 @@ def _assemble_export(
     divergence_step: int | None,
 ) -> JsonDict:
     steps = _steps_from_timeline(timeline)
+    scenario = None
+    for step in steps:
+        if isinstance(step.get("state"), dict) and step["state"].get("scenario"):
+            scenario = str(step["state"]["scenario"])
+            break
+    scenario_card = SCENARIO_REFERENCE_CARDS.get(scenario or "")
     return {
         "meta": {
             "name": name,
@@ -124,8 +130,10 @@ def _assemble_export(
             "exported_at": _now(),
             "complete": complete,
             "divergence_step": divergence_step,
+            "scenario": scenario,
+            "scenario_card": scenario_card,
         },
-        "cards": _card_bundle(steps),
+        "cards": _card_bundle(steps, extra_codes=[scenario_card] if scenario_card else []),
         "steps": steps,
         "result": result,
     }
@@ -216,8 +224,12 @@ def _warn_divergence(run_dir: Path, step: int, expected: object, actual: object)
     )
 
 
-def _card_bundle(steps: list[JsonDict]) -> JsonDict:
-    codes: set[str] = set()
+# Scenario reference cards (chaos-token effects) per scenario id.
+SCENARIO_REFERENCE_CARDS = {"the_gathering": "01104"}
+
+
+def _card_bundle(steps: list[JsonDict], extra_codes: list[str] | None = None) -> JsonDict:
+    codes: set[str] = set(extra_codes or [])
     all_cards = card_data.cards_by_code()
     for step in steps:
         state = step.get("state", {})
