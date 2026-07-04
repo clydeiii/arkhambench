@@ -367,8 +367,14 @@ def effective_action_cost(state: GameState, action: str) -> int:
     cost = 2 if action in {"discard_haunted", "study_draw"} else 1
     designator = action_designator(action)
     key = f"frozen:{state.round}:move_fight_evade"
-    if designator in {"move", "fight", "evade"} and has_threat(state, "01164") and not state.limits.get(key):
-        cost += 1
+    if designator in {"move", "fight", "evade"} and not state.limits.get(key):
+        # Each Frozen in Fear copy is an independent Forced effect on the same
+        # "first move/fight/evade each round" — multiple copies stack.
+        cost += sum(
+            1
+            for instance_id in state.investigator.threat_area
+            if state.card_instances[instance_id].card_code == "01164"
+        )
     return cost
 
 

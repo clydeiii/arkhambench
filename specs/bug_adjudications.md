@@ -108,3 +108,12 @@ reporting channel works; the claims just didn't survive the source texts.
     already logged the pre-boost base — every weapon's started-test message
     understated the value. Boost now folds into start() via base_boost so the log
     is truthful. Credit: GPT-5.5, game 1, R2 (first find of its run).
+
+## gpt55-bughunt game-03 (Skids, Return, seed 1003) — 2026-07-04
+
+11. **"Two Frozen in Fear copies should make the first move/fight/evade cost 3
+    actions, engine charged 2."** **CONFIRMED BUG — GPT-5.5's first rules find.**
+    Each copy is an independent Forced effect binding the same first qualifying
+    action; effects stack absent a limit. `effective_action_cost` used a boolean
+    has_threat check — now sums copies in the threat area. Regression test:
+    FrozenInFearStackTests. Credit: GPT-5.5, game 3, R11.

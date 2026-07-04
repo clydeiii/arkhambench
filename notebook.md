@@ -121,3 +121,11 @@ SCORING: with Lita's +3 bonus now in the formula, re-derive the R1-vs-R2 choice 
 
 ENGINE QUIRK: playing an Ally when your 1 Ally slot is already occupied auto-discards the incumbent with no confirmation/cancel step -- I lost a full-health Guard Dog by playing Beat Cop without checking slot occupancy first. Always check what's already in your Ally/Hand slots before playing a new card of the same slot type.
 
+## [2026-07-04T20:30:22+00:00] Run none · Round ?
+
+BUGHUNT game-01 Return/Roland: Run became unplayable R3 during Bedroom investigate commit confirmation; ./ahlcg do/state/actions/score/bug all fail with 'missing hidden state: runs/mch/hidden.blob'. Could not finish or file ./ahlcg bug because the bug command hits the same error. Earlier suspected log/UI bug: Machete option showed Combat(5) and final math used combat 5, but test-start log printed combat 4 vs 2.
+
+## [2026-07-04T20:30:28+00:00] Run none · Round ?
+
+Return/Roland opening lesson: Mag Glass + Machete is a strong keep; Flashlight conflicts with hand slots once both are in play, so committing it for the Study clue was good. Return Act 1 needs 3 clues spent from Guest Hall, but Guest Hall revealed with 0 clues in this run; Bedroom had 1 clue and Obscuring Fog can be cleared by a successful investigate. Cover Up is optional on each clue discovery, so decline it when Act tempo is urgent and use later spare clue discoveries/Roland kill triggers to clear it.
+

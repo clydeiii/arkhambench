@@ -1,0 +1,267 @@
+{
+  "act": {
+    "clues_required": 3,
+    "code": "50012",
+    "name": "Mysterious Gateway",
+    "stage": 1
+  },
+  "active_skill_test": null,
+  "agenda": {
+    "code": "01105",
+    "doom": 0,
+    "name": "What's Going On?!",
+    "stage": 1,
+    "threshold": 3
+  },
+  "card_instances": {
+    "pc0004": {
+      "attachments": [],
+      "card_code": "01058",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0004",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0006": {
+      "attachments": [],
+      "card_code": "01059",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0006",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0018": {
+      "attachments": [],
+      "card_code": "01072",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0018",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0019": {
+      "attachments": [],
+      "card_code": "01074",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0019",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0029": {
+      "attachments": [],
+      "card_code": "01091",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0029",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    }
+  },
+  "chaos_bag": {
+    "tokens": [
+      "+1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "-1",
+      "-2",
+      "-2",
+      "-3",
+      "-4",
+      "skull",
+      "skull",
+      "cultist",
+      "tablet",
+      "autofail",
+      "eldersign"
+    ]
+  },
+  "decision_queue": [
+    {
+      "id": "opening-mulligan",
+      "kind": "scenario",
+      "options": [
+        {
+          "label": "Keep opening hand",
+          "payload": {
+            "choice": "keep_hand",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Mulligan Holy Rosary",
+          "payload": {
+            "card": "pc0006",
+            "choice": "mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Mulligan Forbidden Knowledge",
+          "payload": {
+            "card": "pc0004",
+            "choice": "mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Mulligan Baseball Bat",
+          "payload": {
+            "card": "pc0019",
+            "choice": "mulligan_card",
+            "kind": "scenario"
+          }
+        }
+      ],
+      "prompt": "Opening hand: Holy Rosary, Forbidden Knowledge, Baseball Bat, Leather Coat, Overpower. Choose cards to mulligan (one at a time; weaknesses are never dealt into your opening hand), then keep."
+    }
+  ],
+  "difficulty": "standard",
+  "encounter_deck": [],
+  "encounter_deck_count": 32,
+  "encounter_discard": [],
+  "enemies": {},
+  "investigator": {
+    "actions_remaining": 3,
+    "agility": 3,
+    "card_code": "01004",
+    "clues": 0,
+    "combat": 2,
+    "damage": 0,
+    "deck_count": 26,
+    "discard": [],
+    "engaged_enemies": [],
+    "exhausted": false,
+    "hand": [
+      "pc0006",
+      "pc0004",
+      "pc0019",
+      "pc0018",
+      "pc0029"
+    ],
+    "health": 6,
+    "horror": 0,
+    "id": "agnes",
+    "intellect": 2,
+    "location_id": "study",
+    "name": "Agnes Baker",
+    "play_area": [],
+    "resources": 5,
+    "sanity": 8,
+    "threat_area": [],
+    "willpower": 5
+  },
+  "limits": {
+    "mulligan_available": [
+      "pc0006",
+      "pc0004",
+      "pc0019"
+    ],
+    "mulliganed_aside": [
+      "pc0016",
+      "pc0009"
+    ],
+    "return_variant:attic": "return",
+    "return_variant:cellar": "original"
+  },
+  "locations": {
+    "bathroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50016",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bathroom",
+      "investigator_ids": [],
+      "name": "Bathroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "bedroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50015",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bedroom",
+      "investigator_ids": [],
+      "name": "Bedroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "guest_hall": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50014",
+      "connections": [
+        "study",
+        "bedroom",
+        "bathroom"
+      ],
+      "enemy_ids": [],
+      "id": "guest_hall",
+      "investigator_ids": [],
+      "name": "Guest Hall",
+      "revealed": false,
+      "shroud": null
+    },
+    "study": {
+      "attached_instance_ids": [],
+      "clues": 1,
+      "code": "50013",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "study",
+      "investigator_ids": [
+        "agnes"
+      ],
+      "name": "Study (Aberrant Gateway)",
+      "revealed": true,
+      "shroud": 3
+    }
+  },
+  "pending_damage": null,
+  "phase": "Investigation",
+  "removed_from_game": [],
+  "result": null,
+  "round": 1,
+  "scenario": "return_to_the_gathering",
+  "schema_version": 2,
+  "status": "in_progress",
+  "trauma": {},
+  "turn": {
+    "action_index": 0,
+    "investigator_id": "agnes"
+  },
+  "victory_display": []
+}

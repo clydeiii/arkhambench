@@ -371,3 +371,15 @@ class ObjectiveDedupeTests(unittest.TestCase):
         s.investigator.actions_remaining = 3
         labels = [o.label for o in actions.legal_actions(s) if o.label.startswith("Advance act")]
         self.assertEqual(len(labels), 1, labels)
+
+
+class FrozenInFearStackTests(unittest.TestCase):
+    def test_two_frozen_copies_add_two_actions_to_first_move(self) -> None:
+        s = return_state(seed=8)
+        for i in range(2):
+            fid = f"frozen{i}"
+            s.card_instances[fid] = CardInstance(id=fid, card_code="01164", zone="threat", owner=s.investigator.id)
+            s.investigator.threat_area.append(fid)
+        self.assertEqual(actions.effective_action_cost(s, "move"), 3)
+        actions.mark_action_cost_paid(s, "move", 3)
+        self.assertEqual(actions.effective_action_cost(s, "move"), 1)  # only the first each round
