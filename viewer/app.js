@@ -38,6 +38,26 @@ const fixedPositions = {
   parlor: [78, 50],
 };
 
+// Return to The Gathering: Study and Hallway coexist, plus five new rooms —
+// laid out as the house deepens left-to-right (entry -> guest wing -> beyond
+// the wall -> the impossible places).
+const returnPositions = {
+  study: [8, 50],
+  guest_hall: [26, 50],
+  bedroom: [22, 16],
+  bathroom: [22, 84],
+  hallway: [46, 50],
+  parlor: [66, 50],
+  attic: [60, 16],
+  cellar: [60, 84],
+  field_of_graves: [84, 14],
+  ghoul_pits: [84, 86],
+};
+
+function scenarioPositions() {
+  return String(state.run?.meta?.scenario || "") === "return_to_the_gathering" ? returnPositions : fixedPositions;
+}
+
 init().catch((error) => {
   document.body.innerHTML = `<main class="fatal">Unable to load viewer data: ${escapeHtml(error.message)}</main>`;
 });
@@ -268,9 +288,10 @@ function renderMap(step, prev) {
 
 function mapPositions(ids) {
   const result = {};
-  const unknown = ids.filter((id) => !fixedPositions[id]);
+  const fixed = scenarioPositions();
+  const unknown = ids.filter((id) => !fixed[id]);
   ids.forEach((id) => {
-    result[id] = fixedPositions[id] ? [...fixedPositions[id]] : [50, 50];
+    result[id] = fixed[id] ? [...fixed[id]] : [50, 50];
   });
   unknown.forEach((id, index) => {
     const angle = (Math.PI * 2 * index) / Math.max(unknown.length, 1);
