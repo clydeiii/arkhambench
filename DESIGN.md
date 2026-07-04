@@ -1,11 +1,13 @@
 # ArkhamBench Engine — Design Document
 
 **Goal:** A rules-enforcing engine + CLI harness that lets LLM coding agents play *Arkham
-Horror: The Card Game* (AHLCG) solo scenario **"The Gathering"** (Night of the Zealot, Part I),
-so we can reproduce Epoch AI's EBR-Bench continual-learning experiments with AHLCG
-("ArkhamBench"). Agents interact through a CLI; the engine enforces all rules, tracks all
-state, adjudicates skill tests with a seeded chaos bag, and writes complete game logs.
-A persistent, compactable **notebook** is a first-class feature.
+Horror: The Card Game* (AHLCG) solo — scenario **"The Gathering"** (Night of the Zealot,
+Part I) and **"Return to The Gathering"** (Return to the Night of the Zealot), with any of
+the **five core-set investigators** — so we can reproduce Epoch AI's EBR-Bench
+continual-learning experiments with AHLCG ("ArkhamBench"). Agents interact through a CLI;
+the engine enforces all rules, tracks all state, adjudicates skill tests with a seeded
+chaos bag, and writes complete game logs. A persistent, compactable **notebook** is a
+first-class feature.
 
 Design owner: Claude (planning). Implementation: codex/GPT-5.5 with Claude review.
 
@@ -25,8 +27,9 @@ Design owner: Claude (planning). Implementation: codex/GPT-5.5 with Claude revie
 5. **Complete, readable logs.** Every event goes to a JSONL log and a human-readable
    markdown transcript. Clyde must be able to read `log.md` and follow the whole game.
 6. **Scoped rules implementation, honest about scope.** We implement the AHLCG rules subset
-   needed for The Gathering with the Roland Banks Learn-to-Play deck — completely and
-   correctly. Architecture leaves room for more cards/scenarios but does not build them.
+   needed for The Gathering and Return to The Gathering with the five core investigators'
+   "Better Starter Decks" (killbray, revised-core pool) — completely and correctly.
+   Architecture leaves room for more cards/scenarios but does not build them.
 
 ## 2. Tech & repo layout
 
@@ -461,6 +464,26 @@ in meta.json to detect tampering. (Threat model is honest-agent hygiene, not sec
 - **D — scenario + scoring**: The Gathering setup/transitions/outcomes, result.json,
   score command, integration tests, fuzzer.
 - **E — docs**: playing_guide.md + scenario_reference.md (Claude writes these).
+
+### Expansion phases (2026-07: five investigators + Return to The Gathering)
+
+Decks are killbray's "Better Starter Decks" (arkhamdb 33937/33942–33945), vendored in
+`data/decks/killbray/<investigator>.json` — 30 cards + 2 signatures + a **fixed** basic
+weakness (deterministic; we do not draw a random one). Return to NotZ card data is
+vendored in `data/cards/rtnotz*.json`; its setup/resolutions are the original campaign
+guide's plus the exceptions on scenario card 50011 (see `data/rules/ahc26_rules_insert.pdf`).
+
+- **V1 — investigator framework**: `new --investigator`, scenario registry, all five
+  investigator abilities + elder signs, four new engine timing windows (token-reveal
+  reaction, would-fail window, revelation-cancel, after-horror reaction; consumers:
+  Wendy/Lucky!/Ward of Protection/Agnes), neutral skills 01090/01091/01093, basic
+  weaknesses 01096/01097/01098/01101. Spec: `specs/phase_v1_investigators.md`.
+- **V2–V5 — class card packages**: Daisy, Skids, Agnes, Wendy deck contents (pure card
+  content; no new engine windows).
+- **V6 — Return to The Gathering**: scenario module (random Attic/Cellar variants,
+  double-sided location pairs, Ghouls of Umôrdhoth swap, Mysterious Gateway act).
+- **V7 — rotation harness + docs + viewer + validation**: interleaved investigator
+  rotation in bench.py, per-investigator strategy blurbs, fuzz matrix, demo games.
 
 Codex: keep code plain, typed (dataclasses + type hints), no cleverness, no external deps.
 Raise `EngineError` for impossible states; never let an exception corrupt a run dir.
