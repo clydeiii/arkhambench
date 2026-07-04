@@ -32,7 +32,13 @@ open http://localhost:8765/viewer/
 ```
 
 `scripts/view.sh` exports any passed bench or run directories that are not already in
-`viewer/data/`, rebuilds the viewer index, and serves the static UI from the repo root.
+`viewer/data/`, rebuilds the viewer index, caches card images, and serves the static UI
+from the repo root. The viewer steps through every decision of a run: location map with
+card art, player board, event ticker, the decision presented with the agent's choice
+highlighted, and double-sided card modals.
+
+**Live viewer:** https://clydeiii.github.io/arkhambench/ — redeploy with
+`scripts/deploy_pages.sh` after exporting new runs.
 
 ## Scoring
 
