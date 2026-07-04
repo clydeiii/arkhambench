@@ -24,6 +24,16 @@ python3 -m arkham.fuzz --games 100        # random-agent crash/invariant fuzz
 scripts/play_demo.sh claude-sonnet-5 my-demo 7   # let an agent play a full game
 ```
 
+## Watching a game
+
+```
+scripts/view.sh bench/sonnet5-mini
+open http://localhost:8765/viewer/
+```
+
+`scripts/view.sh` exports any passed bench or run directories that are not already in
+`viewer/data/`, rebuilds the viewer index, and serves the static UI from the repo root.
+
 ## Scoring
 
 Reported per run in `result.json`, alongside the raw dimensions (track them all —

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ArkhamBench Run Viewer</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <select id="run-select" aria-label="Run selector"></select>
+      <div class="nav-controls" aria-label="Step navigation">
+        <button id="first-step" type="button" title="First step">&lt;&lt;</button>
+        <button id="prev-step" type="button" title="Previous step">&lt;</button>
+        <span id="step-label" class="step-label">step 0/0</span>
+        <button id="next-step" type="button" title="Next step">&gt;</button>
+        <button id="last-step" type="button" title="Last step">&gt;&gt;</button>
+      </div>
+      <label class="round-jump">
+        <span>round</span>
+        <select id="round-select" aria-label="Jump to round"></select>
+      </label>
+      <input id="step-slider" type="range" min="0" max="0" value="0" aria-label="Step slider">
+      <output id="status-line" class="status-line"></output>
+    </header>
+
+    <main class="viewer-shell">
+      <section class="map-panel" aria-labelledby="map-title">
+        <h2 id="map-title">Location Map</h2>
+        <div id="location-map" class="location-map"></div>
+      </section>
+
+      <aside class="scenario-panel" aria-labelledby="scenario-title">
+        <h2 id="scenario-title">Scenario</h2>
+        <div id="scenario-content"></div>
+      </aside>
+
+      <section class="event-panel" aria-labelledby="event-title">
+        <h2 id="event-title">Event Ticker</h2>
+        <div id="event-ticker" class="event-ticker"></div>
+      </section>
+
+      <section class="decision-panel" aria-labelledby="decision-title">
+        <div id="skill-test" class="skill-test" hidden></div>
+        <h2 id="decision-title">Decision</h2>
+        <div id="decision-content"></div>
+      </section>
+
+      <section class="player-panel" aria-labelledby="player-title">
+        <h2 id="player-title">Player Board</h2>
+        <div id="player-board"></div>
+      </section>
+    </main>
+
+    <div id="modal-backdrop" class="modal-backdrop" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-header">
+          <h2 id="modal-title"></h2>
+          <button id="modal-close" type="button" title="Close">x</button>
+        </div>
+        <div id="modal-body" class="modal-body"></div>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
