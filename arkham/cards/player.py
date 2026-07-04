@@ -18,6 +18,8 @@ PLAYER_CARD_CODES = [
     "01009",
     "01012",
     "01013",
+    "01014",
+    "01015",
     "01006",
     "01007",
     "01102",
@@ -45,9 +47,12 @@ PLAYER_CARD_CODES = [
     "01011",
     "01044",
     "01045",
+    "01046",
     "01047",
+    "01048",
     "01049",
     "01050",
+    "01051",
     "01052",
     "01053",
     "01058",
@@ -61,9 +66,15 @@ PLAYER_CARD_CODES = [
     "01066",
     "01067",
     "01072",
+    "01073",
     "01074",
+    "01075",
     "01076",
+    "01077",
+    "01078",
+    "01079",
     "01080",
+    "01081",
     "01086",
     "01087",
     "01088",
@@ -131,6 +142,66 @@ def controls_code(state: GameState, code: str) -> bool:
     return bool(play_area_ids(state, code))
 
 
+def topmost_discard_event_id(state: GameState) -> str | None:
+    for instance_id in reversed(state.investigator.discard):
+        card = card_data.get_card(state.card_instances[instance_id].card_code)
+        if card.get("type_code") == "event":
+            return instance_id
+    return None
+
+
+def can_play_from_discard_with_amulet(state: GameState, instance_id: str) -> bool:
+    return controls_code(state, "01014") and topmost_discard_event_id(state) == instance_id
+
+
+def remove_from_hand_or_discard_for_play(state: GameState, instance_id: str) -> bool:
+    if instance_id in state.investigator.hand:
+        state.investigator.hand.remove(instance_id)
+        state.card_instances[instance_id].zone = "limbo"
+        return True
+    if can_play_from_discard_with_amulet(state, instance_id):
+        state.investigator.discard.remove(instance_id)
+        state.card_instances[instance_id].zone = "limbo"
+        return True
+    return False
+
+
+def place_played_event(state: GameState, instance_id: str, events: list[dict[str, Any]]) -> None:
+    instance = state.card_instances[instance_id]
+    card = card_data.get_card(instance.card_code)
+    if card.get("type_code") != "event":
+        return
+    if instance_id in state.investigator.hand:
+        state.investigator.hand.remove(instance_id)
+    if instance_id in state.investigator.discard:
+        state.investigator.discard.remove(instance_id)
+    if controls_code(state, "01014"):
+        instance.zone = "player_deck"
+        state.investigator.deck.append(instance_id)
+        from ..effects import log_event
+
+        log_event(events, "wendy_amulet", f"Wendy's Amulet placed {card.get('name', instance.card_code)} on the bottom of the deck.", card=instance_id)
+    else:
+        instance.zone = "discard"
+        if instance_id not in state.investigator.discard:
+            state.investigator.discard.append(instance_id)
+
+
+def discard_event_from_play(state: GameState, instance_id: str, events: list[dict[str, Any]]) -> None:
+    instance = state.card_instances[instance_id]
+    card = card_data.get_card(instance.card_code)
+    if card.get("type_code") == "event" and controls_code(state, "01014"):
+        instance.zone = "player_deck"
+        state.investigator.deck.append(instance_id)
+        from ..effects import log_event
+
+        log_event(events, "wendy_amulet", f"Wendy's Amulet placed {card.get('name', instance.card_code)} on the bottom of the deck.", card=instance_id)
+        return
+    instance.zone = "discard"
+    if instance_id not in state.investigator.discard:
+        state.investigator.discard.append(instance_id)
+
+
 def setup_uses(instance: CardInstance) -> None:
     if instance.card_code in {"01006", "01016"}:
         instance.uses["ammo"] = 4
@@ -155,6 +226,8 @@ def discard_from_play(state: GameState, instance_id: str) -> None:
     instance.zone = "discard"
     if instance_id not in state.investigator.discard:
         state.investigator.discard.append(instance_id)
+    if instance.card_code == "01048" and state.phase == "Investigation":
+        state.investigator.actions_remaining = max(0, state.investigator.actions_remaining - 1)
 
 
 def discard_from_threat(state: GameState, instance_id: str) -> None:
@@ -240,6 +313,13 @@ def boost_options(state: GameState) -> list[DecisionOption]:
                 {"kind": "skill_boost", "card_code": "01049", "skill": skill},
             )
         )
+    if controls_code(state, "01077") and skill in {"willpower", "agility"}:
+        options.append(
+            DecisionOption(
+                f"Spend 1 resource with Dig Deep (+1 {skill})",
+                {"kind": "skill_boost", "card_code": "01077", "skill": skill},
+            )
+        )
     return options
 
 
@@ -256,6 +336,8 @@ def apply_boost(state: GameState, card_code: str, skill: str) -> bool:
     if card_code == "01034" and skill not in {"intellect", "agility"}:
         return False
     if card_code == "01049" and skill not in {"combat", "agility"}:
+        return False
+    if card_code == "01077" and skill not in {"willpower", "agility"}:
         return False
     if not controls_code(state, card_code):
         return False

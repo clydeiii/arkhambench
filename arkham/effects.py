@@ -88,6 +88,21 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
         instance.zone = "threat"
         state.investigator.threat_area.append(instance_id)
         log_event(events, "weakness_revealed", "Haunted entered the threat area.", card=instance_id)
+    elif instance.card_code == "01015":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        log_event(events, "weakness_revealed", "Abandoned and Alone was revealed.", card=instance_id)
+        start_damage_assignment(state, events, source="Abandoned and Alone", damage=0, horror=2, direct=True)
+        removed = list(state.investigator.discard)
+        state.investigator.discard = []
+        for discard_id in removed:
+            state.card_instances[discard_id].zone = "removed"
+            if discard_id not in state.removed_from_game:
+                state.removed_from_game.append(discard_id)
+        if removed:
+            log_event(events, "cards_removed", "Abandoned and Alone removed the discard pile from the game.", cards=removed)
+        instance.zone = "discard"
+        state.investigator.discard.append(instance_id)
     elif instance.card_code == "01009":
         if instance_id in state.investigator.hand:
             state.investigator.hand.remove(instance_id)
@@ -444,9 +459,7 @@ def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> N
         health = int(card.get("health") or 0)
         sanity = int(card.get("sanity") or 0)
         if (health and instance.damage >= health) or (sanity and instance.horror >= sanity):
-            state.investigator.play_area.remove(instance_id)
-            state.investigator.discard.append(instance_id)
-            instance.zone = "discard"
+            player_cards.discard_from_play(state, instance_id)
             log_event(events, "asset_discarded", f"{card.get('name', instance_id)} was discarded.", card=instance_id)
 
 

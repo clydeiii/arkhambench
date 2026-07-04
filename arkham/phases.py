@@ -255,7 +255,10 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
 
 
 def starting_actions(state: GameState) -> int:
-    return 4 if state.investigator.card_code == "01002" else 3
+    total = 4 if state.investigator.card_code == "01002" else 3
+    if player_cards.controls_code(state, "01048"):
+        total += 1
+    return total
 
 
 def resolve_dark_memory_end_turn(state: GameState, events: list[dict[str, Any]]) -> bool:

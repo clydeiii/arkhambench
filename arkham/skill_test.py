@@ -283,7 +283,11 @@ def present_lucky_decision(state: GameState, result: dict[str, Any]) -> None:
 def legal_lucky_cards(state: GameState) -> list[str]:
     if state.investigator.resources < 1:
         return []
-    return player_cards.hand_ids(state, "01080")
+    ids = player_cards.hand_ids(state, "01080")
+    top = player_cards.topmost_discard_event_id(state)
+    if top is not None and player_cards.can_play_from_discard_with_amulet(state, top) and state.card_instances[top].card_code == "01080":
+        ids.append(top)
+    return ids
 
 
 def resolve_lucky_would_fail(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
@@ -295,8 +299,11 @@ def resolve_lucky_would_fail(state: GameState, payload: dict[str, Any], events: 
         card_id = str(payload.get("card", ""))
         if card_id in legal_lucky_cards(state):
             state.investigator.resources -= 1
-            player_cards.discard_from_hand(state, card_id)
+            if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
+                state.investigator.resources += 1
+                return
             test.setdefault("boosts", []).append({"card_code": "01080", "skill": test["skill"], "amount": 2})
+            player_cards.place_played_event(state, card_id, events)
             log_event(events, "event_played", "Played Lucky! for +2 skill value.", card=card_id)
             result = compute_result(state, test)
             if not result["success"] and legal_lucky_cards(state):
@@ -325,7 +332,9 @@ def finalize_resolution(
     apply_blinding_light_symbol_loss(state, events, test, result)
     apply_elder_sign_success(state, events, result, rng)
     callback = test["on_success"] if success else test["on_failure"]
+    result["callback_kind"] = callback.get("kind")
     committed_ids = list(test["committed"])
+    played_event = str(test.get("played_event", ""))
     for instance_id in test["committed"]:
         code = state.card_instances[instance_id].card_code
         if success and code == "01053" and margin >= 3:
@@ -339,6 +348,9 @@ def finalize_resolution(
     apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
     apply_post_attack_symbol_effects(state, events, test, result)
     apply_scenario_token_aftermath(state, events, result, rng)
+    if played_event:
+        player_cards.place_played_event(state, played_event, events)
+    present_skill_test_aftermath_reactions(state, result, committed_ids)
 
 
 def apply_callback(
@@ -391,10 +403,16 @@ def apply_callback(
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
             disengage_enemy(state, events, enemy_id, exhaust=True)
+            from . import actions
+
+            actions.queue_pickpocketing_reaction(state, enemy_id)
     elif kind == "blinding_light":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
             disengage_enemy(state, events, enemy_id, exhaust=True)
+            from . import actions
+
+            actions.queue_pickpocketing_reaction(state, enemy_id)
             if enemy_id in state.enemies:
                 damage_enemy(state, events, enemy_id, 1)
     elif kind == "burglary":
@@ -462,6 +480,166 @@ def apply_callback(
             draw_player_card(state, events, rng)
         if success and code == "01067":
             heal_roland(state, events, horror=1)
+    if success and any(state.card_instances[instance_id].card_code == "01081" for instance_id in committed) and kind in {"evade", "blinding_light"}:
+        present_survival_instinct_decision(state)
+
+
+def present_skill_test_aftermath_reactions(state: GameState, result: dict[str, Any], committed: list[str]) -> None:
+    state.limits["last_skill_test"] = result
+    if result.get("success"):
+        if result.get("callback_kind") == "investigate" and int(result.get("margin", 0)) >= 2:
+            present_scavenging_decision(state)
+        return
+    options: list[DecisionOption] = []
+    rabbit = next(
+        (
+            card_id
+            for card_id in player_cards.play_area_ids(state, "01075")
+            if not state.card_instances[card_id].exhausted
+        ),
+        None,
+    )
+    if rabbit:
+        options.append(DecisionOption("Exhaust Rabbit's Foot to draw 1 card", {"kind": "after_fail_reaction", "reaction": "rabbit", "card": rabbit}))
+    if (
+        result.get("callback_kind") == "investigate"
+        and int(result.get("margin", 0)) <= 2
+        and state.investigator.resources >= 2
+        and state.locations[state.investigator.location_id].clues > 0
+    ):
+        for card_id in legal_look_what_i_found_cards(state):
+            suffix = " from discard" if card_id not in state.investigator.hand else ""
+            options.append(DecisionOption(f'Play "Look what I found!"{suffix}', {"kind": "after_fail_reaction", "reaction": "look", "card": card_id}))
+    if not options:
+        return
+    options.append(DecisionOption("Done", {"kind": "after_fail_reaction", "reaction": "done"}))
+    state.decision_queue.append(
+        PendingDecision(
+            id="after-fail-reactions",
+            kind="after_fail_reaction",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Choose reactions after failing {result.get('source', 'the test')}.",
+            options=options,
+        )
+    )
+
+
+def legal_look_what_i_found_cards(state: GameState) -> list[str]:
+    ids = player_cards.hand_ids(state, "01079")
+    top = player_cards.topmost_discard_event_id(state)
+    if top is not None and player_cards.can_play_from_discard_with_amulet(state, top) and state.card_instances[top].card_code == "01079":
+        ids.append(top)
+    return ids
+
+
+def resolve_after_fail_reaction(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    reaction = str(payload.get("reaction", ""))
+    if reaction == "rabbit":
+        card_id = str(payload.get("card", ""))
+        if card_id in state.investigator.play_area and not state.card_instances[card_id].exhausted:
+            state.card_instances[card_id].exhausted = True
+            draw_player_card(state, events, rng)
+            log_event(events, "rabbits_foot", "Rabbit's Foot drew 1 card.", card=card_id)
+    elif reaction == "look":
+        card_id = str(payload.get("card", ""))
+        if card_id in legal_look_what_i_found_cards(state) and state.investigator.resources >= 2:
+            state.investigator.resources -= 2
+            if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
+                state.investigator.resources += 2
+                return
+            discover_clue(state, 2, events)
+            player_cards.place_played_event(state, card_id, events)
+            log_event(events, "event_played", 'Played "Look what I found!".', card=card_id)
+    if reaction in {"rabbit", "look"} and state.status == "in_progress":
+        result = dict(state.limits.get("last_skill_test", {}))
+        if result:
+            present_skill_test_aftermath_reactions(state, result, [])
+
+
+def present_scavenging_decision(state: GameState) -> None:
+    scavenging = next(
+        (
+            card_id
+            for card_id in player_cards.play_area_ids(state, "01073")
+            if not state.card_instances[card_id].exhausted
+        ),
+        None,
+    )
+    if not scavenging:
+        return
+    item_ids = [
+        card_id
+        for card_id in state.investigator.discard
+        if "Item" in str(card_data.get_card(state.card_instances[card_id].card_code).get("traits", ""))
+    ]
+    if not item_ids:
+        return
+    options = [
+        DecisionOption(
+            f"Return {player_cards.card_name(state, card_id)} to hand",
+            {"kind": "scavenging_reaction", "choice": "take", "card": card_id, "asset": scavenging},
+        )
+        for card_id in item_ids
+    ]
+    options.append(DecisionOption("Pass", {"kind": "scavenging_reaction", "choice": "pass", "asset": scavenging}))
+    state.decision_queue.append(
+        PendingDecision(
+            id="scavenging-reaction",
+            kind="scavenging_reaction",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use Scavenging?",
+            options=options,
+        )
+    )
+
+
+def resolve_scavenging_reaction(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    asset = str(payload.get("asset", ""))
+    if payload.get("choice") != "take" or asset not in state.investigator.play_area:
+        return
+    card_id = str(payload.get("card", ""))
+    if card_id not in state.investigator.discard:
+        return
+    if "Item" not in str(card_data.get_card(state.card_instances[card_id].card_code).get("traits", "")):
+        return
+    state.card_instances[asset].exhausted = True
+    state.investigator.discard.remove(card_id)
+    state.investigator.hand.append(card_id)
+    state.card_instances[card_id].zone = "hand"
+    log_event(events, "scavenging", f"Scavenging returned {player_cards.card_name(state, card_id)} to hand.", card=card_id)
+
+
+def present_survival_instinct_decision(state: GameState) -> None:
+    others = [enemy_id for enemy_id in state.investigator.engaged_enemies if enemy_id in state.enemies]
+    destinations = list(state.locations[state.investigator.location_id].connections)
+    if not others and not destinations:
+        return
+    options: list[DecisionOption] = []
+    if others:
+        options.append(DecisionOption("Disengage each other engaged enemy", {"kind": "survival_instinct", "disengage": True, "location": ""}))
+    for location_id in destinations:
+        options.append(DecisionOption(f"Move to {state.locations[location_id].name}", {"kind": "survival_instinct", "disengage": False, "location": location_id}))
+        if others:
+            options.append(DecisionOption(f"Disengage other enemies and move to {state.locations[location_id].name}", {"kind": "survival_instinct", "disengage": True, "location": location_id}))
+    options.append(DecisionOption("Do neither", {"kind": "survival_instinct", "disengage": False, "location": ""}))
+    state.decision_queue.append(
+        PendingDecision(
+            id="survival-instinct",
+            kind="survival_instinct",
+            prompt="Resolve Survival Instinct.",
+            options=options,
+        )
+    )
+
+
+def resolve_survival_instinct(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    if payload.get("disengage"):
+        for enemy_id in list(state.investigator.engaged_enemies):
+            if enemy_id in state.enemies:
+                disengage_enemy(state, events, enemy_id, exhaust=False)
+    location_id = str(payload.get("location", ""))
+    if location_id:
+        from . import actions
+
+        actions.move(state, location_id, events)
 
 
 def apply_blinding_light_symbol_loss(

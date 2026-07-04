@@ -179,6 +179,14 @@ class Game:
             skill_test.resolve_wendy_token_reaction(self.state, payload, events, self.rng)
         elif kind == "lucky_would_fail":
             skill_test.resolve_lucky_would_fail(self.state, payload, events, self.rng)
+        elif kind == "after_fail_reaction":
+            skill_test.resolve_after_fail_reaction(self.state, payload, events, self.rng)
+        elif kind == "scavenging_reaction":
+            skill_test.resolve_scavenging_reaction(self.state, payload, events)
+        elif kind == "survival_instinct":
+            skill_test.resolve_survival_instinct(self.state, payload, events)
+        elif kind == "pickpocketing_reaction":
+            actions.resolve_pickpocketing_reaction(self.state, payload, events, self.rng)
         elif kind == "ward_revelation":
             from . import encounter
 

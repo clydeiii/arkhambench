@@ -6,6 +6,7 @@ from typing import Any
 
 from .. import data as card_data
 from ..model import ActState, AgendaState, CardInstance, ChaosBag, DecisionOption, GameState, Investigator, Location, PendingDecision, TurnState
+from ..cards import player as player_cards
 from ..cards.player import card_name
 from ..cards.registry import REGISTRY
 from ..errors import EngineError
@@ -597,6 +598,8 @@ def finish_mythos_after_agenda_choice(state: GameState, events: list[dict[str, A
     if state.status == "in_progress" and not state.decision_queue:
         state.phase = "Investigation"
         state.investigator.actions_remaining = starting_actions(state.investigator.card_code)
+        if player_cards.controls_code(state, "01048"):
+            state.investigator.actions_remaining += 1
         state.turn.action_index = 0
         log_event(events, "phase_started", "Investigation phase began.")
 

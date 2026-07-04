@@ -95,6 +95,9 @@ def assert_unique_cards(state) -> None:
             add(card_id, zone_name)
     for test_card in (state.active_skill_test or {}).get("committed", []):
         add(test_card, "committed")
+    played_event = (state.active_skill_test or {}).get("played_event")
+    if played_event:
+        add(str(played_event), "limbo")
     for enemy_id in state.enemies:
         add(enemy_id, "enemy")
     for location in state.locations.values():
