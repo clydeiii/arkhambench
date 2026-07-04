@@ -6,7 +6,7 @@ from typing import Any
 from . import actions, encounter
 from .cards import player as player_cards
 from .effects import draw_player_card, gain_resource, log_event
-from .enemies import attack, engage_ready_enemies_at_roland, enemy_name, move_hunters
+from .enemies import attack, can_attack_investigator, engage_ready_enemies_at_roland, enemy_name, move_hunters
 from .model import DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
@@ -72,6 +72,8 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("upkeep_done:")
                     and not str(key).startswith("fastwin:")
                     and not str(key).startswith("hunters_moved:")
+                    and not str(key).startswith("on_the_lam:")
+                    and not str(key).startswith("hospital_debts:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":
@@ -127,6 +129,7 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
         if enemy_id not in attacked
         and (enemy := state.enemies.get(enemy_id)) is not None
         and not enemy.exhausted
+        and can_attack_investigator(state, enemy_id)
     ]
     if len(ready_attackers) > 1:
         present_enemy_attack_order(state, ready_attackers)
@@ -164,7 +167,7 @@ def resolve_enemy_attack_order(state: GameState, payload: dict[str, Any], events
     enemy_id = str(payload.get("enemy", ""))
     attacked_key = f"enemy_phase_attacked:{state.round}"
     attacked = set(state.limits.get(attacked_key, []))
-    if enemy_id in state.enemies and not state.enemies[enemy_id].exhausted and enemy_id not in attacked:
+    if enemy_id in state.enemies and not state.enemies[enemy_id].exhausted and enemy_id not in attacked and can_attack_investigator(state, enemy_id):
         attacked.add(enemy_id)
         state.limits[attacked_key] = sorted(attacked)
         attack(state, events, enemy_id, source="enemy phase", rng=rng)

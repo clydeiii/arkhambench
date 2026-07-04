@@ -39,6 +39,15 @@ PLAYER_CARD_CODES = [
     "01037",
     "01038",
     "01039",
+    "01010",
+    "01011",
+    "01044",
+    "01045",
+    "01047",
+    "01049",
+    "01050",
+    "01052",
+    "01053",
     "01061",
     "01065",
     "01066",
@@ -113,6 +122,8 @@ def controls_code(state: GameState, code: str) -> bool:
 def setup_uses(instance: CardInstance) -> None:
     if instance.card_code in {"01006", "01016"}:
         instance.uses["ammo"] = 4
+    elif instance.card_code == "01047":
+        instance.uses["ammo"] = 3
     elif instance.card_code == "01087":
         instance.uses["supplies"] = 3
     elif instance.card_code == "01019":
@@ -196,6 +207,13 @@ def boost_options(state: GameState) -> list[DecisionOption]:
                 {"kind": "skill_boost", "card_code": "01034", "skill": skill},
             )
         )
+    if controls_code(state, "01049") and skill in {"combat", "agility"}:
+        options.append(
+            DecisionOption(
+                f"Spend 1 resource with Hard Knocks (+1 {skill})",
+                {"kind": "skill_boost", "card_code": "01049", "skill": skill},
+            )
+        )
     return options
 
 
@@ -208,6 +226,8 @@ def apply_boost(state: GameState, card_code: str, skill: str) -> bool:
     if card_code == "01017" and skill not in {"willpower", "combat"}:
         return False
     if card_code == "01034" and skill not in {"intellect", "agility"}:
+        return False
+    if card_code == "01049" and skill not in {"combat", "agility"}:
         return False
     if not controls_code(state, card_code):
         return False

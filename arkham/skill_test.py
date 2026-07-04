@@ -327,8 +327,14 @@ def finalize_resolution(
     callback = test["on_success"] if success else test["on_failure"]
     committed_ids = list(test["committed"])
     for instance_id in test["committed"]:
-        state.investigator.discard.append(instance_id)
-        state.card_instances[instance_id].zone = "discard"
+        code = state.card_instances[instance_id].card_code
+        if success and code == "01053" and margin >= 3:
+            state.investigator.hand.append(instance_id)
+            state.card_instances[instance_id].zone = "hand"
+            log_event(events, "opportunist_returned", "Opportunist returned to hand.", card=instance_id)
+        else:
+            state.investigator.discard.append(instance_id)
+            state.card_instances[instance_id].zone = "discard"
     state.active_skill_test = None
     apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
     apply_scenario_token_aftermath(state, events, result, rng)
@@ -362,6 +368,11 @@ def apply_callback(
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
             damage = int(callback.get("damage", 1))
+            if callback.get("succeed_by") is not None and margin >= int(callback.get("succeed_by", 0)):
+                bonus = int(callback.get("bonus_damage", 0))
+                damage += bonus
+                if bonus:
+                    log_event(events, "succeed_by_bonus", f"Succeed-by bonus added {bonus} damage.")
             if any(state.card_instances[instance_id].card_code == "01025" for instance_id in committed):
                 damage += 1
                 log_event(events, "vicious_blow", "Vicious Blow added 1 damage.")
@@ -385,6 +396,11 @@ def apply_callback(
             disengage_enemy(state, events, enemy_id, exhaust=True)
             if enemy_id in state.enemies:
                 damage_enemy(state, events, enemy_id, 1)
+    elif kind == "burglary":
+        if success:
+            state.investigator.resources += 3
+            log_event(events, "burglary", "Burglary gained 3 resources instead of discovering clues.", amount=3)
+            discard_obscuring_fog_at_roland(state, events)
     elif kind == "horror_per_fail":
         if not success and margin > 0:
             start_damage_assignment(state, events, source=str(callback.get("source", "treachery")), damage=0, horror=margin)

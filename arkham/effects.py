@@ -98,6 +98,12 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
         from . import actions
 
         actions.enforce_slot_capacity(state, events)
+    elif instance.card_code == "01011":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        instance.zone = "threat"
+        state.investigator.threat_area.append(instance_id)
+        log_event(events, "weakness_revealed", "Hospital Debts entered the threat area.", card=instance_id)
     elif card_data.get_card(instance.card_code).get("type_code") == "enemy" and str(card_data.get_card(instance.card_code).get("subtype_code", "")) in {"weakness", "basicweakness"}:
         if instance_id in state.investigator.hand:
             state.investigator.hand.remove(instance_id)

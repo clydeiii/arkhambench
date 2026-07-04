@@ -493,6 +493,8 @@ def start_next_round_after_end_round_choice(state: GameState, events: list[dict[
         and not str(key).startswith("agnes_horror:")
         and not str(key).startswith("frozen_end_turn:")
         and not str(key).startswith("mythos_")
+        and not str(key).startswith("on_the_lam:")
+        and not str(key).startswith("hospital_debts:")
     }
     log_event(events, "round_started", f"Round {state.round} began.")
 
@@ -671,6 +673,14 @@ def finalize_result(
         xp = victory_points + 2
         lita_earned = True
         score = max(0, xp - total_trauma(state) + LITA_SCORE_VALUE)
+    hospital_debts_penalty = hospital_debts_xp_penalty(state)
+    if hospital_debts_penalty:
+        xp = max(0, xp - hospital_debts_penalty)
+        if outcome == "R3":
+            score = 0
+        else:
+            lita_bonus = LITA_SCORE_VALUE if lita_earned else 0
+            score = max(0, xp - total_trauma(state) + lita_bonus)
     state.status = "ended"
     state.decision_queue = []
     state.result = {
@@ -684,6 +694,7 @@ def finalize_result(
         "trauma": dict(state.trauma),
         "victory_points": victory_points,
         "xp": xp,
+        "hospital_debts_xp_penalty": hospital_debts_penalty,
         "score": score,
         "ghoul_priest_defeated": any(
             state.card_instances[card_id].card_code == "01116"
@@ -737,6 +748,14 @@ def calculate_victory_points(state: GameState) -> int:
 
 def total_trauma(state: GameState) -> int:
     return sum(int(value) for value in state.trauma.values())
+
+
+def hospital_debts_xp_penalty(state: GameState) -> int:
+    for instance_id in state.investigator.threat_area:
+        instance = state.card_instances[instance_id]
+        if instance.card_code == "01011" and instance.uses.get("resources", 0) < 6:
+            return 2
+    return 0
 
 
 def ghouls_at_roland_location(state: GameState) -> int:

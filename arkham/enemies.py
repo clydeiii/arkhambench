@@ -26,6 +26,16 @@ def has_retaliate(state: GameState, enemy_id: str) -> bool:
     return "Retaliate" in str(enemy_card(state, enemy_id).get("text", ""))
 
 
+def is_elite(state: GameState, enemy_id: str) -> bool:
+    return "Elite" in str(enemy_card(state, enemy_id).get("traits", ""))
+
+
+def can_attack_investigator(state: GameState, enemy_id: str) -> bool:
+    if any(str(key).startswith("on_the_lam:") and value for key, value in state.limits.items()):
+        return is_elite(state, enemy_id)
+    return True
+
+
 def enemy_health(state: GameState, enemy_id: str) -> int:
     return int(enemy_card(state, enemy_id).get("enemy_health") or enemy_card(state, enemy_id).get("health") or 1)
 
@@ -157,6 +167,17 @@ def attack(
     rng: Any = None,
 ) -> None:
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
+        return
+    if not can_attack_investigator(state, enemy_id):
+        log_event(events, "enemy_attack_suppressed", f"{enemy_name(state, enemy_id)} could not attack.", enemy=enemy_id, source=source)
+        if resume and resume.get("kind") == "action":
+            from . import actions
+
+            actions.execute(state, dict(resume.get("payload", {})), events, rng)
+        elif resume and resume.get("kind") == "aoo_order":
+            from . import actions
+
+            actions.continue_aoo_order(state, events, dict(resume), rng)
         return
     dodge = legal_dodge_card(state)
     if dodge:
