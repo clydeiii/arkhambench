@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CSV_COLUMNS = [
     "game",
     "seed",
+    "investigator",
     "status",
     "outcome",
     "resolution",
@@ -38,6 +39,13 @@ CSV_COLUMNS = [
 
 def default_seeds(games: int) -> list[int]:
     return [1000 + index for index in range(1, games + 1)]
+
+
+def investigator_for_game(rotation: list[str], game: int) -> str:
+    # Interleaved rotation, identical for every agent: game 1 -> rotation[0],
+    # game 2 -> rotation[1], ..., wrapping. With the full five-investigator
+    # rotation and 10 games, the final-20% window is the 2nd Agnes + 2nd Wendy.
+    return rotation[(game - 1) % len(rotation)]
 
 
 def read_seeds(path: Path, games: int) -> list[int]:
@@ -63,10 +71,12 @@ def notebook_line_count(path: Path) -> int:
     return len(path.read_text(encoding="utf-8").splitlines())
 
 
-def bench_header(label: str, k: int, n: int, notebook_lines: int) -> str:
+def bench_header(label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str) -> str:
     final_count, first_final = final_window(n)
     return (
         f"=== ArkhamBench: playthrough {k} of {n} ===\n"
+        f"This game you are playing {investigator.title()} in scenario '{scenario}'. Investigator-specific\n"
+        "strategy notes are in docs_agent/decks_guide.md — read your investigator's section.\n"
         f"You are agent '{label}'. Your benchmark objective is to maximize your AVERAGE SCORE over\n"
         f"the FINAL {final_count} playthroughs (games {first_final}-{n}). Earlier games are for\n"
         "learning: explore, take risks you can learn from, and invest heavily in your notebook —\n"
@@ -90,11 +100,13 @@ def bench_mission(mission: str) -> str:
     )
 
 
-def build_prompt(mission: str, label: str, k: int, n: int, notebook_lines: int) -> str:
-    return bench_header(label, k, n, notebook_lines) + bench_mission(mission)
+def build_prompt(mission: str, label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str) -> str:
+    return bench_header(label, k, n, notebook_lines, investigator, scenario) + bench_mission(mission)
 
 
-def build_new_argv(run_dir: Path, seed: int, difficulty: str, notebook: Path) -> list[str]:
+def build_new_argv(
+    run_dir: Path, seed: int, difficulty: str, notebook: Path, scenario: str, investigator: str
+) -> list[str]:
     return [
         "./ahlcg",
         "new",
@@ -104,6 +116,10 @@ def build_new_argv(run_dir: Path, seed: int, difficulty: str, notebook: Path) ->
         str(seed),
         "--difficulty",
         difficulty,
+        "--scenario",
+        scenario,
+        "--investigator",
+        investigator,
         "--notebook",
         str(notebook),
     ]
@@ -171,10 +187,11 @@ def trauma_total(result: dict[str, Any]) -> int:
     return 0
 
 
-def row_from_result(game: int, seed: int, result: dict[str, Any], wall_seconds: float = 0.0) -> dict[str, Any]:
+def row_from_result(game: int, seed: int, result: dict[str, Any], wall_seconds: float = 0.0, investigator: str = "roland") -> dict[str, Any]:
     return {
         "game": game,
         "seed": seed,
+        "investigator": investigator,
         "status": str(result.get("status", "complete")),
         "outcome": str(result.get("outcome", "")),
         "resolution": str(result.get("resolution", "")),
@@ -193,12 +210,13 @@ def row_from_result(game: int, seed: int, result: dict[str, Any], wall_seconds: 
     }
 
 
-def incomplete_row(game: int, seed: int, wall_seconds: float = 0.0) -> dict[str, Any]:
+def incomplete_row(game: int, seed: int, wall_seconds: float = 0.0, investigator: str = "roland") -> dict[str, Any]:
     row = {column: 0 for column in CSV_COLUMNS}
     row.update(
         {
             "game": game,
             "seed": seed,
+            "investigator": investigator,
             "status": "incomplete",
             "outcome": "incomplete",
             "resolution": "incomplete",
@@ -286,12 +304,12 @@ def write_summary(path: Path, label: str, rows: list[dict[str, Any]], stats: dic
         "",
         "## Per-game results",
         "",
-        "| Game | Seed | Status | Outcome | Resolution | Score | XP | Trauma | Rounds |",
-        "| ---: | ---: | --- | --- | --- | ---: | ---: | ---: | ---: |",
+        "| Game | Seed | Investigator | Status | Outcome | Resolution | Score | XP | Trauma | Rounds |",
+        "| ---: | ---: | --- | --- | --- | --- | ---: | ---: | ---: | ---: |",
     ]
     for row in rows:
         lines.append(
-            f"| {row['game']} | {row['seed']} | {row['status']} | {row['outcome']} | "
+            f"| {row['game']} | {row['seed']} | {row.get('investigator', '')} | {row['status']} | {row['outcome']} | "
             f"{row['resolution']} | {row['score']} | {row['xp']} | {row['trauma_total']} | {row['rounds']} |"
         )
     lines.extend(
@@ -304,6 +322,19 @@ def write_summary(path: Path, label: str, rows: list[dict[str, Any]], stats: dic
             f"- First-half mean score: {stats['first_half_mean']:.2f}",
             f"- Second-half mean score: {stats['second_half_mean']:.2f}",
             f"- Final-20% average: {stats['final_20_average']:.2f}",
+            "",
+            "## Per-investigator",
+            "",
+        ]
+    )
+    by_investigator: dict[str, list[float]] = {}
+    for row in rows:
+        by_investigator.setdefault(str(row.get("investigator", "?")), []).append(float(row.get("score", 0)))
+    for slug in sorted(by_investigator):
+        scores = by_investigator[slug]
+        lines.append(f"- {slug}: mean {mean(scores):.2f} over {len(scores)} game(s)")
+    lines.extend(
+        [
             "",
             "## Safety note",
             "",
@@ -383,6 +414,9 @@ def run_streamed(argv: list[str], log_path: Path | None = None) -> int:
 def run_bench(args: argparse.Namespace) -> int:
     games = int(args.games)
     seeds = read_seeds(Path(args.seeds_file), games) if args.seeds_file else default_seeds(games)
+    rotation = [slug.strip() for slug in str(args.investigators).split(",") if slug.strip()]
+    if not rotation:
+        raise ValueError("--investigators must name at least one investigator")
     label_dir = ROOT / "bench" / args.label
     notebook = label_dir / "notebook.md"
     mission = (ROOT / "docs_agent" / "mission.md").read_text(encoding="utf-8")
@@ -391,9 +425,10 @@ def run_bench(args: argparse.Namespace) -> int:
         print(f"label: {args.label}")
         print(f"seeds: {', '.join(str(seed) for seed in seeds)}")
         for game, seed in enumerate(seeds, start=1):
+            investigator = investigator_for_game(rotation, game)
             run_dir = label_dir / game_dir_name(game, games)
-            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook))
-            print(shlex.join(build_new_argv(run_dir, seed, args.difficulty, notebook)))
+            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario)
+            print(shlex.join(build_new_argv(run_dir, seed, args.difficulty, notebook, args.scenario, investigator)))
             print(shlex.join(build_agent_argv(args.agent, args.label, prompt, args.max_turns)))
         return 0
 
@@ -404,21 +439,22 @@ def run_bench(args: argparse.Namespace) -> int:
         notebook.touch(exist_ok=True)
         rows = load_bench_rows(label_dir / "bench.json")
         for game, seed in enumerate(seeds, start=1):
+            investigator = investigator_for_game(rotation, game)
             run_dir = label_dir / game_dir_name(game, games)
             log_path = label_dir / "logs" / f"game-{game:0{max(2, len(str(games)))}d}.agent.log"
             if game_completed(run_dir):
                 print(f"skip game {game}: existing result.json")
-                row = row_from_result(game, seed, load_json(run_dir / "result.json"))
+                row = row_from_result(game, seed, load_json(run_dir / "result.json"), investigator=investigator)
                 rows = upsert_row(rows, row)
                 write_artifacts(label_dir, args.label, rows, games)
                 continue
 
             start = time.monotonic()
-            new_rc = run_streamed(build_new_argv(run_dir, seed, args.difficulty, notebook))
+            new_rc = run_streamed(build_new_argv(run_dir, seed, args.difficulty, notebook, args.scenario, investigator))
             if new_rc != 0:
                 raise RuntimeError(f"new failed for game {game} with exit {new_rc}")
 
-            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook))
+            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario)
             rc = run_streamed(build_agent_argv(args.agent, args.label, prompt, args.max_turns), log_path)
             if rc != 0:
                 print(f"warning: agent exited {rc} for game {game}", file=sys.stderr)
@@ -435,10 +471,10 @@ def run_bench(args: argparse.Namespace) -> int:
 
             elapsed = time.monotonic() - start
             if game_completed(run_dir):
-                row = row_from_result(game, seed, load_json(run_dir / "result.json"), elapsed)
+                row = row_from_result(game, seed, load_json(run_dir / "result.json"), elapsed, investigator=investigator)
             else:
                 print(f"warning: game {game} incomplete after {continues} continue(s); score=0", file=sys.stderr)
-                row = incomplete_row(game, seed, elapsed)
+                row = incomplete_row(game, seed, elapsed, investigator=investigator)
             rows = upsert_row(rows, row)
             write_artifacts(label_dir, args.label, rows, games)
     return 0
@@ -450,6 +486,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--label", required=True)
     parser.add_argument("--games", type=int, default=10)
     parser.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
+    parser.add_argument("--scenario", choices=("the_gathering", "return_to_the_gathering"), default="return_to_the_gathering")
+    parser.add_argument(
+        "--investigators",
+        default="roland,daisy,skids,agnes,wendy",
+        help="comma-separated rotation, cycled per game index (identical for all agents)",
+    )
     parser.add_argument("--seeds-file")
     parser.add_argument("--max-continues", type=int, default=2)
     parser.add_argument("--max-turns", type=int, default=500)

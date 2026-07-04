@@ -1,8 +1,9 @@
 # ArkhamBench
 
 A rules-enforcing engine + CLI harness that lets LLM agents play *Arkham Horror: The Card
-Game* (solo, "The Gathering" from Night of the Zealot) inside coding-agent harnesses, with
-a persistent, compactable notebook — built to reproduce Epoch AI's EBR-Bench
+Game* solo — "The Gathering" and "Return to The Gathering" (Night of the Zealot, Part I)
+with any of the five core-set investigators — inside coding-agent harnesses, with a
+persistent, compactable notebook. Built to reproduce Epoch AI's EBR-Bench
 continual-learning experiments with AHLCG.
 
 - `DESIGN.md` — full architecture & rules-scope spec
@@ -16,13 +17,21 @@ continual-learning experiments with AHLCG.
 
 ```
 ./ahlcg new --run runs/mygame --seed 7    # set up The Gathering (Roland, standard)
+./ahlcg new --run runs/mygame2 --scenario return_to_the_gathering --investigator agnes
 ./ahlcg state                             # the board
 ./ahlcg do 3                              # pick option 3; prints events + next decision
 ./ahlcg score                             # final result once GAME OVER
-python3 -m unittest discover -s tests     # engine test suite (76 tests)
-python3 -m arkham.fuzz --games 100        # random-agent crash/invariant fuzz
+python3 -m unittest discover -s tests     # engine test suite (144 tests)
+python3 -m arkham.fuzz --games 100 --scenario return_to_the_gathering --investigator wendy
 scripts/play_demo.sh claude-sonnet-5 my-demo 7   # let an agent play a full game
+python3 scripts/bench.py --agent claude-sonnet-5 --label mybench --games 10
+# ^ benchmark: Return to The Gathering, investigators rotate roland,daisy,skids,
+#   agnes,wendy per game (same order+seeds for every agent), per-label notebook
 ```
+
+Decks are killbray's ["Better Starter Decks"](https://arkhamdb.com/decklist/view/33937/better-starter-decks-roland-banks-1.0)
+(30 cards + 2 signatures + a fixed basic weakness, revised-core pool), vendored in
+`data/decks/killbray/`.
 
 ## Watching a game
 

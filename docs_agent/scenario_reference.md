@@ -1,34 +1,40 @@
-# Scenario Reference — The Gathering (Night of the Zealot, Part I)
+# Scenario Reference — Night of the Zealot, Part I
 
-Public setup information for the scenario you are playing. (This is the same information a
+Public setup information for the scenario you are playing — either **The Gathering** or
+**Return to The Gathering** (`./ahlcg state` shows which). This is the same information a
 human player has after performing setup: the contents of the encounter deck are known as a
-pool, but their order and draws are not.)
+pool, but their order and draws are not.
 
 ## Your investigator
 
-**Roland Banks, "The Fed"** (Guardian). Willpower 3 · Intellect 3 · Combat 4 · Agility 2.
-Health 9 · Sanity 5.
+The run assigns one of the five core investigators. Stats (Willpower/Intellect/Combat/
+Agility · Health/Sanity), ability, and elder sign:
 
-- **Ability (optional reaction, limit once per round):** After you defeat an enemy —
-  discover 1 clue at your location.
-- **Elder sign token:** +1 for each clue on your location.
+| Investigator | Stats | Ability (see card for exact text) | Elder sign |
+|---|---|---|---|
+| Roland Banks (Guardian) | 3/3/4/2 · 9/5 | Reaction after you defeat an enemy: discover 1 clue at your location (1×/round) | +1 per clue on your location |
+| Daisy Walker (Seeker) | 3/5/2/2 · 5/9 | 1 extra action per turn, usable only on Tome ability activations | +0; on success draw 1 per Tome you control |
+| "Skids" O'Toole (Rogue) | 2/3/3/4 · 8/6 | Fast, 1×/turn: spend 2 resources for 1 extra action | +2; on success gain 2 resources |
+| Agnes Baker (Mystic) | 5/2/2/3 · 6/8 | Reaction after horror is placed on her: deal 1 damage to an enemy at your location (1×/phase) | +1 per horror on her |
+| Wendy Adams (Survivor) | 4/3/1/4 · 7/7 | Reaction on token reveal, 1×/test: discard a card to cancel and redraw | +0; auto-success if Wendy's Amulet is in play |
 
-Your 33-card deck (30 + signature + 2 weaknesses) is the official Learn-to-Play suggested
-deck; use `./ahlcg card <name>` for any card's exact text.
+Your 33-card deck (30 + 2 signature cards + 1 fixed basic weakness) is a community
+"Better Starter Deck" — strategy summary in `docs_agent/decks_guide.md`, exact card text
+via `./ahlcg card <name>`.
 
 ## Difficulty & chaos bag (Standard)
 
 +1, 0, 0, −1, −1, −1, −2, −2, −3, −4, skull ×2, cultist, tablet, auto-fail, elder sign.
 
-Scenario token effects (Easy/Standard):
+Scenario token effects (Easy/Standard — same reference card in both scenarios):
 
 - **Skull:** −X, where X = number of Ghoul enemies at your location.
 - **Cultist:** −1. If you fail, take 1 horror.
 - **Tablet:** −2. If there is a Ghoul enemy at your location, take 1 damage.
 - **Auto-fail:** you automatically fail.
-- **Elder sign:** +1 per clue on your location (Roland's effect).
+- **Elder sign:** your investigator's effect (table above).
 
-## Encounter deck contents (27 cards, shuffled)
+## The Gathering — encounter deck (27 cards, shuffled)
 
 From encounter sets *The Gathering, Rats, Ghouls, Striking Fear, Ancient Evils, Chilling Cold*:
 
@@ -48,22 +54,43 @@ From encounter sets *The Gathering, Rats, Ghouls, Striking Fear, Ancient Evils, 
 | 2 | Obscuring Fog | Treachery: attaches to your location, +2 shroud until successfully investigated |
 | 2 | Locked Door | Treachery: attaches to location with most clues; blocks investigation until Combat(4)/Agility(4) test |
 
-(Enemy stat format: fight / health / evade. When the encounter deck runs out, the discard
-pile is shuffled back in.)
+You begin in the **Study** (shroud 2, 2 clues). **Act 1a — "Trapped"** advances by
+spending 2 clues during your turn; the house map opens up from there.
 
-Set aside, out of play: **Ghoul Priest** (Enemy 4/5/4, dmg 2 / horror 2, Hunter,
-Retaliate, Elite, Victory 2) and **Lita Chantler** (story ally).
+## Return to The Gathering — differences
 
-## Starting position
+Same agendas, resolutions, token effects, and scoring. Setup and the encounter pool
+change (scenario card *Return to The Gathering*):
 
-You begin in the **Study** (shroud 2, 2 clues). The agenda deck and act deck are at stage
-1: **Agenda 1a — "What's Going On?!" (doom threshold 3)** · **Act 1a — "Trapped"**
-(advance by spending 2 clues, as a group, during your turn).
+- **Encounter deck (32 cards):** as above, but the *Ghouls* set (Ghoul Minion ×3,
+  Ravenous Ghoul ×1, Grasping Hands ×3) is replaced by *Ghouls of Umôrdhoth*, and the
+  Return set adds three cards:
 
-You have 5 starting resources and draw an opening hand of 5 (one mulligan allowed;
-weaknesses drawn during setup are set aside and redrawn).
+| Qty | Card | Type |
+|---|---|---|
+| 3 | Grave-Eater | Enemy 2/2/2, dmg 1 / horror 1; after it attacks you, discard 1 random card |
+| 1 | Acolyte of Umôrdhoth | Enemy 3/3/2, dmg 1 / horror 1; cannot be evaded while your hand is empty |
+| 3 | Chill from Below | Treachery: test Willpower (3); discard 1 random card per point failed, 1 damage per card you cannot discard |
+| 1 | Corpse-Hungry Ghoul | Enemy 4/3/3, dmg 2 / horror 2, Victory 1, Hunter, spawns Bedroom |
+| 1 | Ghoul from the Depths | Enemy 3/4/2, dmg 1 / horror 1, Victory 1, Retaliate, spawns Bathroom |
+| 2 | The Zealot's Seal | Treachery: hand ≤3 → 1 damage + 1 horror; hand ≥4 → Willpower (2) or discard 2 random |
 
-## Scoring
+  The new set punishes a small hand — manage your card economy.
+
+- **Map:** you begin in the **Study (Aberrant Gateway)** (shroud 3, 1 clue), which lets
+  the lead investigator spend 2 actions to draw 3 cards, and which pulls not-in-play
+  spawn locations into play. It connects only to the **Guest Hall** (draw actions
+  forbidden there), which connects to the **Bedroom** (failed investigates there discard
+  a random card) and **Bathroom** (skull/cultist/tablet/auto-fail while investigating
+  there ends your turn).
+- **Act 1a — "Mysterious Gateway"** requires 3 clues, spendable only in the Guest Hall.
+  Advancing opens a hole in the wall and forcibly moves you deeper into the house
+  (willpower test on the way in). The Attic and Cellar you find beyond are chosen at
+  random during setup from the original and Return versions — the deeper locations
+  beyond them (worth Victory points) exist only behind the Return versions.
+- Ghoul Priest and Lita Chantler are set aside, exactly as in The Gathering.
+
+## Scoring (both scenarios)
 
 At game end you earn experience (XP) = total Victory X in the victory display (defeated
 Victory enemies; revealed, clueless Victory locations) + any resolution bonuses.
@@ -73,6 +100,7 @@ Victory enemies; revealed, clueless Victory locations) + any resolution bonuses.
 The +3 reflects Lita's campaign value: she is a powerful story ally that joins your deck
 for the rest of the campaign in some outcomes but not others — which outcomes is yours to
 discover. Trauma is permanent campaign damage: defeat causes it (physical if by damage,
-mental if by horror), some resolution choices cause it, and any clues left on *Cover Up*
-cost 1 mental trauma at game end. Getting killed by the agenda while still trapped in the
-house scores 0. Resigning is safe but forfeits unearned victory points.
+mental if by horror), some resolution choices cause it, and some signature weaknesses
+cost trauma or XP at game end (see your deck's entry in `docs_agent/decks_guide.md`).
+Getting killed by the agenda while still trapped in the house scores 0. Resigning is
+safe but forfeits unearned victory points.
