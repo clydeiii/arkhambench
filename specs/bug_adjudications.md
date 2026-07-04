@@ -47,8 +47,12 @@ reporting channel works; the claims just didn't survive the source texts.
    `during_turn=False` — the window now offers only any-window triggered abilities.
    Credit: Fable 5, game 3, R8.
 
-   Noted while adjudicating (engine-restrictive, not agent-exploitable): fast EVENT
-   plays are currently limited to during-turn windows across the board, so
-   unrestricted fast events (e.g. Cunning Distraction) cannot be played in the
-   enemy-phase pre-attack window even though RAW allows it. Uniform for all agents;
-   deferred as a known scope limit.
+   ~~Noted while adjudicating: unrestricted fast events (e.g. Cunning Distraction)
+   cannot be played in non-turn windows.~~ **RETRACTED after checking card texts:**
+   Cunning Distraction is NOT Fast (plain Evade event), and every fast player card
+   in the five decks is turn-restricted by its own text (Elusive/Mind over Matter/
+   Working a Hunch "only during your turn", On the Lam "after your turn begins") or
+   by the RR asset-play rule (Magnifying Glass, Switchblade). Triggered fast
+   abilities (Beat Cop, Forbidden Knowledge, Arcane Initiate, Stray Cat, Hospital
+   Debts) are already offered in every window including enemy-phase pre-attack.
+   The engine's window handling is RAW-correct for the full card pool in scope.
