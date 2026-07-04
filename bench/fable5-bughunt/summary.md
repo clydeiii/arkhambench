@@ -9,12 +9,13 @@ Final window: last 1 game(s), starting at game 5.
 | ---: | ---: | --- | --- | --- | --- | ---: | ---: | ---: | ---: |
 | 1 | 1001 | roland | complete | no_resolution | no_resolution | 2 | 4 | 2 | 10 |
 | 2 | 1002 | daisy | complete | no_resolution | no_resolution | 3 | 3 | 0 | 10 |
+| 3 | 1003 | skids | complete | no_resolution | no_resolution | 3 | 5 | 2 | 16 |
 
 ## Aggregate stats
 
-- Games recorded: 2
-- Mean score: 2.50
-- First-half mean score: 2.50
+- Games recorded: 3
+- Mean score: 2.67
+- First-half mean score: 2.67
 - Second-half mean score: 0.00
 - Final-20% average: 0.00
 
@@ -22,6 +23,7 @@ Final window: last 1 game(s), starting at game 5.
 
 - daisy: mean 3.00 over 1 game(s)
 - roland: mean 2.00 over 1 game(s)
+- skids: mean 3.00 over 1 game(s)
 
 ## Safety note
 

@@ -34,13 +34,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     investigator = state.investigator
     location = state.locations[investigator.location_id]
     options: list[DecisionOption] = []
-    if (
-        state.act
-        and state.act.clues_required is not None
-        and investigator.clues >= state.act.clues_required
-        and not (state.scenario in GATHERING_FAMILY and state.act.stage == 2)
-        and act_advance_location_ok(state)
-    ):
+    if act_advance_available(state):
         options.append(DecisionOption(f"Advance act by spending {state.act.clues_required} clues", {"kind": "action", "action": "advance_act"}))
     if location.revealed and location.shroud is not None and not location_locked(state, location.id):
         shroud = modified_shroud(state, location.id)
@@ -155,6 +149,18 @@ def the_gathering_module():
     from .scenarios import the_gathering
 
     return the_gathering
+
+
+def act_advance_available(state: GameState) -> bool:
+    # Advancing via the act Objective is a free triggered ability, legal in any
+    # player window during the investigators' turns (RR "Objective").
+    return bool(
+        state.act
+        and state.act.clues_required is not None
+        and state.investigator.clues >= state.act.clues_required
+        and not (state.scenario in GATHERING_FAMILY and state.act.stage == 2)
+        and act_advance_location_ok(state)
+    )
 
 
 def act_advance_location_ok(state: GameState) -> bool:
@@ -765,6 +771,13 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
     # Fast card PLAYS are only legal during the investigator's own turn;
     # triggered fast abilities on in-play cards (Beat Cop) work in any window.
     if during_turn:
+        if act_advance_available(state):
+            options.append(
+                DecisionOption(
+                    f"Advance act by spending {state.act.clues_required} clues",
+                    {"kind": "action", "action": "advance_act"},
+                )
+            )
         if (
             state.investigator.card_code == "01003"
             and state.investigator.resources >= 2

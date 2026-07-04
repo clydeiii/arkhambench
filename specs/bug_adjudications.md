@@ -56,3 +56,17 @@ reporting channel works; the claims just didn't survive the source texts.
    abilities (Beat Cop, Forbidden Knowledge, Arcane Initiate, Stray Cat, Hospital
    Debts) are already offered in every window including enemy-phase pre-attack.
    The engine's window handling is RAW-correct for the full card pool in scope.
+
+## fable5-bughunt game-04 (Agnes, Return, seed 1004) — 2026-07-04
+
+6. **"Act objective never offered in the player window after my last action."**
+   **CONFIRMED BUG — third verified find, and it exposed an overcorrection in fix
+   #5.** Two layers: (a) the RR timing chart keeps a player window open after the
+   LAST action, still during the turn — fix #5 had made the whole inv_end window
+   post-turn, which was only correct for forced "end your turn" effects; now a
+   `turn_forcibly_ended` flag (set by the Return Bathroom) decides, restoring
+   Skids's legal post-3rd-action buy. (b) The act Objective is a free triggered
+   ability legal in any during-turn player window, but was only ever offered in
+   the action menu — now offered in during-turn fast windows too
+   (act_advance_available shared helper). Regression tests:
+   PostActionWindowTests. Credit: Fable 5, game 4, R8.

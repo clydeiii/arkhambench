@@ -37,10 +37,12 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     return
                 if start_frozen_end_turn_test(state, events):
                     return
-                # The turn is over once the last action is spent (or forcibly
-                # drained, e.g. the Return Bathroom) — "during your turn" fast
-                # plays and Skids's action-buy are not legal in this window.
-                if present_fast_window(state, "inv_end", during_turn=False):
+                # The RR timing chart keeps one player window open after the
+                # LAST action, still during the turn (this is how Skids legally
+                # buys a 4th action, and where an objective can be triggered).
+                # Only "end your turn" forced effects (Return Bathroom) skip it.
+                forced_end = bool(state.limits.get(f"turn_forcibly_ended:{state.round}"))
+                if present_fast_window(state, "inv_end", during_turn=not forced_end):
                     return
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
@@ -83,6 +85,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("on_the_lam:")
                     and not str(key).startswith("hospital_debts:")
                     and not str(key).startswith("dark_memory_end_turn:")
+                    and not str(key).startswith("turn_forcibly_ended:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")
         elif state.phase == "Mythos":

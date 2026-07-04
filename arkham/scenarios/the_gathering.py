@@ -1051,7 +1051,10 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
         location_id = state.investigator.location_id
         if location_id == "bathroom" and any(token in {"skull", "cultist", "tablet", "autofail"} for token in tokens):
             # Bathroom Forced: lose all remaining actions and end your turn.
+            # The forced end skips the normal post-action player window — mark
+            # it so the inv_end window is treated as after the turn.
             state.investigator.actions_remaining = 0
+            state.limits[f"turn_forcibly_ended:{state.round}"] = True
             log_event(events, "bathroom_forced", "The Bathroom drained all remaining actions; the turn ends.")
         if location_id == "bedroom" and failed:
             # Bedroom Forced: discard 1 random card after failing an investigate here.

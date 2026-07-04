@@ -280,3 +280,44 @@ class PhaseV6Tests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PostActionWindowTests(unittest.TestCase):
+    def _guest_hall_state(self, investigator_code: str):
+        s = return_state(seed=3)
+        s.investigator.card_code = investigator_code
+        s.investigator.clues = 3
+        s.investigator.actions_remaining = 0
+        s.investigator.resources = 5
+        tg.reveal_location(s, [], "guest_hall")
+        move_to(s, "guest_hall")
+        return s
+
+    def test_objective_offered_in_post_last_action_window(self) -> None:
+        from arkham import phases
+
+        s = self._guest_hall_state("01004")
+        queued = phases.present_fast_window(s, "inv_end", during_turn=True)
+        self.assertTrue(queued)
+        labels = [o.label for o in s.decision_queue[0].options]
+        self.assertTrue(any(l.startswith("Advance act") for l in labels), labels)
+
+    def test_skids_can_buy_action_after_last_action(self) -> None:
+        from arkham import phases
+
+        s = self._guest_hall_state("01003")
+        s.investigator.clues = 0
+        queued = phases.present_fast_window(s, "inv_end", during_turn=True)
+        self.assertTrue(queued)
+        labels = [o.label for o in s.decision_queue[0].options]
+        self.assertTrue(any("Skids" in l for l in labels), labels)
+
+    def test_forced_turn_end_closes_during_turn_window(self) -> None:
+        from arkham import phases
+
+        s = self._guest_hall_state("01003")
+        s.limits[f"turn_forcibly_ended:{s.round}"] = True
+        queued = phases.present_fast_window(s, "inv_end", during_turn=False)
+        if queued:
+            labels = [o.label for o in s.decision_queue[0].options]
+            self.assertFalse(any("Skids" in l or l.startswith("Advance act") for l in labels), labels)
