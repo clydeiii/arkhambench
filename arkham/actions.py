@@ -142,10 +142,12 @@ def exhausted_enemies_at_location(state: GameState) -> list[str]:
 
 
 def elusive_destinations(state: GameState) -> list[str]:
+    # RR "Move": an entity cannot move to its current placement — the
+    # investigator's own location is never a legal Elusive destination.
     return [
         location.id
         for location in sorted(state.locations.values(), key=lambda loc: (loc.code, loc.id))
-        if location.revealed and not location.enemy_ids
+        if location.revealed and not location.enemy_ids and location.id != state.investigator.location_id
     ]
 
 
@@ -807,11 +809,12 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
             elif code == "01037" and state.locations[state.investigator.location_id].clues > 0:
                 options.append(DecisionOption("Play Working a Hunch", {"kind": "action", "action": "fast_ability", "ability": "working_hunch", "card": card_id}))
             elif code == "01050":
+                # Only offer Elusive when it can change the game state (RR play
+                # rules): a legal move destination or an enemy to disengage from.
                 destinations = elusive_destinations(state)
-                if destinations:
-                    for location_id in destinations:
-                        options.append(DecisionOption(f"Play Elusive and move to {state.locations[location_id].name}", {"kind": "action", "action": "fast_ability", "ability": "elusive", "card": card_id, "location": location_id}))
-                else:
+                for location_id in destinations:
+                    options.append(DecisionOption(f"Play Elusive and move to {state.locations[location_id].name}", {"kind": "action", "action": "fast_ability", "ability": "elusive", "card": card_id, "location": location_id}))
+                if not destinations and state.investigator.engaged_enemies:
                     options.append(DecisionOption("Play Elusive (disengage; no eligible move)", {"kind": "action", "action": "fast_ability", "ability": "elusive", "card": card_id, "location": ""}))
     for debt in player_cards.threat_ids(state, "01011"):
         count = int(state.limits.get(f"hospital_debts:{state.round}", 0))
@@ -1387,6 +1390,8 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
     elif ability == "elusive" and playable_event(state, card_id) and state.investigator.resources >= 2:
         destination = str(payload.get("location", ""))
         if destination and destination not in elusive_destinations(state):
+            return
+        if not destination and not state.investigator.engaged_enemies:
             return
         state.investigator.resources -= 2
         if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):

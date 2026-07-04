@@ -21,3 +21,20 @@ authority: card JSON (data/cards), Rules Reference, campaign guide
 
 Quality note: both reports were specific, checkable, and cited log evidence — the
 reporting channel works; the claims just didn't survive the source texts.
+
+## fable5-bughunt game-02 (Daisy, Return, seed 1002) — 2026-07-04
+
+3. **Self-retraction of report 1**: the agent verified in game 2 that Act 2b spawns
+   the Ghoul Priest and asked to close its own agenda-spawn claim. Matches
+   adjudication (one nuance: the spawn is on Act 2b in core The Gathering as well —
+   it never lived on the agenda).
+
+## fable5-bughunt game-03 (Skids, Return, seed 1003) — 2026-07-04
+
+4. **"Elusive offers a move to my current location / with no valid destination."**
+   **CONFIRMED BUG — first verified agent find.** `elusive_destinations` did not
+   exclude the investigator's own location (RR "Move": an entity cannot move to its
+   current placement), and the play was offered even when it could not change the
+   game state (no destination, no engaged enemies). Fixed same day: current location
+   excluded, option/exec gated on a legal destination or an engaged enemy;
+   regression test added (ElusiveDestinationTests). Credit: Fable 5, game 3, R1.

@@ -215,3 +215,34 @@ class PhaseV3Tests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ElusiveDestinationTests(unittest.TestCase):
+    def test_elusive_never_offers_current_location_or_no_op_play(self) -> None:
+        from arkham import actions
+        from arkham.scenarios import the_gathering as tg
+        from arkham.rng import ArkhamRng
+
+        s = tg.build_return_state(difficulty="standard", rng=ArkhamRng(5))
+        s.decision_queue = []
+        s.limits.pop("mulligan_available", None)
+        s.investigator.card_code = "01003"
+        s.investigator.hand = []
+        s.investigator.resources = 5
+        elusive = "elusive_test"
+        from arkham.model import CardInstance
+
+        s.card_instances[elusive] = CardInstance(id=elusive, card_code="01050", zone="hand", owner=s.investigator.id)
+        s.investigator.hand.append(elusive)
+
+        # Study is the only revealed location and Skids stands on it with no
+        # enemies engaged: Elusive has no legal effect and must not be offered.
+        labels = [o.label for o in actions.legal_actions(s) if "Elusive" in o.label]
+        self.assertEqual(labels, [])
+        self.assertNotIn("study", actions.elusive_destinations(s))
+
+        # With another revealed, enemy-free location it is offered — but never
+        # to the current location.
+        tg.reveal_location(s, [], "guest_hall")
+        labels = [o.label for o in actions.legal_actions(s) if "Elusive" in o.label]
+        self.assertEqual(labels, ["Play Elusive and move to Guest Hall"])

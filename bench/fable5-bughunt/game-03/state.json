@@ -1,0 +1,338 @@
+{
+  "act": {
+    "clues_required": 3,
+    "code": "50012",
+    "name": "Mysterious Gateway",
+    "stage": 1
+  },
+  "active_skill_test": null,
+  "agenda": {
+    "code": "01105",
+    "doom": 1,
+    "name": "What's Going On?!",
+    "stage": 1,
+    "threshold": 3
+  },
+  "card_instances": {
+    "pc0002": {
+      "attachments": [],
+      "card_code": "01011",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0002",
+      "owner": "skids",
+      "uses": {},
+      "zone": "threat"
+    },
+    "pc0007": {
+      "attachments": [],
+      "card_code": "01025",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0007",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0013": {
+      "attachments": [],
+      "card_code": "01047",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0013",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0014": {
+      "attachments": [],
+      "card_code": "01047",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0014",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0015": {
+      "attachments": [],
+      "card_code": "01049",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0015",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0018": {
+      "attachments": [],
+      "card_code": "01050",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0018",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0020": {
+      "attachments": [],
+      "card_code": "01052",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0020",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0025": {
+      "attachments": [],
+      "card_code": "01087",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0025",
+      "owner": "skids",
+      "uses": {
+        "supplies": 2
+      },
+      "zone": "play"
+    },
+    "pc0031": {
+      "attachments": [],
+      "card_code": "01091",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0031",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    }
+  },
+  "chaos_bag": {
+    "tokens": [
+      "+1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "-1",
+      "-2",
+      "-2",
+      "-3",
+      "-4",
+      "skull",
+      "skull",
+      "cultist",
+      "tablet",
+      "autofail",
+      "eldersign"
+    ]
+  },
+  "decision_queue": [
+    {
+      "id": "fast-window-mythos_end",
+      "kind": "fast_window",
+      "options": [
+        {
+          "label": "Move 1 resource to Hospital Debts (0/6)",
+          "payload": {
+            "ability": "hospital_debts",
+            "action": "fast_ability",
+            "card": "pc0002",
+            "kind": "action"
+          }
+        },
+        {
+          "label": "Pass (continue)",
+          "payload": {
+            "key": "fastwin:mythos_end:2",
+            "kind": "fast_window_pass"
+          }
+        }
+      ],
+      "prompt": "[Round 2 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"
+    }
+  ],
+  "difficulty": "standard",
+  "encounter_deck": [],
+  "encounter_deck_count": 31,
+  "encounter_discard": [],
+  "enemies": {
+    "ec0029": {
+      "attachments": [],
+      "card_code": "50022",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0029",
+      "location_id": "bedroom"
+    }
+  },
+  "investigator": {
+    "actions_remaining": 0,
+    "agility": 4,
+    "card_code": "01003",
+    "clues": 1,
+    "combat": 3,
+    "damage": 0,
+    "deck_count": 24,
+    "discard": [],
+    "engaged_enemies": [],
+    "exhausted": false,
+    "hand": [
+      "pc0007",
+      "pc0031",
+      "pc0014",
+      "pc0018",
+      "pc0020",
+      "pc0013",
+      "pc0015"
+    ],
+    "health": 8,
+    "horror": 0,
+    "id": "skids",
+    "intellect": 3,
+    "location_id": "study",
+    "name": "\"Skids\" O'Toole",
+    "play_area": [
+      "pc0025"
+    ],
+    "resources": 2,
+    "sanity": 6,
+    "threat_area": [
+      "pc0002"
+    ],
+    "willpower": 2
+  },
+  "limits": {
+    "actions_taken": 4,
+    "encounter_cards_drawn": 1,
+    "last_skill_test": {
+      "auto_success": false,
+      "base": 3,
+      "boosts": 0,
+      "callback_kind": "investigate",
+      "committed_icons": 0,
+      "difficulty": 1,
+      "extra_tokens": [],
+      "margin": 0,
+      "modifier": -2,
+      "skill": "intellect",
+      "source": "Investigate with Flashlight Study (Aberrant Gateway)",
+      "success": true,
+      "token": "-2",
+      "value": 1
+    },
+    "mythos_doom_placed:2": true,
+    "mythos_encounter_drawn:2": true,
+    "return_variant:attic": "original",
+    "return_variant:cellar": "return"
+  },
+  "locations": {
+    "bathroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50016",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bathroom",
+      "investigator_ids": [],
+      "name": "Bathroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "bedroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50015",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [
+        "ec0029"
+      ],
+      "id": "bedroom",
+      "investigator_ids": [],
+      "name": "Bedroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "guest_hall": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50014",
+      "connections": [
+        "study",
+        "bedroom",
+        "bathroom"
+      ],
+      "enemy_ids": [],
+      "id": "guest_hall",
+      "investigator_ids": [],
+      "name": "Guest Hall",
+      "revealed": false,
+      "shroud": null
+    },
+    "study": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50013",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "study",
+      "investigator_ids": [
+        "skids"
+      ],
+      "name": "Study (Aberrant Gateway)",
+      "revealed": true,
+      "shroud": 3
+    }
+  },
+  "pending_damage": null,
+  "phase": "Mythos",
+  "removed_from_game": [],
+  "result": null,
+  "round": 2,
+  "scenario": "return_to_the_gathering",
+  "schema_version": 2,
+  "status": "in_progress",
+  "trauma": {},
+  "turn": {
+    "action_index": 4,
+    "investigator_id": "skids"
+  },
+  "victory_display": []
+}
