@@ -64,6 +64,9 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     if not str(key).startswith("frozen:")
                     and not str(key).startswith("enemy_phase_attacked:")
                     and not str(key).startswith("mind_over_matter:")
+                    and not str(key).startswith("daisy_tome:")
+                    and not str(key).startswith("skids_action:")
+                    and not str(key).startswith("agnes_horror:")
                     and not str(key).startswith("frozen_end_turn:")
                     and not str(key).startswith("mythos_")
                     and not str(key).startswith("upkeep_done:")
@@ -77,7 +80,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                 if present_fast_window(state, "mythos_end", during_turn=False):
                     return
                 state.phase = "Investigation"
-                state.investigator.actions_remaining = 3
+                state.investigator.actions_remaining = starting_actions(state)
                 state.turn.action_index = 0
                 log_event(events, "phase_started", "Investigation phase began.")
         else:
@@ -101,7 +104,7 @@ def present_fast_window(state: GameState, boundary: str, *, during_turn: bool) -
         PendingDecision(
             id=f"fast-window-{boundary}",
             kind="fast_window",
-            prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Fast-ability window — use a fast ability or pass:",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Fast-ability window — use a fast ability or pass:",
             options=options,
         )
     ]
@@ -198,7 +201,7 @@ def present_discard_to_size(state: GameState) -> None:
         PendingDecision(
             id="discard-to-size",
             kind="choose_option",
-            prompt=f"[Round {state.round} · Upkeep · Roland Banks] Discard to hand size 8.",
+            prompt=f"[Round {state.round} · Upkeep · {state.investigator.name}] Discard to hand size 8.",
             options=options,
         )
     ]
@@ -240,6 +243,10 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
     if state.status != "in_progress" or state.decision_queue:
         return
     engage_ready_enemies_at_roland(state, events)
+
+
+def starting_actions(state: GameState) -> int:
+    return 4 if state.investigator.card_code == "01002" else 3
 
 
 def start_frozen_end_turn_test(state: GameState, events: list[dict[str, Any]]) -> bool:

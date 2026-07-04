@@ -16,8 +16,15 @@ def token_modifier(state: GameState, token: str) -> tuple[int, bool]:
     if token == "autofail":
         return (0, True)
     if token == "eldersign":
-        location = state.locations[state.investigator.location_id]
-        return (location.clues, False)
+        code = state.investigator.card_code
+        if code == "01001":
+            location = state.locations[state.investigator.location_id]
+            return (location.clues, False)
+        if code == "01003":
+            return (2, False)
+        if code == "01004":
+            return (state.investigator.horror, False)
+        return (0, False)
     if state.scenario == "the_gathering":
         if token == "skull":
             if state.difficulty in {"easy", "standard"}:

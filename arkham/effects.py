@@ -68,6 +68,66 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
         from .enemies import spawn_enemy
 
         spawn_enemy(state, events, instance_id=instance_id, location_id=state.investigator.location_id, engaged=True)
+    elif instance.card_code == "01096":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        instance.zone = "discard"
+        state.investigator.discard.append(instance_id)
+        present_amnesia_decision(state)
+        log_event(events, "weakness_revealed", "Amnesia was revealed.", card=instance_id)
+    elif instance.card_code == "01097":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        instance.zone = "discard"
+        state.investigator.discard.append(instance_id)
+        state.investigator.resources = 0
+        log_event(events, "weakness_revealed", "Paranoia discarded all resources.", card=instance_id)
+    elif instance.card_code == "01098":
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        instance.zone = "threat"
+        state.investigator.threat_area.append(instance_id)
+        log_event(events, "weakness_revealed", "Haunted entered the threat area.", card=instance_id)
+    elif card_data.get_card(instance.card_code).get("type_code") == "enemy" and str(card_data.get_card(instance.card_code).get("subtype_code", "")) in {"weakness", "basicweakness"}:
+        if instance_id in state.investigator.hand:
+            state.investigator.hand.remove(instance_id)
+        from .enemies import spawn_enemy
+
+        spawn_enemy(state, events, instance_id=instance_id, location_id=state.investigator.location_id, engaged=True)
+
+
+def present_amnesia_decision(state: GameState) -> None:
+    if len(state.investigator.hand) <= 1:
+        return
+    cards = card_data.cards_by_code()
+    state.decision_queue = [
+        PendingDecision(
+            id="amnesia-keep",
+            kind="amnesia_keep",
+            prompt="Choose 1 card to keep for Amnesia.",
+            options=[
+                DecisionOption(
+                    f"Keep {cards[state.card_instances[card_id].card_code].get('name', card_id)}",
+                    {"kind": "amnesia_keep", "keep": card_id},
+                )
+                for card_id in state.investigator.hand
+            ],
+        )
+    ]
+
+
+def resolve_amnesia_keep(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "amnesia-keep"]
+    keep = str(payload.get("keep", ""))
+    for card_id in list(state.investigator.hand):
+        if card_id == keep:
+            continue
+        player_cards.discard_from_hand(state, card_id)
+        log_event(events, "card_discarded", f"Discarded {card_name_for_id(state, card_id)} for Amnesia.", card=card_id)
+
+
+def card_name_for_id(state: GameState, instance_id: str) -> str:
+    return str(card_data.get_card(state.card_instances[instance_id].card_code).get("name", instance_id))
 
 
 def gain_resource(state: GameState, amount: int, events: list[dict[str, Any]]) -> None:
@@ -239,6 +299,8 @@ def start_damage_assignment(
         state.investigator.horror += horror
         log_event(events, "damage_assigned", f"Roland took {damage} damage and {horror} horror.", source=source)
         check_investigator_defeat(state, events)
+        if state.status == "in_progress" and horror > 0:
+            present_after_horror_reaction(state, events)
         return
     state.pending_damage = {
         "source": source,
@@ -246,6 +308,7 @@ def start_damage_assignment(
         "remaining_horror": horror,
         "direct": direct,
         "resume": resume or {},
+        "horror_to_investigator": 0,
     }
     if resume and resume.get("kind") == "after_attack":
         state.pending_damage["attack_enemy_id"] = resume.get("enemy")
@@ -312,6 +375,7 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
             state.investigator.damage += 1
         else:
             state.investigator.horror += 1
+            pending["horror_to_investigator"] = int(pending.get("horror_to_investigator", 0)) + 1
     else:
         instance = state.card_instances[target]
         if point_type == "damage":
@@ -340,6 +404,10 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         present_damage_decision(state)
     else:
         state.pending_damage = None
+        if int(pending.get("horror_to_investigator", 0)) > 0:
+            present_after_horror_reaction(state, events)
+            if state.decision_queue:
+                return
         resume = dict(pending.get("resume", {}))
         if resume.get("kind") == "after_attack":
             from .enemies import after_attack
@@ -416,6 +484,52 @@ def heal_roland(state: GameState, events: list[dict[str, Any]], *, damage: int =
     if horror > 0 and state.investigator.horror > 0:
         state.investigator.horror = max(0, state.investigator.horror - horror)
         log_event(events, "horror_healed", f"Roland healed {horror} horror.", amount=horror)
+
+
+def present_after_horror_reaction(state: GameState, events: list[dict[str, Any]]) -> None:
+    if state.investigator.card_code != "01004":
+        return
+    key = f"agnes_horror:{state.phase}:{state.round}"
+    if state.limits.get(key):
+        return
+    enemies = [
+        enemy_id
+        for enemy_id in state.locations[state.investigator.location_id].enemy_ids
+        if enemy_id in state.enemies
+    ]
+    if not enemies:
+        return
+    from .enemies import enemy_name
+
+    options = [
+        DecisionOption(
+            f"Deal 1 damage to {enemy_name(state, enemy_id)}",
+            {"kind": "agnes_horror_reaction", "enemy": enemy_id, "key": key},
+        )
+        for enemy_id in enemies
+    ]
+    options.append(DecisionOption("Pass", {"kind": "agnes_horror_reaction", "enemy": "", "key": key, "pass": True}))
+    state.decision_queue.append(
+        PendingDecision(
+            id="agnes-after-horror",
+            kind="after_horror",
+            prompt=f"[Round {state.round} · {state.phase} · Agnes Baker] Use Agnes Baker reaction after horror was placed?",
+            options=options,
+        )
+    )
+
+
+def resolve_agnes_horror_reaction(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    key = str(payload.get("key", f"agnes_horror:{state.phase}:{state.round}"))
+    state.limits[key] = True
+    if payload.get("pass"):
+        return
+    enemy_id = str(payload.get("enemy", ""))
+    if enemy_id in state.enemies:
+        from .enemies import damage_enemy
+
+        damage_enemy(state, events, enemy_id, 1)
+        log_event(events, "agnes_reaction", "Agnes dealt 1 damage after horror was placed.", enemy=enemy_id)
 
 
 def discard_asset_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:

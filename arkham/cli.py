@@ -32,6 +32,8 @@ def build_parser() -> argparse.ArgumentParser:
     new = sub.add_parser("new")
     new.add_argument("--seed", type=int, default=1)
     new.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
+    new.add_argument("--scenario", choices=("the_gathering",), default="the_gathering")
+    new.add_argument("--investigator", choices=tuple(card_data.INVESTIGATOR_CODES), default="roland")
     new.add_argument("--deck", default=None)
     new.add_argument("--run", dest="run", default=None)
     new.add_argument("--notebook", dest="notebook", default=None, help="persistent notebook bound to this run (recorded in meta.json)")
@@ -104,6 +106,8 @@ def cmd_new(args: argparse.Namespace) -> int:
         difficulty=args.difficulty,
         deck_path=args.deck,
         run_dir=run_dir,
+        scenario=args.scenario,
+        investigator=args.investigator,
         notebook=args.notebook,
     )
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
@@ -272,7 +276,7 @@ def render_state(state: GameState, *, full: bool = False) -> str:
             details.append("enemies " + ", ".join(enemy_label(state, enemy_id) for enemy_id in location.enemy_ids if enemy_id in state.enemies))
         lines.append("- " + "; ".join(details))
     lines.append(
-        f"Roland: {investigator.damage}/{investigator.health} damage, {investigator.horror}/{investigator.sanity} horror, "
+        f"{investigator.name}: {investigator.damage}/{investigator.health} damage, {investigator.horror}/{investigator.sanity} horror, "
         f"{investigator.resources} resources, {investigator.clues} clues, hand {len(investigator.hand)}, deck {len(investigator.deck)}"
     )
     if investigator.engaged_enemies:

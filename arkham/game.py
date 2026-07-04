@@ -15,7 +15,14 @@ from .model import GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
 from . import actions, enemies, phases, skill_test
-from .effects import RuleEventList, assign_damage_choice, discard_asset_choice, resolve_cover_up_choice
+from .effects import (
+    RuleEventList,
+    assign_damage_choice,
+    discard_asset_choice,
+    resolve_agnes_horror_reaction,
+    resolve_amnesia_keep,
+    resolve_cover_up_choice,
+)
 
 
 CHAOS_BAGS: dict[str, list[str]] = {
@@ -40,17 +47,32 @@ class Game:
         difficulty: str,
         deck_path: str | Path | None,
         run_dir: str | Path,
+        scenario: str = "the_gathering",
+        investigator: str = "roland",
         notebook: str | Path | None = None,
     ) -> "Game":
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
         run_path = Path(run_dir)
         rng = ArkhamRng(seed)
-        from .scenarios.the_gathering import build_gathering_state
+        from .scenarios import SCENARIOS
 
-        state = build_gathering_state(difficulty=difficulty, rng=rng, deck_path=deck_path)
+        if scenario not in SCENARIOS:
+            raise EngineError(f"unknown scenario: {scenario}")
+        state = SCENARIOS[scenario].build_state(
+            difficulty=difficulty,
+            rng=rng,
+            deck_path=deck_path,
+            investigator_slug=investigator,
+        )
         game = cls(run_path, state, rng)
-        game._initialize_files(seed=seed, difficulty=difficulty, deck_path=deck_path, notebook=notebook)
+        game._initialize_files(
+            seed=seed,
+            difficulty=difficulty,
+            deck_path=deck_path or card_data.default_deck_for_investigator(investigator),
+            scenario=scenario,
+            notebook=notebook,
+        )
         init_events: list[dict[str, Any]] = RuleEventList(state)
         phases.advance_until_decision(state, rng, init_events)
         game.save()
@@ -153,6 +175,14 @@ class Game:
             skill_test.apply_skill_boost(self.state, payload, events)
         elif kind == "post_reveal_done":
             skill_test.resolve(self.state, events, self.rng)
+        elif kind == "wendy_token_reaction":
+            skill_test.resolve_wendy_token_reaction(self.state, payload, events, self.rng)
+        elif kind == "lucky_would_fail":
+            skill_test.resolve_lucky_would_fail(self.state, payload, events, self.rng)
+        elif kind == "ward_revelation":
+            from . import encounter
+
+            encounter.resolve_ward_revelation(self.state, payload, events, self.rng)
         elif kind == "assign_damage":
             resume = dict(self.state.pending_damage.get("resume", {})) if self.state.pending_damage else {}
             assign_damage_choice(self.state, payload, events, self.rng)
@@ -169,9 +199,7 @@ class Game:
                 and not self.state.decision_queue
                 and resume.get("kind") == "scenario"
             ):
-                from .scenarios import the_gathering
-
-                the_gathering.resolve_scenario_choice(self.state, dict(resume), events, self.rng)
+                self._resolve_scenario_choice(dict(resume), events)
         elif kind == "dodge_attack":
             enemies.cancel_pending_attack(self.state, events, str(payload["card"]), self.rng)
         elif kind == "take_attack":
@@ -191,6 +219,10 @@ class Game:
             enemies.resolve_enemy_defeated_reaction(self.state, payload, events)
         elif kind == "discard_asset":
             discard_asset_choice(self.state, payload, events)
+        elif kind == "amnesia_keep":
+            resolve_amnesia_keep(self.state, payload, events)
+        elif kind == "agnes_horror_reaction":
+            resolve_agnes_horror_reaction(self.state, payload, events)
         elif kind == "slot_discard":
             actions.resolve_slot_discard(self.state, payload, events)
         elif kind == "discard_to_size":
@@ -202,11 +234,17 @@ class Game:
         elif kind == "old_book_choice":
             actions.resolve_old_book_choice(self.state, payload, events, self.rng)
         elif kind == "scenario":
-            from .scenarios import the_gathering
-
-            the_gathering.resolve_scenario_choice(self.state, payload, events, self.rng)
+            self._resolve_scenario_choice(payload, events)
         else:
             raise EngineError(f"unsupported decision payload: {kind}")
+
+    def _resolve_scenario_choice(self, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+        from .scenarios import SCENARIOS
+
+        scenario = SCENARIOS.get(self.state.scenario)
+        if scenario is None:
+            raise EngineError(f"unsupported scenario choice for {self.state.scenario}")
+        scenario.resolve_choice(self.state, payload, events, self.rng)
 
     def _append_rule_events(self, rule_events: list[dict[str, Any]]) -> list[dict[str, Any]]:
         rendered: list[dict[str, Any]] = []
@@ -259,6 +297,7 @@ class Game:
         seed: int,
         difficulty: str,
         deck_path: str | Path | None,
+        scenario: str = "the_gathering",
         notebook: str | Path | None = None,
     ) -> None:
         self.run_dir.mkdir(parents=True, exist_ok=True)
@@ -266,6 +305,12 @@ class Game:
             "seed": seed,
             "difficulty": difficulty,
             "deck": str(deck_path or card_data.DEFAULT_DECK),
+            "scenario": scenario,
+            "investigator": {
+                "id": self.state.investigator.id,
+                "code": self.state.investigator.card_code,
+                "name": self.state.investigator.name,
+            },
             "created_at": _now(),
             "engine_version": __version__,
             "status": self.state.status,

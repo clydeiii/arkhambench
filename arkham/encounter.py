@@ -4,10 +4,10 @@ from __future__ import annotations
 from typing import Any
 
 from . import data as card_data
-from .cards import encounter_cards
+from .cards import encounter_cards, player as player_cards
 from .effects import log_event, place_doom, start_damage_assignment
 from .enemies import spawn_enemy
-from .model import GameState
+from .model import DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 from . import skill_test
 
@@ -22,8 +22,60 @@ def draw_encounter(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]
     card = card_data.cards_by_code().get(instance.card_code, {})
     log_event(events, "encounter_drawn", f"Roland drew encounter card {card.get('name', instance.card_code)}.", card=instance_id)
     state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
+    if present_revelation_cancel(state, instance_id):
+        return instance_id
     resolve_revelation(state, rng, events, instance_id)
     return instance_id
+
+
+def present_revelation_cancel(state: GameState, instance_id: str) -> bool:
+    instance = state.card_instances[instance_id]
+    card = card_data.get_card(instance.card_code)
+    if card.get("type_code") != "treachery" or card.get("subtype_code") in {"weakness", "basicweakness"}:
+        return False
+    wards = player_cards.hand_ids(state, "01065")
+    if not wards or state.investigator.resources < 1:
+        return False
+    state.decision_queue = [
+        PendingDecision(
+            id="revelation-cancel",
+            kind="revelation_cancel",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Cancel {card.get('name', instance.card_code)}'s revelation?",
+            options=[
+                DecisionOption(
+                    "Play Ward of Protection",
+                    {"kind": "ward_revelation", "choice": "cancel", "ward": wards[0], "treachery": instance_id},
+                ),
+                DecisionOption(
+                    "Resolve revelation",
+                    {"kind": "ward_revelation", "choice": "pass", "treachery": instance_id},
+                ),
+            ],
+        )
+    ]
+    return True
+
+
+def resolve_ward_revelation(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+) -> None:
+    treachery = str(payload.get("treachery", ""))
+    if treachery not in state.card_instances:
+        return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "revelation-cancel"]
+    if payload.get("choice") == "cancel":
+        ward = str(payload.get("ward", ""))
+        if ward in state.investigator.hand and state.investigator.resources >= 1:
+            state.investigator.resources -= 1
+            player_cards.discard_from_hand(state, ward)
+            discard_encounter(state, treachery)
+            log_event(events, "revelation_canceled", "Ward of Protection canceled the revelation effect.", card=treachery, ward=ward)
+            start_damage_assignment(state, events, source="Ward of Protection", damage=0, horror=1)
+            return
+    resolve_revelation(state, rng, events, treachery)
 
 
 def reshuffle(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:

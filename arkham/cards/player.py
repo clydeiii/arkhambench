@@ -10,6 +10,10 @@ from .registry import card
 
 PLAYER_CARD_CODES = [
     "01001",
+    "01002",
+    "01003",
+    "01004",
+    "01005",
     "01006",
     "01007",
     "01102",
@@ -33,11 +37,20 @@ PLAYER_CARD_CODES = [
     "01037",
     "01038",
     "01039",
+    "01065",
+    "01080",
     "01086",
     "01087",
     "01088",
     "01089",
+    "01090",
+    "01091",
     "01092",
+    "01093",
+    "01096",
+    "01097",
+    "01098",
+    "01101",
 ]
 
 
@@ -130,6 +143,8 @@ def discard_from_hand(state: GameState, instance_id: str) -> None:
 
 def static_skill_bonus(state: GameState, skill: str, source: str) -> int:
     bonus = 0
+    if any(state.card_instances[instance_id].card_code == "01098" for instance_id in state.investigator.threat_area):
+        bonus -= 1
     if skill == "combat":
         if controls_code(state, "01018"):
             bonus += 1
@@ -210,7 +225,7 @@ def committed_codes(state: GameState) -> list[str]:
 
 
 def max_one_committed_already(state: GameState, code: str) -> bool:
-    return code in {"01089", "01092"} and code in committed_codes(state)
+    return code in {"01089", "01090", "01091", "01092", "01093"} and code in committed_codes(state)
 
 
 def lita_controlled_at_roland_location(state: GameState) -> bool:
@@ -232,6 +247,15 @@ def lita_uncontrolled_at_location(state: GameState, location_id: str) -> str | N
 
 def roland_location_has_clues(state: GameState) -> bool:
     return state.locations[state.investigator.location_id].clues > 0
+
+
+def controlled_tome_count(state: GameState) -> int:
+    count = 0
+    for instance_id in state.investigator.play_area:
+        card = card_data.get_card(state.card_instances[instance_id].card_code)
+        if card.get("type_code") == "asset" and "Tome" in str(card.get("traits", "")):
+            count += 1
+    return count
 
 
 def has_cultist_at_roland_location(state: GameState) -> bool:

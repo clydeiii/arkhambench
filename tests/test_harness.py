@@ -50,7 +50,7 @@ class StatusLineTests(unittest.TestCase):
 
         self.assertEqual(
             status_line(state),
-            "[R4·Investigation a2/3 | Hallway | clu2 res4 | dmg3/9 hor1/5 | h4 d21 x9 | Act2 Agd2 doom5/7]",
+            "[R4·Investigation a2/3 | Roland Banks 01001 | Hallway | clu2 res4 | dmg3/9 hor1/5 | h4 d21 x9 | Act2 Agd2 doom5/7]",
         )
 
 

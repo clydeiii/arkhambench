@@ -12,7 +12,7 @@ from .model import DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
-SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "parley_lita", "resign", "pass", "advance_act"}
+SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "parley_lita", "parley_mob", "resign", "pass", "advance_act"}
 FREE_ACTIONS = {"fast_ability"}
 NON_ACTIONS = {"advance_act", "pass"}
 
@@ -22,7 +22,7 @@ def present_action_decision(state: GameState) -> None:
         PendingDecision(
             id="choose-action",
             kind="choose_action",
-            prompt=f"[Round {state.round} · Investigation · Roland Banks · {state.investigator.actions_remaining} actions left] Choose an action:",
+            prompt=f"[Round {state.round} · Investigation · {state.investigator.name} · {state.investigator.actions_remaining} actions left] Choose an action:",
             options=legal_actions(state),
         )
     ]
@@ -62,7 +62,9 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     options.append(DecisionOption("Take resource (gain 1)", {"kind": "action", "action": "resource"}))
     add_asset_action_options(state, options)
     add_locked_door_options(state, options)
+    add_threat_action_options(state, options)
     add_lita_parley_option(state, options)
+    add_mob_enforcer_options(state, options)
     add_resign_option(state, options)
     add_fast_options(state, options)
     for instance_id in investigator.hand:
@@ -90,6 +92,8 @@ def affordable_actions(state: GameState, options: list[DecisionOption]) -> list[
             affordable.append(option)
             continue
         action = str(payload.get("action", ""))
+        if only_daisy_tome_action_remains(state) and action not in FREE_ACTIONS | NON_ACTIONS and not is_tome_action(state, payload):
+            continue
         if action in FREE_ACTIONS or action in NON_ACTIONS or effective_action_cost(state, action) <= state.investigator.actions_remaining:
             affordable.append(option)
     return affordable
@@ -141,11 +145,15 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         old_book_of_lore(state, payload, events)
     elif action == "medical_texts":
         skill_test.start(state, events, skill="intellect", difficulty=2, source="Medical Texts", on_success={"kind": "medical_texts"}, on_failure={"kind": "medical_texts"})
+    elif action == "discard_haunted":
+        discard_haunted(state, payload, events)
     elif action == "locked_door":
         skill = str(payload["skill"])
         skill_test.start(state, events, skill=skill, difficulty=4, source="Locked Door", on_success={"kind": "locked_door", "door": payload["door"]})
     elif action == "parley_lita":
         skill_test.start(state, events, skill="intellect", difficulty=4, source="Parley with Lita Chantler", on_success={"kind": "lita_parley", "lita": payload["lita"]})
+    elif action == "parley_mob":
+        parley_mob_enforcer(state, payload, events)
     elif action == "dynamite":
         dynamite_blast(state, payload, events)
     elif action == "fast_ability":
@@ -155,7 +163,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
             advance_act(state, events)
     elif action == "pass":
         state.investigator.actions_remaining = 0
-        log_event(events, "turn_passed", "Roland ended his turn.")
+        log_event(events, "turn_passed", f"{state.investigator.name} ended their turn.")
     elif action == "resign":
         from .scenarios import the_gathering
 
@@ -174,7 +182,7 @@ def spend_action(state: GameState, events: list[dict[str, Any]], action: str) ->
 
 
 def effective_action_cost(state: GameState, action: str) -> int:
-    cost = 1
+    cost = 2 if action == "discard_haunted" else 1
     designator = action_designator(action)
     key = f"frozen:{state.round}:move_fight_evade"
     if designator in {"move", "fight", "evade"} and has_threat(state, "01164") and not state.limits.get(key):
@@ -187,14 +195,34 @@ def mark_action_cost_paid(state: GameState, action: str, cost: int) -> None:
     key = f"frozen:{state.round}:move_fight_evade"
     if cost > 1 and designator in {"move", "fight", "evade"}:
         state.limits[key] = True
+    if state.investigator.card_code == "01002" and action in {"old_book", "medical_texts"}:
+        state.limits[f"daisy_tome:{state.round}"] = True
 
 
 def action_designator(action: str) -> str:
     if action == "asset_fight":
         return "fight"
-    if action == "parley_lita":
+    if action in {"parley_lita", "parley_mob"}:
         return "parley"
+    if action == "discard_haunted":
+        return "activate"
     return action
+
+
+def only_daisy_tome_action_remains(state: GameState) -> bool:
+    return (
+        state.investigator.card_code == "01002"
+        and state.investigator.actions_remaining == 1
+        and not state.limits.get(f"daisy_tome:{state.round}")
+    )
+
+
+def is_tome_action(state: GameState, payload: dict[str, Any]) -> bool:
+    asset_id = str(payload.get("asset", ""))
+    if asset_id not in state.investigator.play_area:
+        return False
+    card = card_data.get_card(state.card_instances[asset_id].card_code)
+    return card.get("type_code") == "asset" and "Tome" in str(card.get("traits", ""))
 
 
 def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> None:
@@ -421,6 +449,17 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
     # Fast card PLAYS are only legal during the investigator's own turn;
     # triggered fast abilities on in-play cards (Beat Cop) work in any window.
     if during_turn:
+        if (
+            state.investigator.card_code == "01003"
+            and state.investigator.resources >= 2
+            and not state.limits.get(f"skids_action:{state.round}")
+        ):
+            options.append(
+                DecisionOption(
+                    'Use "Skids" O\'Toole ability (spend 2 resources for +1 action)',
+                    {"kind": "action", "action": "fast_ability", "ability": "skids_action"},
+                )
+            )
         for card_id in list(state.investigator.hand):
             instance = state.card_instances[card_id]
             code = instance.card_code
@@ -499,6 +538,29 @@ def add_locked_door_options(state: GameState, options: list[DecisionOption]) -> 
             options.append(DecisionOption("Pick Locked Door (Agility 4)", {"kind": "action", "action": "locked_door", "door": attachment, "skill": "agility"}))
 
 
+def add_threat_action_options(state: GameState, options: list[DecisionOption]) -> None:
+    for instance_id in player_cards.threat_ids(state, "01098"):
+        options.append(
+            DecisionOption(
+                "Discard Haunted (2 actions)",
+                {"kind": "action", "action": "discard_haunted", "card": instance_id},
+            )
+        )
+
+
+def add_mob_enforcer_options(state: GameState, options: list[DecisionOption]) -> None:
+    if state.investigator.resources < 4:
+        return
+    for enemy_id in list(state.investigator.engaged_enemies):
+        if enemy_id in state.enemies and state.enemies[enemy_id].card_code == "01101":
+            options.append(
+                DecisionOption(
+                    "Parley with Mob Enforcer (spend 4 resources)",
+                    {"kind": "action", "action": "parley_mob", "enemy": enemy_id},
+                )
+            )
+
+
 def add_lita_parley_option(state: GameState, options: list[DecisionOption]) -> None:
     lita = player_cards.lita_uncontrolled_at_location(state, state.investigator.location_id)
     if lita:
@@ -569,6 +631,30 @@ def first_aid(state: GameState, payload: dict[str, Any], events: list[dict[str, 
     if asset.uses.get("supplies", 0) <= 0:
         player_cards.discard_from_play(state, asset_id)
         log_event(events, "asset_discarded", "First Aid was discarded with no supplies.", card=asset_id)
+
+
+def discard_haunted(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    card_id = str(payload.get("card", ""))
+    if card_id in state.investigator.threat_area and state.card_instances[card_id].card_code == "01098":
+        player_cards.discard_from_threat(state, card_id)
+        log_event(events, "treachery_discarded", "Haunted was discarded.", card=card_id)
+
+
+def parley_mob_enforcer(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    enemy_id = str(payload.get("enemy", ""))
+    if enemy_id not in state.enemies or state.enemies[enemy_id].card_code != "01101":
+        return
+    if state.investigator.resources < 4:
+        return
+    state.investigator.resources -= 4
+    enemy = state.enemies.pop(enemy_id)
+    if enemy.location_id in state.locations and enemy_id in state.locations[enemy.location_id].enemy_ids:
+        state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
+    if enemy_id in state.investigator.engaged_enemies:
+        state.investigator.engaged_enemies.remove(enemy_id)
+    state.card_instances[enemy_id].zone = "discard"
+    state.investigator.discard.append(enemy_id)
+    log_event(events, "enemy_discarded", "Mob Enforcer was discarded after parley.", enemy=enemy_id)
 
 
 def old_book_of_lore(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -656,6 +742,13 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
             player_cards.discard_from_play(state, card_id)
             damage_enemy(state, events, enemy_id, 1)
             log_event(events, "beat_cop_ability", "Beat Cop dealt 1 damage.", enemy=enemy_id)
+    elif ability == "skids_action":
+        key = f"skids_action:{state.round}"
+        if state.investigator.card_code == "01003" and state.investigator.resources >= 2 and not state.limits.get(key):
+            state.investigator.resources -= 2
+            state.investigator.actions_remaining += 1
+            state.limits[key] = True
+            log_event(events, "skids_ability", '"Skids" spent 2 resources to gain 1 action.')
 
 
 def research_librarian_search(state: GameState, events: list[dict[str, Any]]) -> None:

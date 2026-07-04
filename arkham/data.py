@@ -7,8 +7,22 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parent.parent
-CARD_FILES = (ROOT / "data/cards/core.json", ROOT / "data/cards/core_encounter.json")
-DEFAULT_DECK = ROOT / "data/decks/roland_ltp.json"
+CARD_FILES = (
+    ROOT / "data/cards/core.json",
+    ROOT / "data/cards/core_encounter.json",
+    ROOT / "data/cards/rtnotz.json",
+    ROOT / "data/cards/rtnotz_encounter.json",
+)
+DEFAULT_DECK = ROOT / "data/decks/killbray/roland.json"
+LEGACY_ROLAND_DECK = ROOT / "data/decks/roland_ltp.json"
+INVESTIGATOR_CODES = {
+    "roland": "01001",
+    "daisy": "01002",
+    "skids": "01003",
+    "agnes": "01004",
+    "wendy": "01005",
+}
+INVESTIGATOR_SLUGS = {code: slug for slug, code in INVESTIGATOR_CODES.items()}
 
 
 @lru_cache(maxsize=1)
@@ -33,6 +47,12 @@ def load_deck(path: str | Path | None = None) -> dict[str, Any]:
     deck_path = Path(path) if path else DEFAULT_DECK
     with deck_path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def default_deck_for_investigator(slug: str) -> Path:
+    if slug not in INVESTIGATOR_CODES:
+        raise KeyError(slug)
+    return ROOT / "data/decks/killbray" / f"{slug}.json"
 
 
 def search_cards(query: str) -> list[dict[str, Any]]:

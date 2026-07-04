@@ -81,7 +81,7 @@ def present_commit_decision(state: GameState) -> None:
         PendingDecision(
             id="commit-cards",
             kind="commit_cards",
-            prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Commit cards to {test['source']} ({skill} vs {test['difficulty']}).",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Commit cards to {test['source']} ({skill} vs {test['difficulty']}).",
             options=options,
         )
     ]
@@ -122,6 +122,18 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
     test = state.active_skill_test
     if not test:
         return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "commit-cards"]
+    reveal_token_for_test(state, rng, events)
+    present_token_reveal_reaction(state, rng, events)
+    if state.decision_queue:
+        return
+    resolve(state, events, rng)
+
+
+def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
     token = draw_token(state, rng)
     modifier, autofail = token_modifier(state, token)
     extra_tokens: list[str] = []
@@ -139,6 +151,53 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
     test["autofail"] = autofail
     suffix = f" then {', '.join(extra_tokens)}" if extra_tokens else ""
     log_event(events, "chaos_token", f"Revealed {token}{suffix}.", token=token, modifier=modifier, extra_tokens=extra_tokens)
+
+
+def present_token_reveal_reaction(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
+    test = state.active_skill_test
+    if not test or state.investigator.card_code != "01005":
+        return
+    if test.get("wendy_used") or not state.investigator.hand:
+        return
+    options = [
+        DecisionOption(
+            f"Discard {card_data.get_card(state.card_instances[card_id].card_code)['name']} to cancel and redraw",
+            {"kind": "wendy_token_reaction", "choice": "redraw", "discard": card_id},
+        )
+        for card_id in state.investigator.hand
+    ]
+    options.append(DecisionOption("Pass", {"kind": "wendy_token_reaction", "choice": "pass"}))
+    state.decision_queue = [
+        PendingDecision(
+            id="wendy-token-reaction",
+            kind="token_reveal_reaction",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use Wendy Adams reaction after revealing {test.get('token')}?",
+            options=options,
+        )
+    ]
+
+
+def resolve_wendy_token_reaction(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "wendy-token-reaction"]
+    if payload.get("choice") == "redraw" and not test.get("wendy_used"):
+        discard_id = str(payload.get("discard", ""))
+        if discard_id in state.investigator.hand:
+            state.investigator.hand.remove(discard_id)
+            state.investigator.discard.append(discard_id)
+            state.card_instances[discard_id].zone = "discard"
+            test["wendy_used"] = True
+            log_event(events, "wendy_reaction", "Wendy canceled the chaos token and redrew.", card=discard_id)
+            reveal_token_for_test(state, rng, events)
+    else:
+        test["wendy_passed"] = True
     resolve(state, events, rng)
 
 
@@ -152,7 +211,7 @@ def present_post_reveal_decision(state: GameState) -> None:
         PendingDecision(
             id="post-reveal-boosts",
             kind="post_reveal_boosts",
-            prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Use fast abilities after revealing {test.get('token')}.",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use fast abilities after revealing {test.get('token')}.",
             options=options,
         )
     ]
@@ -162,6 +221,14 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
     test = state.active_skill_test
     if not test:
         return
+    result = compute_result(state, test)
+    if not result["success"] and legal_lucky_cards(state) and not test.get("resolving_lucky"):
+        present_lucky_decision(state, result)
+        return
+    finalize_resolution(state, events, rng, result)
+
+
+def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
     cards = card_data.cards_by_code()
     skill = str(test["skill"])
     committed = sum(icon_count(cards[state.card_instances[instance_id].card_code], skill) for instance_id in test["committed"])
@@ -170,9 +237,14 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
     if bool(test["autofail"]):
         value = 0
     difficulty = int(test["difficulty"])
-    success = value >= difficulty and not bool(test["autofail"])
+    auto_success = (
+        test.get("token") == "eldersign"
+        and state.investigator.card_code == "01005"
+        and player_cards.controls_code(state, "01014")
+    )
+    success = (value >= difficulty and not bool(test["autofail"])) or auto_success
     margin = value - difficulty if success else max(0, difficulty - value)
-    result = {
+    return {
         "source": test["source"],
         "skill": skill,
         "difficulty": difficulty,
@@ -184,11 +256,73 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
         "modifier": test["modifier"],
         "value": value,
         "success": success,
+        "auto_success": auto_success,
         "margin": margin,
     }
+
+
+def present_lucky_decision(state: GameState, result: dict[str, Any]) -> None:
+    options = [
+        DecisionOption(
+            f"Play Lucky! ({card_data.get_card(state.card_instances[card_id].card_code)['name']})",
+            {"kind": "lucky_would_fail", "choice": "play", "card": card_id},
+        )
+        for card_id in legal_lucky_cards(state)
+    ]
+    options.append(DecisionOption("Fail the test", {"kind": "lucky_would_fail", "choice": "pass"}))
+    state.decision_queue = [
+        PendingDecision(
+            id="would-fail",
+            kind="would_fail",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] {result['source']} would fail by {result['margin']}.",
+            options=options,
+        )
+    ]
+
+
+def legal_lucky_cards(state: GameState) -> list[str]:
+    if state.investigator.resources < 1:
+        return []
+    return player_cards.hand_ids(state, "01080")
+
+
+def resolve_lucky_would_fail(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "would-fail"]
+    if payload.get("choice") == "play":
+        card_id = str(payload.get("card", ""))
+        if card_id in legal_lucky_cards(state):
+            state.investigator.resources -= 1
+            player_cards.discard_from_hand(state, card_id)
+            test.setdefault("boosts", []).append({"card_code": "01080", "skill": test["skill"], "amount": 2})
+            log_event(events, "event_played", "Played Lucky! for +2 skill value.", card=card_id)
+            result = compute_result(state, test)
+            if not result["success"] and legal_lucky_cards(state):
+                present_lucky_decision(state, result)
+                return
+            finalize_resolution(state, events, rng, result)
+            return
+    result = compute_result(state, test)
+    finalize_resolution(state, events, rng, result)
+
+
+def finalize_resolution(
+    state: GameState,
+    events: list[dict[str, Any]],
+    rng: ArkhamRng | None,
+    result: dict[str, Any],
+) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
     state.limits["last_skill_test"] = result
+    success = bool(result["success"])
+    margin = int(result["margin"])
     label = "failure (autofail)" if test["autofail"] and not success else ("success" if success else "failure")
     log_event(events, "skill_test_result", f"{test['source']}: {label} by {margin}.", **result)
+    apply_elder_sign_success(state, events, result, rng)
     callback = test["on_success"] if success else test["on_failure"]
     committed_ids = list(test["committed"])
     for instance_id in test["committed"]:
@@ -300,8 +434,27 @@ def apply_callback(
             log_event(events, "lita_recruited", "Roland took control of Lita Chantler.", card=lita)
     for instance_id in committed:
         code = state.card_instances[instance_id].card_code
-        if success and code in {"01089", "01092"}:
+        if success and code in {"01089", "01090", "01091", "01092"}:
             draw_player_card(state, events, rng)
+
+
+def apply_elder_sign_success(
+    state: GameState,
+    events: list[dict[str, Any]],
+    result: dict[str, Any],
+    rng: ArkhamRng | None,
+) -> None:
+    if result.get("token") != "eldersign" or not result.get("success"):
+        return
+    if state.investigator.card_code == "01002":
+        count = player_cards.controlled_tome_count(state)
+        for _ in range(count):
+            draw_player_card(state, events, rng)
+        if count:
+            log_event(events, "elder_sign", f"Daisy drew {count} card from her elder sign.", amount=count)
+    elif state.investigator.card_code == "01003":
+        state.investigator.resources += 2
+        log_event(events, "elder_sign", '"Skids" gained 2 resources from his elder sign.', amount=2)
 
 
 def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:

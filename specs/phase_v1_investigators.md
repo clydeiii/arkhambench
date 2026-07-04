@@ -96,13 +96,14 @@ triggered abilities, not boost windows.
   TOTAL to 0 per the audited rule; offering it would waste the card, but RAW it is
   legal — allow it and let the recomputation still fail). FLAG in your report if you
   believe the RR contradicts this.
-- **(c) Revelation-cancel window** — when the investigator draws a treachery (encounter
-  draw AND weakness treachery draw), before resolving its Revelation, offer playable
-  "when you draw a treachery" fast plays. First consumer, implement now: **01065 Ward of
-  Protection** (mystic event, cost 1, fast): "Play when you draw a treachery card. Cancel
-  that card's revelation effect. Take 1 horror." The treachery is still considered drawn
-  and goes to discard; only its revelation effect is canceled. Peril is out of scope
-  (no core Gathering treachery has it).
+- **(c) Revelation-cancel window** — when the investigator draws a treachery, before
+  resolving its Revelation, offer playable "when you draw a treachery" fast plays. First
+  consumer, implement now: **01065 Ward of Protection** (mystic event, cost 1, fast):
+  "Play when you draw a **non-weakness** treachery card. Cancel that card's revelation
+  effect. Then, take 1 horror." (Weakness treacheries therefore do NOT open this window
+  for Ward.) The treachery is still considered drawn and goes to discard; only its
+  revelation effect is canceled. Peril is out of scope (no core Gathering treachery
+  has it).
 - **(d) After-horror reaction** — after horror is placed on the investigator (from any
   source, after the assignment resolves), offer available reactions. V1 consumer: Agnes.
   If multiple horror are placed at once, the trigger fires once. Respect once-per-phase

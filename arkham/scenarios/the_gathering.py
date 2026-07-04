@@ -7,6 +7,8 @@ from typing import Any
 from .. import data as card_data
 from ..model import ActState, AgendaState, CardInstance, ChaosBag, DecisionOption, GameState, Investigator, Location, PendingDecision, TurnState
 from ..cards.player import card_name
+from ..cards.registry import REGISTRY
+from ..errors import EngineError
 from ..rng import ArkhamRng
 
 
@@ -49,12 +51,16 @@ def build_gathering_state(
     difficulty: str,
     rng: ArkhamRng,
     deck_path: str | Path | None = None,
+    investigator_slug: str = "roland",
 ) -> GameState:
     cards = card_data.cards_by_code()
-    investigator_card = cards["01001"]
+    if investigator_slug not in card_data.INVESTIGATOR_CODES:
+        raise EngineError(f"unknown investigator: {investigator_slug}")
+    investigator_code = card_data.INVESTIGATOR_CODES[investigator_slug]
+    investigator_card = cards[investigator_code]
     instances: dict[str, CardInstance] = {}
 
-    player_deck = build_player_deck(instances, deck_path)
+    player_deck = build_player_deck(instances, deck_path, investigator_slug=investigator_slug)
     rng.shuffle(player_deck)
     hand, player_deck = draw_opening_hand_without_weaknesses(instances, player_deck, rng)
 
@@ -66,7 +72,7 @@ def build_gathering_state(
     instances[lita] = CardInstance(id=lita, card_code="01117", zone="set_aside")
 
     investigator = Investigator(
-        id="roland",
+        id=investigator_slug,
         name=str(investigator_card["name"]),
         card_code=str(investigator_card["code"]),
         location_id="study",
@@ -77,7 +83,7 @@ def build_gathering_state(
         health=int(investigator_card["health"]),
         sanity=int(investigator_card["sanity"]),
         resources=5,
-        actions_remaining=3,
+        actions_remaining=starting_actions(investigator_code),
         hand=hand,
         deck=player_deck,
     )
@@ -88,11 +94,11 @@ def build_gathering_state(
         status="in_progress",
         round=1,
         phase="Investigation",
-        turn=TurnState(investigator_id="roland", action_index=0),
+        turn=TurnState(investigator_id=investigator_slug, action_index=0),
         investigator=investigator,
         card_instances=instances,
         locations={
-            "study": Location(id="study", code="01111", name="Study", revealed=True, shroud=2, clues=2, connections=[], investigator_ids=["roland"]),
+            "study": Location(id="study", code="01111", name="Study", revealed=True, shroud=2, clues=2, connections=[], investigator_ids=[investigator_slug]),
         },
         agenda=AgendaState(code="01105", name="What's Going On?!", stage=1, threshold=3),
         act=ActState(code="01108", name="Trapped", stage=1, clues_required=2),
@@ -104,14 +110,38 @@ def build_gathering_state(
     return state
 
 
-def build_player_deck(instances: dict[str, CardInstance], deck_path: str | Path | None) -> list[str]:
-    deck = card_data.load_deck(deck_path)
+def starting_actions(investigator_code: str) -> int:
+    return 4 if investigator_code == "01002" else 3
+
+
+def build_player_deck(
+    instances: dict[str, CardInstance],
+    deck_path: str | Path | None,
+    *,
+    investigator_slug: str,
+) -> list[str]:
+    actual_path = Path(deck_path) if deck_path else card_data.default_deck_for_investigator(investigator_slug)
+    deck = card_data.load_deck(actual_path)
+    expected_code = card_data.INVESTIGATOR_CODES[investigator_slug]
+    deck_investigator = deck.get("investigator_code")
+    if deck_investigator and str(deck_investigator) != expected_code:
+        raise EngineError(
+            f"deck investigator_code {deck_investigator} does not match {investigator_slug} ({expected_code})"
+        )
+    missing = sorted(str(code) for code in deck["slots"] if str(code) not in REGISTRY)
+    if missing:
+        raise EngineError(f"deck contains unimplemented card codes: {', '.join(missing)}")
     deck_ids: list[str] = []
     index = 1
     for code, count in deck["slots"].items():
         for _ in range(int(count)):
             instance_id = f"pc{index:04d}"
-            instances[instance_id] = CardInstance(id=instance_id, card_code=str(code), zone="player_deck")
+            instances[instance_id] = CardInstance(
+                id=instance_id,
+                card_code=str(code),
+                zone="player_deck",
+                owner=investigator_slug,
+            )
             deck_ids.append(instance_id)
             index += 1
     return deck_ids
@@ -126,7 +156,7 @@ def draw_opening_hand_without_weaknesses(
     set_aside: list[str] = []
     while len(hand) < 5 and deck:
         card_id = deck.pop(0)
-        if instances[card_id].card_code in PLAYER_WEAKNESSES:
+        if is_player_weakness(instances[card_id].card_code):
             set_aside.append(card_id)
         else:
             instances[card_id].zone = "hand"
@@ -268,7 +298,7 @@ def draw_one_nonweakness(
     found: str | None = None
     while deck and found is None:
         card_id = deck.pop(0)
-        if instances[card_id].card_code in PLAYER_WEAKNESSES:
+        if is_player_weakness(instances[card_id].card_code):
             set_aside.append(card_id)
         else:
             instances[card_id].zone = "hand"
@@ -276,6 +306,11 @@ def draw_one_nonweakness(
     deck.extend(set_aside)
     rng.shuffle(deck)
     return found
+
+
+def is_player_weakness(card_code: str) -> bool:
+    card = card_data.get_card(card_code)
+    return str(card.get("subtype_code", "")) in {"weakness", "basicweakness"}
 
 
 def reveal_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:
@@ -329,10 +364,11 @@ def advance_act_1(state: GameState, events: list[dict[str, Any]]) -> None:
         )
     discard_enemies_at_location(state, "study", events)
     discard_location_attachments(state, "study", events)
-    if "study" in state.locations and "roland" in state.locations["study"].investigator_ids:
-        state.locations["study"].investigator_ids.remove("roland")
+    investigator_id = state.investigator.id
+    if "study" in state.locations and investigator_id in state.locations["study"].investigator_ids:
+        state.locations["study"].investigator_ids.remove(investigator_id)
     state.investigator.location_id = "hallway"
-    state.locations["hallway"].investigator_ids.append("roland")
+    state.locations["hallway"].investigator_ids.append(investigator_id)
     reveal_location(state, events, "hallway")
     state.removed_from_game.append("study")
     state.locations.pop("study", None)
@@ -452,6 +488,9 @@ def start_next_round_after_end_round_choice(state: GameState, events: list[dict[
         if not str(key).startswith("frozen:")
         and not str(key).startswith("enemy_phase_attacked:")
         and not str(key).startswith("mind_over_matter:")
+        and not str(key).startswith("daisy_tome:")
+        and not str(key).startswith("skids_action:")
+        and not str(key).startswith("agnes_horror:")
         and not str(key).startswith("frozen_end_turn:")
         and not str(key).startswith("mythos_")
     }
@@ -554,7 +593,7 @@ def finish_mythos_after_agenda_choice(state: GameState, events: list[dict[str, A
     engage_ready_enemies_at_roland(state, events)
     if state.status == "in_progress" and not state.decision_queue:
         state.phase = "Investigation"
-        state.investigator.actions_remaining = 3
+        state.investigator.actions_remaining = starting_actions(state.investigator.card_code)
         state.turn.action_index = 0
         log_event(events, "phase_started", "Investigation phase began.")
 

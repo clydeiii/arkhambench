@@ -132,6 +132,7 @@ def _assemble_export(
             "divergence_step": divergence_step,
             "scenario": scenario,
             "scenario_card": scenario_card,
+            "investigator": meta.get("investigator"),
         },
         "cards": _card_bundle(steps, extra_codes=[scenario_card] if scenario_card else []),
         "steps": steps,
@@ -188,6 +189,8 @@ def _replay_timeline(run_dir: Path, meta: JsonDict) -> tuple[list[JsonDict], boo
             difficulty=str(meta.get("difficulty", "standard")),
             deck_path=meta.get("deck"),
             run_dir=replay_dir,
+            scenario=str(meta.get("scenario", "the_gathering")),
+            investigator=str((meta.get("investigator") or {}).get("id", "roland")),
         )
         divergence_step: int | None = None
         for step, choice in enumerate(choices):

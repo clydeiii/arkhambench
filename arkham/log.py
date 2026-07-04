@@ -28,7 +28,8 @@ def status_line(state: GameState) -> str:
     location_name = location.name if location else investigator.location_id
     parts = [f"R{state.round}·{state.phase}"]
     if state.phase == "Investigation":
-        parts[0] += f" a{investigator.actions_remaining}/3"
+        max_actions = 4 if investigator.card_code == "01002" else 3
+        parts[0] += f" a{investigator.actions_remaining}/{max_actions}"
     doom = (state.agenda.doom if state.agenda else 0) + sum(
         instance.doom for instance in state.card_instances.values()
     ) + sum(enemy.doom for enemy in state.enemies.values())
@@ -36,7 +37,7 @@ def status_line(state: GameState) -> str:
     agenda_stage = state.agenda.stage if state.agenda else 0
     doom_threshold = state.agenda.threshold if state.agenda else 0
     return (
-        f"[{parts[0]} | {location_name} | clu{investigator.clues} res{investigator.resources} | "
+        f"[{parts[0]} | {investigator.name} {investigator.card_code} | {location_name} | clu{investigator.clues} res{investigator.resources} | "
         f"dmg{investigator.damage}/{investigator.health} hor{investigator.horror}/{investigator.sanity} | "
         f"h{len(investigator.hand)} d{len(investigator.deck)} x{len(investigator.discard)} | "
         f"Act{act_stage} Agd{agenda_stage} doom{doom}/{doom_threshold}]"
