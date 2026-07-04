@@ -15,7 +15,7 @@ from .effects import (
     start_damage_assignment,
 )
 from .enemies import damage_enemy, disengage_enemy, has_retaliate, attack
-from .model import DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
 
@@ -138,7 +138,7 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
     modifier, autofail = token_modifier(state, token)
     extra_tokens: list[str] = []
     current = token
-    while state.scenario == "the_gathering" and state.difficulty in {"hard", "expert"} and current == "cultist":
+    while state.scenario in GATHERING_FAMILY and state.difficulty in {"hard", "expert"} and current == "cultist":
         extra = draw_token(state, rng)
         extra_modifier, extra_autofail = token_modifier(state, extra)
         modifier += extra_modifier
@@ -426,6 +426,41 @@ def apply_callback(
     elif kind == "damage_per_fail":
         if not success and margin > 0:
             start_damage_assignment(state, events, source=str(callback.get("source", "treachery")), damage=margin, horror=0)
+    elif kind == "discard_random_per_fail":
+        if not success and margin > 0 and rng is not None:
+            source = str(callback.get("source", "treachery"))
+            for _ in range(margin):
+                if not state.investigator.hand:
+                    break
+                card_id = rng.choice(state.investigator.hand)
+                player_cards.discard_from_hand(state, card_id)
+                log_event(events, "card_discarded", f"{source} forced a random discard of {player_cards.card_name(state, card_id)}.", card=card_id)
+    elif kind == "zealots_seal_discard":
+        if not success and rng is not None:
+            for _ in range(2):
+                if not state.investigator.hand:
+                    break
+                card_id = rng.choice(state.investigator.hand)
+                player_cards.discard_from_hand(state, card_id)
+                log_event(events, "card_discarded", f"The Zealot's Seal forced a random discard of {player_cards.card_name(state, card_id)}.", card=card_id)
+    elif kind == "chill_from_below":
+        if not success and margin > 0 and rng is not None:
+            discarded = 0
+            for _ in range(margin):
+                if not state.investigator.hand:
+                    break
+                card_id = rng.choice(state.investigator.hand)
+                player_cards.discard_from_hand(state, card_id)
+                log_event(events, "card_discarded", f"Chill from Below forced a random discard of {player_cards.card_name(state, card_id)}.", card=card_id)
+                discarded += 1
+            shortfall = margin - discarded
+            if shortfall > 0:
+                start_damage_assignment(state, events, source="Chill from Below", damage=shortfall, horror=0)
+    elif kind == "ghoul_pits_rats":
+        if not success and margin > 0 and rng is not None:
+            from .scenarios import the_gathering
+
+            the_gathering.ghoul_pits_draw_rats(state, events, rng, margin)
     elif kind == "discard_threat_on_success":
         if success:
             code = str(callback.get("card_code", ""))
@@ -701,7 +736,7 @@ def apply_elder_sign_success(
 
 
 def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
-    if state.scenario != "the_gathering" or state.status != "in_progress" or state.decision_queue:
+    if state.scenario not in GATHERING_FAMILY or state.status != "in_progress" or state.decision_queue:
         return
     from .scenarios import the_gathering
 

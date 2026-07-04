@@ -1,7 +1,7 @@
 """Chaos bag helpers will be implemented in phase B."""
 from __future__ import annotations
 
-from .model import GameState
+from .model import GATHERING_FAMILY, GameState
 from .rng import ArkhamRng
 
 
@@ -30,7 +30,7 @@ def token_modifier(state: GameState, token: str) -> tuple[int, bool]:
         if code == "01004":
             return (state.investigator.horror, False)
         return (0, False)
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         if token == "skull":
             if state.difficulty in {"easy", "standard"}:
                 from .scenarios import the_gathering

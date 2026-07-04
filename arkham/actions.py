@@ -7,9 +7,9 @@ from typing import Any
 from . import data as card_data
 from .cards import encounter_cards, player as player_cards
 from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
-from .enemies import attack, can_attack_investigator, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
+from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
-from .model import DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
@@ -37,7 +37,8 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         state.act
         and state.act.clues_required is not None
         and investigator.clues >= state.act.clues_required
-        and not (state.scenario == "the_gathering" and state.act.stage == 2)
+        and not (state.scenario in GATHERING_FAMILY and state.act.stage == 2)
+        and act_advance_location_ok(state)
     ):
         options.append(DecisionOption(f"Advance act by spending {state.act.clues_required} clues", {"kind": "action", "action": "advance_act"}))
     if location.revealed and location.shroud is not None and not location_locked(state, location.id):
@@ -45,7 +46,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         intellect = player_cards.effective_base_skill(state, "intellect", f"Investigate {location.name}")
         options.append(DecisionOption(f"Investigate {location.name} (shroud {shroud}) — test Intellect({intellect}) vs {shroud}", {"kind": "action", "action": "investigate"}))
     for target in sorted(location.connections, key=lambda loc: (state.locations[loc].code, loc)):
-        if state.scenario == "the_gathering" and target == "parlor" and not state.locations[target].revealed:
+        if state.scenario in GATHERING_FAMILY and target == "parlor" and not state.locations[target].revealed:
             continue
         options.append(DecisionOption(f"Move to {state.locations[target].name}", {"kind": "action", "action": "move", "location": target}))
     for enemy_id in fight_targets(state):
@@ -53,14 +54,18 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         combat = player_cards.effective_base_skill(state, "combat", f"Fight {enemy_name(state, enemy_id)}")
         options.append(DecisionOption(f"Fight {enemy_name(state, enemy_id)} (fight {card.get('enemy_fight', 1)}, 1 dmg) — test Combat({combat})", {"kind": "action", "action": "fight", "enemy": enemy_id}))
     for enemy_id in list(investigator.engaged_enemies):
+        if not can_be_evaded(state, enemy_id):
+            continue
         card = enemy_card(state, enemy_id)
         agility = player_cards.effective_base_skill(state, "agility", f"Evade {enemy_name(state, enemy_id)}")
         options.append(DecisionOption(f"Evade {enemy_name(state, enemy_id)} (evade {card.get('enemy_evade', 1)}) — test Agility({agility})", {"kind": "action", "action": "evade", "enemy": enemy_id}))
     for enemy_id in sorted(location.enemy_ids):
         if enemy_id not in investigator.engaged_enemies and state.enemies[enemy_id].engaged_with is None:
             options.append(DecisionOption(f"Engage {enemy_name(state, enemy_id)}", {"kind": "action", "action": "engage", "enemy": enemy_id}))
-    options.append(DecisionOption("Draw 1 card", {"kind": "action", "action": "draw"}))
+    if not (the_gathering_module().is_return(state) and investigator.location_id == "guest_hall"):
+        options.append(DecisionOption("Draw 1 card", {"kind": "action", "action": "draw"}))
     options.append(DecisionOption("Take resource (gain 1)", {"kind": "action", "action": "resource"}))
+    add_study_gateway_option(state, options)
     add_asset_action_options(state, options)
     add_locked_door_options(state, options)
     add_threat_action_options(state, options)
@@ -143,6 +148,33 @@ def elusive_destinations(state: GameState) -> list[str]:
     ]
 
 
+def the_gathering_module():
+    from .scenarios import the_gathering
+
+    return the_gathering
+
+
+def act_advance_location_ok(state: GameState) -> bool:
+    # Return to The Gathering Act 1 (Mysterious Gateway): only investigators in
+    # the Guest Hall may spend the requisite clues to advance.
+    if the_gathering_module().is_return(state) and state.act and state.act.stage == 1:
+        return state.investigator.location_id == "guest_hall"
+    return True
+
+
+def add_study_gateway_option(state: GameState, options: list[DecisionOption]) -> None:
+    # Study (Aberrant Gateway): "[action] [action]: Draw 3 cards." (lead
+    # investigator only — the solo investigator qualifies).
+    if not the_gathering_module().is_return(state):
+        return
+    if state.investigator.location_id != "study":
+        return
+    if state.investigator.actions_remaining >= effective_action_cost(state, "study_draw"):
+        options.append(
+            DecisionOption("Study (Aberrant Gateway): spend 2 actions to draw 3 cards", {"kind": "action", "action": "study_draw"})
+        )
+
+
 def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
     action = str(payload["action"])
     if action not in NON_ACTIONS | FREE_ACTIONS:
@@ -163,12 +195,22 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         skill_test.start(state, events, skill="combat", difficulty=difficulty, source=f"Fight {enemy_name(state, enemy_id)}", on_success={"kind": "fight", "enemy": enemy_id, "damage": 1}, on_failure={"kind": "fight", "enemy": enemy_id})
     elif action == "evade":
         enemy_id = str(payload["enemy"])
+        if not can_be_evaded(state, enemy_id):
+            raise EngineError(f"{enemy_name(state, enemy_id)} cannot be evaded right now")
         difficulty = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
         skill_test.start(state, events, skill="agility", difficulty=difficulty, source=f"Evade {enemy_name(state, enemy_id)}", on_success={"kind": "evade", "enemy": enemy_id})
     elif action == "engage":
         engage_enemy(state, events, str(payload["enemy"]))
     elif action == "draw":
+        if the_gathering_module().is_return(state) and state.investigator.location_id == "guest_hall":
+            raise EngineError("Investigators in the Guest Hall cannot take draw actions")
         draw_player_card(state, events, rng)
+    elif action == "study_draw":
+        for _ in range(3):
+            if state.status != "in_progress":
+                break
+            draw_player_card(state, events, rng)
+        log_event(events, "study_draw", "The Study's gateway ability drew 3 cards.")
     elif action == "resource":
         gain_resource(state, 1, events)
     elif action == "play":
@@ -234,7 +276,7 @@ def spend_action(state: GameState, events: list[dict[str, Any]], action: str) ->
 
 
 def effective_action_cost(state: GameState, action: str) -> int:
-    cost = 2 if action == "discard_haunted" else 1
+    cost = 2 if action in {"discard_haunted", "study_draw"} else 1
     designator = action_designator(action)
     key = f"frozen:{state.round}:move_fight_evade"
     if designator in {"move", "fight", "evade"} and has_threat(state, "01164") and not state.limits.get(key):
@@ -258,7 +300,7 @@ def action_designator(action: str) -> str:
         return "evade"
     if action in {"parley_lita", "parley_mob"}:
         return "parley"
-    if action in {"discard_haunted", "necronomicon", "scrying"}:
+    if action in {"discard_haunted", "necronomicon", "scrying", "study_draw"}:
         return "activate"
     return action
 
@@ -375,7 +417,7 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
     state.locations[location_id].investigator_ids.append(state.investigator.id)
     move_engaged_enemies_with_roland(state, events, location_id)
     log_event(events, "investigator_moved", f"Roland moved to {state.locations[location_id].name}.", location=location_id)
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         the_gathering.after_enter_location(state, events, location_id)
@@ -719,7 +761,7 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
             )
     for cat in player_cards.play_area_ids(state, "01076"):
         for enemy_id in enemies_at_location(state):
-            if not is_elite(state, enemy_id):
+            if not is_elite(state, enemy_id) and can_be_evaded(state, enemy_id):
                 options.append(
                     DecisionOption(
                         f"Discard Stray Cat to evade {enemy_name(state, enemy_id)}",
@@ -815,7 +857,7 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
                 options.append(DecisionOption(f"Play Sneak Attack on {enemy_name(state, enemy_id)}", {"kind": "action", "action": "sneak_attack", "card": card_id, "enemy": enemy_id}))
         if state.card_instances[card_id].card_code == "01066" and state.investigator.resources >= 2 and not dissonant_blocks(state, "01066"):
             for enemy_id in list(state.investigator.engaged_enemies):
-                if enemy_id in state.enemies:
+                if enemy_id in state.enemies and can_be_evaded(state, enemy_id):
                     willpower = player_cards.effective_base_skill(state, "willpower", f"Blinding Light {enemy_name(state, enemy_id)}")
                     evade = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
                     options.append(DecisionOption(f"Play Blinding Light to evade {enemy_name(state, enemy_id)} — test Willpower({willpower}) vs {evade}", {"kind": "action", "action": "blinding_light", "card": card_id, "enemy": enemy_id}))
@@ -882,7 +924,7 @@ def add_lita_parley_option(state: GameState, options: list[DecisionOption]) -> N
 
 
 def add_resign_option(state: GameState, options: list[DecisionOption]) -> None:
-    if state.scenario != "the_gathering":
+    if state.scenario not in GATHERING_FAMILY:
         return
     location = state.locations[state.investigator.location_id]
     if location.id == "parlor" and location.revealed:
@@ -1133,7 +1175,7 @@ def cunning_distraction(state: GameState, payload: dict[str, Any], events: list[
         return
     evaded = []
     for enemy_id in targets:
-        if enemy_id in state.enemies:
+        if enemy_id in state.enemies and can_be_evaded(state, enemy_id):
             disengage_enemy(state, events, enemy_id, exhaust=True)
             evaded.append(enemy_id)
     if evaded:
@@ -1471,7 +1513,7 @@ def move_without_engaged_enemies(state: GameState, location_id: str, events: lis
     if state.investigator.id not in state.locations[location_id].investigator_ids:
         state.locations[location_id].investigator_ids.append(state.investigator.id)
     log_event(events, "investigator_moved", f"Roland moved to {state.locations[location_id].name}.", location=location_id)
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         the_gathering.after_enter_location(state, events, location_id)

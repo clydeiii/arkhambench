@@ -32,7 +32,7 @@ def build_parser() -> argparse.ArgumentParser:
     new = sub.add_parser("new")
     new.add_argument("--seed", type=int, default=1)
     new.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
-    new.add_argument("--scenario", choices=("the_gathering",), default="the_gathering")
+    new.add_argument("--scenario", choices=("the_gathering", "return_to_the_gathering"), default="the_gathering")
     new.add_argument("--investigator", choices=tuple(card_data.INVESTIGATOR_CODES), default="roland")
     new.add_argument("--deck", default=None)
     new.add_argument("--run", dest="run", default=None)

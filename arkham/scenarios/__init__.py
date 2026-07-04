@@ -23,5 +23,13 @@ SCENARIOS: dict[str, ScenarioDef] = {
         id="the_gathering",
         build_state=the_gathering.build_gathering_state,
         resolve_choice=the_gathering.resolve_scenario_choice,
-    )
+    ),
+    # Return to The Gathering shares The Gathering's acts 2-3, agendas,
+    # resolutions, scoring, and token effects; only setup, the location
+    # graph, act 1, and the Ghouls-set swap differ (scenario card 50011).
+    "return_to_the_gathering": ScenarioDef(
+        id="return_to_the_gathering",
+        build_state=the_gathering.build_return_state,
+        resolve_choice=the_gathering.resolve_scenario_choice,
+    ),
 }

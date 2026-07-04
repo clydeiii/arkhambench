@@ -228,7 +228,7 @@ def _warn_divergence(run_dir: Path, step: int, expected: object, actual: object)
 
 
 # Scenario reference cards (chaos-token effects) per scenario id.
-SCENARIO_REFERENCE_CARDS = {"the_gathering": "01104"}
+SCENARIO_REFERENCE_CARDS = {"the_gathering": "01104", "return_to_the_gathering": "01104"}
 
 
 def _card_bundle(steps: list[JsonDict], extra_codes: list[str] | None = None) -> JsonDict:

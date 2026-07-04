@@ -7,7 +7,7 @@ from . import actions, encounter
 from .cards import player as player_cards
 from .effects import draw_player_card, gain_resource, log_event
 from .enemies import attack, can_attack_investigator, engage_ready_enemies_at_roland, enemy_name, move_hunters
-from .model import DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
 
@@ -44,7 +44,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
         elif state.phase == "Enemy":
             run_enemy_phase(state, events, rng)
             if not state.decision_queue and state.status == "in_progress":
-                if state.scenario == "the_gathering":
+                if state.scenario in GATHERING_FAMILY:
                     from .scenarios import the_gathering
 
                     the_gathering.end_enemy_phase(state, events)
@@ -55,7 +55,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
         elif state.phase == "Upkeep":
             run_upkeep_phase(state, events, rng)
             if not state.decision_queue and state.status == "in_progress":
-                if state.scenario == "the_gathering":
+                if state.scenario in GATHERING_FAMILY:
                     from .scenarios import the_gathering
 
                     the_gathering.end_round(state, events)

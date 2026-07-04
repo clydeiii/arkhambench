@@ -112,10 +112,18 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
     type_code = card.get("type_code")
     if type_code == "enemy":
         if code == "01118":
+            ensure_return_spawn_location(state, events, "attic")
             spawn_enemy(state, events, instance_id=instance_id, location_id="attic")
             return
         if code == "01119":
+            ensure_return_spawn_location(state, events, "cellar")
             spawn_enemy(state, events, instance_id=instance_id, location_id="cellar")
+            return
+        if code == "50022":
+            spawn_enemy(state, events, instance_id=instance_id, location_id="bedroom")
+            return
+        if code == "50023":
+            spawn_enemy(state, events, instance_id=instance_id, location_id="bathroom")
             return
         spawn_enemy(state, events, instance_id=instance_id)
         return
@@ -163,6 +171,29 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
             source=card.get("name", "Crypt Chill"),
             on_failure={"kind": "crypt_chill"},
         )
+    elif code == "50024":
+        discard_encounter(state, instance_id)
+        if len(state.investigator.hand) <= 3:
+            start_damage_assignment(state, events, source="The Zealot's Seal", damage=1, horror=1)
+        else:
+            skill_test.start(
+                state,
+                events,
+                skill="willpower",
+                difficulty=2,
+                source="The Zealot's Seal",
+                on_failure={"kind": "zealots_seal_discard"},
+            )
+    elif code == "50040":
+        discard_encounter(state, instance_id)
+        skill_test.start(
+            state,
+            events,
+            skill="willpower",
+            difficulty=3,
+            source="Chill from Below",
+            on_failure={"kind": "chill_from_below"},
+        )
     elif code == "01168":
         attach_to_location_or_discard(state, events, instance_id, state.investigator.location_id, limit_code="01168")
     elif code == "01174":
@@ -175,6 +206,18 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
     else:
         discard_encounter(state, instance_id)
         log_event(events, "treachery_discarded", f"{card.get('name', code)} had no placeholder effect.", card=instance_id)
+
+
+def ensure_return_spawn_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:
+    # Study (Aberrant Gateway) Forced: when an enemy attempts to spawn at a
+    # location that is not in play, put that location into play (unrevealed)
+    # and spawn the enemy there. Only the Return scenario has this fallback;
+    # in the core scenario a missing spawn location discards the enemy (RR).
+    from .scenarios import the_gathering
+
+    if the_gathering.is_return(state) and location_id not in state.locations:
+        the_gathering.put_return_location_into_play(state, events, location_id)
+        log_event(events, "study_forced", f"The Study's gateway pulled {state.locations[location_id].name} into play.", location=location_id)
 
 
 def discard_encounter(state: GameState, instance_id: str) -> None:

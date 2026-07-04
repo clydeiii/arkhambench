@@ -7,7 +7,7 @@ from typing import Any
 from . import data as card_data
 from .cards import player as player_cards
 from .effects import discover_clue, log_event, place_doom, start_damage_assignment
-from .model import DecisionOption, EnemyInstance, GameState, PendingDecision
+from .model import GATHERING_FAMILY, DecisionOption, EnemyInstance, GameState, PendingDecision
 
 
 def enemy_card(state: GameState, enemy_id: str) -> dict[str, Any]:
@@ -33,6 +33,14 @@ def is_elite(state: GameState, enemy_id: str) -> bool:
 def can_attack_investigator(state: GameState, enemy_id: str) -> bool:
     if any(str(key).startswith("on_the_lam:") and value for key, value in state.limits.items()):
         return is_elite(state, enemy_id)
+    return True
+
+
+def can_be_evaded(state: GameState, enemy_id: str) -> bool:
+    # Acolyte of Umôrdhoth: cannot be evaded while the engaged investigator has
+    # no cards in hand. "Cannot" is absolute — it also blocks automatic evades.
+    if enemy_card(state, enemy_id).get("code") == "50039" and not state.investigator.hand:
+        return False
     return True
 
 
@@ -288,6 +296,17 @@ def after_attack(
     )
     if card_code == "01102":
         place_doom(state, 1, events, source="Silver Twilight Acolyte", rng=rng)
+    if card_code == "50038" and state.investigator.hand and rng is not None:
+        from .cards import player as player_cards
+
+        card_id = rng.choice(state.investigator.hand)
+        player_cards.discard_from_hand(state, card_id)
+        log_event(
+            events,
+            "grave_eater_forced",
+            f"Grave-Eater's attack forced a random discard of {player_cards.card_name(state, card_id)}.",
+            card=card_id,
+        )
     if source == "enemy phase" and enemy_id in state.enemies:
         state.enemies[enemy_id].exhausted = True
         log_event(events, "enemy_exhausted", f"{enemy_name(state, enemy_id)} exhausted after attacking.", enemy=enemy_id)
@@ -326,7 +345,7 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         state.encounter_discard.append(enemy_id)
         state.card_instances[enemy_id].zone = "encounter_discard"
     log_event(events, "enemy_defeated", f"{card.get('name', enemy_id)} was defeated.", enemy=enemy_id)
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         if the_gathering.after_enemy_defeated(state, events, enemy_id):

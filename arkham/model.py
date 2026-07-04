@@ -4,6 +4,9 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 
+# Scenarios sharing The Gathering engine hooks (agenda/act/token/resolution logic).
+GATHERING_FAMILY = {"the_gathering", "return_to_the_gathering"}
+
 JsonDict = dict[str, Any]
 
 

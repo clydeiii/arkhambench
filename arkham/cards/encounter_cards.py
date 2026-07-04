@@ -21,6 +21,13 @@ ENCOUNTER_CARD_CODES = [
     "01167",
     "01168",
     "01174",
+    # Return to The Gathering (return set + Ghouls of Umôrdhoth)
+    "50022",
+    "50023",
+    "50024",
+    "50038",
+    "50039",
+    "50040",
 ]
 
 

@@ -13,14 +13,15 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--games", type=int, default=200)
     parser.add_argument("--investigator", default="roland")
+    parser.add_argument("--scenario", default="the_gathering")
     args = parser.parse_args(argv)
-    outcomes = run_fuzz(args.games, investigator=args.investigator)
+    outcomes = run_fuzz(args.games, investigator=args.investigator, scenario=args.scenario)
     for outcome, count in sorted(outcomes.items()):
         print(f"{outcome}: {count}")
     return 0
 
 
-def run_fuzz(games: int, *, investigator: str = "roland") -> Counter[str]:
+def run_fuzz(games: int, *, investigator: str = "roland", scenario: str = "the_gathering") -> Counter[str]:
     difficulties = ["easy", "standard", "hard", "expert"]
     outcomes: Counter[str] = Counter()
     with tempfile.TemporaryDirectory() as tmp:
@@ -29,7 +30,7 @@ def run_fuzz(games: int, *, investigator: str = "roland") -> Counter[str]:
             difficulty = difficulties[index % len(difficulties)]
             seed = index + 1
             chooser = random.Random(seed * 7919)
-            game = Game.new(seed=seed, difficulty=difficulty, deck_path=None, run_dir=root / f"game-{index}", investigator=investigator)
+            game = Game.new(seed=seed, difficulty=difficulty, deck_path=None, run_dir=root / f"game-{index}", investigator=investigator, scenario=scenario)
             steps = 0
             while game.state.status == "in_progress":
                 check_invariants(game)

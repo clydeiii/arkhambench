@@ -6,7 +6,7 @@ from typing import Any
 from . import data as card_data
 from .cards import player as player_cards
 from .errors import EngineError
-from .model import CardInstance, DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, CardInstance, DecisionOption, GameState, PendingDecision
 
 
 class RuleEventList(list[dict[str, Any]]):
@@ -268,7 +268,7 @@ def place_doom(
 def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: Any = None) -> None:
     if state.agenda is None or state.agenda.threshold <= 0:
         return
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         the_gathering.check_agenda_advance(state, events, rng=rng)
@@ -297,7 +297,7 @@ def clear_all_doom(state: GameState) -> None:
 def advance_act(state: GameState, events: list[dict[str, Any]]) -> None:
     if state.act is None:
         return
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         the_gathering.advance_act(state, events)
@@ -482,7 +482,7 @@ def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> No
     state.status = "ended"
     state.decision_queue = []
     state.result = {"outcome": summary, "round": state.round, "trauma": dict(state.trauma)}
-    if state.scenario == "the_gathering":
+    if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         the_gathering.finalize_result(state, events, outcome="no_resolution", summary=summary)

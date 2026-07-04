@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from .. import data as card_data
-from ..model import ActState, AgendaState, CardInstance, ChaosBag, DecisionOption, GameState, Investigator, Location, PendingDecision, TurnState
+from ..model import GATHERING_FAMILY as model_GATHERING_FAMILY, ActState, AgendaState, CardInstance, ChaosBag, DecisionOption, GameState, Investigator, Location, PendingDecision, TurnState
 from ..cards import player as player_cards
 from ..cards.player import card_name
 from ..cards.registry import REGISTRY
@@ -45,6 +45,63 @@ ENCOUNTER_COUNTS = {
     "01168": 2,
     "01174": 2,
 }
+
+RETURN_SCENARIO = "return_to_the_gathering"
+GATHERING_FAMILY = model_GATHERING_FAMILY
+
+# Return to The Gathering swaps the Ghouls set (01160 x3, 01161 x1, 01162 x3 — 7 cards)
+# for Ghouls of Umôrdhoth (50038 x3, 50039 x1, 50040 x3 — 7 cards) and adds the Return
+# set's deck cards (50022, 50023, 50024 x2). Everything else matches the core scenario.
+RETURN_ENCOUNTER_COUNTS = {
+    "01118": 1,
+    "01119": 1,
+    "01159": 3,
+    "50038": 3,
+    "50039": 1,
+    "50040": 3,
+    "01163": 3,
+    "01164": 2,
+    "01165": 2,
+    "01166": 3,
+    "01167": 2,
+    "01168": 2,
+    "01174": 2,
+    "50022": 1,
+    "50023": 1,
+    "50024": 2,
+}
+
+# id: (code, unrevealed_name, revealed_name, shroud, clues, connections-when-in-play)
+# Connections were transcribed and verified from the physical card scans (see
+# specs/phase_v6_return.md). Neighbors are linked only once both sides are in play.
+RETURN_LOCATION_INFO: dict[str, tuple[str, str, str, int, int, list[str]]] = {
+    "study": ("50013", "Study (Aberrant Gateway)", "Study (Aberrant Gateway)", 3, 1, ["guest_hall"]),
+    "guest_hall": ("50014", "Guest Hall", "Guest Hall", 1, 0, ["study", "bedroom", "bathroom", "hallway"]),
+    "bedroom": ("50015", "Bedroom", "Bedroom", 2, 1, ["guest_hall"]),
+    "bathroom": ("50016", "Bathroom", "Bathroom", 1, 1, ["guest_hall"]),
+    "hallway": ("50017", "Hole in the Wall", "Hallway", 1, 0, ["guest_hall", "attic", "cellar", "parlor"]),
+    "attic": ("50018", "Attic", "Attic", 3, 1, ["hallway", "field_of_graves"]),
+    "cellar": ("50020", "Cellar", "Cellar", 2, 1, ["hallway", "ghoul_pits"]),
+    "parlor": ("01115", "Parlor", "Parlor", 2, 0, ["hallway"]),
+    "field_of_graves": ("50019", "Far Above Your House", "Field of Graves", 2, 1, ["attic"]),
+    "ghoul_pits": ("50021", "Deep Below Your House", "Ghoul Pits", 4, 1, ["cellar"]),
+}
+# Original core Attic/Cellar stats when the random setup picks the old versions.
+RETURN_ORIGINAL_VARIANTS = {
+    "attic": ("01113", "Attic", "Attic", 1, 2, ["hallway"]),
+    "cellar": ("01114", "Cellar", "Cellar", 4, 2, ["hallway"]),
+}
+
+
+def is_return(state: GameState) -> bool:
+    return state.scenario == RETURN_SCENARIO
+
+
+def return_location_info(state: GameState, location_id: str) -> tuple[str, str, str, int, int, list[str]]:
+    variant_key = f"return_variant:{location_id}"
+    if state.limits.get(variant_key) == "original":
+        return RETURN_ORIGINAL_VARIANTS[location_id]
+    return RETURN_LOCATION_INFO[location_id]
 
 
 def build_gathering_state(
@@ -109,6 +166,121 @@ def build_gathering_state(
     state.limits["mulligan_available"] = list(hand)
     present_mulligan_decision(state)
     return state
+
+
+def build_return_state(
+    *,
+    difficulty: str,
+    rng: ArkhamRng,
+    deck_path: str | Path | None = None,
+    investigator_slug: str = "roland",
+) -> GameState:
+    cards = card_data.cards_by_code()
+    if investigator_slug not in card_data.INVESTIGATOR_CODES:
+        raise EngineError(f"unknown investigator: {investigator_slug}")
+    investigator_code = card_data.INVESTIGATOR_CODES[investigator_slug]
+    investigator_card = cards[investigator_code]
+    instances: dict[str, CardInstance] = {}
+
+    player_deck = build_player_deck(instances, deck_path, investigator_slug=investigator_slug)
+    rng.shuffle(player_deck)
+    hand, player_deck = draw_opening_hand_without_weaknesses(instances, player_deck, rng)
+
+    encounter_deck = build_return_encounter_deck(instances)
+    rng.shuffle(encounter_deck)
+    instances["setaside_ghoul_priest"] = CardInstance(id="setaside_ghoul_priest", card_code="01116", zone="set_aside")
+    instances["setaside_lita"] = CardInstance(id="setaside_lita", card_code="01117", zone="set_aside")
+
+    investigator = Investigator(
+        id=investigator_slug,
+        name=str(investigator_card["name"]),
+        card_code=str(investigator_card["code"]),
+        location_id="study",
+        willpower=int(investigator_card["skill_willpower"]),
+        intellect=int(investigator_card["skill_intellect"]),
+        combat=int(investigator_card["skill_combat"]),
+        agility=int(investigator_card["skill_agility"]),
+        health=int(investigator_card["health"]),
+        sanity=int(investigator_card["sanity"]),
+        resources=5,
+        actions_remaining=starting_actions(investigator_code),
+        hand=hand,
+        deck=player_deck,
+    )
+    state = GameState(
+        schema_version=2,
+        scenario=RETURN_SCENARIO,
+        difficulty=difficulty,
+        status="in_progress",
+        round=1,
+        phase="Investigation",
+        turn=TurnState(investigator_id=investigator_slug, action_index=0),
+        investigator=investigator,
+        card_instances=instances,
+        locations={},
+        agenda=AgendaState(code="01105", name="What's Going On?!", stage=1, threshold=3),
+        act=ActState(code="50012", name="Mysterious Gateway", stage=1, clues_required=3),
+        chaos_bag=ChaosBag(tokens=list(CHAOS_BAGS[difficulty])),
+        encounter_deck=encounter_deck,
+    )
+    # Setup card 50011: choose one of the two Attic and one of the two Cellar
+    # versions at random; the other copies are removed from the game.
+    state.limits["return_variant:attic"] = rng.choice(["original", "return"])
+    state.limits["return_variant:cellar"] = rng.choice(["original", "return"])
+    put_return_location_into_play(state, [], "study", revealed=True)
+    for location_id in ("guest_hall", "bedroom", "bathroom"):
+        put_return_location_into_play(state, [], location_id)
+    state.locations["study"].investigator_ids.append(investigator_slug)
+    state.limits["mulligan_available"] = list(hand)
+    present_mulligan_decision(state)
+    return state
+
+
+def build_return_encounter_deck(instances: dict[str, CardInstance]) -> list[str]:
+    ids: list[str] = []
+    index = 1
+    for code, count in RETURN_ENCOUNTER_COUNTS.items():
+        for _ in range(count):
+            instance_id = f"ec{index:04d}"
+            instances[instance_id] = CardInstance(id=instance_id, card_code=code, zone="encounter_deck")
+            ids.append(instance_id)
+            index += 1
+    return ids
+
+
+def put_return_location_into_play(
+    state: GameState,
+    events: list[dict[str, Any]],
+    location_id: str,
+    *,
+    revealed: bool = False,
+) -> None:
+    if location_id in state.locations:
+        return
+    code, unrevealed_name, revealed_name, shroud, clues, connections = return_location_info(state, location_id)
+    if location_id == "hallway" and not revealed:
+        # Hole in the Wall (the unrevealed face) connects only to the Guest Hall;
+        # the full Hallway connections apply once it is revealed (RR: unrevealed-
+        # side connection icons govern while unrevealed).
+        connections = ["guest_hall"]
+    in_play = [neighbor for neighbor in connections if neighbor in state.locations]
+    state.locations[location_id] = Location(
+        id=location_id,
+        code=code,
+        name=revealed_name if revealed else unrevealed_name,
+        revealed=revealed,
+        shroud=shroud if revealed else None,
+        clues=clues if revealed else 0,
+        connections=in_play,
+    )
+    for neighbor in in_play:
+        neighbor_connections = state.locations[neighbor].connections
+        if location_id not in neighbor_connections:
+            neighbor_connections.append(location_id)
+    if events:
+        from ..effects import log_event
+
+        log_event(events, "location_added", f"{state.locations[location_id].name} was put into play.", location=location_id)
 
 
 def starting_actions(investigator_code: str) -> int:
@@ -218,6 +390,16 @@ def resolve_scenario_choice(
             rng.shuffle(state.investigator.deck)
         final_hand = ", ".join(card_name(state, cid) for cid in state.investigator.hand)
         log_event(events, "setup_complete", f"Opening hand finalized: {final_hand}.")
+        if is_return(state):
+            attic_variant = state.limits.get("return_variant:attic", "return")
+            cellar_variant = state.limits.get("return_variant:cellar", "return")
+            log_event(
+                events,
+                "setup_variants",
+                f"Setup chose the {attic_variant} Attic and the {cellar_variant} Cellar.",
+                attic=attic_variant,
+                cellar=cellar_variant,
+            )
     elif choice == "mulligan_card":
         mulligan_card(state, str(payload.get("card")), events, rng)
         present_mulligan_decision(state)
@@ -320,6 +502,9 @@ def reveal_location(state: GameState, events: list[dict[str, Any]], location_id:
     location = state.locations[location_id]
     if location.revealed:
         return
+    if is_return(state):
+        reveal_return_location(state, events, location_id)
+        return
     location.revealed = True
     _, _, shroud, clues, _ = LOCATION_INFO[location_id]
     location.shroud = shroud
@@ -327,13 +512,61 @@ def reveal_location(state: GameState, events: list[dict[str, Any]], location_id:
     log_event(events, "location_revealed", f"{location.name} was revealed.", location=location_id)
 
 
+def reveal_return_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:
+    from .. import skill_test
+    from ..effects import log_event
+
+    location = state.locations[location_id]
+    code, _unrevealed_name, revealed_name, shroud, clues, connections = return_location_info(state, location_id)
+    location.revealed = True
+    location.name = revealed_name
+    location.shroud = shroud
+    location.clues = clues
+    log_event(events, "location_revealed", f"{location.name} was revealed.", location=location_id)
+    variant = state.limits.get(f"return_variant:{location_id}")
+    if location_id == "hallway":
+        # The Hole in the Wall flips to the Hallway: restore its printed
+        # connections and put the set-aside Attic, Cellar, and Parlor into play.
+        for neighbor_id in ("attic", "cellar", "parlor"):
+            put_return_location_into_play(state, events, neighbor_id)
+        for neighbor_id in connections:
+            if neighbor_id in state.locations:
+                if neighbor_id not in location.connections:
+                    location.connections.append(neighbor_id)
+                if location_id not in state.locations[neighbor_id].connections:
+                    state.locations[neighbor_id].connections.append(location_id)
+    elif location_id == "attic" and variant != "original":
+        put_return_location_into_play(state, events, "field_of_graves")
+    elif location_id == "cellar" and variant != "original":
+        put_return_location_into_play(state, events, "ghoul_pits")
+    elif location_id == "field_of_graves":
+        skill_test.start(
+            state,
+            events,
+            skill="willpower",
+            difficulty=4,
+            source="Field of Graves",
+            on_failure={"kind": "discard_random_per_fail", "source": "Field of Graves"},
+        )
+    elif location_id == "ghoul_pits":
+        skill_test.start(
+            state,
+            events,
+            skill="agility",
+            difficulty=3,
+            source="Ghoul Pits",
+            on_failure={"kind": "ghoul_pits_rats", "source": "Ghoul Pits"},
+        )
+
+
 def after_enter_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:
     reveal_location(state, events, location_id)
-    if location_id == "attic":
+    original_variant = not is_return(state) or state.limits.get(f"return_variant:{location_id}") == "original"
+    if location_id == "attic" and original_variant:
         from ..effects import start_damage_assignment
 
         start_damage_assignment(state, events, source="Attic", damage=0, horror=1)
-    elif location_id == "cellar":
+    elif location_id == "cellar" and original_variant:
         from ..effects import start_damage_assignment
 
         start_damage_assignment(state, events, source="Cellar", damage=1, horror=0)
@@ -353,6 +586,9 @@ def advance_act(state: GameState, events: list[dict[str, Any]]) -> None:
 def advance_act_1(state: GameState, events: list[dict[str, Any]]) -> None:
     from ..effects import log_event
 
+    if is_return(state):
+        advance_act_1_return(state, events)
+        return
     for location_id, (code, name, _shroud, _clues, connections) in LOCATION_INFO.items():
         state.locations[location_id] = Location(
             id=location_id,
@@ -375,6 +611,38 @@ def advance_act_1(state: GameState, events: list[dict[str, Any]]) -> None:
     state.locations.pop("study", None)
     state.act = ActState(code="01109", name="The Barrier", stage=2, clues_required=3)
     log_event(events, "act_advanced", "Act advanced to The Barrier.")
+
+
+def advance_act_1_return(state: GameState, events: list[dict[str, Any]]) -> None:
+    """Act 1b 'Breaking the Wall': Hole in the Wall enters play, the investigator
+    moves into it and reveals it (flipping it to the Hallway, which pulls the
+    Attic, Cellar, and Parlor into play), then tests willpower (4), discarding
+    1 random card per point failed by."""
+    from .. import skill_test
+    from ..effects import log_event
+    from ..enemies import engage_ready_enemies_at_roland, move_engaged_enemies_with_roland
+
+    put_return_location_into_play(state, events, "hallway")
+    investigator_id = state.investigator.id
+    previous = state.investigator.location_id
+    if previous in state.locations and investigator_id in state.locations[previous].investigator_ids:
+        state.locations[previous].investigator_ids.remove(investigator_id)
+    state.investigator.location_id = "hallway"
+    state.locations["hallway"].investigator_ids.append(investigator_id)
+    move_engaged_enemies_with_roland(state, events, "hallway")
+    log_event(events, "forced_move", f"{state.investigator.name} moved into the Hole in the Wall.")
+    reveal_location(state, events, "hallway")
+    engage_ready_enemies_at_roland(state, events)
+    state.act = ActState(code="01109", name="The Barrier", stage=2, clues_required=3)
+    log_event(events, "act_advanced", "Act advanced to The Barrier.")
+    skill_test.start(
+        state,
+        events,
+        skill="willpower",
+        difficulty=4,
+        source="Breaking the Wall",
+        on_failure={"kind": "discard_random_per_fail", "source": "Breaking the Wall"},
+    )
 
 
 def discard_enemies_at_location(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:
@@ -734,9 +1002,13 @@ def campaign_log(state: GameState, outcome: str, lita_earned: bool) -> dict[str,
 
 
 def add_victory_locations(state: GameState) -> None:
-    for location_id in ("attic", "cellar"):
-        location = state.locations.get(location_id)
-        if location and location.revealed and location.clues == 0 and location_id not in state.victory_display:
+    # RR: a cleared (no clues), revealed location with Victory X goes to the
+    # victory display at game end. Covers core Attic/Cellar and the Return
+    # scenario's Field of Graves / Ghoul Pits via their printed victory values.
+    for location_id, location in state.locations.items():
+        if not location.revealed or location.clues != 0 or location_id in state.victory_display:
+            continue
+        if int(card_data.get_card(location.code).get("victory") or 0) > 0:
             state.victory_display.append(location_id)
 
 
@@ -771,9 +1043,29 @@ def is_ghoul_card(card_code: str) -> bool:
     return "Ghoul" in str(card_data.get_card(card_code).get("traits", ""))
 
 
+def is_investigate_result(result: dict[str, Any]) -> bool:
+    return str(result.get("callback_kind") or "") in {"investigate", "burglary"} or str(result.get("source", "")).startswith(
+        ("Investigate", "Burglary")
+    )
+
+
 def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
     tokens = [str(result.get("token"))] + [str(token) for token in result.get("extra_tokens", [])]
     failed = not bool(result.get("success"))
+    if is_return(state) and is_investigate_result(result):
+        from ..effects import log_event
+
+        location_id = state.investigator.location_id
+        if location_id == "bathroom" and any(token in {"skull", "cultist", "tablet", "autofail"} for token in tokens):
+            # Bathroom Forced: lose all remaining actions and end your turn.
+            state.investigator.actions_remaining = 0
+            log_event(events, "bathroom_forced", "The Bathroom drained all remaining actions; the turn ends.")
+        if location_id == "bedroom" and failed:
+            # Bedroom Forced: discard 1 random card after failing an investigate here.
+            if state.investigator.hand and rng is not None:
+                card_id = rng.choice(state.investigator.hand)
+                player_cards.discard_from_hand(state, card_id)
+                log_event(events, "bedroom_forced", f"The Bedroom forced a random discard of {card_name(state, card_id)}.", card=card_id)
     damage = 0
     horror = 0
     if "cultist" in tokens and failed:
@@ -791,6 +1083,33 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
 
             raise EngineError("skull ghoul search requires the game RNG")
         search_and_draw_ghoul(state, events, rng)
+
+
+def ghoul_pits_draw_rats(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, count: int) -> None:
+    """Ghoul Pits: for each point failed by, search the encounter deck and
+    discard pile for a Swarm of Rats and draw it, then shuffle the deck."""
+    from ..encounter import resolve_revelation
+    from ..effects import log_event
+
+    drawn = 0
+    for _ in range(count):
+        if state.status != "in_progress":
+            return
+        combined = list(state.encounter_deck) + list(state.encounter_discard)
+        found = next((card_id for card_id in combined if state.card_instances[card_id].card_code == "01159"), None)
+        if not found:
+            break
+        if found in state.encounter_deck:
+            state.encounter_deck.remove(found)
+        if found in state.encounter_discard:
+            state.encounter_discard.remove(found)
+        state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
+        log_event(events, "encounter_drawn", "Ghoul Pits pulled a Swarm of Rats from the encounter deck.", card=found)
+        resolve_revelation(state, rng, events, found)
+        drawn += 1
+    rng.shuffle(state.encounter_deck)
+    if drawn:
+        log_event(events, "encounter_reshuffled", "The encounter deck was shuffled after Ghoul Pits' search.")
 
 
 def search_and_draw_ghoul(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
