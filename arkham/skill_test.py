@@ -36,8 +36,11 @@ def start(
     source: str,
     on_success: dict[str, Any] | None = None,
     on_failure: dict[str, Any] | None = None,
+    base_boost: int = 0,
 ) -> None:
-    base = player_cards.effective_base_skill(state, skill, source)
+    # base_boost carries ability modifiers (Machete's +1, Baseball Bat's +2...)
+    # so the started-test log shows the true value, not the pre-boost base.
+    base = player_cards.effective_base_skill(state, skill, source) + base_boost
     state.active_skill_test = {
         "skill": skill,
         "difficulty": difficulty,

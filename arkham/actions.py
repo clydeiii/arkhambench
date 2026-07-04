@@ -1064,9 +1064,8 @@ def asset_fight(state: GameState, payload: dict[str, Any], events: list[dict[str
         on_success["succeed_by"] = int(payload.get("succeed_by", 0))
         on_success["bonus_damage"] = int(payload.get("bonus_damage", 0))
     skill = str(payload.get("skill", "combat"))
-    skill_test.start(state, events, skill=skill, difficulty=difficulty, source=f"Fight with {player_cards.card_name(state, asset_id)}", on_success=on_success, on_failure={"kind": "fight", "enemy": enemy_id})
+    skill_test.start(state, events, skill=skill, difficulty=difficulty, source=f"Fight with {player_cards.card_name(state, asset_id)}", on_success=on_success, on_failure={"kind": "fight", "enemy": enemy_id}, base_boost=boost)
     if state.active_skill_test:
-        state.active_skill_test["base"] += boost
         if payload.get("symbol_horror"):
             state.active_skill_test["symbol_horror"] = {"asset": asset_id}
         if payload.get("bat_discard_symbols"):

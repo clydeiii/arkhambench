@@ -98,3 +98,13 @@ reporting channel works; the claims just didn't survive the source texts.
    added by both legal_actions and add_fast_options, which the action menu also
    calls). Deduped via include_objective flag: only standalone fast windows add it.
    Regression test: ObjectiveDedupeTests. Credit: Fable 5, game 5, R6.
+
+## gpt55-bughunt game-01 (Roland, Return, seed 1001) — 2026-07-04
+
+10. **"Machete offered as Combat(5) but the test started as combat 4."**
+    **PARTIAL — enforcement correct, log misleading.** The +1 was applied and the
+    test resolved at 5 (visible in the same game's resolution line: "combat 5 + ...
+    = 5 vs 2"), but `asset_fight` added the weapon boost AFTER skill_test.start had
+    already logged the pre-boost base — every weapon's started-test message
+    understated the value. Boost now folds into start() via base_boost so the log
+    is truthful. Credit: GPT-5.5, game 1, R2 (first find of its run).
