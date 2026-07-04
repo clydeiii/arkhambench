@@ -24,29 +24,43 @@
       <output id="status-line" class="status-line"></output>
     </header>
 
-    <main class="viewer-shell">
-      <section class="map-panel" aria-labelledby="map-title">
-        <h2 id="map-title">Location Map</h2>
-        <div id="location-map" class="location-map"></div>
-      </section>
+    <main class="workbench" id="workbench">
+      <div class="bench-top" id="bench-top">
+        <section class="map-panel pane" aria-labelledby="map-title">
+          <h2 id="map-title">Location Map</h2>
+          <div id="location-map" class="location-map"></div>
+        </section>
 
-      <aside class="scenario-panel" aria-labelledby="scenario-title">
-        <h2 id="scenario-title">Scenario</h2>
-        <div id="scenario-content"></div>
-      </aside>
+        <div class="divider divider-col" id="div-col" role="separator" aria-orientation="vertical"
+             aria-label="Resize map / scenario" title="Drag to resize (double-click resets)"></div>
 
-      <section class="event-panel" aria-labelledby="event-title">
+        <aside class="scenario-panel pane" aria-labelledby="scenario-title">
+          <h2 id="scenario-title">Scenario</h2>
+          <div id="scenario-content"></div>
+        </aside>
+      </div>
+
+      <div class="divider divider-row" id="div-events" role="separator" aria-orientation="horizontal"
+           aria-label="Resize event ticker" title="Drag to resize (double-click resets)"></div>
+
+      <section class="event-panel pane" aria-labelledby="event-title">
         <h2 id="event-title">Event Ticker</h2>
         <div id="event-ticker" class="event-ticker"></div>
       </section>
 
-      <section class="decision-panel" aria-labelledby="decision-title">
+      <div class="divider divider-row" id="div-decision" role="separator" aria-orientation="horizontal"
+           aria-label="Resize decision panel" title="Drag to resize (double-click resets)"></div>
+
+      <section class="decision-panel pane" aria-labelledby="decision-title">
         <div id="skill-test" class="skill-test" hidden></div>
         <h2 id="decision-title">Decision</h2>
         <div id="decision-content"></div>
       </section>
 
-      <section class="player-panel" aria-labelledby="player-title">
+      <div class="divider divider-row" id="div-player" role="separator" aria-orientation="horizontal"
+           aria-label="Resize player board" title="Drag to resize (double-click resets)"></div>
+
+      <section class="player-panel pane" aria-labelledby="player-title">
         <h2 id="player-title">Player Board</h2>
         <div id="player-board"></div>
       </section>

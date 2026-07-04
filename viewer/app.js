@@ -896,3 +896,138 @@ function escapeHtml(value) {
     "'": "&#39;",
   }[char]));
 }
+
+// ---------------------------------------------------------------------------
+// Workbench splitters (VSCode model): one 100vh budget; each divider moves the
+// boundary between its two neighbors. The map row is flexible (1fr) and
+// absorbs whatever the pixel-sized rows release. Sizes persist per browser.
+
+const LAYOUT_KEY = "arkham-viewer-layout";
+const LAYOUT_DEFAULTS = { events: 110, decision: 130, player: 230, scenario: 330 };
+const LAYOUT_MIN = { events: 56, decision: 64, player: 96, scenario: 220 };
+const BENCH_TOP_MIN = 140;
+
+function initWorkbench() {
+  const workbench = document.querySelector("#workbench");
+  if (!workbench) return;
+  const layout = { ...LAYOUT_DEFAULTS, ...readLayout() };
+  applyLayout(workbench, layout);
+
+  bindDivider("#div-events", (dy) => boundaryDrag(workbench, layout, "events", dy));
+  bindDivider("#div-decision", (dy) => boundaryDrag(workbench, layout, "decision", dy));
+  bindDivider("#div-player", (dy) => boundaryDrag(workbench, layout, "player", dy));
+  bindDivider("#div-col", (dx) => {
+    const maxScenario = Math.max(LAYOUT_MIN.scenario, workbench.clientWidth * 0.6);
+    layout.scenario = clamp(layout.scenario - dx, LAYOUT_MIN.scenario, maxScenario);
+    applyLayout(workbench, layout);
+  });
+
+  function resetTo(defaults) {
+    Object.assign(layout, defaults);
+    applyLayout(workbench, layout);
+    persistLayout(layout);
+  }
+  for (const id of ["#div-events", "#div-decision", "#div-player", "#div-col"]) {
+    document.querySelector(id)?.addEventListener("dblclick", () => resetTo(LAYOUT_DEFAULTS));
+  }
+
+  function bindDivider(selector, onDelta) {
+    const divider = document.querySelector(selector);
+    if (!divider) return;
+    const horizontal = divider.classList.contains("divider-col");
+    const begin = (startX, startY) => {
+      divider.classList.add("dragging");
+      let last = { x: startX, y: startY };
+      // Window-level listeners with mouse fallbacks: pointer capture on the
+      // 5px sash is unreliable (and synthetic/automation input may only send
+      // mouse events). Absolute-position deltas make duplicate events no-ops.
+      const move = (ev) => {
+        const delta = horizontal ? ev.clientX - last.x : ev.clientY - last.y;
+        if (delta !== 0) {
+          onDelta(delta);
+          last = { x: ev.clientX, y: ev.clientY };
+        }
+        ev.preventDefault();
+      };
+      const up = () => {
+        divider.classList.remove("dragging");
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", up);
+        window.removeEventListener("mousemove", move);
+        window.removeEventListener("mouseup", up);
+        persistLayout(layout);
+      };
+      window.addEventListener("pointermove", move);
+      window.addEventListener("pointerup", up);
+      window.addEventListener("mousemove", move);
+      window.addEventListener("mouseup", up);
+    };
+    divider.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      begin(event.clientX, event.clientY);
+    });
+    divider.addEventListener("mousedown", (event) => {
+      if (event.button !== 0 || divider.classList.contains("dragging")) return;
+      event.preventDefault();
+      begin(event.clientX, event.clientY);
+    });
+  }
+}
+
+// Each row divider sits directly ABOVE its named row, so dragging it moves that
+// row's top boundary: dy > 0 shrinks the row (freed space returns to the
+// flexible map row), dy < 0 grows it — taking from the map first (VSCode
+// terminal/editor behavior), then cascading into the other fixed rows once the
+// map is at its minimum. The sash always tracks the pointer.
+const CASCADE = {
+  events: ["decision", "player"],
+  decision: ["events", "player"],
+  player: ["decision", "events"],
+};
+
+function boundaryDrag(workbench, layout, row, dy) {
+  if (dy > 0) {
+    layout[row] = Math.max(LAYOUT_MIN[row], layout[row] - dy);
+  } else {
+    let need = -dy;
+    const pixelRows = ["events", "decision", "player"];
+    const dividers = 15;
+    const flexNow = workbench.clientHeight - dividers - pixelRows.reduce((sum, k) => sum + layout[k], 0);
+    const fromFlex = Math.min(need, Math.max(0, flexNow - BENCH_TOP_MIN));
+    layout[row] += fromFlex;
+    need -= fromFlex;
+    for (const other of CASCADE[row]) {
+      if (need <= 0) break;
+      const take = Math.min(need, layout[other] - LAYOUT_MIN[other]);
+      layout[other] -= take;
+      layout[row] += take;
+      need -= take;
+    }
+  }
+  applyLayout(workbench, layout);
+}
+
+function applyLayout(workbench, layout) {
+  workbench.style.setProperty("--h-events", `${Math.round(layout.events)}px`);
+  workbench.style.setProperty("--h-decision", `${Math.round(layout.decision)}px`);
+  workbench.style.setProperty("--h-player", `${Math.round(layout.player)}px`);
+  workbench.style.setProperty("--w-scenario", `${Math.round(layout.scenario)}px`);
+}
+
+function readLayout() {
+  try {
+    return JSON.parse(localStorage.getItem(LAYOUT_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function persistLayout(layout) {
+  try {
+    localStorage.setItem(LAYOUT_KEY, JSON.stringify(layout));
+  } catch {
+    /* private mode etc. — layout just won't persist */
+  }
+}
+
+initWorkbench();

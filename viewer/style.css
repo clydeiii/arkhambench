@@ -91,71 +91,73 @@ button {
   font-size: 12px;
 }
 
-.viewer-shell {
+/* VSCode-style workbench: one 100vh budget, dividers transfer space between
+   neighbors. The map row is the flexible "editor" (1fr); the ticker, decision,
+   and player-board ("terminal") rows hold pixel heights managed by app.js. */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.workbench {
+  flex: 1;
+  min-height: 0;
   display: grid;
-  grid-template-columns: minmax(650px, 1fr) 330px;
-  grid-template-rows: minmax(340px, 42vh) 112px auto auto;
-  gap: 0;
+  grid-template-rows:
+    minmax(120px, 1fr)               /* bench-top: map + scenario */
+    5px                              /* divider */
+    var(--h-events, 110px)
+    5px
+    var(--h-decision, 130px)
+    5px
+    var(--h-player, 230px);
   border-left: 1px solid var(--line);
 }
 
-.map-panel,
-.scenario-panel,
-.event-panel,
-.decision-panel,
-.player-panel {
+.bench-top {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) 5px var(--w-scenario, 330px);
+}
+
+.pane {
   min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px;
   border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
   background: var(--panel);
 }
 
-.map-panel,
-.scenario-panel,
-.event-panel,
-.decision-panel,
-.player-panel {
-  overflow: auto;
-  padding: 8px;
+.divider {
+  background: var(--line);
+  transition: background 80ms linear;
+  z-index: 5;
+  touch-action: none;
 }
 
-.scenario-panel,
-.event-panel,
-.decision-panel,
-.player-panel {
-  resize: vertical;
+.divider:hover,
+.divider.dragging {
+  background: #8f7a52;
 }
 
-.map-panel {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 560px;
-  min-height: 300px;
-  resize: both;
+.divider-row {
+  cursor: row-resize;
 }
 
-.scenario-panel {
-  grid-column: 2;
-  grid-row: 1;
-  min-height: 300px;
+.divider-col {
+  cursor: col-resize;
 }
 
-.event-panel {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  min-height: 76px;
-}
-
-.decision-panel {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  min-height: 86px;
-}
-
-.player-panel {
-  grid-column: 1 / -1;
-  grid-row: 4;
-  min-height: 210px;
+@media (prefers-reduced-motion: reduce) {
+  .divider {
+    transition: none;
+  }
 }
 
 h2 {
@@ -169,7 +171,7 @@ h2 {
 .location-map {
   position: relative;
   height: calc(100% - 24px);
-  min-height: 280px;
+  min-height: 0;
   overflow: auto;
   border: 1px solid var(--line);
   background: #f7f2e7;
@@ -532,9 +534,10 @@ button.zone-title {
 }
 
 .investigator-card {
+  /* Investigator cards are landscape. */
   position: relative;
   flex: 0 0 auto;
-  width: 58px;
+  width: 112px;
   height: 80px;
   overflow: hidden;
   padding: 0;
