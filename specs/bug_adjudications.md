@@ -38,3 +38,17 @@ reporting channel works; the claims just didn't survive the source texts.
    game state (no destination, no engaged enemies). Fixed same day: current location
    excluded, option/exec gated on a legal destination or an engaged enemy;
    regression test added (ElusiveDestinationTests). Credit: Fable 5, game 3, R1.
+
+5. **"After Bathroom's 'end your turn' forced effect, the fast window still offered
+   Skids's action-buy and Elusive."** **CONFIRMED BUG — second verified find.** The
+   `inv_end` fast window (presented once actions are spent or drained) was flagged
+   `during_turn=True`; per the RR turn structure it sits AFTER the turn ends, where
+   "during your turn" plays and Skids's ability are illegal. Flipped to
+   `during_turn=False` — the window now offers only any-window triggered abilities.
+   Credit: Fable 5, game 3, R8.
+
+   Noted while adjudicating (engine-restrictive, not agent-exploitable): fast EVENT
+   plays are currently limited to during-turn windows across the board, so
+   unrestricted fast events (e.g. Cunning Distraction) cannot be played in the
+   enemy-phase pre-attack window even though RAW allows it. Uniform for all agents;
+   deferred as a known scope limit.

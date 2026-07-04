@@ -37,7 +37,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     return
                 if start_frozen_end_turn_test(state, events):
                     return
-                if present_fast_window(state, "inv_end", during_turn=True):
+                # The turn is over once the last action is spent (or forcibly
+                # drained, e.g. the Return Bathroom) — "during your turn" fast
+                # plays and Skids's action-buy are not legal in this window.
+                if present_fast_window(state, "inv_end", during_turn=False):
                     return
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
