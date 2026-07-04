@@ -275,7 +275,7 @@ class PhaseV6Tests(unittest.TestCase):
         tg.finalize_result(s, [], outcome="R1", resolution="R1", summary="R1")
         self.assertEqual(s.result["resolution"], "R1")
         self.assertTrue(s.result["lita_earned"])
-        self.assertEqual(s.result["score"], max(0, s.result["xp"] - sum(s.trauma.values()) + 3))
+        self.assertEqual(s.result["score"], max(0, s.result["xp"] - sum(s.trauma.values())))
 
 
 if __name__ == "__main__":

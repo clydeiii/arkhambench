@@ -31,7 +31,7 @@ def draw_player_card(state: GameState, events: list[dict[str, Any]], rng: Any = 
         # RR: an investigator who must draw from an empty deck shuffles his
         # discard pile into his deck, draws, and takes 1 horror after the draw.
         if not investigator.discard:
-            log_event(events, "deck_empty", "Roland's deck and discard are both empty; no card drawn.")
+            log_event(events, "deck_empty", f"{investigator.name}'s deck and discard are both empty; no card drawn.")
             return None
         if rng is None:
             raise EngineError("deck reshuffle requires the game RNG")
@@ -41,12 +41,12 @@ def draw_player_card(state: GameState, events: list[dict[str, Any]], rng: Any = 
             state.card_instances[instance_id].zone = "deck"
         rng.shuffle(investigator.deck)
         reshuffled = True
-        log_event(events, "deck_reshuffled", "Roland shuffled his discard pile into his deck (he will take 1 horror).")
+        log_event(events, "deck_reshuffled", f"{investigator.name} shuffled their discard pile into their deck (they will take 1 horror).")
     instance_id = investigator.deck.pop(0)
     investigator.hand.append(instance_id)
     state.card_instances[instance_id].zone = "hand"
     card = card_data.get_card(state.card_instances[instance_id].card_code)
-    log_event(events, "card_drawn", f"Roland drew {card['name']}.", card=instance_id)
+    log_event(events, "card_drawn", f"{investigator.name} drew {card['name']}.", card=instance_id)
     resolve_player_weakness_draw(state, events, instance_id)
     if reshuffled and state.status == "in_progress":
         start_damage_assignment(state, events, source="empty-deck reshuffle", damage=0, horror=1)
@@ -61,7 +61,7 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
         instance.zone = "threat"
         instance.clues = 3
         state.investigator.threat_area.append(instance_id)
-        log_event(events, "weakness_revealed", "Cover Up entered Roland's threat area with 3 clues.", card=instance_id)
+        log_event(events, "weakness_revealed", f"Cover Up entered {state.investigator.name}'s threat area with 3 clues.", card=instance_id)
     elif instance.card_code == "01102":
         if instance_id in state.investigator.hand:
             state.investigator.hand.remove(instance_id)
@@ -163,7 +163,7 @@ def card_name_for_id(state: GameState, instance_id: str) -> str:
 
 def gain_resource(state: GameState, amount: int, events: list[dict[str, Any]]) -> None:
     state.investigator.resources += amount
-    log_event(events, "resource_gained", f"Roland gained {amount} resource.", amount=amount)
+    log_event(events, "resource_gained", f"{state.investigator.name} gained {amount} resource.", amount=amount)
 
 
 def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -> int:
@@ -185,7 +185,7 @@ def actually_discover_clues(state: GameState, count: int, events: list[dict[str,
         return 0
     location.clues -= count
     state.investigator.clues += count
-    log_event(events, "clue_discovered", f"Roland discovered {count} clue.", amount=count)
+    log_event(events, "clue_discovered", f"{state.investigator.name} discovered {count} clue.", amount=count)
     return count
 
 
@@ -244,7 +244,7 @@ def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> 
     if state.investigator.clues < amount:
         return False
     state.investigator.clues -= amount
-    log_event(events, "clues_spent", f"Roland spent {amount} clue.", amount=amount)
+    log_event(events, "clues_spent", f"{state.investigator.name} spent {amount} clue.", amount=amount)
     return True
 
 
@@ -328,7 +328,7 @@ def start_damage_assignment(
     if not allies:
         state.investigator.damage += damage
         state.investigator.horror += horror
-        log_event(events, "damage_assigned", f"Roland took {damage} damage and {horror} horror.", source=source)
+        log_event(events, "damage_assigned", f"{state.investigator.name} took {damage} damage and {horror} horror.", source=source)
         check_investigator_defeat(state, events)
         if state.status == "in_progress" and horror > 0:
             present_after_horror_reaction(state, events)
@@ -363,14 +363,14 @@ def present_damage_decision(state: GameState) -> None:
     cards = card_data.cards_by_code()
     options = []
     if pending["remaining_damage"] > 0:
-        options.append(DecisionOption("Assign 1 damage to Roland", {"kind": "assign_damage", "type": "damage", "target": "roland"}))
+        options.append(DecisionOption(f"Assign 1 damage to {state.investigator.name}", {"kind": "assign_damage", "type": "damage", "target": "roland"}))
         for target in legal_soak_targets(state):
             instance = state.card_instances[target]
             card = cards.get(instance.card_code, {})
             if instance.damage < int(card.get("health") or 0):
                 options.append(DecisionOption(f"Assign 1 damage to {card.get('name', target)}", {"kind": "assign_damage", "type": "damage", "target": target}))
     if pending["remaining_horror"] > 0:
-        options.append(DecisionOption("Assign 1 horror to Roland", {"kind": "assign_damage", "type": "horror", "target": "roland"}))
+        options.append(DecisionOption(f"Assign 1 horror to {state.investigator.name}", {"kind": "assign_damage", "type": "horror", "target": "roland"}))
         for target in legal_soak_targets(state):
             instance = state.card_instances[target]
             card = cards.get(instance.card_code, {})
@@ -383,7 +383,7 @@ def present_damage_decision(state: GameState) -> None:
         PendingDecision(
             id="assign-damage",
             kind="assign_damage",
-            prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Assign damage/horror from {pending['source']}.",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Assign damage/horror from {pending['source']}.",
             options=options,
         )
     ] + others
@@ -419,7 +419,7 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         else:
             instance.horror += 1
     if target == "roland":
-        target_name = "Roland"
+        target_name = state.investigator.name
     else:
         target_card = card_data.cards_by_code().get(state.card_instances[target].card_code, {})
         target_name = str(target_card.get("name", target))
@@ -474,7 +474,7 @@ def check_investigator_defeat(state: GameState, events: list[dict[str, Any]]) ->
         state.limits["defeat_trauma_applied"] = True
         state.trauma["physical"] = int(state.trauma.get("physical", 0)) + (1 if physical else 0)
         state.trauma["mental"] = int(state.trauma.get("mental", 0)) + (1 if mental else 0)
-        end_game(state, events, "Roland was defeated")
+        end_game(state, events, f"{state.investigator.name} was defeated")
 
 
 def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> None:
@@ -507,10 +507,10 @@ def apply_cover_up_trauma(state: GameState, events: list[dict[str, Any]]) -> Non
 def heal_roland(state: GameState, events: list[dict[str, Any]], *, damage: int = 0, horror: int = 0) -> None:
     if damage > 0 and state.investigator.damage > 0:
         state.investigator.damage = max(0, state.investigator.damage - damage)
-        log_event(events, "damage_healed", f"Roland healed {damage} damage.", amount=damage)
+        log_event(events, "damage_healed", f"{state.investigator.name} healed {damage} damage.", amount=damage)
     if horror > 0 and state.investigator.horror > 0:
         state.investigator.horror = max(0, state.investigator.horror - horror)
-        log_event(events, "horror_healed", f"Roland healed {horror} horror.", amount=horror)
+        log_event(events, "horror_healed", f"{state.investigator.name} healed {horror} horror.", amount=horror)
 
 
 def present_after_horror_reaction(state: GameState, events: list[dict[str, Any]]) -> None:

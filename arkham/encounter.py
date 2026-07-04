@@ -21,7 +21,7 @@ def draw_encounter(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]
     instance = state.card_instances[instance_id]
     instance.zone = "encounter_drawn"
     card = card_data.cards_by_code().get(instance.card_code, {})
-    log_event(events, "encounter_drawn", f"Roland drew encounter card {card.get('name', instance.card_code)}.", card=instance_id)
+    log_event(events, "encounter_drawn", f"{state.investigator.name} drew encounter card {card.get('name', instance.card_code)}.", card=instance_id)
     state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
     if present_revelation_cancel(state, instance_id):
         return instance_id
@@ -156,11 +156,11 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
     elif code == "01164":
         state.investigator.threat_area.append(instance_id)
         instance.zone = "threat"
-        log_event(events, "treachery_threat", "Frozen in Fear entered Roland's threat area.", card=instance_id)
+        log_event(events, "treachery_threat", f"Frozen in Fear entered {state.investigator.name}'s threat area.", card=instance_id)
     elif code == "01165":
         state.investigator.threat_area.append(instance_id)
         instance.zone = "threat"
-        log_event(events, "treachery_threat", "Dissonant Voices entered Roland's threat area.", card=instance_id)
+        log_event(events, "treachery_threat", f"Dissonant Voices entered {state.investigator.name}'s threat area.", card=instance_id)
     elif code == "01167":
         discard_encounter(state, instance_id)
         skill_test.start(
@@ -197,12 +197,14 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
     elif code == "01168":
         attach_to_location_or_discard(state, events, instance_id, state.investigator.location_id, limit_code="01168")
     elif code == "01174":
-        location_id = locked_door_target(state)
-        if location_id is None:
+        targets = locked_door_targets(state)
+        if not targets:
             discard_encounter(state, instance_id)
             log_event(events, "treachery_discarded", "Locked Door had no legal location.", card=instance_id)
+        elif len(targets) == 1:
+            attach_to_location_or_discard(state, events, instance_id, targets[0])
         else:
-            attach_to_location_or_discard(state, events, instance_id, location_id)
+            present_locked_door_target_choice(state, instance_id, targets)
     else:
         discard_encounter(state, instance_id)
         log_event(events, "treachery_discarded", f"{card.get('name', code)} had no placeholder effect.", card=instance_id)
@@ -243,13 +245,45 @@ def attach_to_location_or_discard(
     log_event(events, "treachery_attached", f"{card_data.get_card(state.card_instances[instance_id].card_code)['name']} attached to {state.locations[location_id].name}.", card=instance_id, location=location_id)
 
 
-def locked_door_target(state: GameState) -> str | None:
+def locked_door_targets(state: GameState) -> list[str]:
     candidates = [
         location
         for location in state.locations.values()
         if location.revealed and not encounter_cards.location_has_attachment(state, location.id, "01174")
     ]
     if not candidates:
-        return None
-    candidates.sort(key=lambda loc: (-loc.clues, loc.code, loc.id))
-    return candidates[0].id
+        return []
+    most_clues = max(location.clues for location in candidates)
+    tied = [location for location in candidates if location.clues == most_clues]
+    tied.sort(key=lambda loc: (loc.code, loc.id))
+    return [location.id for location in tied]
+
+
+def locked_door_target(state: GameState) -> str | None:
+    targets = locked_door_targets(state)
+    return targets[0] if targets else None
+
+
+def present_locked_door_target_choice(state: GameState, instance_id: str, targets: list[str]) -> None:
+    state.decision_queue = [
+        PendingDecision(
+            id="locked-door-target",
+            kind="locked_door_target",
+            prompt="Choose where Locked Door attaches.",
+            options=[
+                DecisionOption(
+                    f"Attach Locked Door to {state.locations[location_id].name}",
+                    {"kind": "locked_door_target", "card": instance_id, "location": location_id},
+                )
+                for location_id in targets
+            ],
+        )
+    ]
+
+
+def resolve_locked_door_target(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    card_id = str(payload.get("card", ""))
+    location_id = str(payload.get("location", ""))
+    if card_id not in state.card_instances or location_id not in locked_door_targets(state):
+        return
+    attach_to_location_or_discard(state, events, card_id, location_id)

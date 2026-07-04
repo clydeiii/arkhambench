@@ -121,7 +121,7 @@ class Game:
             return None
         return self.state.decision_queue[0]
 
-    def apply(self, option_index: int) -> list[dict[str, Any]]:
+    def apply(self, option_index: int, *, why: str | None = None) -> list[dict[str, Any]]:
         decision = self.current_decision()
         if decision is None:
             raise EngineError("no current decision")
@@ -139,6 +139,10 @@ class Game:
         )
         self.state.decision_queue.pop(0)
         rule_events: list[dict[str, Any]] = RuleEventList(self.state)
+        if why is not None:
+            from .effects import log_event
+
+            log_event(rule_events, "agent_reason", why[:300])
         self._dispatch_payload(option.payload, rule_events)
         if not self.state.decision_queue and self.state.status == "in_progress":
             phases.advance_until_decision(self.state, self.rng, rule_events)
@@ -152,6 +156,27 @@ class Game:
             events=rendered_events,
         )
         return events
+
+    def report_bug(self, description: str) -> Path:
+        path = self.run_dir / "bug_reports.md"
+        timestamp = _now()
+        entry = (
+            f"## {timestamp}\n"
+            f"- Round: {self.state.round}\n"
+            f"- Phase: {self.state.phase}\n"
+            f"- Description: {description}\n\n"
+        )
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(entry)
+        event = EventLog(self.run_dir).append(
+            round=self.state.round,
+            phase=self.state.phase,
+            type="bug_report",
+            data={"message": description, "timestamp": timestamp},
+        )
+        self._append_timeline(chose=None, events=[event])
+        return path
 
     def _append_decision_presented(self) -> dict[str, Any]:
         return EventLog(self.run_dir).append(
@@ -191,6 +216,10 @@ class Game:
             from . import encounter
 
             encounter.resolve_ward_revelation(self.state, payload, events, self.rng)
+        elif kind == "locked_door_target":
+            from . import encounter
+
+            encounter.resolve_locked_door_target(self.state, payload, events)
         elif kind == "assign_damage":
             resume = dict(self.state.pending_damage.get("resume", {})) if self.state.pending_damage else {}
             assign_damage_choice(self.state, payload, events, self.rng)

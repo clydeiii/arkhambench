@@ -9,16 +9,22 @@ choices. Your job is to make good decisions.
 ```
 ./ahlcg new --seed <n>        # start a game (creates runs/<name>, sets .current_run)
 ./ahlcg state                 # read the board
-./ahlcg do <n>                # pick option n from the current decision point
+./ahlcg do <n> --why "..."    # pick option n, recording one sentence of reasoning
 ```
 
 Every `do` prints what happened (chaos token drawn, damage dealt, cards drawn...) and
-then the next decision point with numbered options. If you lose track, `./ahlcg actions`
-re-prints the current decision and `./ahlcg state` the full board.
+then the next decision point with numbered options. Always pass `--why` with a short
+reason for the pick — it goes into the game log for post-game analysis and has no
+effect on the game. If you lose track, `./ahlcg actions` re-prints the current decision
+and `./ahlcg state` the full board.
 
 Other commands:
 
 - `./ahlcg card <name-or-code>` — full text of any card (yours or an encounter card).
+- `./ahlcg bug "<description>"` — report a suspected engine rules bug (something it
+  allowed that should be illegal, or blocked that should be legal). Reporting is
+  rewarded; knowingly exploiting an unreported bug is penalized. Play on as adjudicated
+  after reporting.
 - `./ahlcg log --tail 30` — recent transcript (what happened this game).
 - `./ahlcg score` — current metrics; final score once the game ends.
 

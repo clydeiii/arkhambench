@@ -7,6 +7,7 @@ from typing import Any
 from . import data as card_data
 from .cards import encounter_cards, player as player_cards
 from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
+from .log import action_count_text
 from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
 from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
@@ -23,7 +24,7 @@ def present_action_decision(state: GameState) -> None:
         PendingDecision(
             id="choose-action",
             kind="choose_action",
-            prompt=f"[Round {state.round} · Investigation · {state.investigator.name} · {state.investigator.actions_remaining} actions left] Choose an action:",
+            prompt=f"[Round {state.round} · Investigation · {state.investigator.name} · {action_count_text(state)}] Choose an action:",
             options=legal_actions(state),
         )
     ]
@@ -179,7 +180,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
     action = str(payload["action"])
     if action not in NON_ACTIONS | FREE_ACTIONS:
         if not payload.get("cost_paid"):
-            spend_action(state, events, action)
+            spend_action(state, events, action, payload)
         if not payload.get("skip_aoo"):
             attacks_of_opportunity(state, events, action, payload, rng=rng)
             if state.decision_queue or state.status != "in_progress":
@@ -264,7 +265,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         the_gathering.resign(state, events)
 
 
-def spend_action(state: GameState, events: list[dict[str, Any]], action: str) -> None:
+def spend_action(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any] | None = None) -> None:
     cost = effective_action_cost(state, action)
     if cost > state.investigator.actions_remaining:
         raise EngineError(f"cannot spend {cost} actions with only {state.investigator.actions_remaining} remaining")
@@ -272,7 +273,86 @@ def spend_action(state: GameState, events: list[dict[str, Any]], action: str) ->
     state.investigator.actions_remaining -= cost
     state.turn.action_index += cost
     state.limits["actions_taken"] = int(state.limits.get("actions_taken", 0)) + cost
-    log_event(events, "action_spent", f"Spent {cost} action on {action}.", action=action, cost=cost)
+    label = describe_action(state, action, payload or {})
+    plural = "action" if cost == 1 else "actions"
+    log_event(events, "action_spent", f"Spent {cost} {plural}: {label}.", action=action, cost=cost)
+
+
+def describe_action(state: GameState, action: str, payload: dict[str, Any]) -> str:
+    if action == "investigate":
+        return f"Investigate {state.locations[state.investigator.location_id].name}"
+    if action == "move":
+        location_id = str(payload.get("location", ""))
+        return f"Move to {state.locations[location_id].name}" if location_id in state.locations else "Move"
+    if action == "fight":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Fight {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Fight"
+    if action == "evade":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Evade {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Evade"
+    if action == "engage":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Engage {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Engage"
+    if action == "draw":
+        return "Draw 1 card"
+    if action == "resource":
+        return "Take resource"
+    if action == "play":
+        card_id = str(payload.get("card", ""))
+        name = player_cards.card_name(state, card_id) if card_id in state.card_instances else "card"
+        return f"Play {name}"
+    if action == "asset_fight":
+        asset_id = str(payload.get("asset", ""))
+        enemy_id = str(payload.get("enemy", ""))
+        asset = player_cards.card_name(state, asset_id) if asset_id in state.card_instances else "asset"
+        if enemy_id in state.enemies:
+            return f"Fight with {asset} (target: {enemy_name(state, enemy_id)})"
+        return f"Fight with {asset}"
+    if action == "flashlight":
+        return f"Investigate {state.locations[state.investigator.location_id].name} with Flashlight"
+    if action == "first_aid":
+        heal = str(payload.get("heal", "damage"))
+        return f"Use First Aid to heal 1 {heal}"
+    if action == "old_book":
+        return "Use Old Book of Lore"
+    if action == "medical_texts":
+        return "Use Medical Texts"
+    if action == "necronomicon":
+        return "Use The Necronomicon"
+    if action == "scrying":
+        return "Use Scrying"
+    if action == "burglary":
+        return f"Use Burglary at {state.locations[state.investigator.location_id].name}"
+    if action == "blinding_light":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Play Blinding Light on {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Play Blinding Light"
+    if action == "backstab":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Play Backstab on {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Play Backstab"
+    if action == "cunning_distraction":
+        return "Play Cunning Distraction"
+    if action == "discard_haunted":
+        return "Discard Haunted"
+    if action == "locked_door":
+        skill = str(payload.get("skill", "combat")).capitalize()
+        return f"Test {skill} to discard Locked Door"
+    if action == "parley_lita":
+        return "Parley with Lita Chantler"
+    if action == "parley_mob":
+        return "Parley with Mob Enforcer"
+    if action == "dynamite":
+        location_id = str(payload.get("location", ""))
+        return f"Play Dynamite Blast at {state.locations[location_id].name}" if location_id in state.locations else "Play Dynamite Blast"
+    if action == "sneak_attack":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Play Sneak Attack on {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Play Sneak Attack"
+    if action == "study_draw":
+        return "Study (Aberrant Gateway) - draw 3 cards"
+    if action == "advance_act":
+        return "Advance act"
+    if action == "resign":
+        return "Resign"
+    return action.replace("_", " ").title()
 
 
 def effective_action_cost(state: GameState, action: str) -> int:
@@ -416,7 +496,7 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
     state.investigator.location_id = location_id
     state.locations[location_id].investigator_ids.append(state.investigator.id)
     move_engaged_enemies_with_roland(state, events, location_id)
-    log_event(events, "investigator_moved", f"Roland moved to {state.locations[location_id].name}.", location=location_id)
+    log_event(events, "investigator_moved", f"{state.investigator.name} moved to {state.locations[location_id].name}.", location=location_id)
     if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
@@ -467,7 +547,7 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]], 
         elif instance.card_code == "01038":
             instance.zone = "attachment"
             state.locations[state.investigator.location_id].attached_instance_ids.append(instance_id)
-            log_event(events, "event_attached", "Barricade attached to Roland's location.", card=instance_id, location=state.investigator.location_id)
+            log_event(events, "event_attached", f"Barricade attached to {state.investigator.name}'s location.", card=instance_id, location=state.investigator.location_id)
             queue_heirloom_reaction(state, instance_id)
             return
         elif instance.card_code == "01064":
@@ -478,7 +558,7 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]], 
             state.limits["after_encounter_draw"] = {"kind": "drawn_to_the_flame"}
             encounter.draw_encounter(state, rng, events)
         player_cards.place_played_event(state, instance_id, events)
-    log_event(events, "card_played", f"Roland played {card.get('name', instance.card_code)}.", card=instance_id)
+    log_event(events, "card_played", f"{state.investigator.name} played {card.get('name', instance.card_code)}.", card=instance_id)
     if card.get("type_code") == "asset":
         enforce_slot_capacity(state, events)
     queue_heirloom_reaction(state, instance_id)
@@ -844,7 +924,7 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
             for location_id in [state.investigator.location_id, *state.locations[state.investigator.location_id].connections]:
                 label = f"Play Dynamite Blast at {state.locations[location_id].name}"
                 if location_id == state.investigator.location_id:
-                    label += " (hits Roland)"
+                    label += f" (hits {state.investigator.name})"
                 options.append(DecisionOption(label, {"kind": "action", "action": "dynamite", "card": card_id, "location": location_id}))
         if state.card_instances[card_id].card_code == "01051" and state.investigator.resources >= 3 and not dissonant_blocks(state, "01051"):
             for enemy_id in fight_targets(state):
@@ -1253,7 +1333,7 @@ def resolve_old_book_choice(
     state.investigator.deck.extend(rest)
     rng.shuffle(state.investigator.deck)
     card = card_data.get_card(state.card_instances[chosen].card_code)
-    log_event(events, "card_drawn", f"Roland drew {card['name']}.", card=chosen)
+    log_event(events, "card_drawn", f"{state.investigator.name} drew {card['name']}.", card=chosen)
     resolve_player_weakness_draw(state, events, chosen)
 
 
@@ -1287,7 +1367,7 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
             return
         state.limits[f"mind_over_matter:{state.round}"] = True
         player_cards.place_played_event(state, card_id, events)
-        log_event(events, "event_played", "Roland played Mind over Matter.", card=card_id)
+        log_event(events, "event_played", f"{state.investigator.name} played Mind over Matter.", card=card_id)
     elif ability == "working_hunch" and playable_event(state, card_id) and state.investigator.resources >= 2:
         state.investigator.resources -= 2
         if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
@@ -1295,7 +1375,7 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
             return
         discover_clue(state, 1, events)
         player_cards.place_played_event(state, card_id, events)
-        log_event(events, "event_played", "Roland played Working a Hunch.", card=card_id)
+        log_event(events, "event_played", f"{state.investigator.name} played Working a Hunch.", card=card_id)
     elif ability == "on_the_lam" and playable_event(state, card_id) and state.investigator.resources >= 1:
         state.investigator.resources -= 1
         if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
@@ -1512,7 +1592,7 @@ def move_without_engaged_enemies(state: GameState, location_id: str, events: lis
     state.investigator.location_id = location_id
     if state.investigator.id not in state.locations[location_id].investigator_ids:
         state.locations[location_id].investigator_ids.append(state.investigator.id)
-    log_event(events, "investigator_moved", f"Roland moved to {state.locations[location_id].name}.", location=location_id)
+    log_event(events, "investigator_moved", f"{state.investigator.name} moved to {state.locations[location_id].name}.", location=location_id)
     if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
@@ -1554,4 +1634,4 @@ def discard_barricades_at_location(state: GameState, location_id: str, events: l
         if state.card_instances[attachment].card_code == "01038":
             location.attached_instance_ids.remove(attachment)
             player_cards.discard_event_from_play(state, attachment, events)
-            log_event(events, "barricade_discarded", "Barricade was discarded when Roland left.", card=attachment)
+            log_event(events, "barricade_discarded", f"Barricade was discarded when {state.investigator.name} left.", card=attachment)

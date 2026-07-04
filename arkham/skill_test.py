@@ -261,6 +261,23 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def skill_test_result_message(test: dict[str, Any], result: dict[str, Any], label: str, margin: int) -> str:
+    difficulty = int(result["difficulty"])
+    if bool(test.get("autofail")):
+        return f"{result['source']}: {label} by {margin} - autofail (skill value 0) vs {difficulty}."
+    skill = str(result["skill"])
+    base = int(result["base"])
+    committed = int(result["committed_icons"])
+    boosts = int(result["boosts"])
+    modifier = int(result["modifier"])
+    value = int(result["value"])
+    token_part = f"+ token {modifier}"
+    return (
+        f"{result['source']}: {label} by {margin} - "
+        f"{skill} {base} + committed {committed} + boosts {boosts} {token_part} = {value} vs {difficulty}."
+    )
+
+
 def present_lucky_decision(state: GameState, result: dict[str, Any]) -> None:
     options = [
         DecisionOption(
@@ -328,7 +345,7 @@ def finalize_resolution(
     success = bool(result["success"])
     margin = int(result["margin"])
     label = "failure (autofail)" if test["autofail"] and not success else ("success" if success else "failure")
-    log_event(events, "skill_test_result", f"{test['source']}: {label} by {margin}.", **result)
+    log_event(events, "skill_test_result", skill_test_result_message(test, result, label, margin), **result)
     apply_blinding_light_symbol_loss(state, events, test, result)
     apply_elder_sign_success(state, events, result, rng)
     callback = test["on_success"] if success else test["on_failure"]
@@ -376,7 +393,7 @@ def apply_callback(
             discard_obscuring_fog_at_roland(state, events)
             if player_cards.controls_code(state, "01033"):
                 state.investigator.resources += 1
-                log_event(events, "milan_reaction", "Dr. Milan Christopher gained Roland 1 resource.")
+                log_event(events, "milan_reaction", f"Dr. Milan Christopher gained {state.investigator.name} 1 resource.")
     elif kind == "fight":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
@@ -508,7 +525,7 @@ def apply_callback(
             state.card_instances[lita].zone = "play"
             state.card_instances[lita].owner = state.investigator.id
             state.investigator.play_area.append(lita)
-            log_event(events, "lita_recruited", "Roland took control of Lita Chantler.", card=lita)
+            log_event(events, "lita_recruited", f"{state.investigator.name} took control of Lita Chantler.", card=lita)
     for instance_id in committed:
         code = state.card_instances[instance_id].card_code
         if success and code in {"01089", "01090", "01091", "01092"}:

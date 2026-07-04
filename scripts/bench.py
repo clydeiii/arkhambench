@@ -100,8 +100,9 @@ def bench_mission(mission: str) -> str:
     )
 
 
-def build_prompt(mission: str, label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str) -> str:
-    return bench_header(label, k, n, notebook_lines, investigator, scenario) + bench_mission(mission)
+def build_prompt(mission: str, label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str, note: str = "") -> str:
+    extra = f"\n{note.strip()}\n" if note.strip() else ""
+    return bench_header(label, k, n, notebook_lines, investigator, scenario) + extra + bench_mission(mission)
 
 
 def build_new_argv(
@@ -427,7 +428,7 @@ def run_bench(args: argparse.Namespace) -> int:
         for game, seed in enumerate(seeds, start=1):
             investigator = investigator_for_game(rotation, game)
             run_dir = label_dir / game_dir_name(game, games)
-            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario)
+            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note)
             print(shlex.join(build_new_argv(run_dir, seed, args.difficulty, notebook, args.scenario, investigator)))
             print(shlex.join(build_agent_argv(args.agent, args.label, prompt, args.max_turns)))
         return 0
@@ -454,7 +455,7 @@ def run_bench(args: argparse.Namespace) -> int:
             if new_rc != 0:
                 raise RuntimeError(f"new failed for game {game} with exit {new_rc}")
 
-            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario)
+            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note)
             rc = run_streamed(build_agent_argv(args.agent, args.label, prompt, args.max_turns), log_path)
             if rc != 0:
                 print(f"warning: agent exited {rc} for game {game}", file=sys.stderr)
@@ -487,6 +488,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--games", type=int, default=10)
     parser.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
     parser.add_argument("--scenario", choices=("the_gathering", "return_to_the_gathering"), default="return_to_the_gathering")
+    parser.add_argument("--prompt-note", default="", help="extra text inserted into every game prompt")
     parser.add_argument(
         "--investigators",
         default="roland,daisy,skids,agnes,wendy",

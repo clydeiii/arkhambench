@@ -28,8 +28,11 @@ def status_line(state: GameState) -> str:
     location_name = location.name if location else investigator.location_id
     parts = [f"R{state.round}·{state.phase}"]
     if state.phase == "Investigation":
-        max_actions = 4 if investigator.card_code == "01002" else 3
-        parts[0] += f" a{investigator.actions_remaining}/{max_actions}"
+        if daisy_tome_action_visible(state):
+            parts[0] += f" {action_count_text(state)}"
+        else:
+            max_actions = 4 if investigator.card_code == "01002" else 3
+            parts[0] += f" a{investigator.actions_remaining}/{max_actions}"
     doom = (state.agenda.doom if state.agenda else 0) + sum(
         instance.doom for instance in state.card_instances.values()
     ) + sum(enemy.doom for enemy in state.enemies.values())
@@ -42,6 +45,24 @@ def status_line(state: GameState) -> str:
         f"h{len(investigator.hand)} d{len(investigator.deck)} x{len(investigator.discard)} | "
         f"Act{act_stage} Agd{agenda_stage} doom{doom}/{doom_threshold}]"
     )
+
+
+def daisy_tome_action_visible(state: GameState) -> bool:
+    return (
+        state.investigator.card_code == "01002"
+        and state.phase == "Investigation"
+        and state.investigator.actions_remaining > 0
+        and not state.limits.get(f"daisy_tome:{state.round}")
+    )
+
+
+def action_count_text(state: GameState) -> str:
+    count = state.investigator.actions_remaining
+    plural = "action" if count == 1 else "actions"
+    text = f"{count} {plural} left"
+    if daisy_tome_action_visible(state):
+        text += " (1 Tome-only)"
+    return text
 
 
 def render_event(event: dict[str, Any]) -> str:

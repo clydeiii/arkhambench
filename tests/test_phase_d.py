@@ -84,10 +84,10 @@ class PhaseDScenarioTests(unittest.TestCase):
         state.locations["attic"] = __import__("arkham.model", fromlist=["Location"]).Location(id="attic", code="01113", name="Attic", revealed=True, shroud=1, clues=0, connections=["hallway"])
         state.trauma["mental"] = 1
         finalize_result(state, [], outcome="R1", resolution="R1", summary="burn")
-        # R1: xp = victory(1) + 2 insight; score = xp - trauma + 3 (Lita earned).
+        # R1: xp = victory(1) + 2 insight; score = xp - trauma.
         self.assertEqual(state.result["xp"], 3)
         self.assertTrue(state.result["lita_earned"])
-        self.assertEqual(state.result["score"], 5)
+        self.assertEqual(state.result["score"], 2)
 
         state = gathering()
         state.locations["attic"] = __import__("arkham.model", fromlist=["Location"]).Location(id="attic", code="01113", name="Attic", revealed=True, shroud=1, clues=0, connections=["hallway"])

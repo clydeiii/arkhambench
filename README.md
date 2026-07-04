@@ -59,26 +59,27 @@ composite score is for the benchmark's single number, the dimensions are for ana
   at act ≤ 2).
 - **Trauma** — defeat trauma (physical/mental by cause), resolution trauma (R1's burned
   house), Cover Up's game-end trauma.
-- **Lita Chantler earned?** — she joins the campaign deck in some outcomes (R1,
-  no-resolution) but not others (R2, R3).
+- **Lita Chantler earned?** — per the campaign guide she joins the campaign in every
+  outcome except R2 (she never needs to enter play), so she is tracked as a campaign
+  dimension rather than scored.
 - **Resolution reached**, victory points, rounds, damage/horror per round, tests
   passed/failed, etc.
 
-**Score = max(0, XP − trauma + 3·Lita)** — the +3 approximates Lita's campaign equity
-(she is arguably the strongest card in the Core Set era), so the R1-vs-R2 choice prices
-in the real prize the way an experienced player would, instead of rewarding trauma-dodging.
+**Score = max(0, XP − trauma)**; killed by the agenda while still trapped (R3) scores 0.
+(An earlier formula added +3 for Lita; dropped once the campaign guide confirmed she is
+earned in all outcomes but R2 regardless of play.)
 
 ## Demo results (2026-07-03, one game each, harness-validation runs — not a controlled comparison)
 
-Scores recomputed under the current formula (the runs were played under an earlier
-`XP − trauma` formula, and a defeat-trauma double-count inflated opus48/sonnet5 trauma by 1):
+Scores under the current `max(0, XP − trauma)` formula (the runs were played under
+earlier formulas, and a defeat-trauma double-count inflated opus48/sonnet5 trauma by 1):
 
 | Agent (harness) | Seed | Outcome | XP | Trauma | Lita | Score |
 |---|---|---|---|---|---|---|
-| GPT-5.5 (codex) | 23 | Defeated by agenda 3 at Act 3, Priest at 4/5 dmg | 6 | 1 | yes | **8** |
-| Fable 5 (claude) | 11 | **Won — R1**, Ghoul Priest slain R12 | 6 | 2 | yes | **7** |
-| Opus 4.8 (claude) | 31 | Defeated by horror R11 (two hunters stacked) | 4 | 1 | yes | **6** |
-| Sonnet 5 (claude) | 47 | Defeated by horror R4 (AoO while engaged) | 2 | 1 | yes | **4** |
+| GPT-5.5 (codex) | 23 | Defeated by agenda 3 at Act 3, Priest at 4/5 dmg | 6 | 1 | yes | **5** |
+| Fable 5 (claude) | 11 | **Won — R1**, Ghoul Priest slain R12 | 6 | 2 | yes | **4** |
+| Opus 4.8 (claude) | 31 | Defeated by horror R11 (two hunters stacked) | 4 | 1 | yes | **3** |
+| Sonnet 5 (claude) | 47 | Defeated by horror R4 (AoO while engaged) | 2 | 1 | yes | **1** |
 
 (The Gathering's no-resolution outcome is canonically forgiving — you escape with Lita
 and your victory display — so defeat is punished mainly through trauma and lost tempo.

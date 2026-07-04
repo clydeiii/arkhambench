@@ -8,7 +8,7 @@ from pathlib import Path
 from . import data as card_data
 from .errors import EngineError
 from .game import Game
-from .log import read_jsonl, read_markdown, render_event, status_line
+from .log import action_count_text, read_jsonl, read_markdown, render_event, status_line
 from .model import GameState
 from .notebook import add_note, compact, resolve_notebook, show
 
@@ -50,8 +50,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     do = sub.add_parser("do")
     do.add_argument("option", type=int)
+    do.add_argument("--why", default=None, help="optional agent motivation to log before applying the option")
     do.add_argument("--run", dest="run", default=None)
     do.set_defaults(func=cmd_do)
+
+    bug = sub.add_parser("bug")
+    bug.add_argument("description")
+    bug.add_argument("--run", dest="run", default=None)
+    bug.set_defaults(func=cmd_bug)
 
     log = sub.add_parser("log")
     log.add_argument("--run", dest="run", default=None)
@@ -143,7 +149,7 @@ def cmd_do(args: argparse.Namespace) -> int:
         print("error: invalid option", file=sys.stderr)
         print(render_decision(decision, game.state), file=sys.stderr)
         return 2
-    events = game.apply(args.option)
+    events = game.apply(args.option, why=args.why)
     for event in events:
         print(render_event(event))
     if game.state.status == "ended":
@@ -152,6 +158,13 @@ def cmd_do(args: argparse.Namespace) -> int:
         print(f"GAME OVER — {summary}")
     else:
         print(render_decision(game.current_decision(), game.state))
+    return 0
+
+
+def cmd_bug(args: argparse.Namespace) -> int:
+    game = Game.load(resolve_run_dir(args.run))
+    path = game.report_bug(args.description)
+    print(f"recorded bug report: {path}")
     return 0
 
 
@@ -254,7 +267,7 @@ def render_state(state: GameState, *, full: bool = False) -> str:
     act = state.act
     lines = [
         f"Scenario: {state.scenario} ({state.difficulty})",
-        f"Round {state.round} · {state.phase} · {investigator.name} · {investigator.actions_remaining} actions left",
+        f"Round {state.round} · {state.phase} · {investigator.name} · {action_count_text(state)}",
     ]
     if agenda:
         lines.append(f"Agenda: {agenda.name} — doom {agenda.doom}/{agenda.threshold}")

@@ -25,7 +25,7 @@ def present_window(state: GameState, *, window: str, options: list[DecisionOptio
         PendingDecision(
             id=f"window-{window}",
             kind="choose_option",
-            prompt=f"[Round {state.round} · {state.phase} · Roland Banks] Choose an optional trigger for {window}.",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Choose an optional trigger for {window}.",
             options=options + [DecisionOption("Pass", {"kind": "window_pass", "window": window})],
         )
     ]

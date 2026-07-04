@@ -13,9 +13,6 @@ from ..errors import EngineError
 from ..rng import ArkhamRng
 
 
-# Campaign-equity value of earning Lita Chantler, added to the benchmark score.
-LITA_SCORE_VALUE = 3
-
 CHAOS_BAGS: dict[str, list[str]] = {
     "easy": ["+1", "+1", "0", "0", "0", "-1", "-1", "-1", "-2", "-2", "skull", "skull", "cultist", "tablet", "autofail", "eldersign"],
     "standard": ["+1", "0", "0", "-1", "-1", "-1", "-2", "-2", "-3", "-4", "skull", "skull", "cultist", "tablet", "autofail", "eldersign"],
@@ -432,7 +429,7 @@ def resolve_scenario_choice(
     elif choice == "act2_wait":
         from ..effects import log_event
 
-        log_event(events, "act_objective_declined", "Roland did not advance The Barrier.")
+        log_event(events, "act_objective_declined", f"{state.investigator.name} did not advance The Barrier.")
         start_next_round_after_end_round_choice(state, events)
     elif choice == "resolution_r1":
         from ..effects import log_event
@@ -838,7 +835,7 @@ def agenda1_discard(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
         return
     card_id = rng.choice(state.investigator.hand)
     player_cards.discard_from_hand(state, card_id)
-    log_event(events, "card_discarded", "Roland discarded 1 random card for Agenda 1.", card=card_id)
+    log_event(events, "card_discarded", f"{state.investigator.name} discarded {player_cards.card_name(state, card_id)} at random for Agenda 1.", card=card_id)
 
 
 def set_agenda_2(state: GameState, events: list[dict[str, Any]]) -> None:
@@ -894,7 +891,7 @@ def advance_agenda_2(state: GameState, events: list[dict[str, Any]], rng: Arkham
     log_event(events, "agenda_advanced", "Agenda advanced to They're Getting Out!.")
     if drawn:
         state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
-        log_event(events, "encounter_drawn", f"Roland drew encounter card {card_data.get_card(state.card_instances[drawn].card_code)['name']}.", card=drawn)
+        log_event(events, "encounter_drawn", f"{state.investigator.name} drew encounter card {card_data.get_card(state.card_instances[drawn].card_code)['name']}.", card=drawn)
         resolve_revelation(state, rng, events, drawn)
 
 
@@ -903,17 +900,17 @@ def agenda_3_doom_out(state: GameState, events: list[dict[str, Any]]) -> None:
 
     if state.act and state.act.stage <= 2:
         apply_cover_up_trauma(state, events)
-        finalize_result(state, events, outcome="R3", resolution="R3", summary="R3: Roland was killed")
-        log_event(events, "game_end", "R3: Roland was killed")
+        finalize_result(state, events, outcome="R3", resolution="R3", summary=f"R3: {state.investigator.name} was killed")
+        log_event(events, "game_end", f"R3: {state.investigator.name} was killed")
         return
     state.trauma["physical"] = int(state.trauma.get("physical", 0)) + 1
-    end_game(state, events, "Roland was defeated by agenda 3")
+    end_game(state, events, f"{state.investigator.name} was defeated by agenda 3")
 
 
 def resign(state: GameState, events: list[dict[str, Any]]) -> None:
     from ..effects import end_game
 
-    end_game(state, events, "Roland resigned")
+    end_game(state, events, f"{state.investigator.name} resigned")
 
 
 def finalize_result(
@@ -929,10 +926,7 @@ def finalize_result(
     apply_cover_up_trauma(state, events)
     add_victory_locations(state)
     victory_points = calculate_victory_points(state)
-    # Lita Chantler is earned on R1 and no-resolution (she follows you out of the
-    # house) but NOT on R2 (you kicked her out; "she doesn't seem to trust you")
-    # or R3. Score values her at 3 XP of campaign equity — she is the real prize
-    # of this scenario, which is why experienced players burn the house down.
+    # Lita remains a reported campaign dimension, but score is only XP minus trauma.
     if outcome == "R3":
         xp = 0
         score = 0
@@ -944,15 +938,14 @@ def finalize_result(
     else:
         xp = victory_points + 2
         lita_earned = True
-        score = max(0, xp - total_trauma(state) + LITA_SCORE_VALUE)
+        score = max(0, xp - total_trauma(state))
     hospital_debts_penalty = hospital_debts_xp_penalty(state)
     if hospital_debts_penalty:
         xp = max(0, xp - hospital_debts_penalty)
         if outcome == "R3":
             score = 0
         else:
-            lita_bonus = LITA_SCORE_VALUE if lita_earned else 0
-            score = max(0, xp - total_trauma(state) + lita_bonus)
+            score = max(0, xp - total_trauma(state))
     state.status = "ended"
     state.decision_queue = []
     state.result = {

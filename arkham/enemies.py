@@ -85,7 +85,7 @@ def engage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
     enemy.engaged_with = state.investigator.id
     if enemy_id not in state.investigator.engaged_enemies:
         state.investigator.engaged_enemies.append(enemy_id)
-    log_event(events, "enemy_engaged", f"{enemy_name(state, enemy_id)} engaged Roland.", enemy=enemy_id)
+    log_event(events, "enemy_engaged", f"{enemy_name(state, enemy_id)} engaged {state.investigator.name}.", enemy=enemy_id)
 
 
 def disengage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str, *, exhaust: bool) -> None:
@@ -199,7 +199,7 @@ def attack(
             PendingDecision(
                 id="enemy-attack",
                 kind="enemy_attack",
-                prompt=f"{enemy_name(state, enemy_id)} is attacking Roland.",
+                prompt=f"{enemy_name(state, enemy_id)} is attacking {state.investigator.name}.",
                 options=[
                     DecisionOption(
                         f"Play Dodge to cancel {enemy_name(state, enemy_id)}'s attack",
@@ -235,7 +235,7 @@ def resolve_attack(
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
         return
     damage, horror = enemy_damage_horror(state, enemy_id)
-    log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked Roland.", enemy=enemy_id, source=source)
+    log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked {state.investigator.name}.", enemy=enemy_id, source=source)
     after_resume = {"kind": "after_attack", "enemy": enemy_id, "source": source, "resume": resume or {}}
     start_damage_assignment(
         state,
@@ -367,7 +367,7 @@ def present_enemy_defeat_reactions(state: GameState, events: list[dict[str, Any]
     options: list[DecisionOption] = []
     location = state.locations[state.investigator.location_id]
     roland_key = f"roland_reaction:{state.round}"
-    if location.clues > 0 and not state.limits.get(roland_key):
+    if state.investigator.card_code == "01001" and location.clues > 0 and not state.limits.get(roland_key):
         options.append(
             DecisionOption(
                 "Use Roland Banks reaction to discover 1 clue",
@@ -403,14 +403,14 @@ def resolve_enemy_defeated_reaction(state: GameState, payload: dict[str, Any], e
     if reaction == "roland":
         state.limits[f"roland_reaction:{state.round}"] = True
         discover_clue(state, 1, events)
-        log_event(events, "roland_reaction", "Roland discovered 1 clue after defeating an enemy.")
+        log_event(events, "roland_reaction", f"{state.investigator.name} discovered 1 clue after defeating an enemy.")
     elif reaction == "evidence":
         card_id = str(payload.get("card"))
         if card_id in state.investigator.hand and state.investigator.resources >= 1:
             state.investigator.resources -= 1
             player_cards.discard_from_hand(state, card_id)
             discover_clue(state, 1, events)
-            log_event(events, "event_played", "Roland played Evidence!.", card=card_id)
+            log_event(events, "event_played", f"{state.investigator.name} played Evidence!.", card=card_id)
     # Multiple reactions may trigger off the same defeat (Roland's ability AND
     # Evidence!) — re-offer whatever is still legal until the player is Done.
     if reaction in ("roland", "evidence") and state.status == "in_progress":

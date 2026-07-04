@@ -325,7 +325,19 @@ function enemyChip(enemyId, snapshot) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = `enemy-chip ${enemy?.engaged_with ? "engaged" : ""} ${enemy?.exhausted ? "exhausted" : ""}`;
-  button.textContent = `${card.name || enemyId} dmg ${enemy?.damage || 0}`;
+  const name = document.createElement("span");
+  name.className = "enemy-chip-name";
+  name.textContent = card.name || enemyId;
+  button.append(name);
+  const health = Number(card.health || 0);
+  const damage = Number(enemy?.damage || 0);
+  if (damage > 0) {
+    const hits = document.createElement("span");
+    hits.className = "enemy-chip-damage";
+    hits.textContent = health ? `${damage}/${health}` : `${damage} dmg`;
+    hits.title = `${damage} damage${health ? ` of ${health} health` : ""}`;
+    button.append(hits);
+  }
   button.addEventListener("click", (event) => {
     event.stopPropagation();
     openEntityModal(resolveEnemy(enemyId, snapshot));
@@ -450,8 +462,27 @@ function renderEvents(step) {
     line.className = "event-line";
     const message = replaceInstanceTokens(event.message || JSON.stringify(event), snapshot);
     line.innerHTML = `<span>${escapeHtml(event.type || "event")}</span> ${escapeHtml(message)}`;
+    if (event.type === "agent_reason") {
+      line.className = "event-line agent-reason";
+    }
+    const drawnCode = eventCardCode(event, snapshot);
+    if (drawnCode) {
+      line.append(codeThumb(drawnCode, { className: "event-card-thumb", title: "View card" }));
+    }
     el.events.append(line);
   }
+}
+
+// Show the actual card next to draw/reveal events so treacheries like Chill
+// from Below are visible even though they resolve and discard within a step.
+const CARD_EVENT_TYPES = new Set(["encounter_drawn", "treachery_threat", "treachery_attached", "enemy_spawned", "weakness_drawn"]);
+
+function eventCardCode(event, snapshot) {
+  if (!CARD_EVENT_TYPES.has(event.type)) return null;
+  const instanceId = event.card || event.enemy;
+  if (!instanceId) return null;
+  const instance = snapshot.card_instances?.[instanceId];
+  return instance?.card_code || null;
 }
 
 function renderSkillTest(step) {
