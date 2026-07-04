@@ -716,6 +716,20 @@ def after_enemy_defeated(state: GameState, events: list[dict[str, Any]], enemy_i
 
 
 def end_round(state: GameState, events: list[dict[str, Any]]) -> None:
+    # RR simultaneous-timing priority: Forced abilities (agenda 3's end-of-round
+    # doom tick) resolve BEFORE optional ones (the act 2 objective). This also
+    # means a Ghoul Priest spawned by advancing the act at this window does not
+    # tick doom until the following round's end.
+    if state.agenda and state.agenda.stage == 3:
+        from ..effects import place_doom
+
+        count = sum(
+            1
+            for enemy in state.enemies.values()
+            if is_ghoul_card(enemy.card_code) and enemy.location_id in {"hallway", "parlor"}
+        )
+        if count:
+            place_doom(state, count, events, source="They're Getting Out!")
     if state.act and state.act.stage == 2 and state.investigator.location_id == "hallway" and state.investigator.clues >= 3:
         state.decision_queue = [
             PendingDecision(
@@ -729,16 +743,6 @@ def end_round(state: GameState, events: list[dict[str, Any]]) -> None:
             )
         ]
         return
-    if state.agenda and state.agenda.stage == 3:
-        from ..effects import place_doom
-
-        count = sum(
-            1
-            for enemy in state.enemies.values()
-            if is_ghoul_card(enemy.card_code) and enemy.location_id in {"hallway", "parlor"}
-        )
-        if count:
-            place_doom(state, count, events, source="They're Getting Out!")
 
 
 def start_next_round_after_end_round_choice(state: GameState, events: list[dict[str, Any]]) -> None:

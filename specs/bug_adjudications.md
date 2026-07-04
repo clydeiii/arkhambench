@@ -70,3 +70,13 @@ reporting channel works; the claims just didn't survive the source texts.
    the action menu — now offered in during-turn fast windows too
    (act_advance_available shared helper). Regression tests:
    PostActionWindowTests. Credit: Fable 5, game 4, R8.
+
+7. **"Agenda 3's end-of-round doom tick was skipped when the act-2 objective
+   decision was presented."** **CONFIRMED BUG — fourth verified find.** `end_round`
+   returned early after queueing the objective decision, and the post-choice path
+   never ran the tick, so any round where the objective was offered silently lost
+   its ghoul doom. Per RR simultaneous-timing priority, Forced abilities resolve
+   before optional ones: the tick now runs first, then the objective decision.
+   (Consequence: a Priest spawned by advancing at that window does not tick until
+   the next round's end — answering the reporter's timing question.) Regression
+   test: EndRoundOrderingTests. Credit: Fable 5, game 4, R15.

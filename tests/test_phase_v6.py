@@ -321,3 +321,23 @@ class PostActionWindowTests(unittest.TestCase):
         if queued:
             labels = [o.label for o in s.decision_queue[0].options]
             self.assertFalse(any("Skids" in l or l.startswith("Advance act") for l in labels), labels)
+
+
+class EndRoundOrderingTests(unittest.TestCase):
+    def test_agenda3_doom_tick_precedes_act2_objective(self) -> None:
+        from arkham.model import AgendaState, ActState
+
+        s = return_state(seed=4)
+        tg.reveal_location(s, [], "guest_hall")
+        s.investigator.clues = 3
+        s.agenda = AgendaState(code="01107", name="They're Getting Out!", stage=3, threshold=10)
+        s.act = ActState(code="01109", name="The Barrier", stage=2, clues_required=3)
+        tg.put_return_location_into_play(s, [], "hallway")
+        tg.reveal_location(s, [], "hallway")
+        move_to(s, "hallway")
+        # revealing the Hallway already pulled the Parlor into play
+        ghoul = add_enemy(s, "01119", "parlor", engaged=False)  # Icy Ghoul lurking in Parlor
+        doom_before = s.agenda.doom
+        tg.end_round(s, [])
+        self.assertEqual(s.agenda.doom, doom_before + 1)  # forced tick applied first
+        self.assertTrue(s.decision_queue and s.decision_queue[0].id == "act2-objective")
