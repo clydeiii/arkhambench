@@ -90,3 +90,11 @@ reporting channel works; the claims just didn't survive the source texts.
    like the suppressed-attack branch does. In the reporter's game this cost a
    resign line and likely the scenario. Regression test:
    DeadAooAttackerResumeTests. Credit: Fable 5, game 4, R15.
+
+## fable5-bughunt game-05 (Wendy, Return, seed 1005) — 2026-07-04
+
+9. **"'Advance act' appears twice in the same action menu."** **CONFIRMED BUG —
+   sixth verified find; regression from fix #6 minutes earlier** (the objective was
+   added by both legal_actions and add_fast_options, which the action menu also
+   calls). Deduped via include_objective flag: only standalone fast windows add it.
+   Regression test: ObjectiveDedupeTests. Credit: Fable 5, game 5, R6.

@@ -767,11 +767,13 @@ def is_fast_turn_card(card_code: str) -> bool:
     return card_code in {"01010", "01022", "01023", "01030", "01036", "01037", "01044", "01050"}
 
 
-def add_fast_options(state: GameState, options: list[DecisionOption], *, during_turn: bool = True) -> None:
+def add_fast_options(state: GameState, options: list[DecisionOption], *, during_turn: bool = True, include_objective: bool = False) -> None:
     # Fast card PLAYS are only legal during the investigator's own turn;
     # triggered fast abilities on in-play cards (Beat Cop) work in any window.
     if during_turn:
-        if act_advance_available(state):
+        # The action menu adds the objective itself; only standalone fast
+        # windows (present_fast_window) ask for it here.
+        if include_objective and act_advance_available(state):
             options.append(
                 DecisionOption(
                     f"Advance act by spending {state.act.clues_required} clues",

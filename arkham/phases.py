@@ -109,7 +109,7 @@ def present_fast_window(state: GameState, boundary: str, *, during_turn: bool) -
     if state.limits.get(key):
         return False
     options: list[DecisionOption] = []
-    actions.add_fast_options(state, options, during_turn=during_turn)
+    actions.add_fast_options(state, options, during_turn=during_turn, include_objective=during_turn)
     if not options:
         state.limits[key] = True
         return False

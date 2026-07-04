@@ -951,3 +951,8 @@
 [R15·Enemy | Agnes Baker 01004 | Hallway | clu1 res1 | dmg5/6 hor9/8 | h3 d7 x20 | Act3 Agd3 doom7/10]
 **R15 · Enemy** — GAME OVER: Agnes Baker was defeated
 **R15 · Enemy** — Ghoul Priest exhausted after attacking.
+**R15 · Enemy** — Note added.
+**R15 · Enemy** — Note added.
+**R15 · Enemy** — Note added.
+**R15 · Enemy** — Note added.
+**R15 · Enemy** — Note added.

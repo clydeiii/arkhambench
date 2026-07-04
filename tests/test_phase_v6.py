@@ -360,3 +360,14 @@ class DeadAooAttackerResumeTests(unittest.TestCase):
         }
         enemies_mod.attack(s, [], rat, source="attack of opportunity", resume=resume, rng=ArkhamRng(2))
         self.assertEqual(s.investigator.location_id, "guest_hall")
+
+
+class ObjectiveDedupeTests(unittest.TestCase):
+    def test_action_menu_offers_objective_once(self) -> None:
+        s = return_state(seed=7)
+        tg.reveal_location(s, [], "guest_hall")
+        move_to(s, "guest_hall")
+        s.investigator.clues = 3
+        s.investigator.actions_remaining = 3
+        labels = [o.label for o in actions.legal_actions(s) if o.label.startswith("Advance act")]
+        self.assertEqual(len(labels), 1, labels)
