@@ -1,0 +1,233 @@
+{"data": {"prompt": "Opening hand: Leo De Luca, Manual Dexterity, Rabbit's Foot, Pickpocketing, Survival Instinct. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 1, "status": "[R1\u00b7Investigation a3/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res5 | dmg0/7 hor0/7 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Set aside Pickpocketing", "option": 5}, "phase": "Investigation", "round": 1, "seq": 2, "type": "decision_made"}
+{"data": {"message": "Pickpocketing is expensive for limited value; fishing for Flashlight or resource generation like Emergency Cache"}, "phase": "Investigation", "round": 1, "seq": 3, "type": "agent_reason"}
+{"data": {"prompt": "Opening hand: Leo De Luca, Manual Dexterity, Rabbit's Foot, Pickpocketing, Survival Instinct. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 4, "status": "[R1\u00b7Investigation a3/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res5 | dmg0/7 hor0/7 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Keep hand and draw replacements", "option": 1}, "phase": "Investigation", "round": 1, "seq": 5, "type": "decision_made"}
+{"data": {"message": "Finalize mulligan with Pickpocketing set aside"}, "phase": "Investigation", "round": 1, "seq": 6, "type": "agent_reason"}
+{"data": {"drew": ["pc0023"], "message": "Mulliganed Pickpocketing; drew Knife.", "out": ["pc0003"]}, "phase": "Investigation", "round": 1, "seq": 7, "type": "mulligan"}
+{"data": {"message": "Opening hand finalized: Leo De Luca, Manual Dexterity, Rabbit's Foot, Survival Instinct, Knife."}, "phase": "Investigation", "round": 1, "seq": 8, "type": "setup_complete"}
+{"data": {"attic": "original", "cellar": "original", "message": "Setup chose the original Attic and the original Cellar."}, "phase": "Investigation", "round": 1, "seq": 9, "type": "setup_variants"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 10, "status": "[R1\u00b7Investigation a3/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res5 | dmg0/7 hor0/7 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Study (Aberrant Gateway): spend 2 actions to draw 3 cards", "option": 5}, "phase": "Investigation", "round": 1, "seq": 11, "type": "decision_made"}
+{"data": {"message": "Aberrant Gateway (2 actions, 3 cards) builds hand for token-redraws and finds key cards like Flashlight or resources"}, "phase": "Investigation", "round": 1, "seq": 12, "type": "agent_reason"}
+{"data": {"action": "study_draw", "cost": 2, "message": "Spent 2 actions: Study (Aberrant Gateway) - draw 3 cards."}, "phase": "Investigation", "round": 1, "seq": 13, "type": "action_spent"}
+{"data": {"card": "pc0015", "message": "Wendy Adams drew Cunning Distraction."}, "phase": "Investigation", "round": 1, "seq": 14, "type": "card_drawn"}
+{"data": {"card": "pc0018", "message": "Wendy Adams drew \"Look what I found!\"."}, "phase": "Investigation", "round": 1, "seq": 15, "type": "card_drawn"}
+{"data": {"card": "pc0009", "message": "Wendy Adams drew Scavenging."}, "phase": "Investigation", "round": 1, "seq": 16, "type": "card_drawn"}
+{"data": {"message": "The Study's gateway ability drew 3 cards."}, "phase": "Investigation", "round": 1, "seq": 17, "type": "study_draw"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 18, "status": "[R1\u00b7Investigation a1/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res5 | dmg0/7 hor0/7 | h8 d25 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 1, "seq": 19, "type": "decision_made"}
+{"data": {"message": "Explore Guest Hall to map the board and find clue locations"}, "phase": "Investigation", "round": 1, "seq": 20, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 1, "seq": 21, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Wendy Adams moved to Guest Hall."}, "phase": "Investigation", "round": 1, "seq": 22, "type": "investigator_moved"}
+{"data": {"location": "guest_hall", "message": "Guest Hall was revealed."}, "phase": "Investigation", "round": 1, "seq": 23, "type": "location_revealed"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 1, "seq": 24, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 1, "seq": 25, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 1, "seq": 26, "type": "ready_step"}
+{"data": {"card": "pc0007", "message": "Wendy Adams drew Backstab."}, "phase": "Upkeep", "round": 1, "seq": 27, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 1, "seq": 28, "type": "resource_gained"}
+{"data": {"prompt": "[Round 1 \u00b7 Upkeep \u00b7 Wendy Adams] Discard to hand size 8."}, "phase": "Upkeep", "round": 1, "seq": 29, "status": "[R1\u00b7Upkeep | Wendy Adams 01005 | Guest Hall | clu0 res6 | dmg0/7 hor0/7 | h9 d24 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "discard-to-size", "label": "Discard Cunning Distraction", "option": 6}, "phase": "Upkeep", "round": 1, "seq": 30, "type": "decision_made"}
+{"data": {"message": "Cunning Distraction is too expensive per deck guide; keep core evasion, clue, and combat cards"}, "phase": "Upkeep", "round": 1, "seq": 31, "type": "agent_reason"}
+{"data": {"card": "pc0015", "message": "Discarded Cunning Distraction to hand size."}, "phase": "Upkeep", "round": 1, "seq": 32, "type": "card_discarded"}
+{"data": {"message": "Round 2 began."}, "phase": "Mythos", "round": 2, "seq": 33, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 2, "seq": 34, "type": "doom_placed"}
+{"data": {"card": "ec0007", "message": "Wendy Adams drew encounter card Grave-Eater."}, "phase": "Mythos", "round": 2, "seq": 35, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater spawned at Guest Hall."}, "phase": "Mythos", "round": 2, "seq": 36, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater engaged Wendy Adams."}, "phase": "Mythos", "round": 2, "seq": 37, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 2, "seq": 38, "type": "phase_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 39, "status": "[R2\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res6 | dmg0/7 hor0/7 | h8 d24 x1 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Leo De Luca (6 res)", "option": 9}, "phase": "Investigation", "round": 2, "seq": 40, "type": "decision_made"}
+{"data": {"message": "Leo De Luca is the most valuable card; playing him now enables 4-action turns (3+1) starting next turn, critical for Wendy's tempo"}, "phase": "Investigation", "round": 2, "seq": 41, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Leo De Luca."}, "phase": "Investigation", "round": 2, "seq": 42, "type": "action_spent"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater attacked Wendy Adams.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 2, "seq": 43, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 1 damage and 1 horror.", "source": "Grave-Eater"}, "phase": "Investigation", "round": 2, "seq": 44, "type": "damage_assigned"}
+{"data": {"card": "pc0012", "message": "Grave-Eater's attack forced a random discard of Rabbit's Foot."}, "phase": "Investigation", "round": 2, "seq": 45, "type": "grave_eater_forced"}
+{"data": {"card": "pc0005", "message": "Wendy Adams played Leo De Luca."}, "phase": "Investigation", "round": 2, "seq": 46, "type": "card_played"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 47, "status": "[R2\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Grave-Eater (evade 2) \u2014 test Agility(4)", "option": 6}, "phase": "Investigation", "round": 2, "seq": 48, "type": "decision_made"}
+{"data": {"message": "Evade Grave-Eater (Agility 4 vs 2, highly favored); prevents another damage/horror and random discard"}, "phase": "Investigation", "round": 2, "seq": 49, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Grave-Eater."}, "phase": "Investigation", "round": 2, "seq": 50, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 2.", "source": "Evade Grave-Eater"}, "phase": "Investigation", "round": 2, "seq": 51, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Evade Grave-Eater (agility vs 2)."}, "phase": "Investigation", "round": 2, "seq": 52, "status": "[R2\u00b7Investigation a2/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 4}, "phase": "Investigation", "round": 2, "seq": 53, "type": "decision_made"}
+{"data": {"message": "Already favored (4 vs 2); save evasion cards for critical tests"}, "phase": "Investigation", "round": 2, "seq": 54, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 2, "seq": 55, "type": "chaos_token"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing -1?"}, "phase": "Investigation", "round": 2, "seq": 56, "status": "[R2\u00b7Investigation a2/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 7}, "phase": "Investigation", "round": 2, "seq": 57, "type": "decision_made"}
+{"data": {"message": "Already succeeding; save token-redraw reaction for marginal or failing tests"}, "phase": "Investigation", "round": 2, "seq": 58, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 1, "message": "Evade Grave-Eater: success by 1 - agility 4 + committed 0 + boosts 0 + token -1 = 3 vs 2.", "modifier": -1, "skill": "agility", "source": "Evade Grave-Eater", "success": true, "token": "-1", "value": 3}, "phase": "Investigation", "round": 2, "seq": 59, "type": "skill_test_result"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater disengaged."}, "phase": "Investigation", "round": 2, "seq": 60, "type": "enemy_disengaged"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 61, "status": "[R2\u00b7Investigation a2/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Guest Hall (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 2, "seq": 62, "type": "decision_made"}
+{"data": {"message": "Investigate Guest Hall (shroud 1, easy test); I need 3 clues in Guest Hall to advance Act 1a"}, "phase": "Investigation", "round": 2, "seq": 63, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 64, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Guest Hall"}, "phase": "Investigation", "round": 2, "seq": 65, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Guest Hall (intellect vs 1)."}, "phase": "Investigation", "round": 2, "seq": 66, "status": "[R2\u00b7Investigation a1/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 2, "seq": 67, "type": "decision_made"}
+{"data": {"message": "Already favored (3 vs 1); save cards with bonuses for harder tests"}, "phase": "Investigation", "round": 2, "seq": 68, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 2, "seq": 69, "type": "chaos_token"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing -1?"}, "phase": "Investigation", "round": 2, "seq": 70, "status": "[R2\u00b7Investigation a1/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 7}, "phase": "Investigation", "round": 2, "seq": 71, "type": "decision_made"}
+{"data": {"message": "Succeeding by 1; save reaction for crucial tests"}, "phase": "Investigation", "round": 2, "seq": 72, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate Guest Hall: success by 1 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "skill": "intellect", "source": "Investigate Guest Hall", "success": true, "token": "-1", "value": 2}, "phase": "Investigation", "round": 2, "seq": 73, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 74, "status": "[R2\u00b7Investigation a1/3 | Wendy Adams 01005 | Guest Hall | clu0 res0 | dmg1/7 hor1/7 | h6 d24 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Take resource (gain 1)", "option": 7}, "phase": "Investigation", "round": 2, "seq": 75, "type": "decision_made"}
+{"data": {"message": "Take resource for future turns; next turn I'll have 4 actions (3+Leo), can explore more efficiently"}, "phase": "Investigation", "round": 2, "seq": 76, "type": "agent_reason"}
+{"data": {"action": "resource", "cost": 1, "message": "Spent 1 action: Take resource."}, "phase": "Investigation", "round": 2, "seq": 77, "type": "action_spent"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Investigation", "round": 2, "seq": 78, "type": "resource_gained"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 2, "seq": 79, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 2, "seq": 80, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 2, "seq": 81, "type": "ready_step"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater engaged Wendy Adams."}, "phase": "Upkeep", "round": 2, "seq": 82, "type": "enemy_engaged"}
+{"data": {"card": "pc0006", "message": "Wendy Adams drew Leo De Luca."}, "phase": "Upkeep", "round": 2, "seq": 83, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 2, "seq": 84, "type": "resource_gained"}
+{"data": {"message": "Round 3 began."}, "phase": "Mythos", "round": 3, "seq": 85, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 3, "seq": 86, "type": "doom_placed"}
+{"data": {"card": "ec0029", "message": "Wendy Adams drew encounter card Corpse-Hungry Ghoul."}, "phase": "Mythos", "round": 3, "seq": 87, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul spawned at Bedroom."}, "phase": "Mythos", "round": 3, "seq": 88, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 3, "seq": 89, "type": "phase_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 4 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 90, "status": "[R3\u00b7Investigation a4/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h7 d23 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Guest Hall (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 3, "seq": 91, "type": "decision_made"}
+{"data": {"message": "Investigate Guest Hall for 2nd clue; agenda flips next round so need to accelerate clue gathering"}, "phase": "Investigation", "round": 3, "seq": 92, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 93, "type": "action_spent"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater attacked Wendy Adams.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 3, "seq": 94, "type": "enemy_attack"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Assign damage/horror from Grave-Eater."}, "phase": "Investigation", "round": 3, "seq": 95, "status": "[R3\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h7 d23 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 damage to Leo De Luca", "option": 2}, "phase": "Investigation", "round": 3, "seq": 96, "type": "decision_made"}
+{"data": {"message": "Assign 1 damage to Leo De Luca instead of myself to preserve health"}, "phase": "Investigation", "round": 3, "seq": 97, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 damage to Leo De Luca.", "target": "pc0005"}, "phase": "Investigation", "round": 3, "seq": 98, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Assign damage/horror from Grave-Eater."}, "phase": "Investigation", "round": 3, "seq": 99, "status": "[R3\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h7 d23 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Leo De Luca", "option": 2}, "phase": "Investigation", "round": 3, "seq": 100, "type": "decision_made"}
+{"data": {"message": "Assign 1 horror to Leo to preserve sanity; assets can soak horror"}, "phase": "Investigation", "round": 3, "seq": 101, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Leo De Luca.", "target": "pc0005"}, "phase": "Investigation", "round": 3, "seq": 102, "type": "damage_assigned"}
+{"data": {"card": "pc0009", "message": "Grave-Eater's attack forced a random discard of Scavenging."}, "phase": "Investigation", "round": 3, "seq": 103, "type": "grave_eater_forced"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Guest Hall"}, "phase": "Investigation", "round": 3, "seq": 104, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Guest Hall (intellect vs 1)."}, "phase": "Investigation", "round": 3, "seq": 105, "status": "[R3\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h6 d23 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 3, "seq": 106, "type": "decision_made"}
+{"data": {"message": "Already favored (3 vs 1); don't commit cards, especially Leo which is damaged"}, "phase": "Investigation", "round": 3, "seq": 107, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -1, "token": "skull"}, "phase": "Investigation", "round": 3, "seq": 108, "type": "chaos_token"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing skull?"}, "phase": "Investigation", "round": 3, "seq": 109, "status": "[R3\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h6 d23 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 7}, "phase": "Investigation", "round": 3, "seq": 110, "type": "decision_made"}
+{"data": {"message": "Skull = -0 (no Ghouls here); test 3 vs 1 still succeeds; save redraw for critical tests"}, "phase": "Investigation", "round": 3, "seq": 111, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate Guest Hall: success by 1 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "skill": "intellect", "source": "Investigate Guest Hall", "success": true, "token": "skull", "value": 2}, "phase": "Investigation", "round": 3, "seq": 112, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 113, "status": "[R3\u00b7Investigation a3/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h6 d23 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bathroom", "option": 4}, "phase": "Investigation", "round": 3, "seq": 114, "type": "decision_made"}
+{"data": {"message": "Move to Bathroom to map and investigate for the 3rd clue needed for Act advancement"}, "phase": "Investigation", "round": 3, "seq": 115, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bathroom."}, "phase": "Investigation", "round": 3, "seq": 116, "type": "action_spent"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater attacked Wendy Adams.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 3, "seq": 117, "type": "enemy_attack"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Assign damage/horror from Grave-Eater."}, "phase": "Investigation", "round": 3, "seq": 118, "status": "[R3\u00b7Investigation a2/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h6 d23 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 damage to Leo De Luca", "option": 2}, "phase": "Investigation", "round": 3, "seq": 119, "type": "decision_made"}
+{"data": {"message": "Leo can soak 1 more damage; trying to preserve cards"}, "phase": "Investigation", "round": 3, "seq": 120, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 damage to Leo De Luca.", "target": "pc0005"}, "phase": "Investigation", "round": 3, "seq": 121, "type": "damage_assigned"}
+{"data": {"card": "pc0005", "message": "Leo De Luca was discarded."}, "phase": "Investigation", "round": 3, "seq": 122, "type": "asset_discarded"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Assign damage/horror from Grave-Eater."}, "phase": "Investigation", "round": 3, "seq": 123, "status": "[R3\u00b7Investigation a1/3 | Wendy Adams 01005 | Guest Hall | clu0 res2 | dmg1/7 hor1/7 | h6 d23 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Wendy Adams", "option": 1}, "phase": "Investigation", "round": 3, "seq": 124, "type": "decision_made"}
+{"data": {"message": "Only option; take horror to Wendy"}, "phase": "Investigation", "round": 3, "seq": 125, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Wendy Adams.", "target": "roland"}, "phase": "Investigation", "round": 3, "seq": 126, "type": "damage_assigned"}
+{"data": {"card": "pc0018", "message": "Grave-Eater's attack forced a random discard of \"Look what I found!\"."}, "phase": "Investigation", "round": 3, "seq": 127, "type": "grave_eater_forced"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater moved to Bathroom."}, "phase": "Investigation", "round": 3, "seq": 128, "type": "enemy_moved"}
+{"data": {"location": "bathroom", "message": "Wendy Adams moved to Bathroom."}, "phase": "Investigation", "round": 3, "seq": 129, "type": "investigator_moved"}
+{"data": {"location": "bathroom", "message": "Bathroom was revealed."}, "phase": "Investigation", "round": 3, "seq": 130, "type": "location_revealed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 131, "status": "[R3\u00b7Investigation a1/3 | Wendy Adams 01005 | Bathroom | clu0 res2 | dmg1/7 hor2/7 | h5 d23 x5 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Grave-Eater (evade 2) \u2014 test Agility(4)", "option": 4}, "phase": "Investigation", "round": 3, "seq": 132, "type": "decision_made"}
+{"data": {"message": "Evade Grave-Eater to stop attacks and recover cards; with 1 action left this is best use"}, "phase": "Investigation", "round": 3, "seq": 133, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Grave-Eater."}, "phase": "Investigation", "round": 3, "seq": 134, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 2.", "source": "Evade Grave-Eater"}, "phase": "Investigation", "round": 3, "seq": 135, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Evade Grave-Eater (agility vs 2)."}, "phase": "Investigation", "round": 3, "seq": 136, "status": "[R3\u00b7Investigation a0/3 | Wendy Adams 01005 | Bathroom | clu0 res2 | dmg1/7 hor2/7 | h5 d23 x5 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 4}, "phase": "Investigation", "round": 3, "seq": 137, "type": "decision_made"}
+{"data": {"message": "Already favored (4 vs 2); save evasion cards"}, "phase": "Investigation", "round": 3, "seq": 138, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 3, "seq": 139, "type": "chaos_token"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing -2?"}, "phase": "Investigation", "round": 3, "seq": 140, "status": "[R3\u00b7Investigation a0/3 | Wendy Adams 01005 | Bathroom | clu0 res2 | dmg1/7 hor2/7 | h5 d23 x5 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 6}, "phase": "Investigation", "round": 3, "seq": 141, "type": "decision_made"}
+{"data": {"message": "Test 4-2=2 vs 2 (succeeds on tie); save reaction"}, "phase": "Investigation", "round": 3, "seq": 142, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Evade Grave-Eater: success by 0 - agility 4 + committed 0 + boosts 0 + token -2 = 2 vs 2.", "modifier": -2, "skill": "agility", "source": "Evade Grave-Eater", "success": true, "token": "-2", "value": 2}, "phase": "Investigation", "round": 3, "seq": 143, "type": "skill_test_result"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater disengaged."}, "phase": "Investigation", "round": 3, "seq": 144, "type": "enemy_disengaged"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 145, "type": "phase_started"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul moved to Guest Hall."}, "phase": "Enemy", "round": 3, "seq": 146, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 147, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 148, "type": "ready_step"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater engaged Wendy Adams."}, "phase": "Upkeep", "round": 3, "seq": 149, "type": "enemy_engaged"}
+{"data": {"card": "pc0013", "message": "Wendy Adams drew Dig Deep."}, "phase": "Upkeep", "round": 3, "seq": 150, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 151, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 152, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 153, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 4, "seq": 154, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bathroom | clu0 res3 | dmg1/7 hor2/7 | h6 d22 x5 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Discard 1 random card from hand", "option": 1}, "phase": "Mythos", "round": 4, "seq": 155, "type": "decision_made"}
+{"data": {"message": "Discard 1 random card instead of 2 horror; already at 2/7 horror and need to survive longer"}, "phase": "Mythos", "round": 4, "seq": 156, "type": "agent_reason"}
+{"data": {"card": "pc0013", "message": "Wendy Adams discarded Dig Deep at random for Agenda 1."}, "phase": "Mythos", "round": 4, "seq": 157, "type": "card_discarded"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 4, "seq": 158, "type": "agenda_advanced"}
+{"data": {"card": "ec0012", "message": "Wendy Adams drew encounter card Chill from Below."}, "phase": "Mythos", "round": 4, "seq": 159, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 4 vs 3.", "source": "Chill from Below"}, "phase": "Mythos", "round": 4, "seq": 160, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Wendy Adams] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 4, "seq": 161, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bathroom | clu0 res3 | dmg1/7 hor2/7 | h5 d22 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 4, "seq": 162, "type": "decision_made"}
+{"data": {"message": "Already favored (4 vs 3); save commit cards"}, "phase": "Mythos", "round": 4, "seq": 163, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Mythos", "round": 4, "seq": 164, "type": "chaos_token"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing -2?"}, "phase": "Mythos", "round": 4, "seq": 165, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bathroom | clu0 res3 | dmg1/7 hor2/7 | h5 d22 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 6}, "phase": "Mythos", "round": 4, "seq": 166, "type": "decision_made"}
+{"data": {"message": "Fail by 1 discard random card; better than guaranteed evasion card loss via reaction"}, "phase": "Mythos", "round": 4, "seq": 167, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Chill from Below: failure by 1 - willpower 4 + committed 0 + boosts 0 + token -2 = 2 vs 3.", "modifier": -2, "skill": "willpower", "source": "Chill from Below", "success": false, "token": "-2", "value": 2}, "phase": "Mythos", "round": 4, "seq": 168, "type": "skill_test_result"}
+{"data": {"card": "pc0007", "message": "Chill from Below forced a random discard of Backstab."}, "phase": "Mythos", "round": 4, "seq": 169, "type": "card_discarded"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 4, "seq": 170, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 171, "status": "[R4\u00b7Investigation a3/3 | Wendy Adams 01005 | Bathroom | clu0 res3 | dmg1/7 hor2/7 | h4 d22 x7 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bathroom (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 4, "seq": 172, "type": "decision_made"}
+{"data": {"message": "Investigate Bathroom for a clue; need to gather 3 total clues in Guest Hall for Act advancement"}, "phase": "Investigation", "round": 4, "seq": 173, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bathroom."}, "phase": "Investigation", "round": 4, "seq": 174, "type": "action_spent"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater attacked Wendy Adams.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 4, "seq": 175, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 1 damage and 1 horror.", "source": "Grave-Eater"}, "phase": "Investigation", "round": 4, "seq": 176, "type": "damage_assigned"}
+{"data": {"card": "pc0032", "message": "Grave-Eater's attack forced a random discard of Manual Dexterity."}, "phase": "Investigation", "round": 4, "seq": 177, "type": "grave_eater_forced"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Bathroom"}, "phase": "Investigation", "round": 4, "seq": 178, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Bathroom (intellect vs 1)."}, "phase": "Investigation", "round": 4, "seq": 179, "status": "[R4\u00b7Investigation a2/3 | Wendy Adams 01005 | Bathroom | clu0 res3 | dmg2/7 hor3/7 | h3 d22 x8 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 4, "seq": 180, "type": "decision_made"}
+{"data": {"message": "Already favored (3 vs 1); pass on commit"}, "phase": "Investigation", "round": 4, "seq": 181, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -1, "token": "skull"}, "phase": "Investigation", "round": 4, "seq": 182, "type": "chaos_token"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing skull?"}, "phase": "Investigation", "round": 4, "seq": 183, "status": "[R4\u00b7Investigation a2/3 | Wendy Adams 01005 | Bathroom | clu0 res3 | dmg2/7 hor3/7 | h3 d22 x8 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 4}, "phase": "Investigation", "round": 4, "seq": 184, "type": "decision_made"}
+{"data": {"message": "Skull = -0; test succeeds; check Bathroom end-turn rule effect"}, "phase": "Investigation", "round": 4, "seq": 185, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate Bathroom: success by 1 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "skill": "intellect", "source": "Investigate Bathroom", "success": true, "token": "skull", "value": 2}, "phase": "Investigation", "round": 4, "seq": 186, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 4, "seq": 187, "type": "clue_discovered"}
+{"data": {"message": "The Bathroom drained all remaining actions; the turn ends."}, "phase": "Investigation", "round": 4, "seq": 188, "type": "bathroom_forced"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 4, "seq": 189, "type": "phase_started"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul moved to Bathroom."}, "phase": "Enemy", "round": 4, "seq": 190, "type": "enemy_moved"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul engaged Wendy Adams."}, "phase": "Enemy", "round": 4, "seq": 191, "type": "enemy_engaged"}
+{"data": {"prompt": "Choose the next enemy-phase attack."}, "phase": "Enemy", "round": 4, "seq": 192, "status": "[R4\u00b7Enemy | Wendy Adams 01005 | Bathroom | clu1 res3 | dmg2/7 hor3/7 | h3 d22 x8 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "enemy-attack-order", "label": "Attack next: Corpse-Hungry Ghoul", "option": 2}, "phase": "Enemy", "round": 4, "seq": 193, "type": "decision_made"}
+{"data": {"message": "Corpse-Hungry Ghoul attacks first (2 dmg/horror) to avoid Grave-Eater's random card discard"}, "phase": "Enemy", "round": 4, "seq": 194, "type": "agent_reason"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul attacked Wendy Adams.", "source": "enemy phase"}, "phase": "Enemy", "round": 4, "seq": 195, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 2 damage and 2 horror.", "source": "Corpse-Hungry Ghoul"}, "phase": "Enemy", "round": 4, "seq": 196, "type": "damage_assigned"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul exhausted after attacking."}, "phase": "Enemy", "round": 4, "seq": 197, "type": "enemy_exhausted"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater attacked Wendy Adams.", "source": "enemy phase"}, "phase": "Enemy", "round": 4, "seq": 198, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 1 damage and 1 horror.", "source": "Grave-Eater"}, "phase": "Enemy", "round": 4, "seq": 199, "type": "damage_assigned"}
+{"data": {"card": "pc0006", "message": "Grave-Eater's attack forced a random discard of Leo De Luca."}, "phase": "Enemy", "round": 4, "seq": 200, "type": "grave_eater_forced"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater exhausted after attacking."}, "phase": "Enemy", "round": 4, "seq": 201, "type": "enemy_exhausted"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 4, "seq": 202, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 4, "seq": 203, "type": "ready_step"}
+{"data": {"card": "pc0019", "message": "Wendy Adams drew Lucky!."}, "phase": "Upkeep", "round": 4, "seq": 204, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 4, "seq": 205, "type": "resource_gained"}
+{"data": {"message": "Round 5 began."}, "phase": "Mythos", "round": 5, "seq": 206, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 5, "seq": 207, "type": "doom_placed"}
+{"data": {"card": "ec0026", "message": "Wendy Adams drew encounter card Obscuring Fog."}, "phase": "Mythos", "round": 5, "seq": 208, "type": "encounter_drawn"}
+{"data": {"card": "ec0026", "location": "bathroom", "message": "Obscuring Fog attached to Bathroom."}, "phase": "Mythos", "round": 5, "seq": 209, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 5, "seq": 210, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 211, "status": "[R5\u00b7Investigation a3/3 | Wendy Adams 01005 | Bathroom | clu1 res4 | dmg5/7 hor6/7 | h3 d21 x9 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Corpse-Hungry Ghoul (evade 3) \u2014 test Agility(4)", "option": 6}, "phase": "Investigation", "round": 5, "seq": 212, "type": "decision_made"}
+{"data": {"message": "Evade Corpse-Hungry Ghoul (Hunter) first; reduces immediate threats; Agility 4 vs evade 3 should succeed"}, "phase": "Investigation", "round": 5, "seq": 213, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Corpse-Hungry Ghoul."}, "phase": "Investigation", "round": 5, "seq": 214, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 3.", "source": "Evade Corpse-Hungry Ghoul"}, "phase": "Investigation", "round": 5, "seq": 215, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Evade Corpse-Hungry Ghoul (agility vs 3)."}, "phase": "Investigation", "round": 5, "seq": 216, "status": "[R5\u00b7Investigation a2/3 | Wendy Adams 01005 | Bathroom | clu1 res4 | dmg5/7 hor6/7 | h3 d21 x9 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 5, "seq": 217, "type": "decision_made"}
+{"data": {"message": "Already favored (4 vs 3); save Survival Instinct for other tests"}, "phase": "Investigation", "round": 5, "seq": 218, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 5, "seq": 219, "type": "chaos_token"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Use Wendy Adams reaction after revealing -1?"}, "phase": "Investigation", "round": 5, "seq": 220, "status": "[R5\u00b7Investigation a2/3 | Wendy Adams 01005 | Bathroom | clu1 res4 | dmg5/7 hor6/7 | h3 d21 x9 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 4}, "phase": "Investigation", "round": 5, "seq": 221, "type": "decision_made"}
+{"data": {"message": "4-1=3 vs 3 (tie succeeds); save reaction"}, "phase": "Investigation", "round": 5, "seq": 222, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Evade Corpse-Hungry Ghoul: success by 0 - agility 4 + committed 0 + boosts 0 + token -1 = 3 vs 3.", "modifier": -1, "skill": "agility", "source": "Evade Corpse-Hungry Ghoul", "success": true, "token": "-1", "value": 3}, "phase": "Investigation", "round": 5, "seq": 223, "type": "skill_test_result"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul disengaged."}, "phase": "Investigation", "round": 5, "seq": 224, "type": "enemy_disengaged"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 225, "status": "[R5\u00b7Investigation a2/3 | Wendy Adams 01005 | Bathroom | clu1 res4 | dmg5/7 hor6/7 | h3 d21 x9 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 5, "seq": 226, "type": "decision_made"}
+{"data": {"message": "Move to Guest Hall to prepare for Act advancement when I gather 3 clues total"}, "phase": "Investigation", "round": 5, "seq": 227, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 5, "seq": 228, "type": "action_spent"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater attacked Wendy Adams.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 5, "seq": 229, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 1 damage and 1 horror.", "source": "Grave-Eater"}, "phase": "Investigation", "round": 5, "seq": 230, "type": "damage_assigned"}
+{"data": {"message": "Wendy Adams was defeated", "summary": "Wendy Adams was defeated"}, "phase": "Investigation", "round": 5, "seq": 231, "type": "game_end"}
+{"data": {"card": "pc0019", "message": "Grave-Eater's attack forced a random discard of Lucky!."}, "phase": "Investigation", "round": 5, "seq": 232, "type": "grave_eater_forced"}
+{"data": {}, "phase": "Investigation", "round": 5, "seq": 233, "type": "note_added"}

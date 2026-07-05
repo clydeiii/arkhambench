@@ -164,3 +164,29 @@ Seven findings; all verified against code/state; fixes = specs/fixes_batch_5_aud
 Pipeline economics: 3 Haiku games + 3 Fable audits found 7 new confirmed defects —
 including the double-execution class two live hunts missed — at roughly a tenth of
 a live hunt's token cost. All fixed in fixes batch 5.
+
+## Transcript-audit pass #2 (GPT-5.5 auditing 3 fresh Haiku games) — 2026-07-05
+
+Diversity pass (Clyde's design: Haiku plays, GPT-5.5 audits, Claude verifies).
+Four findings; three confirmed, one ruled correct-as-implemented. Fixes = batch 6.
+
+21. **Dark Memory's resource cost unpaid during the AoO it provoked** (game-01) —
+    CONFIRMED ordering defect: RR pays ALL costs at initiation, before AoOs; the
+    engine paid resource costs in the effect phase. Materially invisible in this
+    game but wrong ordering engine-wide for the generic play action.
+22. **Sequential damage/horror application hid legal Leo soak** (game-02) —
+    CONFIRMED: RR assigns all tokens then applies simultaneously; the engine
+    applied damage (removing Leo) before horror assignment. Wendy could legally
+    have soaked both on Leo.
+23. **Leo's death clawed back an already-consumed bonus action** (game-02) —
+    CONFIRMED per the additional-actions FAQ: the first qualifying action uses the
+    bonus; discarding Leo later in the turn must not reduce remaining actions.
+24. **Bathroom Forced fired after test resolution instead of at token reveal**
+    (game-03) — **NOT A BUG (adjudicated)**: firing on the FINAL token is the
+    correct cancellation semantics for Wendy's redraw (a canceled skull is not a
+    revealed symbol for Forced purposes), and no reachable state reads the action
+    count between reveal and resolution. Documented deviation, retained.
+
+Auditor-diversity observation: GPT-5.5's finds (cost timing, simultaneity,
+action-economy edge cases) are a different genre from Fable's (window/sequence
+drops) — running BOTH auditors over the same corpus would likely stack coverage.

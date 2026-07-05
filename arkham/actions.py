@@ -197,9 +197,14 @@ def add_study_gateway_option(state: GameState, options: list[DecisionOption]) ->
 
 def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
     action = str(payload["action"])
+    if action in {"play", "dynamite", "sneak_attack"} and not validate_play_initiation(state, payload, events):
+        return
     if action not in NON_ACTIONS | FREE_ACTIONS:
         if not payload.get("cost_paid"):
             spend_action(state, events, action, payload)
+        if action in {"play", "dynamite", "sneak_attack"} and not payload.get("resource_cost_paid"):
+            if not pay_play_resource_cost(state, payload):
+                return
         if not payload.get("skip_aoo"):
             if attacks_of_opportunity(state, events, action, payload, rng=rng):
                 return
@@ -233,7 +238,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
     elif action == "resource":
         gain_resource(state, 1, events)
     elif action == "play":
-        play_card(state, str(payload["card"]), events, rng)
+        play_card(state, str(payload["card"]), events, rng, cost_paid=bool(payload.get("resource_cost_paid")), paid_cost=int(payload.get("resource_cost", 0)))
     elif action == "asset_fight":
         asset_fight(state, payload, events)
     elif action == "flashlight":
@@ -412,6 +417,59 @@ def mark_action_cost_paid(state: GameState, action: str, cost: int) -> None:
         state.limits[f"daisy_tome:{state.round}"] = True
 
 
+def validate_play_initiation(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> bool:
+    def fail() -> bool:
+        if payload.get("resource_cost_paid"):
+            refund_play_resource_cost(state, payload)
+        return False
+
+    card_id = str(payload.get("card", ""))
+    if card_id not in state.card_instances:
+        return False
+    code = state.card_instances[card_id].card_code
+    card = card_data.get_card(code)
+    if payload.get("action") == "play" and card.get("type_code") not in {"asset", "event"}:
+        return fail()
+    if card.get("type_code") != "event" and payload.get("action") in {"dynamite", "sneak_attack"}:
+        return fail()
+    if card_id not in state.investigator.hand and not player_cards.can_play_from_discard_with_amulet(state, card_id):
+        return fail()
+    if dissonant_blocks(state, code):
+        return fail()
+    if card.get("type_code") == "asset" and not can_enter_play_unique(state, code):
+        log_event(events, "play_blocked", f"{card.get('name', code)} is unique and already in play.", card=card_id)
+        return fail()
+    cost = int(card.get("cost") or 0)
+    if not payload.get("resource_cost_paid") and state.investigator.resources < cost:
+        return False
+    if payload.get("action") == "dynamite" and str(payload.get("location", "")) not in state.locations:
+        return fail()
+    if payload.get("action") == "sneak_attack" and str(payload.get("enemy", "")) not in exhausted_enemies_at_location(state):
+        return fail()
+    return True
+
+
+def pay_play_resource_cost(state: GameState, payload: dict[str, Any]) -> bool:
+    card_id = str(payload.get("card", ""))
+    if card_id not in state.card_instances:
+        return False
+    cost = int(card_data.get_card(state.card_instances[card_id].card_code).get("cost") or 0)
+    if state.investigator.resources < cost:
+        return False
+    state.investigator.resources -= cost
+    payload["resource_cost_paid"] = True
+    payload["resource_cost"] = cost
+    return True
+
+
+def refund_play_resource_cost(state: GameState, payload: dict[str, Any]) -> None:
+    if not payload.get("resource_cost_paid"):
+        return
+    state.investigator.resources += int(payload.get("resource_cost", 0))
+    payload["resource_cost_paid"] = False
+    payload["resource_cost"] = 0
+
+
 def action_designator(action: str) -> str:
     if action == "asset_fight":
         return "fight"
@@ -555,29 +613,45 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
     engage_ready_enemies_at_roland(state, events)
 
 
-def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]], rng: Any = None) -> None:
+def play_card(
+    state: GameState,
+    instance_id: str,
+    events: list[dict[str, Any]],
+    rng: Any = None,
+    *,
+    cost_paid: bool = False,
+    paid_cost: int = 0,
+) -> None:
     in_hand = instance_id in state.investigator.hand
     from_discard = player_cards.can_play_from_discard_with_amulet(state, instance_id)
     if not in_hand and not from_discard:
+        if cost_paid:
+            state.investigator.resources += paid_cost
         return
     instance = state.card_instances[instance_id]
     card = card_data.cards_by_code().get(instance.card_code, {})
     if dissonant_blocks(state, instance.card_code):
+        if cost_paid:
+            state.investigator.resources += paid_cost
         return
     if card.get("type_code") == "asset":
         if not can_enter_play_unique(state, instance.card_code):
             log_event(events, "play_blocked", f"{card.get('name', instance.card_code)} is unique and already in play.", card=instance_id)
+            if cost_paid:
+                state.investigator.resources += paid_cost
             return
         slot_discards = required_slot_discards(state, instance_id)
         if slot_discards:
-            present_slot_discard_decision(state, instance_id, slot_discards)
+            present_slot_discard_decision(state, instance_id, slot_discards, cost_paid=cost_paid, paid_cost=paid_cost)
             return
     cost = int(card.get("cost") or 0)
-    if state.investigator.resources < cost:
+    if not cost_paid and state.investigator.resources < cost:
         return
-    state.investigator.resources -= cost
+    if not cost_paid:
+        state.investigator.resources -= cost
+        paid_cost = cost
     if not player_cards.remove_from_hand_or_discard_for_play(state, instance_id):
-        state.investigator.resources += cost
+        state.investigator.resources += paid_cost
         return
     if card.get("type_code") == "asset":
         instance.zone = "play"
@@ -648,7 +722,14 @@ def required_slot_discards(state: GameState, card_id: str) -> list[str]:
     return []
 
 
-def present_slot_discard_decision(state: GameState, card_id: str, occupants: list[str]) -> None:
+def present_slot_discard_decision(
+    state: GameState,
+    card_id: str,
+    occupants: list[str],
+    *,
+    cost_paid: bool = False,
+    paid_cost: int = 0,
+) -> None:
     state.decision_queue = [
         PendingDecision(
             id="slot-discard-for-play",
@@ -657,7 +738,13 @@ def present_slot_discard_decision(state: GameState, card_id: str, occupants: lis
             options=[
                 DecisionOption(
                     f"Discard {player_cards.card_name(state, occupant)}",
-                    {"kind": "slot_discard", "discard": occupant, "play": card_id},
+                    {
+                        "kind": "slot_discard",
+                        "discard": occupant,
+                        "play": card_id,
+                        "resource_cost_paid": cost_paid,
+                        "resource_cost": paid_cost,
+                    },
                 )
                 for occupant in occupants
             ],
@@ -677,7 +764,13 @@ def resolve_slot_discard(state: GameState, payload: dict[str, Any], events: list
         player_cards.discard_from_threat(state, discard)
         log_event(events, "asset_discarded", f"{name} was discarded for slot capacity.", card=discard)
     if play in state.investigator.hand:
-        play_card(state, play, events)
+        play_card(
+            state,
+            play,
+            events,
+            cost_paid=bool(payload.get("resource_cost_paid")),
+            paid_cost=int(payload.get("resource_cost", 0)),
+        )
     elif not state.decision_queue:
         enforce_slot_capacity(state, events)
 
@@ -1406,11 +1499,15 @@ def resolve_old_book_choice(
 def dynamite_blast(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     card_id = str(payload["card"])
     location_id = str(payload["location"])
-    if not playable_event(state, card_id) or state.investigator.resources < 5:
+    cost_paid = bool(payload.get("resource_cost_paid"))
+    paid_cost = int(payload.get("resource_cost", 0))
+    if not playable_event(state, card_id) or (not cost_paid and state.investigator.resources < 5):
         return
-    state.investigator.resources -= 5
+    if not cost_paid:
+        state.investigator.resources -= 5
+        paid_cost = 5
     if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
-        state.investigator.resources += 5
+        state.investigator.resources += paid_cost
         return
     for enemy_id in list(state.locations[location_id].enemy_ids):
         if enemy_id in state.enemies:
@@ -1674,13 +1771,17 @@ def move_without_engaged_enemies(state: GameState, location_id: str, events: lis
 def sneak_attack(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     card_id = str(payload.get("card", ""))
     enemy_id = str(payload.get("enemy", ""))
-    if not playable_event(state, card_id) or state.investigator.resources < 2:
+    cost_paid = bool(payload.get("resource_cost_paid"))
+    paid_cost = int(payload.get("resource_cost", 0))
+    if not playable_event(state, card_id) or (not cost_paid and state.investigator.resources < 2):
         return
     if enemy_id not in exhausted_enemies_at_location(state):
         return
-    state.investigator.resources -= 2
+    if not cost_paid:
+        state.investigator.resources -= 2
+        paid_cost = 2
     if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
-        state.investigator.resources += 2
+        state.investigator.resources += paid_cost
         return
     damage_enemy(state, events, enemy_id, 2)
     player_cards.place_played_event(state, card_id, events)

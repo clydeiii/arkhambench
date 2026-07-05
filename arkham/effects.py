@@ -355,7 +355,7 @@ def start_damage_assignment(
         "remaining_horror": horror,
         "direct": direct,
         "resume": resume or {},
-        "horror_to_investigator": 0,
+        "assigned": [],
     }
     if resume and resume.get("kind") == "after_attack":
         state.pending_damage["attack_enemy_id"] = resume.get("enemy")
@@ -383,14 +383,16 @@ def present_damage_decision(state: GameState) -> None:
         for target in legal_soak_targets(state):
             instance = state.card_instances[target]
             card = cards.get(instance.card_code, {})
-            if instance.damage < int(card.get("health") or 0):
+            assigned = assigned_damage_count(pending, target, "damage")
+            if instance.damage + assigned < int(card.get("health") or 0):
                 options.append(DecisionOption(f"Assign 1 damage to {card.get('name', target)}", {"kind": "assign_damage", "type": "damage", "target": target}))
     if pending["remaining_horror"] > 0:
         options.append(DecisionOption(f"Assign 1 horror to {state.investigator.name}", {"kind": "assign_damage", "type": "horror", "target": "roland"}))
         for target in legal_soak_targets(state):
             instance = state.card_instances[target]
             card = cards.get(instance.card_code, {})
-            if instance.horror < int(card.get("sanity") or 0):
+            assigned = assigned_damage_count(pending, target, "horror")
+            if instance.horror + assigned < int(card.get("sanity") or 0):
                 options.append(DecisionOption(f"Assign 1 horror to {card.get('name', target)}", {"kind": "assign_damage", "type": "horror", "target": target}))
     # Keep any other queued decisions (e.g. defeat reactions queued when Guard
     # Dog's counter kills the attacker mid-assignment) behind the assignment.
@@ -405,52 +407,46 @@ def present_damage_decision(state: GameState) -> None:
     ] + others
 
 
+def assigned_damage_count(pending: dict[str, Any], target: str, point_type: str) -> int:
+    return sum(
+        1
+        for assignment in pending.get("assigned", [])
+        if assignment.get("target") == target and assignment.get("type") == point_type
+    )
+
+
 def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: Any = None) -> None:
     pending = state.pending_damage
     if pending is None:
         return
     point_type = str(payload["type"])
     target = str(payload["target"])
+    if point_type not in {"damage", "horror"}:
+        return
     if point_type == "damage":
+        if int(pending.get("remaining_damage", 0)) <= 0:
+            return
         pending["remaining_damage"] -= 1
     else:
+        if int(pending.get("remaining_horror", 0)) <= 0:
+            return
         pending["remaining_horror"] -= 1
-    if target == "roland":
-        if point_type == "damage":
-            state.investigator.damage += 1
-        else:
-            state.investigator.horror += 1
-            pending["horror_to_investigator"] = int(pending.get("horror_to_investigator", 0)) + 1
-    else:
-        instance = state.card_instances[target]
-        if point_type == "damage":
-            instance.damage += 1
-            if instance.card_code == "01021" and pending.get("attack_enemy_id"):
-                from .enemies import damage_enemy
-
-                enemy_id = str(pending["attack_enemy_id"])
-                if enemy_id in state.enemies:
-                    damage_enemy(state, events, enemy_id, 1)
-                    log_event(events, "guard_dog_reaction", "Guard Dog dealt 1 damage to the attacking enemy.", enemy=enemy_id)
-        else:
-            instance.horror += 1
+    pending.setdefault("assigned", []).append({"type": point_type, "target": target})
     if target == "roland":
         target_name = state.investigator.name
     else:
         target_card = card_data.cards_by_code().get(state.card_instances[target].card_code, {})
         target_name = str(target_card.get("name", target))
     log_event(events, "damage_assigned", f"Assigned 1 {point_type} to {target_name}.", target=target)
-    destroy_defeated_assets(state, events)
-    check_investigator_defeat(state, events)
-    if state.status != "in_progress":
-        state.pending_damage = None
-        return
     if pending["remaining_damage"] > 0 or pending["remaining_horror"] > 0:
         present_damage_decision(state)
     else:
         state.pending_damage = None
         resume = dict(pending.get("resume", {}))
-        if int(pending.get("horror_to_investigator", 0)) > 0:
+        horror_to_investigator = apply_assigned_damage(state, pending, events)
+        if state.status != "in_progress":
+            return
+        if horror_to_investigator > 0:
             present_after_horror_reaction(state, events)
             if state.decision_queue:
                 if resume.get("kind") == "after_attack":
@@ -467,6 +463,42 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
                 source=str(resume.get("source", "")),
                 rng=rng,
             )
+
+
+def apply_assigned_damage(state: GameState, pending: dict[str, Any], events: list[dict[str, Any]]) -> int:
+    assignments = list(pending.get("assigned", []))
+    horror_to_investigator = 0
+    guard_dog_damage = 0
+    for assignment in assignments:
+        point_type = str(assignment.get("type", ""))
+        target = str(assignment.get("target", ""))
+        if target == "roland":
+            if point_type == "damage":
+                state.investigator.damage += 1
+            elif point_type == "horror":
+                state.investigator.horror += 1
+                horror_to_investigator += 1
+            continue
+        if target not in state.card_instances:
+            continue
+        instance = state.card_instances[target]
+        if point_type == "damage":
+            instance.damage += 1
+            if instance.card_code == "01021" and pending.get("attack_enemy_id"):
+                guard_dog_damage += 1
+        elif point_type == "horror":
+            instance.horror += 1
+    if guard_dog_damage and pending.get("attack_enemy_id"):
+        from .enemies import damage_enemy
+
+        enemy_id = str(pending["attack_enemy_id"])
+        for _ in range(guard_dog_damage):
+            if enemy_id in state.enemies:
+                damage_enemy(state, events, enemy_id, 1)
+                log_event(events, "guard_dog_reaction", "Guard Dog dealt 1 damage to the attacking enemy.", enemy=enemy_id)
+    destroy_defeated_assets(state, events)
+    check_investigator_defeat(state, events)
+    return horror_to_investigator
 
 
 def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> None:

@@ -226,7 +226,7 @@ def discard_from_play(state: GameState, instance_id: str) -> None:
     instance.zone = "discard"
     if instance_id not in state.investigator.discard:
         state.investigator.discard.append(instance_id)
-    if instance.card_code == "01048" and state.phase == "Investigation":
+    if instance.card_code == "01048" and state.phase == "Investigation" and state.turn.action_index == 0:
         state.investigator.actions_remaining = max(0, state.investigator.actions_remaining - 1)
 
 
