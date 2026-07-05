@@ -6,7 +6,7 @@ from typing import Any
 from . import data as card_data
 from .cards import player as player_cards
 from .errors import EngineError
-from .model import GATHERING_FAMILY, CardInstance, DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, CardInstance, DecisionOption, GameState, PendingDecision
 
 
 class RuleEventList(list[dict[str, Any]]):
@@ -183,6 +183,12 @@ def gain_resource(state: GameState, amount: int, events: list[dict[str, Any]]) -
 
 
 def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -> int:
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        if the_midnight_masks.masked_hunter_blocks_clues(state):
+            log_event(events, "clue_discovery_blocked", "The Masked Hunter prevented clue discovery.")
+            return 0
     location = state.locations[state.investigator.location_id]
     count = min(amount, location.clues)
     if count <= 0:
@@ -257,6 +263,12 @@ def resolve_cover_up_choice(state: GameState, payload: dict[str, Any], events: l
 
 
 def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> bool:
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        if the_midnight_masks.masked_hunter_blocks_clues(state):
+            log_event(events, "clue_spend_blocked", "The Masked Hunter prevented spending clues.")
+            return False
     if state.investigator.clues < amount:
         return False
     state.investigator.clues -= amount
@@ -288,6 +300,11 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
         from .scenarios import the_gathering
 
         the_gathering.check_agenda_advance(state, events, rng=rng)
+        return
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.check_agenda_advance(state, events, rng=rng)
         return
     while state.agenda.doom >= state.agenda.threshold and state.status == "in_progress":
         clear_all_doom(state)
@@ -536,6 +553,10 @@ def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> No
         from .scenarios import the_gathering
 
         the_gathering.finalize_result(state, events, outcome="no_resolution", summary=summary)
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.finalize_result(state, events, outcome="R1", resolution="R1", summary=summary)
     log_event(events, "game_end", summary)
 
 

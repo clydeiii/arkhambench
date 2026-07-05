@@ -8,13 +8,13 @@ from . import data as card_data
 from .cards import encounter_cards, player as player_cards
 from .effects import add_player_card_to_hand, advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
 from .log import action_count_text
-from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
+from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, evade_enemy, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
-from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
-SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "backstab", "cunning_distraction", "blinding_light", "parley_lita", "parley_mob", "resign", "pass", "advance_act"}
+SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "backstab", "cunning_distraction", "blinding_light", "parley_lita", "parley_mob", "midnight_parley", "resign", "pass", "advance_act"}
 FREE_ACTIONS = {"fast_ability"}
 NON_ACTIONS = {"advance_act", "pass"}
 
@@ -73,6 +73,10 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     add_threat_action_options(state, options)
     add_lita_parley_option(state, options)
     add_mob_enforcer_options(state, options)
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.add_action_options(state, options)
     add_resign_option(state, options)
     add_fast_options(state, options)
     playable_ids = list(investigator.hand)
@@ -83,7 +87,7 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     for instance_id in playable_ids:
         instance = state.card_instances[instance_id]
         card = card_data.cards_by_code().get(instance.card_code, {})
-        cost = int(card.get("cost") or 0)
+        cost = effective_play_cost(state, instance.card_code)
         from_discard = instance_id not in investigator.hand
         # Two identical copies in hand are the same play — offer it once.
         if (instance.card_code, from_discard) in seen_play_codes:
@@ -237,6 +241,11 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         log_event(events, "study_draw", "The Study's gateway ability drew 3 cards.")
     elif action == "resource":
         gain_resource(state, 1, events)
+    elif action.startswith("midnight_") and state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        if the_midnight_masks.execute_action(state, payload, events, rng):
+            return
     elif action == "play":
         play_card(state, str(payload["card"]), events, rng, cost_paid=bool(payload.get("resource_cost_paid")), paid_cost=int(payload.get("resource_cost", 0)))
     elif action == "asset_fight":
@@ -283,9 +292,14 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         state.investigator.actions_remaining = 0
         log_event(events, "turn_passed", f"{state.investigator.name} ended their turn.")
     elif action == "resign":
-        from .scenarios import the_gathering
+        if state.scenario in MIDNIGHT_MASKS_FAMILY:
+            from .scenarios import the_midnight_masks
 
-        the_gathering.resign(state, events)
+            the_midnight_masks.resign(state, events)
+        else:
+            from .scenarios import the_gathering
+
+            the_gathering.resign(state, events)
 
 
 def unrestricted_actions_available(state: GameState, action: str, payload: dict[str, Any] | None = None) -> int:
@@ -390,6 +404,13 @@ def describe_action(state: GameState, action: str, payload: dict[str, Any]) -> s
         return "Advance act"
     if action == "resign":
         return "Resign"
+    if action == "midnight_cultist_draw":
+        return "Draw from the Cultist deck"
+    if action == "midnight_parley":
+        enemy_id = str(payload.get("enemy", ""))
+        return f"Parley with {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Parley"
+    if action.startswith("midnight_location_"):
+        return "Use location ability"
     return action.replace("_", " ").title()
 
 
@@ -439,7 +460,7 @@ def validate_play_initiation(state: GameState, payload: dict[str, Any], events: 
     if card.get("type_code") == "asset" and not can_enter_play_unique(state, code):
         log_event(events, "play_blocked", f"{card.get('name', code)} is unique and already in play.", card=card_id)
         return fail()
-    cost = int(card.get("cost") or 0)
+    cost = effective_play_cost(state, code)
     if not payload.get("resource_cost_paid") and state.investigator.resources < cost:
         return False
     if payload.get("action") == "dynamite" and str(payload.get("location", "")) not in state.locations:
@@ -453,13 +474,27 @@ def pay_play_resource_cost(state: GameState, payload: dict[str, Any]) -> bool:
     card_id = str(payload.get("card", ""))
     if card_id not in state.card_instances:
         return False
-    cost = int(card_data.get_card(state.card_instances[card_id].card_code).get("cost") or 0)
+    cost = effective_play_cost(state, state.card_instances[card_id].card_code)
     if state.investigator.resources < cost:
         return False
     state.investigator.resources -= cost
     payload["resource_cost_paid"] = True
     payload["resource_cost"] = cost
     return True
+
+
+def effective_play_cost(state: GameState, card_code: str) -> int:
+    card = card_data.get_card(card_code)
+    cost = int(card.get("cost") or 0)
+    if (
+        state.scenario in MIDNIGHT_MASKS_FAMILY
+        and state.investigator.location_id in state.locations
+        and state.locations[state.investigator.location_id].code == "01132"
+        and card.get("type_code") == "asset"
+        and "Ally" in str(card.get("traits", ""))
+    ):
+        return max(0, cost - 2)
+    return cost
 
 
 def refund_play_resource_cost(state: GameState, payload: dict[str, Any]) -> None:
@@ -610,6 +645,10 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
         from .scenarios import the_gathering
 
         the_gathering.after_enter_location(state, events, location_id)
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.after_enter_location(state, events, location_id)
     engage_ready_enemies_at_roland(state, events)
 
 
@@ -936,7 +975,7 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
             instance = state.card_instances[card_id]
             code = instance.card_code
             card = card_data.get_card(code)
-            cost = int(card.get("cost") or 0)
+            cost = effective_play_cost(state, code)
             if state.investigator.resources < cost or dissonant_blocks(state, code):
                 continue
             from_discard = card_id not in state.investigator.hand
@@ -1413,7 +1452,7 @@ def cunning_distraction(state: GameState, payload: dict[str, Any], events: list[
     evaded = []
     for enemy_id in targets:
         if enemy_id in state.enemies and can_be_evaded(state, enemy_id):
-            disengage_enemy(state, events, enemy_id, exhaust=True)
+            evade_enemy(state, events, enemy_id)
             evaded.append(enemy_id)
     if evaded:
         queue_pickpocketing_reaction(state, evaded[0])
@@ -1599,7 +1638,7 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
         if card_id in state.investigator.play_area and state.card_instances[card_id].card_code == "01076":
             if enemy_id in enemies_at_location(state) and not is_elite(state, enemy_id):
                 player_cards.discard_from_play(state, card_id)
-                disengage_enemy(state, events, enemy_id, exhaust=True)
+                evade_enemy(state, events, enemy_id)
                 queue_pickpocketing_reaction(state, enemy_id)
                 log_event(events, "stray_cat", f"Stray Cat automatically evaded {enemy_name(state, enemy_id)}.", enemy=enemy_id)
     elif ability == "skids_action":
@@ -1765,6 +1804,10 @@ def move_without_engaged_enemies(state: GameState, location_id: str, events: lis
         from .scenarios import the_gathering
 
         the_gathering.after_enter_location(state, events, location_id)
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.after_enter_location(state, events, location_id)
     engage_ready_enemies_at_roland(state, events)
 
 

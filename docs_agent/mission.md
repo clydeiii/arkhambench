@@ -1,8 +1,8 @@
 # Your mission
 
 You are playing *Arkham Horror: The Card Game* solo through the `./ahlcg` CLI in this
-repository. The current run tells you which scenario ("The Gathering" or "Return to The
-Gathering") and which investigator you are playing — `./ahlcg state` shows both. Your
+repository. The current run tells you which scenario and investigator you are playing —
+`./ahlcg state` shows both. Your
 goal is to finish the scenario with the **highest score** you can. Score = XP earned
 (victory display + resolution bonuses) − trauma suffered, minimum 0; dying to the agenda
 while still trapped scores 0 (details in `docs_agent/scenario_reference.md`). Your

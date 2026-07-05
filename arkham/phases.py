@@ -7,7 +7,7 @@ from . import actions, encounter
 from .cards import player as player_cards
 from .effects import draw_player_card, gain_resource, log_event
 from .enemies import attack, can_attack_investigator, engage_ready_enemies_at_roland, enemy_name, move_hunters
-from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
 
@@ -66,6 +66,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     from .scenarios import the_gathering
 
                     the_gathering.end_enemy_phase(state, events)
+                elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+                    from .scenarios import the_midnight_masks
+
+                    the_midnight_masks.end_enemy_phase(state, events, rng)
                 if state.decision_queue or state.status != "in_progress":
                     return
                 state.phase = "Upkeep"
@@ -271,6 +275,10 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
     if state.status != "in_progress" or state.decision_queue:
         return
     engage_ready_enemies_at_roland(state, events)
+    if state.status == "in_progress" and not state.decision_queue and state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.end_mythos_phase(state, events, rng)
 
 
 def starting_actions(state: GameState) -> int:

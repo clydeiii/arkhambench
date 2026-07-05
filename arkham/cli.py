@@ -32,9 +32,16 @@ def build_parser() -> argparse.ArgumentParser:
     new = sub.add_parser("new")
     new.add_argument("--seed", type=int, default=1)
     new.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
-    new.add_argument("--scenario", choices=("the_gathering", "return_to_the_gathering"), default="the_gathering")
+    new.add_argument(
+        "--scenario",
+        choices=("the_gathering", "return_to_the_gathering", "the_midnight_masks", "return_to_the_midnight_masks"),
+        default="the_gathering",
+    )
     new.add_argument("--investigator", choices=tuple(card_data.INVESTIGATOR_CODES), default="roland")
     new.add_argument("--deck", default=None)
+    new.add_argument("--house-burned", action="store_true", help="Midnight Masks campaign input: Your House burned down.")
+    new.add_argument("--ghoul-priest-alive", action="store_true", help="Midnight Masks campaign input: Ghoul Priest is still alive.")
+    new.add_argument("--lita-forced-to-find-others", action="store_true", help="Midnight Masks campaign input: Lita was forced to find others.")
     new.add_argument("--run", dest="run", default=None)
     new.add_argument("--notebook", dest="notebook", default=None, help="persistent notebook bound to this run (recorded in meta.json)")
     new.set_defaults(func=cmd_new)
@@ -115,6 +122,9 @@ def cmd_new(args: argparse.Namespace) -> int:
         scenario=args.scenario,
         investigator=args.investigator,
         notebook=args.notebook,
+        house_burned=args.house_burned,
+        ghoul_priest_alive=args.ghoul_priest_alive,
+        lita_forced_to_find_others=args.lita_forced_to_find_others,
     )
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
     print(f"Created run: {run_dir}")

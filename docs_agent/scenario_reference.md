@@ -1,7 +1,7 @@
-# Scenario Reference — Night of the Zealot, Part I
+# Scenario Reference — Night of the Zealot
 
-Public setup information for the scenario you are playing — either **The Gathering** or
-**Return to The Gathering** (`./ahlcg state` shows which). This is the same information a
+Public setup information for the scenario you are playing (`./ahlcg state` shows which).
+This is the same information a
 human player has after performing setup: the contents of the encounter deck are known as a
 pool, but their order and draws are not.
 
@@ -26,7 +26,7 @@ via `./ahlcg card <name>`.
 
 +1, 0, 0, −1, −1, −1, −2, −2, −3, −4, skull ×2, cultist, tablet, auto-fail, elder sign.
 
-Scenario token effects (Easy/Standard — same reference card in both scenarios):
+Scenario token effects (Easy/Standard — The Gathering / Return to The Gathering):
 
 - **Skull:** −X, where X = number of Ghoul enemies at your location.
 - **Cultist:** −1. If you fail, take 1 horror.
@@ -90,10 +90,66 @@ change (scenario card *Return to The Gathering*):
   beyond them (worth Victory points) exist only behind the Return versions.
 - Ghoul Priest and Lita Chantler are set aside, exactly as in The Gathering.
 
+## The Midnight Masks — public setup
+
+You begin in **Your House** if it is still standing, or **Rivertown** if it burned down.
+Your objective is to find as many unique Cultist enemies as possible and add them to the
+victory display. There is a separate, hidden **Cultist deck** of five named cultists.
+The act ability costs one action and 2 clues: draw the top Cultist-deck card and spawn it
+at its printed location. Named cultists can usually be handled by fighting or by a printed
+route:
+
+- Herman Collins: Parley by discarding 4 cards from hand.
+- Peter Warren: Parley by spending 2 clues.
+- Victoria Devereux: Parley by spending 5 resources.
+- Ruth Turner: evade her to add her to the victory display.
+- "Wolf-Man" Drew: fight him; he heals 1 damage when he attacks.
+
+Agenda 1 and agenda 2 both offer **Resign**. Resigning ends at Resolution 1 with the
+information gathered so far. Doom on enemies counts toward agenda thresholds; agenda
+advancement clears doom from every card in play. If agenda 2 advances, it is past
+midnight and the scenario ends at Resolution 2.
+
+The original encounter deck has 21 cards: Hunting Shadow ×3, False Lead ×2, Acolyte ×3,
+Wizard of the Order ×1, Mysterious Chanting ×2, Hunting Nightgaunt ×2, On Wings of
+Darkness ×2, Crypt Chill ×2, Obscuring Fog ×2, and Locked Door ×2. Ghoul Priest may also
+be shuffled in from campaign state.
+
+Scenario token effects (Easy/Standard):
+
+- **Skull:** −X, where X is the highest doom on a Cultist enemy in play.
+- **Cultist:** −2; place 1 doom on the nearest Cultist enemy.
+- **Tablet:** −3; if you fail, place 1 of your clues on your location.
+
+Hard/Expert changes: Skull is −total doom in play; Cultist places 1 doom on each Cultist
+enemy, or reveals another token if none are in play; Tablet is −4 and drops all your
+clues on failure.
+
+## Return to The Midnight Masks — differences
+
+The Return setup keeps a 5-card Cultist deck, but starts from the five core cultists plus
+Jeremiah Pierce, Billy Cooper, and Alma Hill, then removes three at random unseen. Agenda
+1 is randomly either The Masked Hunter or Narogath on the reverse side. Easttown,
+Northside, Miskatonic University, and Rivertown are each randomly the original or Return
+version; Southside and Downtown are randomized as in the original scenario.
+
+The encounter deck has 23 cards: Hunting Shadow ×3, False Lead ×2, Disciple of the
+Devourer ×3, Corpse-Taker ×1, Mask of Umordhoth ×2, Hunting Nightgaunt ×2, On Wings of
+Darkness ×2, Crypt Chill ×2, Obscuring Fog ×2, Locked Door ×2, and Masked Horrors ×2.
+
+Return named cultist routes:
+
+- Jeremiah Pierce: Parley to add him to victory, then test Willpower (4); failed points
+  place doom on the agenda.
+- Billy Cooper: add him to victory after a Monster enemy is defeated at his location.
+- Alma Hill: Parley to draw and resolve the top 3 encounter cards, then add her to
+  victory.
+
 ## Scoring (both scenarios)
 
 At game end you earn experience (XP) = total Victory X in the victory display (defeated
-Victory enemies; revealed, clueless Victory locations) + any resolution bonuses.
+Victory enemies; revealed, clueless Victory locations) + any resolution bonuses. The
+Midnight Masks has no resolution XP bonus.
 
 **Benchmark score = XP − trauma suffered** (minimum 0).
 

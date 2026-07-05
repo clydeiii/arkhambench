@@ -15,7 +15,7 @@ class ScenarioDef:
     resolve_choice: Callable[..., None]
 
 
-from . import the_gathering
+from . import the_gathering, the_midnight_masks
 
 
 SCENARIOS: dict[str, ScenarioDef] = {
@@ -31,5 +31,15 @@ SCENARIOS: dict[str, ScenarioDef] = {
         id="return_to_the_gathering",
         build_state=the_gathering.build_return_state,
         resolve_choice=the_gathering.resolve_scenario_choice,
+    ),
+    "the_midnight_masks": ScenarioDef(
+        id="the_midnight_masks",
+        build_state=the_midnight_masks.build_state,
+        resolve_choice=the_midnight_masks.resolve_scenario_choice,
+    ),
+    "return_to_the_midnight_masks": ScenarioDef(
+        id="return_to_the_midnight_masks",
+        build_state=the_midnight_masks.build_return_state,
+        resolve_choice=the_midnight_masks.resolve_scenario_choice,
     ),
 }

@@ -7,7 +7,7 @@ from typing import Any
 from . import data as card_data
 from .cards import player as player_cards
 from .effects import discover_clue, log_event, place_doom, start_damage_assignment
-from .model import GATHERING_FAMILY, DecisionOption, EnemyInstance, GameState, PendingDecision
+from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, EnemyInstance, GameState, PendingDecision
 
 
 def enemy_card(state: GameState, enemy_id: str) -> dict[str, Any]:
@@ -23,7 +23,14 @@ def is_hunter(state: GameState, enemy_id: str) -> bool:
 
 
 def has_retaliate(state: GameState, enemy_id: str) -> bool:
-    return "Retaliate" in str(enemy_card(state, enemy_id).get("text", ""))
+    if "Retaliate" in str(enemy_card(state, enemy_id).get("text", "")):
+        return True
+    enemy = state.enemies[enemy_id]
+    if card_data.get_card(enemy.card_code).get("is_unique") and any(
+        state.card_instances[attachment].card_code == "50043" for attachment in enemy.attachments
+    ):
+        return True
+    return False
 
 
 def is_elite(state: GameState, enemy_id: str) -> bool:
@@ -45,7 +52,24 @@ def can_be_evaded(state: GameState, enemy_id: str) -> bool:
 
 
 def enemy_health(state: GameState, enemy_id: str) -> int:
-    return int(enemy_card(state, enemy_id).get("enemy_health") or enemy_card(state, enemy_id).get("health") or 1)
+    code = state.enemies[enemy_id].card_code
+    if code == "01121b":
+        base = 6
+    elif code == "50026b":
+        base = 7
+    else:
+        base = int(enemy_card(state, enemy_id).get("enemy_health") or enemy_card(state, enemy_id).get("health") or 1)
+    masks = sum(1 for attachment in state.enemies[enemy_id].attachments if state.card_instances[attachment].card_code == "50043")
+    return base + 2 * masks
+
+
+def is_aloof(state: GameState, enemy_id: str) -> bool:
+    if "Aloof" in str(enemy_card(state, enemy_id).get("text", "")):
+        return True
+    enemy = state.enemies[enemy_id]
+    if card_data.get_card(enemy.card_code).get("is_unique"):
+        return False
+    return any(state.card_instances[attachment].card_code == "50043" for attachment in enemy.attachments)
 
 
 def enemy_damage_horror(state: GameState, enemy_id: str) -> tuple[int, int]:
@@ -73,7 +97,7 @@ def spawn_enemy(
     instance.zone = "enemy"
     state.locations[target].enemy_ids.append(instance_id)
     log_event(events, "enemy_spawned", f"{enemy_name(state, instance_id)} spawned at {state.locations[target].name}.", enemy=instance_id)
-    if engaged is True or (engaged is None and target == state.investigator.location_id and not enemy.exhausted):
+    if engaged is True or (engaged is None and target == state.investigator.location_id and not enemy.exhausted and not is_aloof(state, instance_id)):
         engage_enemy(state, events, instance_id)
     return instance_id
 
@@ -98,11 +122,21 @@ def disengage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: st
     log_event(events, "enemy_disengaged", f"{enemy_name(state, enemy_id)} disengaged.", enemy=enemy_id)
 
 
+def evade_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
+    if enemy_id not in state.enemies or not can_be_evaded(state, enemy_id):
+        return
+    disengage_enemy(state, events, enemy_id, exhaust=True)
+    if state.scenario in MIDNIGHT_MASKS_FAMILY and enemy_id in state.enemies:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.after_enemy_evaded(state, events, enemy_id)
+
+
 def engage_ready_enemies_at_roland(state: GameState, events: list[dict[str, Any]]) -> None:
     location = state.locations[state.investigator.location_id]
     for enemy_id in sorted(location.enemy_ids):
         enemy = state.enemies[enemy_id]
-        if enemy.engaged_with is None and not enemy.exhausted:
+        if enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id):
             engage_enemy(state, events, enemy_id)
 
 
@@ -113,7 +147,7 @@ def move_enemy_to(state: GameState, events: list[dict[str, Any]], enemy_id: str,
     enemy.location_id = location_id
     state.locations[location_id].enemy_ids.append(enemy_id)
     log_event(events, "enemy_moved", f"{enemy_name(state, enemy_id)} moved to {state.locations[location_id].name}.", enemy=enemy_id)
-    if location_id == state.investigator.location_id and enemy.engaged_with is None and not enemy.exhausted:
+    if location_id == state.investigator.location_id and enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id):
         engage_enemy(state, events, enemy_id)
 
 
@@ -247,6 +281,10 @@ def resolve_attack(
         return
     damage, horror = enemy_damage_horror(state, enemy_id)
     log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked {state.investigator.name}.", enemy=enemy_id, source=source)
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.after_enemy_attacks(state, events, enemy_id)
     after_resume = {"kind": "after_attack", "enemy": enemy_id, "source": source, "resume": resume or {}}
     start_damage_assignment(
         state,
@@ -352,6 +390,7 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         return
     card = enemy_card(state, enemy_id)
     enemy = state.enemies.pop(enemy_id)
+    state.limits["last_defeated_enemy_location"] = enemy.location_id
     if enemy.location_id in state.locations and enemy_id in state.locations[enemy.location_id].enemy_ids:
         state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
     if enemy_id in state.investigator.engaged_enemies:
@@ -367,6 +406,11 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         from .scenarios import the_gathering
 
         if the_gathering.after_enemy_defeated(state, events, enemy_id):
+            return
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        if the_midnight_masks.after_enemy_defeated(state, events, enemy_id):
             return
     present_enemy_defeat_reactions(state, events, enemy_id)
 

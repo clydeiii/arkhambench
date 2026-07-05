@@ -291,6 +291,8 @@ def assert_unique_cards(state, *, fail=None) -> None:
             add(card_id, zone_name)
     for test_card in (state.active_skill_test or {}).get("committed", []):
         add(test_card, "committed")
+    for cultist_id in state.limits.get("cultist_deck", []):
+        add(str(cultist_id), "cultist_deck")
     played_event = (state.active_skill_test or {}).get("played_event")
     if played_event:
         add(str(played_event), "limbo")
@@ -300,7 +302,7 @@ def assert_unique_cards(state, *, fail=None) -> None:
         for attachment in location.attached_instance_ids:
             add(attachment, f"attachment:{location.id}")
     for card_id, instance in state.card_instances.items():
-        if instance.zone in {"set_aside", "removed", "aside"}:
+        if instance.zone in {"set_aside", "removed", "removed_unseen", "aside"}:
             seen.setdefault(card_id, instance.zone)
     missing = set(state.card_instances) - set(seen)
     allowed_missing = {

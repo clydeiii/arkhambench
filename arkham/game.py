@@ -50,6 +50,9 @@ class Game:
         scenario: str = "the_gathering",
         investigator: str = "roland",
         notebook: str | Path | None = None,
+        house_burned: bool = False,
+        ghoul_priest_alive: bool = False,
+        lita_forced_to_find_others: bool = False,
     ) -> "Game":
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
@@ -63,12 +66,21 @@ class Game:
 
         if scenario not in SCENARIOS:
             raise EngineError(f"unknown scenario: {scenario}")
-        state = SCENARIOS[scenario].build_state(
-            difficulty=difficulty,
-            rng=rng,
-            deck_path=deck_path,
-            investigator_slug=investigator,
-        )
+        build_kwargs: dict[str, Any] = {
+            "difficulty": difficulty,
+            "rng": rng,
+            "deck_path": deck_path,
+            "investigator_slug": investigator,
+        }
+        if scenario in {"the_midnight_masks", "return_to_the_midnight_masks"}:
+            build_kwargs.update(
+                {
+                    "house_burned": house_burned,
+                    "ghoul_priest_alive": ghoul_priest_alive,
+                    "lita_forced_to_find_others": lita_forced_to_find_others,
+                }
+            )
+        state = SCENARIOS[scenario].build_state(**build_kwargs)
         game = cls(run_path, state, rng)
         game._initialize_files(
             seed=seed,

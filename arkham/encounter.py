@@ -110,6 +110,11 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
     card = card_data.cards_by_code().get(instance.card_code, {})
     code = instance.card_code
     type_code = card.get("type_code")
+    if state.scenario in {"the_midnight_masks", "return_to_the_midnight_masks"}:
+        from .scenarios import the_midnight_masks
+
+        if the_midnight_masks.encounter_revelation(state, rng, events, instance_id):
+            return
     if type_code == "enemy":
         if code == "01118":
             ensure_return_spawn_location(state, events, "attic")

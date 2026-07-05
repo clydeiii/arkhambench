@@ -16,7 +16,7 @@ from .effects import (
     start_damage_assignment,
 )
 from .enemies import damage_enemy, disengage_enemy, has_retaliate, attack
-from .model import GATHERING_FAMILY, DecisionOption, GameState, PendingDecision
+from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
 
@@ -142,7 +142,16 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
     modifier, autofail = token_modifier(state, token)
     extra_tokens: list[str] = []
     current = token
-    while state.scenario in GATHERING_FAMILY and state.difficulty in {"hard", "expert"} and current == "cultist":
+    while (
+        state.scenario in GATHERING_FAMILY
+        and state.difficulty in {"hard", "expert"}
+        and current == "cultist"
+    ) or (
+        state.scenario in MIDNIGHT_MASKS_FAMILY
+        and state.difficulty in {"hard", "expert"}
+        and current == "cultist"
+        and not midnight_cultists_in_play(state)
+    ):
         extra = draw_token(state, rng)
         extra_modifier, extra_autofail = token_modifier(state, extra)
         modifier += extra_modifier
@@ -427,14 +436,18 @@ def apply_callback(
     elif kind == "evade":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
-            disengage_enemy(state, events, enemy_id, exhaust=True)
+            from .enemies import evade_enemy
+
+            evade_enemy(state, events, enemy_id)
             from . import actions
 
             actions.queue_pickpocketing_reaction(state, enemy_id)
     elif kind == "blinding_light":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
-            disengage_enemy(state, events, enemy_id, exhaust=True)
+            from .enemies import evade_enemy
+
+            evade_enemy(state, events, enemy_id)
             from . import actions
 
             actions.queue_pickpocketing_reaction(state, enemy_id)
@@ -524,6 +537,26 @@ def apply_callback(
         if success:
             door = str(callback.get("door"))
             discard_location_attachment(state, events, door)
+    elif kind == "false_lead":
+        if not success and margin > 0:
+            from .scenarios import the_midnight_masks
+
+            the_midnight_masks.false_lead_aftermath(state, events, margin)
+    elif kind == "on_wings":
+        if state.scenario in MIDNIGHT_MASKS_FAMILY:
+            from .scenarios import the_midnight_masks
+
+            the_midnight_masks.on_wings_aftermath(state, events, failed=not success)
+    elif kind == "jeremiah_doom":
+        if not success:
+            from .scenarios import the_midnight_masks
+
+            the_midnight_masks.jeremiah_doom(state, events, margin, rng)
+    elif kind == "graveyard":
+        if not success:
+            from .scenarios import the_midnight_masks
+
+            the_midnight_masks.graveyard_failure(state)
     elif kind == "lita_parley":
         if success:
             lita = str(callback.get("lita"))
@@ -765,11 +798,24 @@ def apply_elder_sign_success(
 
 
 def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
-    if state.scenario not in GATHERING_FAMILY or state.status != "in_progress" or state.decision_queue:
+    if state.status != "in_progress" or state.decision_queue:
         return
-    from .scenarios import the_gathering
+    if state.scenario in GATHERING_FAMILY:
+        from .scenarios import the_gathering
 
-    the_gathering.apply_token_aftermath(state, events, result, rng)
+        the_gathering.apply_token_aftermath(state, events, result, rng)
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.apply_token_aftermath(state, events, result, rng)
+
+
+def midnight_cultists_in_play(state: GameState) -> bool:
+    if state.scenario not in MIDNIGHT_MASKS_FAMILY:
+        return False
+    from .scenarios import the_midnight_masks
+
+    return bool(the_midnight_masks.cultist_enemy_ids(state))
 
 
 def discard_obscuring_fog_at_roland(state: GameState, events: list[dict[str, Any]]) -> None:
