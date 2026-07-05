@@ -230,13 +230,25 @@ def discard_from_play(state: GameState, instance_id: str) -> None:
         state.investigator.actions_remaining = max(0, state.investigator.actions_remaining - 1)
 
 
+def discard_to_owner_pile(state: GameState, instance_id: str) -> None:
+    instance = state.card_instances[instance_id]
+    card = card_data.get_card(instance.card_code)
+    subtype = str(card.get("subtype_code", ""))
+    encounter_owned = card.get("type_code") in {"enemy", "treachery"} and subtype not in {"weakness", "basicweakness"}
+    if encounter_owned:
+        instance.zone = "encounter_discard"
+        if instance_id not in state.encounter_discard:
+            state.encounter_discard.append(instance_id)
+    else:
+        instance.zone = "discard"
+        if instance_id not in state.investigator.discard:
+            state.investigator.discard.append(instance_id)
+
+
 def discard_from_threat(state: GameState, instance_id: str) -> None:
     if instance_id in state.investigator.threat_area:
         state.investigator.threat_area.remove(instance_id)
-    instance = state.card_instances[instance_id]
-    instance.zone = "discard"
-    if instance_id not in state.investigator.discard:
-        state.investigator.discard.append(instance_id)
+    discard_to_owner_pile(state, instance_id)
 
 
 def discard_from_hand(state: GameState, instance_id: str) -> None:

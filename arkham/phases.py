@@ -26,6 +26,17 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
         if deferred:
             if deferred.get("kind") == "aoo_order":
                 actions.continue_aoo_order(state, events, dict(deferred), rng)
+            elif deferred.get("kind") == "after_attack":
+                from .enemies import after_attack
+
+                after_attack(
+                    state,
+                    events,
+                    str(deferred.get("enemy", "")),
+                    dict(deferred.get("resume", {})),
+                    source=str(deferred.get("source", "")),
+                    rng=rng,
+                )
             else:
                 actions.execute(state, dict(deferred.get("payload", {})), events, rng)
             continue
@@ -33,16 +44,18 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             if state.investigator.actions_remaining > 0:
                 actions.present_action_decision(state)
             else:
-                if resolve_dark_memory_end_turn(state, events):
-                    return
-                if start_frozen_end_turn_test(state, events):
-                    return
                 # The RR timing chart keeps one player window open after the
                 # LAST action, still during the turn (this is how Skids legally
                 # buys a 4th action, and where an objective can be triggered).
                 # Only "end your turn" forced effects (Return Bathroom) skip it.
                 forced_end = bool(state.limits.get(f"turn_forcibly_ended:{state.round}"))
-                if present_fast_window(state, "inv_end", during_turn=not forced_end):
+                if not forced_end and present_fast_window(state, "inv_end", during_turn=True):
+                    return
+                if state.investigator.actions_remaining > 0:
+                    continue
+                if resolve_dark_memory_end_turn(state, events):
+                    return
+                if start_frozen_end_turn_test(state, events):
                     return
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")

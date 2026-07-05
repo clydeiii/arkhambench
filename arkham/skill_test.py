@@ -7,6 +7,7 @@ from . import data as card_data
 from .cards import encounter_cards, player as player_cards
 from .chaos import draw_token, token_modifier
 from .effects import (
+    add_player_card_to_hand,
     discard_asset_choice,
     discover_clue,
     draw_player_card,
@@ -358,9 +359,13 @@ def finalize_resolution(
     for instance_id in test["committed"]:
         code = state.card_instances[instance_id].card_code
         if success and code == "01053" and margin >= 3:
-            state.investigator.hand.append(instance_id)
-            state.card_instances[instance_id].zone = "hand"
-            log_event(events, "opportunist_returned", "Opportunist returned to hand.", card=instance_id)
+            add_player_card_to_hand(
+                state,
+                events,
+                instance_id,
+                event_type="opportunist_returned",
+                message="Opportunist returned to hand.",
+            )
         else:
             state.investigator.discard.append(instance_id)
             state.card_instances[instance_id].zone = "discard"
@@ -657,9 +662,13 @@ def resolve_scavenging_reaction(state: GameState, payload: dict[str, Any], event
         return
     state.card_instances[asset].exhausted = True
     state.investigator.discard.remove(card_id)
-    state.investigator.hand.append(card_id)
-    state.card_instances[card_id].zone = "hand"
-    log_event(events, "scavenging", f"Scavenging returned {player_cards.card_name(state, card_id)} to hand.", card=card_id)
+    add_player_card_to_hand(
+        state,
+        events,
+        card_id,
+        event_type="scavenging",
+        message=f"Scavenging returned {player_cards.card_name(state, card_id)} to hand.",
+    )
 
 
 def present_survival_instinct_decision(state: GameState) -> None:
@@ -777,7 +786,5 @@ def discard_location_attachment(state: GameState, events: list[dict[str, Any]], 
         if instance_id in location.attached_instance_ids:
             location.attached_instance_ids.remove(instance_id)
             break
-    state.card_instances[instance_id].zone = "encounter_discard"
-    if instance_id not in state.encounter_discard:
-        state.encounter_discard.append(instance_id)
+    player_cards.discard_to_owner_pile(state, instance_id)
     log_event(events, "attachment_discarded", f"{card_data.get_card(state.card_instances[instance_id].card_code)['name']} was discarded.", card=instance_id)

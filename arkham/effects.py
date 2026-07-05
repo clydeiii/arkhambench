@@ -53,6 +53,22 @@ def draw_player_card(state: GameState, events: list[dict[str, Any]], rng: Any = 
     return instance_id
 
 
+def add_player_card_to_hand(
+    state: GameState,
+    events: list[dict[str, Any]],
+    instance_id: str,
+    *,
+    event_type: str = "card_added_to_hand",
+    message: str | None = None,
+) -> None:
+    if instance_id not in state.investigator.hand:
+        state.investigator.hand.append(instance_id)
+    state.card_instances[instance_id].zone = "hand"
+    if message is not None:
+        log_event(events, event_type, message, card=instance_id)
+    resolve_player_weakness_draw(state, events, instance_id)
+
+
 def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]], instance_id: str) -> None:
     instance = state.card_instances[instance_id]
     if instance.card_code == "01007":
@@ -433,11 +449,13 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         present_damage_decision(state)
     else:
         state.pending_damage = None
+        resume = dict(pending.get("resume", {}))
         if int(pending.get("horror_to_investigator", 0)) > 0:
             present_after_horror_reaction(state, events)
             if state.decision_queue:
+                if resume.get("kind") == "after_attack":
+                    state.limits["deferred_resume"] = resume
                 return
-        resume = dict(pending.get("resume", {}))
         if resume.get("kind") == "after_attack":
             from .enemies import after_attack
 

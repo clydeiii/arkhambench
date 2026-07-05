@@ -6,7 +6,7 @@ from typing import Any
 
 from . import data as card_data
 from .cards import encounter_cards, player as player_cards
-from .effects import advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
+from .effects import add_player_card_to_hand, advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
 from .log import action_count_text
 from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
@@ -114,7 +114,11 @@ def affordable_actions(state: GameState, options: list[DecisionOption]) -> list[
         action = str(payload.get("action", ""))
         if only_daisy_tome_action_remains(state) and action not in FREE_ACTIONS | NON_ACTIONS and not is_tome_action(state, payload):
             continue
-        if action in FREE_ACTIONS or action in NON_ACTIONS or effective_action_cost(state, action) <= state.investigator.actions_remaining:
+        cost_needed = effective_action_cost(state, action)
+        if action in FREE_ACTIONS or action in NON_ACTIONS or (
+            cost_needed <= state.investigator.actions_remaining
+            and (cost_needed <= 1 or cost_needed <= unrestricted_actions_available(state, action, payload))
+        ):
             affordable.append(option)
     return affordable
 
@@ -197,8 +201,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         if not payload.get("cost_paid"):
             spend_action(state, events, action, payload)
         if not payload.get("skip_aoo"):
-            attacks_of_opportunity(state, events, action, payload, rng=rng)
-            if state.decision_queue or state.status != "in_progress":
+            if attacks_of_opportunity(state, events, action, payload, rng=rng):
                 return
     if action == "investigate":
         loc = state.locations[state.investigator.location_id]
@@ -280,10 +283,25 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         the_gathering.resign(state, events)
 
 
+def unrestricted_actions_available(state: GameState, action: str, payload: dict[str, Any] | None = None) -> int:
+    """Actions usable for THIS action: Daisy's unused bonus action is reserved
+    for Tome ability activations and cannot help pay a non-Tome cost."""
+    available = state.investigator.actions_remaining
+    if (
+        state.investigator.card_code == "01002"
+        and not state.limits.get(f"daisy_tome:{state.round}")
+        and not is_tome_action(state, payload or {})
+    ):
+        available -= 1
+    return available
+
+
 def spend_action(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any] | None = None) -> None:
     cost = effective_action_cost(state, action)
     if cost > state.investigator.actions_remaining:
         raise EngineError(f"cannot spend {cost} actions with only {state.investigator.actions_remaining} remaining")
+    if cost > 1 and cost > unrestricted_actions_available(state, action, payload):
+        raise EngineError("not enough unrestricted actions (Daisy's bonus action is Tome-only)")
     mark_action_cost_paid(state, action, cost)
     state.investigator.actions_remaining -= cost
     state.turn.action_index += cost
@@ -421,9 +439,9 @@ def is_tome_action(state: GameState, payload: dict[str, Any]) -> bool:
     return player_cards.is_tome_asset_code(state.card_instances[asset_id].card_code)
 
 
-def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> None:
+def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> bool:
     if action in SAFE_FROM_AOO:
-        return
+        return False
     attackers = [
         enemy_id
         for enemy_id in list(state.investigator.engaged_enemies)
@@ -431,14 +449,15 @@ def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], actio
         and can_attack_investigator(state, enemy_id)
     ]
     if not attackers:
-        return
+        return False
     resume_payload = dict(payload)
     resume_payload["skip_aoo"] = True
     resume_payload["cost_paid"] = True
     if len(attackers) > 1:
         present_aoo_order_decision(state, attackers, resume_payload)
-        return
+        return True
     resolve_ordered_aoo(state, events, attackers[0], [], resume_payload, rng=rng)
+    return True
 
 
 def present_aoo_order_decision(state: GameState, attackers: list[str], action_payload: dict[str, Any]) -> None:
@@ -475,6 +494,17 @@ def resolve_ordered_aoo(
     rng: Any = None,
 ) -> None:
     remaining = [eid for eid in remaining if eid in state.enemies and not state.enemies[eid].exhausted]
+    if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
+        if remaining:
+            continue_aoo_order(
+                state,
+                events,
+                {"kind": "aoo_order", "remaining": remaining, "action_payload": dict(action_payload)},
+                rng,
+            )
+        else:
+            execute(state, dict(action_payload), events, rng)
+        return
     resume: dict[str, Any] = {}
     if aoo_needs_resume(state, enemy_id):
         if remaining:
@@ -556,7 +586,7 @@ def play_card(state: GameState, instance_id: str, events: list[dict[str, Any]], 
         if instance.card_code == "01048" and state.phase == "Investigation":
             state.investigator.actions_remaining += 1
         if instance.card_code == "01032":
-            research_librarian_search(state, events)
+            research_librarian_search(state, events, rng)
         elif instance.card_code == "01063":
             instance.doom += 1
             log_event(events, "doom_placed", "Placed 1 doom on Arcane Initiate.", card=instance_id)
@@ -1317,8 +1347,7 @@ def parley_mob_enforcer(state: GameState, payload: dict[str, Any], events: list[
         state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
     if enemy_id in state.investigator.engaged_enemies:
         state.investigator.engaged_enemies.remove(enemy_id)
-    state.card_instances[enemy_id].zone = "discard"
-    state.investigator.discard.append(enemy_id)
+    player_cards.discard_to_owner_pile(state, enemy_id)
     log_event(events, "enemy_discarded", "Mob Enforcer was discarded after parley.", enemy=enemy_id)
 
 
@@ -1361,14 +1390,17 @@ def resolve_old_book_choice(
         return
     for card_id in candidates:
         state.investigator.deck.remove(card_id)
-    state.investigator.hand.append(chosen)
-    state.card_instances[chosen].zone = "hand"
     rest = [card_id for card_id in candidates if card_id != chosen]
     state.investigator.deck.extend(rest)
     rng.shuffle(state.investigator.deck)
     card = card_data.get_card(state.card_instances[chosen].card_code)
-    log_event(events, "card_drawn", f"{state.investigator.name} drew {card['name']}.", card=chosen)
-    resolve_player_weakness_draw(state, events, chosen)
+    add_player_card_to_hand(
+        state,
+        events,
+        chosen,
+        event_type="card_drawn",
+        message=f"{state.investigator.name} drew {card['name']}.",
+    )
 
 
 def dynamite_blast(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -1569,10 +1601,13 @@ def resolve_arcane_initiate_choice(
     for card_id in candidates:
         state.investigator.deck.remove(card_id)
     if chosen:
-        state.investigator.hand.append(chosen)
-        state.card_instances[chosen].zone = "hand"
-        log_event(events, "card_drawn", f"Arcane Initiate drew {player_cards.card_name(state, chosen)}.", card=chosen)
-        resolve_player_weakness_draw(state, events, chosen)
+        add_player_card_to_hand(
+            state,
+            events,
+            chosen,
+            event_type="card_drawn",
+            message=f"Arcane Initiate drew {player_cards.card_name(state, chosen)}.",
+        )
     rest = [card_id for card_id in candidates if card_id != chosen]
     state.investigator.deck.extend(rest)
     rng.shuffle(state.investigator.deck)
@@ -1652,16 +1687,64 @@ def sneak_attack(state: GameState, payload: dict[str, Any], events: list[dict[st
     log_event(events, "event_played", "Played Sneak Attack.", card=card_id, enemy=enemy_id)
 
 
-def research_librarian_search(state: GameState, events: list[dict[str, Any]]) -> None:
+def research_librarian_search(state: GameState, events: list[dict[str, Any]], rng: Any = None) -> None:
     cards = card_data.cards_by_code()
-    for instance_id in list(state.investigator.deck):
+    found: dict[tuple[str, str], str] = {}
+    for instance_id in state.investigator.deck:
         card = cards[state.card_instances[instance_id].card_code]
         if "Tome" in str(card.get("traits", "")) and card.get("type_code") == "asset":
-            state.investigator.deck.remove(instance_id)
-            state.investigator.hand.append(instance_id)
-            state.card_instances[instance_id].zone = "hand"
-            log_event(events, "research_librarian", f"Research Librarian found {card.get('name')}.", card=instance_id)
-            break
+            key = (str(card.get("name", state.card_instances[instance_id].card_code)), state.card_instances[instance_id].card_code)
+            found.setdefault(key, instance_id)
+    if not found:
+        if rng is not None:
+            rng.shuffle(state.investigator.deck)
+        log_event(events, "research_librarian", "Research Librarian found no Tome assets.")
+        return
+    options = [
+        DecisionOption(
+            f"Add {name} to hand",
+            {"kind": "research_librarian_choice", "choice": "take", "card": instance_id, "candidates": list(found.values())},
+        )
+        for (name, _code), instance_id in found.items()
+    ]
+    options.append(
+        DecisionOption(
+            "Decline",
+            {"kind": "research_librarian_choice", "choice": "decline", "candidates": list(found.values())},
+        )
+    )
+    state.decision_queue.append(
+        PendingDecision(
+            id="research-librarian-search",
+            kind="research_librarian",
+            prompt="Use Research Librarian to search for a Tome asset?",
+            options=options,
+        )
+    )
+
+
+def resolve_research_librarian_choice(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: Any,
+) -> None:
+    candidates = [str(card_id) for card_id in payload.get("candidates", [])]
+    chosen = str(payload.get("card", ""))
+    if payload.get("choice") == "take":
+        if chosen not in candidates or chosen not in state.investigator.deck:
+            return
+        state.investigator.deck.remove(chosen)
+        add_player_card_to_hand(
+            state,
+            events,
+            chosen,
+            event_type="research_librarian",
+            message=f"Research Librarian found {player_cards.card_name(state, chosen)}.",
+        )
+    else:
+        log_event(events, "research_librarian", "Research Librarian declined to take a Tome.")
+    rng.shuffle(state.investigator.deck)
 
 
 def discard_barricades_at_location(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:

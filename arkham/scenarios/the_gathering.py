@@ -339,18 +339,20 @@ def draw_opening_hand_without_weaknesses(
 def present_mulligan_decision(state: GameState) -> None:
     cards = card_data.cards_by_code()
     available = set(state.limits.get("mulligan_available", state.investigator.hand))
-    options = [DecisionOption("Keep opening hand", {"kind": "scenario", "choice": "keep_hand"})]
+    selected = set(state.limits.get("mulligan_selected", []))
+    options = [DecisionOption("Keep hand and draw replacements", {"kind": "scenario", "choice": "keep_hand"})]
     for card_id in state.investigator.hand:
         if card_id not in available:
             continue
         card = cards[state.card_instances[card_id].card_code]
-        options.append(DecisionOption(f"Mulligan {card.get('name', card_id)}", {"kind": "scenario", "choice": "mulligan_card", "card": card_id}))
+        label = "Keep" if card_id in selected else "Set aside"
+        options.append(DecisionOption(f"{label} {card.get('name', card_id)}", {"kind": "scenario", "choice": "toggle_mulligan_card", "card": card_id}))
     hand_names = ", ".join(cards[state.card_instances[cid].card_code].get("name", cid) for cid in state.investigator.hand)
     state.decision_queue = [
         PendingDecision(
             id="opening-mulligan",
             kind="scenario",
-            prompt=f"Opening hand: {hand_names}. Choose cards to mulligan (one at a time; weaknesses are never dealt into your opening hand), then keep.",
+            prompt=f"Opening hand: {hand_names}. Set aside any number of cards, then draw replacements together.",
             options=options,
         )
     ]
@@ -379,12 +381,12 @@ def resolve_scenario_choice(
         from ..effects import log_event
 
         state.limits.pop("mulligan_available", None)
-        aside = state.limits.pop("mulliganed_aside", [])
-        for aside_id in aside:
-            state.card_instances[str(aside_id)].zone = "player_deck"
-            state.investigator.deck.append(str(aside_id))
-        if aside:
-            rng.shuffle(state.investigator.deck)
+        selected = [str(card_id) for card_id in state.limits.pop("mulligan_selected", [])]
+        drawn = resolve_mulligan_replacements(state, selected, rng)
+        if selected:
+            out_names = ", ".join(card_name(state, card_id) for card_id in selected)
+            in_names = ", ".join(card_name(state, card_id) for card_id in drawn) if drawn else "nothing"
+            log_event(events, "mulligan", f"Mulliganed {out_names}; drew {in_names}.", out=selected, drew=drawn)
         final_hand = ", ".join(card_name(state, cid) for cid in state.investigator.hand)
         log_event(events, "setup_complete", f"Opening hand finalized: {final_hand}.")
         if is_return(state):
@@ -397,8 +399,8 @@ def resolve_scenario_choice(
                 attic=attic_variant,
                 cellar=cellar_variant,
             )
-    elif choice == "mulligan_card":
-        mulligan_card(state, str(payload.get("card")), events, rng)
+    elif choice in {"toggle_mulligan_card", "mulligan_card"}:
+        toggle_mulligan_card(state, str(payload.get("card")))
         present_mulligan_decision(state)
     elif choice == "agenda1_discard":
         agenda1_discard(state, events, rng)
@@ -444,29 +446,35 @@ def resolve_scenario_choice(
         log_event(events, "game_end", "R2: the house still stands")
 
 
-def mulligan_card(state: GameState, card_id: str, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
-    from ..effects import log_event
-
+def toggle_mulligan_card(state: GameState, card_id: str) -> None:
     if card_id not in state.investigator.hand:
         return
     available = list(state.limits.get("mulligan_available", []))
     if card_id not in available:
         return
-    available.remove(card_id)
-    state.limits["mulligan_available"] = available
-    state.investigator.hand.remove(card_id)
-    # RAW: mulliganed cards are set aside and only shuffled back after the
-    # opening hand is finalized — you cannot redraw a card you just tossed.
-    state.card_instances[card_id].zone = "aside"
-    aside = list(state.limits.get("mulliganed_aside", []))
-    aside.append(card_id)
-    state.limits["mulliganed_aside"] = aside
-    replacement = draw_one_nonweakness(state.card_instances, state.investigator.deck, rng)
-    if replacement:
-        state.investigator.hand.append(replacement)
-    out_name = card_name(state, card_id)
-    in_name = card_name(state, replacement) if replacement else "nothing (deck empty)"
-    log_event(events, "mulligan", f"Mulliganed {out_name}, drew {in_name}.", out=card_id, drew=replacement)
+    selected = list(state.limits.get("mulligan_selected", []))
+    if card_id in selected:
+        selected.remove(card_id)
+    else:
+        selected.append(card_id)
+    state.limits["mulligan_selected"] = selected
+
+
+def resolve_mulligan_replacements(state: GameState, selected: list[str], rng: ArkhamRng) -> list[str]:
+    selected = [card_id for card_id in selected if card_id in state.investigator.hand]
+    for card_id in selected:
+        state.investigator.hand.remove(card_id)
+        state.card_instances[card_id].zone = "aside"
+    drawn, skipped_weaknesses = draw_nonweakness_replacements(state.card_instances, state.investigator.deck, len(selected))
+    for card_id in drawn:
+        state.card_instances[card_id].zone = "hand"
+        state.investigator.hand.append(card_id)
+    for card_id in [*selected, *skipped_weaknesses]:
+        state.card_instances[card_id].zone = "player_deck"
+        state.investigator.deck.append(card_id)
+    if selected or skipped_weaknesses:
+        rng.shuffle(state.investigator.deck)
+    return drawn
 
 
 def draw_one_nonweakness(
@@ -486,6 +494,22 @@ def draw_one_nonweakness(
     deck.extend(set_aside)
     rng.shuffle(deck)
     return found
+
+
+def draw_nonweakness_replacements(
+    instances: dict[str, CardInstance],
+    deck: list[str],
+    count: int,
+) -> tuple[list[str], list[str]]:
+    skipped: list[str] = []
+    drawn: list[str] = []
+    while deck and len(drawn) < count:
+        card_id = deck.pop(0)
+        if is_player_weakness(instances[card_id].card_code):
+            skipped.append(card_id)
+        else:
+            drawn.append(card_id)
+    return drawn, skipped
 
 
 def is_player_weakness(card_code: str) -> bool:
@@ -655,11 +679,9 @@ def discard_enemies_at_location(state: GameState, location_id: str, events: list
         if enemy_id in state.investigator.engaged_enemies:
             state.investigator.engaged_enemies.remove(enemy_id)
         for attachment in list(enemy.attachments):
-            state.card_instances[attachment].zone = "discard"
-            state.investigator.discard.append(attachment)
+            player_cards.discard_to_owner_pile(state, attachment)
         location.enemy_ids.remove(enemy_id)
-        state.card_instances[enemy_id].zone = "encounter_discard"
-        state.encounter_discard.append(enemy_id)
+        player_cards.discard_to_owner_pile(state, enemy_id)
         log_event(events, "enemy_discarded", f"{card_data.get_card(enemy.card_code)['name']} was discarded.", enemy=enemy_id)
 
 
@@ -671,8 +693,7 @@ def discard_location_attachments(state: GameState, location_id: str, events: lis
         return
     for attachment in list(location.attached_instance_ids):
         location.attached_instance_ids.remove(attachment)
-        state.card_instances[attachment].zone = "discard"
-        state.investigator.discard.append(attachment)
+        player_cards.discard_to_owner_pile(state, attachment)
         log_event(events, "attachment_discarded", "An attachment was discarded.", card=attachment)
 
 

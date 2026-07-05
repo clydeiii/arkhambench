@@ -256,6 +256,9 @@ def resolve_attack(
         horror=horror,
         resume=after_resume,
     )
+    if not state.pending_damage and state.decision_queue:
+        state.limits["deferred_resume"] = after_resume
+        return
     if not state.pending_damage and not state.decision_queue:
         after_attack(state, events, enemy_id, resume or {}, source=source, rng=rng)
 
@@ -274,6 +277,10 @@ def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_i
         from . import actions
 
         actions.execute(state, dict(resume.get("payload", {})), events, rng)
+    elif resume.get("kind") == "aoo_order":
+        from . import actions
+
+        actions.continue_aoo_order(state, events, dict(resume), rng)
 
 
 def take_pending_attack(state: GameState, events: list[dict[str, Any]], rng: Any = None) -> None:

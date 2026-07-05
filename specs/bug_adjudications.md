@@ -155,6 +155,12 @@ Seven findings; all verified against code/state; fixes = specs/fixes_batch_5_aud
 19. (game-01 pass 2 + game-03 pass 2 found nothing else; game-01 was otherwise
     fully reconciled — 11 skill tests, all math verified by the auditor.)
 
-Pipeline economics: 3 Haiku games + 3 Fable audits found 6 new confirmed defects —
+20. **Daisy's Tome-only bonus action paid half of the Study's 2-action non-Tome
+    ability** (game-02, audit finding 2) — CONFIRMED EXPLOIT. Multi-action costs
+    now require enough UNRESTRICTED actions (the unused Tome action is reserved).
+    Note: this finding was accidentally omitted from the batch-5 spec; codex's
+    report flagged the omission — reviewer credit to the implementer.
+
+Pipeline economics: 3 Haiku games + 3 Fable audits found 7 new confirmed defects —
 including the double-execution class two live hunts missed — at roughly a tenth of
-a live hunt's token cost.
+a live hunt's token cost. All fixed in fixes batch 5.

@@ -628,3 +628,6 @@
 **R10 · Investigation** — Wendy Adams took 1 damage and 1 horror.
 [R10·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu0 res4 | dmg4/7 hor7/7 | h1 d16 x14 | Act3 Agd2 doom6/7]
 **R10 · Investigation** — GAME OVER: Wendy Adams was defeated
+**R10 · Investigation** — Note added.
+**R10 · Investigation** — Note added.
+**R10 · Investigation** — Note added.

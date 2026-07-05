@@ -395,3 +395,18 @@ class ReactionOnlyPlayTests(unittest.TestCase):
         s.investigator.resources = 5
         labels = [o.label for o in actions.legal_actions(s) if "Lucky" in o.label or "Ward" in o.label]
         self.assertEqual(labels, [])
+
+
+class DaisyMultiActionReserveTests(unittest.TestCase):
+    def test_study_draw_cannot_use_daisy_tome_action(self) -> None:
+        s = return_state(seed=10)
+        s.investigator.card_code = "01002"
+        s.investigator.actions_remaining = 2  # 1 standard + 1 Tome-only
+        opts = [o.payload.get("action") for o in actions.legal_actions(s)]
+        self.assertNotIn("study_draw", opts)
+        with self.assertRaises(EngineError):
+            actions.execute(s, {"kind": "action", "action": "study_draw"}, [], ArkhamRng(2))
+        # with 3 actions (2 standard usable) the ability is legal again
+        s.investigator.actions_remaining = 3
+        opts = [o.payload.get("action") for o in actions.legal_actions(s)]
+        self.assertIn("study_draw", opts)

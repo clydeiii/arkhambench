@@ -302,8 +302,6 @@ def assert_unique_cards(state, *, fail=None) -> None:
     for card_id, instance in state.card_instances.items():
         if instance.zone in {"set_aside", "removed", "aside"}:
             seen.setdefault(card_id, instance.zone)
-    for card_id in state.limits.get("mulliganed_aside", []):
-        seen.setdefault(str(card_id), "mulliganed_aside")
     missing = set(state.card_instances) - set(seen)
     allowed_missing = {
         card_id

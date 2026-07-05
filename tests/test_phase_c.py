@@ -256,6 +256,8 @@ class PhaseCPlayerCardTests(unittest.TestCase):
         tome = add_card(s, "01031", "deck")
         librarian = add_card(s, "01032", "hand")
         actions.play_card(s, librarian, [])
+        self.assertEqual(s.decision_queue[0].id, "research-librarian-search")
+        actions.resolve_research_librarian_choice(s, s.decision_queue[0].options[0].payload, [], ArkhamRng(1))
         self.assertIn(tome, s.investigator.hand)
 
     def test_dr_milan_static_and_successful_investigate_resource(self) -> None:
@@ -454,7 +456,7 @@ class PhaseCEncounterCardTests(unittest.TestCase):
         s.investigator.actions_remaining = 0
         self.assertTrue(phases.start_frozen_end_turn_test(s, events))
         resolve_current_test(s, events)
-        self.assertIn(frozen, s.investigator.discard)
+        self.assertIn(frozen, s.encounter_discard)
 
     def test_dissonant_voices_blocks_asset_event_play_and_discards_end_round(self) -> None:
         s = state()
@@ -464,7 +466,7 @@ class PhaseCEncounterCardTests(unittest.TestCase):
         actions.play_card(s, flashlight, [])
         self.assertIn(flashlight, s.investigator.hand)
         phases.discard_dissonant_voices(s, [])
-        self.assertIn(dissonant, s.investigator.discard)
+        self.assertIn(dissonant, s.encounter_discard)
 
     def test_ancient_evils_places_doom_and_checks_advance(self) -> None:
         s = state()
