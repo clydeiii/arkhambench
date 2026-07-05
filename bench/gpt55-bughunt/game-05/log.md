@@ -407,3 +407,16 @@
 **R7 · Investigation** — Investigation phase began.
 [R7·Investigation a3/3 | Wendy Adams 01005 | Ghoul Pits | clu2 res1 | dmg0/7 hor0/7 | h2 d21 x8 | Act2 Agd2 doom3/7]
 **R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams · 3 actions left] Choose an action:
+**R7 · Investigation** — Decision made: Move to Cellar
+**R7 · Investigation** — I need to leave Ghoul Pits, and crossing Cellar starts the route back to Attic and Act 2.
+**R7 · Investigation** — Spent 1 action: Move to Cellar.
+**R7 · Investigation** — Wendy Adams moved to Cellar.
+**R7 · Investigation** — Grave-Eater engaged Wendy Adams.
+[R7·Investigation a2/3 | Wendy Adams 01005 | Cellar | clu2 res1 | dmg0/7 hor0/7 | h2 d21 x8 | Act2 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams · 2 actions left] Choose an action:
+**R7 · Investigation** — Decision made: Evade Grave-Eater (evade 2) — test Agility(4)
+**R7 · Investigation** — Evading Grave-Eater avoids its attack and lets me continue back toward Hallway.
+**R7 · Investigation** — Spent 1 action: Evade Grave-Eater.
+**R7 · Investigation** — Started agility test 4 vs 2.
+[R7·Investigation a1/3 | Wendy Adams 01005 | Cellar | clu2 res1 | dmg0/7 hor0/7 | h2 d21 x8 | Act2 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams] Commit cards to Evade Grave-Eater (agility vs 2).

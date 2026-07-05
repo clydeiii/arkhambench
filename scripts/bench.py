@@ -451,9 +451,15 @@ def run_bench(args: argparse.Namespace) -> int:
                 continue
 
             start = time.monotonic()
-            new_rc = run_streamed(build_new_argv(run_dir, seed, args.difficulty, notebook, args.scenario, investigator))
-            if new_rc != 0:
-                raise RuntimeError(f"new failed for game {game} with exit {new_rc}")
+            if (run_dir / "state.json").exists() and run_status(run_dir) == "in_progress":
+                # Crash/outage resume: the game exists mid-play — never re-new
+                # (that would wipe the run); hand it straight back to the agent.
+                print(f"resume game {game}: in progress, skipping new")
+                (ROOT / ".current_run").write_text(str(run_dir) + "\n", encoding="utf-8")
+            else:
+                new_rc = run_streamed(build_new_argv(run_dir, seed, args.difficulty, notebook, args.scenario, investigator))
+                if new_rc != 0:
+                    raise RuntimeError(f"new failed for game {game} with exit {new_rc}")
 
             prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note)
             rc = run_streamed(build_agent_argv(args.agent, args.label, prompt, args.max_turns), log_path)

@@ -5,7 +5,22 @@
     "name": "The Barrier",
     "stage": 2
   },
-  "active_skill_test": null,
+  "active_skill_test": {
+    "autofail": false,
+    "base": 4,
+    "boosts": [],
+    "committed": [],
+    "difficulty": 2,
+    "modifier": 0,
+    "on_failure": {},
+    "on_success": {
+      "enemy": "ec0006",
+      "kind": "evade"
+    },
+    "skill": "agility",
+    "source": "Evade Grave-Eater",
+    "token": null
+  },
   "agenda": {
     "code": "01106",
     "doom": 3,
@@ -234,47 +249,24 @@
   },
   "decision_queue": [
     {
-      "id": "choose-action",
-      "kind": "choose_action",
+      "id": "commit-cards",
+      "kind": "commit_cards",
       "options": [
         {
-          "label": "Investigate Ghoul Pits (shroud 4) \u2014 test Intellect(3) vs 4",
+          "label": "Commit Manual Dexterity (+2)",
           "payload": {
-            "action": "investigate",
-            "kind": "action"
+            "card": "pc0032",
+            "kind": "commit_card"
           }
         },
         {
-          "label": "Move to Cellar",
+          "label": "Done",
           "payload": {
-            "action": "move",
-            "kind": "action",
-            "location": "cellar"
-          }
-        },
-        {
-          "label": "Draw 1 card",
-          "payload": {
-            "action": "draw",
-            "kind": "action"
-          }
-        },
-        {
-          "label": "Take resource (gain 1)",
-          "payload": {
-            "action": "resource",
-            "kind": "action"
-          }
-        },
-        {
-          "label": "Pass (end turn)",
-          "payload": {
-            "action": "pass",
-            "kind": "action"
+            "kind": "commit_done"
           }
         }
       ],
-      "prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"
+      "prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Evade Grave-Eater (agility vs 2)."
     }
   ],
   "difficulty": "standard",
@@ -291,7 +283,7 @@
       "clues": 0,
       "damage": 0,
       "doom": 0,
-      "engaged_with": null,
+      "engaged_with": "wendy",
       "exhausted": false,
       "horror": 0,
       "id": "ec0006",
@@ -323,7 +315,7 @@
     }
   },
   "investigator": {
-    "actions_remaining": 3,
+    "actions_remaining": 1,
     "agility": 4,
     "card_code": "01005",
     "clues": 2,
@@ -340,7 +332,9 @@
       "pc0003",
       "pc0013"
     ],
-    "engaged_enemies": [],
+    "engaged_enemies": [
+      "ec0006"
+    ],
     "exhausted": false,
     "hand": [
       "pc0032",
@@ -350,7 +344,7 @@
     "horror": 0,
     "id": "wendy",
     "intellect": 3,
-    "location_id": "ghoul_pits",
+    "location_id": "cellar",
     "name": "Wendy Adams",
     "play_area": [
       "pc0026",
@@ -362,7 +356,7 @@
     "willpower": 4
   },
   "limits": {
-    "actions_taken": 21,
+    "actions_taken": 23,
     "encounter_cards_drawn": 6,
     "fastwin:mythos_end:7": true,
     "last_skill_test": {
@@ -443,7 +437,9 @@
         "ec0006"
       ],
       "id": "cellar",
-      "investigator_ids": [],
+      "investigator_ids": [
+        "wendy"
+      ],
       "name": "Cellar",
       "revealed": true,
       "shroud": 2
@@ -457,9 +453,7 @@
       ],
       "enemy_ids": [],
       "id": "ghoul_pits",
-      "investigator_ids": [
-        "wendy"
-      ],
+      "investigator_ids": [],
       "name": "Ghoul Pits",
       "revealed": true,
       "shroud": 4
@@ -541,7 +535,7 @@
   "status": "in_progress",
   "trauma": {},
   "turn": {
-    "action_index": 0,
+    "action_index": 2,
     "investigator_id": "wendy"
   },
   "victory_display": []

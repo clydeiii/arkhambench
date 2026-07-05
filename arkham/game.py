@@ -54,6 +54,10 @@ class Game:
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
         run_path = Path(run_dir)
+        if (run_path / "state.json").exists():
+            raise EngineError(
+                f"run directory {run_path} already contains a game; refusing to overwrite (delete it or choose another --run)"
+            )
         rng = ArkhamRng(seed)
         from .scenarios import SCENARIOS
 

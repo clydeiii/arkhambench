@@ -123,11 +123,50 @@ def check_invariants(game: Game, context: InvariantContext | None = None) -> Non
     assert_unique_cards(state, fail=fail)
 
 
+def canonical_payload(game: Game, payload: dict) -> str:
+    """Payload with card-instance ids replaced by their card codes, so two
+    options that differ only in WHICH identical copy they touch canonicalize
+    to the same form."""
+    import json as _json
+
+    instances = game.state.card_instances
+
+    def canon(value):
+        if isinstance(value, str) and value in instances:
+            return f"code:{instances[value].card_code}"
+        if isinstance(value, dict):
+            return {k: canon(v) for k, v in value.items()}
+        if isinstance(value, list):
+            items = [canon(v) for v in value]
+            # Order-insensitive: for duplicate-label comparison, queues that
+            # hold the same multiset of targets are interchangeable.
+            try:
+                return sorted(items, key=_json.dumps)
+            except TypeError:
+                return items
+        return value
+
+    return _json.dumps(canon(dict(payload)), sort_keys=True)
+
+
 def check_decision_invariants(game: Game, decision: PendingDecision, context: InvariantContext) -> None:
     fail = invariant_failer(game, context)
-    labels = [option.label for option in decision.options]
-    duplicates = [label for label, count in Counter(labels).items() if count > 1]
-    fail(not duplicates, f"duplicate option labels: {duplicates}")
+    by_label: dict[str, list] = {}
+    for option in decision.options:
+        by_label.setdefault(option.label, []).append(option)
+    for label, group in by_label.items():
+        if len(group) < 2:
+            continue
+        import json as _json
+
+        raw = [_json.dumps(dict(o.payload), sort_keys=True) for o in group]
+        # Two options with the same label AND same payload are a redundant
+        # duplicate (e.g. the double 'Advance act' regression).
+        fail(len(set(raw)) == len(raw), f"redundant duplicate options: {label!r}")
+        # Same label but materially different targets is dangerous ambiguity;
+        # differing only by which identical copy is touched is fine.
+        canon = {canonical_payload(game, o.payload) for o in group}
+        fail(len(canon) == 1, f"ambiguous duplicate labels: {label!r} canon={sorted(canon)}")
     for option in decision.options:
         move_target = move_target_for_option(option)
         if move_target:

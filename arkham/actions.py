@@ -79,11 +79,16 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
     top_discard_event = player_cards.topmost_discard_event_id(state)
     if top_discard_event is not None and player_cards.can_play_from_discard_with_amulet(state, top_discard_event):
         playable_ids.append(top_discard_event)
+    seen_play_codes: set[tuple[str, bool]] = set()
     for instance_id in playable_ids:
         instance = state.card_instances[instance_id]
         card = card_data.cards_by_code().get(instance.card_code, {})
         cost = int(card.get("cost") or 0)
         from_discard = instance_id not in investigator.hand
+        # Two identical copies in hand are the same play — offer it once.
+        if (instance.card_code, from_discard) in seen_play_codes:
+            continue
+        seen_play_codes.add((instance.card_code, from_discard))
         if (
             card.get("type_code") in {"asset", "event"}
             and investigator.resources >= cost
@@ -803,6 +808,7 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
         top_discard_event = player_cards.topmost_discard_event_id(state)
         if top_discard_event is not None and player_cards.can_play_from_discard_with_amulet(state, top_discard_event):
             fast_ids.append(top_discard_event)
+        seen_fast_codes: set[tuple[str, bool]] = set()
         for card_id in fast_ids:
             instance = state.card_instances[card_id]
             code = instance.card_code
@@ -813,6 +819,9 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
             from_discard = card_id not in state.investigator.hand
             if from_discard and card.get("type_code") != "event":
                 continue
+            if (code, from_discard) in seen_fast_codes:
+                continue
+            seen_fast_codes.add((code, from_discard))
             if code == "01030":
                 if from_discard:
                     continue
