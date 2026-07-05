@@ -401,3 +401,159 @@
 {"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 8, "seq": 401, "type": "action_spent"}
 {"data": {"location": "hallway", "message": "\"Skids\" O'Toole moved to Hallway."}, "phase": "Investigation", "round": 8, "seq": 402, "type": "investigator_moved"}
 {"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 8, "seq": 403, "status": "[R8\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu3 res3 | dmg1/8 hor3/6 | h2 d18 x11 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 6}, "phase": "Investigation", "round": 8, "seq": 404, "type": "decision_made"}
+{"data": {"message": "Pass the fast window to preserve resources for Hard Knocks and boss combat."}, "phase": "Investigation", "round": 8, "seq": 405, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 8, "seq": 406, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 8, "seq": 407, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 8, "seq": 408, "type": "ready_step"}
+{"data": {"card": "pc0003", "message": "\"Skids\" O'Toole drew .45 Automatic."}, "phase": "Upkeep", "round": 8, "seq": 409, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 8, "seq": 410, "type": "resource_gained"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 8, "seq": 411, "status": "[R8\u00b7Upkeep | \"Skids\" O'Toole 01003 | Hallway | clu3 res4 | dmg1/8 hor3/6 | h3 d17 x11 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Do not advance", "option": 2}, "phase": "Upkeep", "round": 8, "seq": 412, "type": "decision_made"}
+{"data": {"message": "Delay Act 2 so Skids can play .45 Automatic before spawning Ghoul Priest."}, "phase": "Upkeep", "round": 8, "seq": 413, "type": "agent_reason"}
+{"data": {"message": "\"Skids\" O'Toole did not advance The Barrier."}, "phase": "Upkeep", "round": 8, "seq": 414, "type": "act_objective_declined"}
+{"data": {"message": "Round 9 began."}, "phase": "Mythos", "round": 9, "seq": 415, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 9, "seq": 416, "type": "doom_placed"}
+{"data": {"card": "ec0027", "message": "\"Skids\" O'Toole drew encounter card Locked Door."}, "phase": "Mythos", "round": 9, "seq": 417, "type": "encounter_drawn"}
+{"data": {"prompt": "Choose where Locked Door attaches."}, "phase": "Mythos", "round": 9, "seq": 418, "status": "[R9\u00b7Mythos | \"Skids\" O'Toole 01003 | Hallway | clu3 res4 | dmg1/8 hor3/6 | h3 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "locked-door-target", "label": "Attach Locked Door to Study (Aberrant Gateway)", "option": 2}, "phase": "Mythos", "round": 9, "seq": 419, "type": "decision_made"}
+{"data": {"message": "Attach Locked Door to Study because all current clues are gone and Study should not matter again."}, "phase": "Mythos", "round": 9, "seq": 420, "type": "agent_reason"}
+{"data": {"card": "ec0027", "location": "study", "message": "Locked Door attached to Study (Aberrant Gateway)."}, "phase": "Mythos", "round": 9, "seq": 421, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 9, "seq": 422, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 423, "status": "[R9\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu3 res4 | dmg1/8 hor3/6 | h3 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play .45 Automatic (4 res)", "option": 13}, "phase": "Investigation", "round": 9, "seq": 424, "type": "decision_made"}
+{"data": {"message": "Play .45 Automatic before the boss spawns so Skids can fight without provoking attacks."}, "phase": "Investigation", "round": 9, "seq": 425, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play .45 Automatic."}, "phase": "Investigation", "round": 9, "seq": 426, "type": "action_spent"}
+{"data": {"card": "pc0003", "message": "\"Skids\" O'Toole played .45 Automatic."}, "phase": "Investigation", "round": 9, "seq": 427, "type": "card_played"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 428, "status": "[R9\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu3 res0 | dmg1/8 hor3/6 | h2 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 5}, "phase": "Investigation", "round": 9, "seq": 429, "type": "decision_made"}
+{"data": {"message": "Draw for boss-turn icons or protection now that the firearm is set up."}, "phase": "Investigation", "round": 9, "seq": 430, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 9, "seq": 431, "type": "action_spent"}
+{"data": {"card": "pc0023", "message": "\"Skids\" O'Toole drew Knife."}, "phase": "Investigation", "round": 9, "seq": 432, "type": "card_drawn"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 433, "status": "[R9\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu3 res0 | dmg1/8 hor3/6 | h3 d16 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Take resource (gain 1)", "option": 6}, "phase": "Investigation", "round": 9, "seq": 434, "type": "decision_made"}
+{"data": {"message": "Take a resource so upkeep leaves two resources for Skids's extra action on the boss turn."}, "phase": "Investigation", "round": 9, "seq": 435, "type": "agent_reason"}
+{"data": {"action": "resource", "cost": 1, "message": "Spent 1 action: Take resource."}, "phase": "Investigation", "round": 9, "seq": 436, "type": "action_spent"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Investigation", "round": 9, "seq": 437, "type": "resource_gained"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 9, "seq": 438, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 9, "seq": 439, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 9, "seq": 440, "type": "ready_step"}
+{"data": {"card": "pc0024", "message": "\"Skids\" O'Toole drew Knife."}, "phase": "Upkeep", "round": 9, "seq": 441, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 9, "seq": 442, "type": "resource_gained"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 9, "seq": 443, "status": "[R9\u00b7Upkeep | \"Skids\" O'Toole 01003 | Hallway | clu3 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Spend 3 clues and advance", "option": 1}, "phase": "Upkeep", "round": 9, "seq": 444, "type": "decision_made"}
+{"data": {"message": "Advance now because Skids has .45 Automatic and enough resources for one extra boss action."}, "phase": "Upkeep", "round": 9, "seq": 445, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "\"Skids\" O'Toole spent 3 clue."}, "phase": "Upkeep", "round": 9, "seq": 446, "type": "clues_spent"}
+{"data": {"location": "parlor", "message": "Parlor was revealed."}, "phase": "Upkeep", "round": 9, "seq": 447, "type": "location_revealed"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest spawned at Hallway."}, "phase": "Upkeep", "round": 9, "seq": 448, "type": "enemy_spawned"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest engaged \"Skids\" O'Toole."}, "phase": "Upkeep", "round": 9, "seq": 449, "type": "enemy_engaged"}
+{"data": {"message": "Act advanced to What Have You Done?."}, "phase": "Upkeep", "round": 9, "seq": 450, "type": "act_advanced"}
+{"data": {"message": "Round 10 began."}, "phase": "Mythos", "round": 10, "seq": 451, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 10, "seq": 452, "type": "doom_placed"}
+{"data": {"message": "Agenda advanced to They're Getting Out!."}, "phase": "Mythos", "round": 10, "seq": 453, "type": "agenda_advanced"}
+{"data": {"card": "ec0008", "message": "\"Skids\" O'Toole drew encounter card Grave-Eater."}, "phase": "Mythos", "round": 10, "seq": 454, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0008", "message": "Grave-Eater spawned at Hallway."}, "phase": "Mythos", "round": 10, "seq": 455, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0008", "message": "Grave-Eater engaged \"Skids\" O'Toole."}, "phase": "Mythos", "round": 10, "seq": 456, "type": "enemy_engaged"}
+{"data": {"card": "ec0013", "message": "\"Skids\" O'Toole drew encounter card Rotting Remains."}, "phase": "Mythos", "round": 10, "seq": 457, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 10, "seq": 458, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 10, "seq": 459, "status": "[R10\u00b7Mythos | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 10, "seq": 460, "type": "decision_made"}
+{"data": {"message": "No will icons are available for Rotting Remains, so resolve raw and rely on Beat Cop soak if needed."}, "phase": "Mythos", "round": 10, "seq": 461, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Mythos", "round": 10, "seq": 462, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Rotting Remains: failure by 3 - willpower 2 + committed 0 + boosts 0 + token -2 = 0 vs 3.", "modifier": -2, "skill": "willpower", "source": "Rotting Remains", "success": false, "token": "-2", "value": 0}, "phase": "Mythos", "round": 10, "seq": 463, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 10 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Assign damage/horror from Rotting Remains."}, "phase": "Mythos", "round": 10, "seq": 464, "status": "[R10\u00b7Mythos | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Beat Cop", "option": 2}, "phase": "Mythos", "round": 10, "seq": 465, "type": "decision_made"}
+{"data": {"message": "Put the first horror on Beat Cop to preserve Skids's last sanity buffer."}, "phase": "Mythos", "round": 10, "seq": 466, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Beat Cop.", "target": "pc0005"}, "phase": "Mythos", "round": 10, "seq": 467, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 10 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Assign damage/horror from Rotting Remains."}, "phase": "Mythos", "round": 10, "seq": 468, "status": "[R10\u00b7Mythos | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to \"Skids\" O'Toole", "option": 1}, "phase": "Mythos", "round": 10, "seq": 469, "type": "decision_made"}
+{"data": {"message": "Assign the second horror to Skids so Beat Cop remains alive for the combat boost."}, "phase": "Mythos", "round": 10, "seq": 470, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to \"Skids\" O'Toole.", "target": "roland"}, "phase": "Mythos", "round": 10, "seq": 471, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 10 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Assign damage/horror from Rotting Remains."}, "phase": "Mythos", "round": 10, "seq": 472, "status": "[R10\u00b7Mythos | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to \"Skids\" O'Toole", "option": 1}, "phase": "Mythos", "round": 10, "seq": 473, "type": "decision_made"}
+{"data": {"message": "Assign the third horror to Skids to keep Beat Cop's +1 combat active for the boss fight."}, "phase": "Mythos", "round": 10, "seq": 474, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to \"Skids\" O'Toole.", "target": "roland"}, "phase": "Mythos", "round": 10, "seq": 475, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 10 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 10, "seq": 476, "status": "[R10\u00b7Mythos | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 10, "seq": 477, "type": "decision_made"}
+{"data": {"message": "Keep Beat Cop in play because the combat boost is needed more than one ping before actions."}, "phase": "Mythos", "round": 10, "seq": 478, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 10, "seq": 479, "type": "phase_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 480, "status": "[R10\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Ghoul Priest (evade 4) \u2014 test Agility(4)", "option": 8}, "phase": "Investigation", "round": 10, "seq": 481, "type": "decision_made"}
+{"data": {"message": "Evade Ghoul Priest first so Retaliate is turned off before committing to boss attacks."}, "phase": "Investigation", "round": 10, "seq": 482, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Ghoul Priest."}, "phase": "Investigation", "round": 10, "seq": 483, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 4.", "source": "Evade Ghoul Priest"}, "phase": "Investigation", "round": 10, "seq": 484, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 10, "seq": 485, "status": "[R10\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h4 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Elusive (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 486, "type": "decision_made"}
+{"data": {"message": "Commit Elusive because the boss evade is the turn's safety gate."}, "phase": "Investigation", "round": 10, "seq": 487, "type": "agent_reason"}
+{"data": {"card": "pc0018", "message": "Committed Elusive."}, "phase": "Investigation", "round": 10, "seq": 488, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 10, "seq": 489, "status": "[R10\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h3 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Hard Knocks (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 490, "type": "decision_made"}
+{"data": {"message": "Commit Hard Knocks as the second agility icon to improve the Ghoul Priest evade odds."}, "phase": "Investigation", "round": 10, "seq": 491, "type": "agent_reason"}
+{"data": {"card": "pc0015", "message": "Committed Hard Knocks."}, "phase": "Investigation", "round": 10, "seq": 492, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 10, "seq": 493, "status": "[R10\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 10, "seq": 494, "type": "decision_made"}
+{"data": {"message": "Resolve at 6 vs 4 because the key evade is sufficiently covered."}, "phase": "Investigation", "round": 10, "seq": 495, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -2, "token": "skull"}, "phase": "Investigation", "round": 10, "seq": 496, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 2, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Evade Ghoul Priest: success by 0 - agility 4 + committed 2 + boosts 0 + token -2 = 4 vs 4.", "modifier": -2, "skill": "agility", "source": "Evade Ghoul Priest", "success": true, "token": "skull", "value": 4}, "phase": "Investigation", "round": 10, "seq": 497, "type": "skill_test_result"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest disengaged."}, "phase": "Investigation", "round": 10, "seq": 498, "type": "enemy_disengaged"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 499, "status": "[R10\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Grave-Eater with .45 Automatic (4 ammo) \u2014 test Combat(5) vs 2, 2 dmg", "option": 14}, "phase": "Investigation", "round": 10, "seq": 500, "type": "decision_made"}
+{"data": {"message": "Kill Grave-Eater with .45 so only the exhausted boss remains after this turn."}, "phase": "Investigation", "round": 10, "seq": 501, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Grave-Eater)."}, "phase": "Investigation", "round": 10, "seq": 502, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 2.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 10, "seq": 503, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 2)."}, "phase": "Investigation", "round": 10, "seq": 504, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 10, "seq": 505, "type": "decision_made"}
+{"data": {"message": "Do not commit to the Grave-Eater shot because 5 vs 2 is already strong and Knives can boost the boss shots."}, "phase": "Investigation", "round": 10, "seq": 506, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 10, "seq": 507, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 4, "message": "Fight with .45 Automatic: success by 4 - combat 5 + committed 0 + boosts 0 + token 1 = 6 vs 2.", "modifier": 1, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "+1", "value": 6}, "phase": "Investigation", "round": 10, "seq": 508, "type": "skill_test_result"}
+{"data": {"enemy": "ec0008", "message": "Grave-Eater took 2 damage."}, "phase": "Investigation", "round": 10, "seq": 509, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0008", "message": "Grave-Eater was defeated."}, "phase": "Investigation", "round": 10, "seq": 510, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 511, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use \"Skids\" O'Toole ability (spend 2 resources for +1 action)", "option": 12}, "phase": "Investigation", "round": 10, "seq": 512, "type": "decision_made"}
+{"data": {"message": "Buy an extra action so Skids can take two .45 shots at the exhausted Ghoul Priest this turn."}, "phase": "Investigation", "round": 10, "seq": 513, "type": "agent_reason"}
+{"data": {"message": "\"Skids\" spent 2 resources to gain 1 action."}, "phase": "Investigation", "round": 10, "seq": 514, "type": "skids_ability"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 515, "status": "[R10\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Ghoul Priest with .45 Automatic (3 ammo) \u2014 test Combat(5) vs 4, 2 dmg", "option": 11}, "phase": "Investigation", "round": 10, "seq": 516, "type": "decision_made"}
+{"data": {"message": "Shoot the exhausted Ghoul Priest with .45 because two hits plus Beat Cop ping can finish it."}, "phase": "Investigation", "round": 10, "seq": 517, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Ghoul Priest)."}, "phase": "Investigation", "round": 10, "seq": 518, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 4.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 10, "seq": 519, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 10, "seq": 520, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Knife (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 521, "type": "decision_made"}
+{"data": {"message": "Commit one Knife to improve the first Ghoul Priest shot while saving the other for the second shot."}, "phase": "Investigation", "round": 10, "seq": 522, "type": "agent_reason"}
+{"data": {"card": "pc0023", "message": "Committed Knife."}, "phase": "Investigation", "round": 10, "seq": 523, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 10, "seq": 524, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h1 d15 x13 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 10, "seq": 525, "type": "decision_made"}
+{"data": {"message": "Keep the second Knife for the next .45 shot."}, "phase": "Investigation", "round": 10, "seq": 526, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 10, "seq": 527, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 2, "message": "Fight with .45 Automatic: success by 2 - combat 5 + committed 1 + boosts 0 + token 0 = 6 vs 4.", "modifier": 0, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "0", "value": 6}, "phase": "Investigation", "round": 10, "seq": 528, "type": "skill_test_result"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest took 2 damage."}, "phase": "Investigation", "round": 10, "seq": 529, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 530, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h1 d15 x14 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Ghoul Priest with .45 Automatic (2 ammo) \u2014 test Combat(5) vs 4, 2 dmg", "option": 11}, "phase": "Investigation", "round": 10, "seq": 531, "type": "decision_made"}
+{"data": {"message": "Take the second .45 shot so a hit plus Beat Cop's ping defeats Ghoul Priest."}, "phase": "Investigation", "round": 10, "seq": 532, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Ghoul Priest)."}, "phase": "Investigation", "round": 10, "seq": 533, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 4.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 10, "seq": 534, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 10, "seq": 535, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h1 d15 x14 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Knife (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 536, "type": "decision_made"}
+{"data": {"message": "Commit the final Knife because this shot sets up the Beat Cop kill."}, "phase": "Investigation", "round": 10, "seq": 537, "type": "agent_reason"}
+{"data": {"card": "pc0024", "message": "Committed Knife."}, "phase": "Investigation", "round": 10, "seq": 538, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 10, "seq": 539, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x14 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 10, "seq": 540, "type": "decision_made"}
+{"data": {"message": "Resolve at 6 vs 4 against the exhausted boss to avoid Retaliate risk."}, "phase": "Investigation", "round": 10, "seq": 541, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -1, "token": "skull"}, "phase": "Investigation", "round": 10, "seq": 542, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Fight with .45 Automatic: success by 1 - combat 5 + committed 1 + boosts 0 + token -1 = 5 vs 4.", "modifier": -1, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "skull", "value": 5}, "phase": "Investigation", "round": 10, "seq": 543, "type": "skill_test_result"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest took 2 damage."}, "phase": "Investigation", "round": 10, "seq": 544, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 10, "seq": 545, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x15 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Discard Beat Cop to deal 1 damage", "option": 1}, "phase": "Investigation", "round": 10, "seq": 546, "type": "decision_made"}
+{"data": {"message": "Discard Beat Cop to deal the final damage to Ghoul Priest before it readies."}, "phase": "Investigation", "round": 10, "seq": 547, "type": "agent_reason"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest took 1 damage."}, "phase": "Investigation", "round": 10, "seq": 548, "type": "enemy_damaged"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest was defeated."}, "phase": "Investigation", "round": 10, "seq": 549, "type": "enemy_defeated"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Beat Cop dealt 1 damage."}, "phase": "Investigation", "round": 10, "seq": 550, "type": "beat_cop_ability"}
+{"data": {"prompt": "The Ghoul Priest is defeated. Choose a resolution."}, "phase": "Investigation", "round": 10, "seq": 551, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x16 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "final-resolution", "label": "Refuse to burn it (R2)", "option": 2}, "phase": "Investigation", "round": 10, "seq": 552, "type": "decision_made"}
+{"data": {"message": "Choose R2 because refusing to burn the house avoids trauma while keeping earned victory XP."}, "phase": "Investigation", "round": 10, "seq": 553, "type": "agent_reason"}
+{"data": {"message": "R2: the house still stands", "summary": "R2: the house still stands"}, "phase": "Investigation", "round": 10, "seq": 554, "type": "game_end"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 555, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 556, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 557, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 558, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 559, "type": "note_added"}

@@ -467,3 +467,186 @@
 **R8 · Investigation** — "Skids" O'Toole moved to Hallway.
 [R8·Investigation a0/3 | "Skids" O'Toole 01003 | Hallway | clu3 res3 | dmg1/8 hor3/6 | h2 d18 x11 | Act2 Agd2 doom5/7]
 **R8 · Investigation** — Decision presented: [Round 8 · Investigation · "Skids" O'Toole] Fast-ability window — use a fast ability or pass:
+**R8 · Investigation** — Decision made: Pass (continue)
+**R8 · Investigation** — Pass the fast window to preserve resources for Hard Knocks and boss combat.
+**R8 · Enemy** — Enemy phase began.
+**R8 · Upkeep** — Upkeep phase began.
+**R8 · Upkeep** — All exhausted cards readied.
+**R8 · Upkeep** — "Skids" O'Toole drew .45 Automatic.
+**R8 · Upkeep** — "Skids" O'Toole gained 1 resource.
+[R8·Upkeep | "Skids" O'Toole 01003 | Hallway | clu3 res4 | dmg1/8 hor3/6 | h3 d17 x11 | Act2 Agd2 doom5/7]
+**R8 · Upkeep** — Decision presented: Spend 3 clues to advance The Barrier?
+**R8 · Upkeep** — Decision made: Do not advance
+**R8 · Upkeep** — Delay Act 2 so Skids can play .45 Automatic before spawning Ghoul Priest.
+**R8 · Upkeep** — "Skids" O'Toole did not advance The Barrier.
+**R9 · Mythos** — Round 9 began.
+**R9 · Mythos** — Placed 1 doom on the agenda.
+**R9 · Mythos** — "Skids" O'Toole drew encounter card Locked Door.
+[R9·Mythos | "Skids" O'Toole 01003 | Hallway | clu3 res4 | dmg1/8 hor3/6 | h3 d17 x11 | Act2 Agd2 doom6/7]
+**R9 · Mythos** — Decision presented: Choose where Locked Door attaches.
+**R9 · Mythos** — Decision made: Attach Locked Door to Study (Aberrant Gateway)
+**R9 · Mythos** — Attach Locked Door to Study because all current clues are gone and Study should not matter again.
+**R9 · Mythos** — Locked Door attached to Study (Aberrant Gateway).
+**R9 · Investigation** — Investigation phase began.
+[R9·Investigation a3/3 | "Skids" O'Toole 01003 | Hallway | clu3 res4 | dmg1/8 hor3/6 | h3 d17 x11 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · "Skids" O'Toole · 3 actions left] Choose an action:
+**R9 · Investigation** — Decision made: Play .45 Automatic (4 res)
+**R9 · Investigation** — Play .45 Automatic before the boss spawns so Skids can fight without provoking attacks.
+**R9 · Investigation** — Spent 1 action: Play .45 Automatic.
+**R9 · Investigation** — "Skids" O'Toole played .45 Automatic.
+[R9·Investigation a2/3 | "Skids" O'Toole 01003 | Hallway | clu3 res0 | dmg1/8 hor3/6 | h2 d17 x11 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · "Skids" O'Toole · 2 actions left] Choose an action:
+**R9 · Investigation** — Decision made: Draw 1 card
+**R9 · Investigation** — Draw for boss-turn icons or protection now that the firearm is set up.
+**R9 · Investigation** — Spent 1 action: Draw 1 card.
+**R9 · Investigation** — "Skids" O'Toole drew Knife.
+[R9·Investigation a1/3 | "Skids" O'Toole 01003 | Hallway | clu3 res0 | dmg1/8 hor3/6 | h3 d16 x11 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · "Skids" O'Toole · 1 action left] Choose an action:
+**R9 · Investigation** — Decision made: Take resource (gain 1)
+**R9 · Investigation** — Take a resource so upkeep leaves two resources for Skids's extra action on the boss turn.
+**R9 · Investigation** — Spent 1 action: Take resource.
+**R9 · Investigation** — "Skids" O'Toole gained 1 resource.
+**R9 · Enemy** — Enemy phase began.
+**R9 · Upkeep** — Upkeep phase began.
+**R9 · Upkeep** — All exhausted cards readied.
+**R9 · Upkeep** — "Skids" O'Toole drew Knife.
+**R9 · Upkeep** — "Skids" O'Toole gained 1 resource.
+[R9·Upkeep | "Skids" O'Toole 01003 | Hallway | clu3 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act2 Agd2 doom6/7]
+**R9 · Upkeep** — Decision presented: Spend 3 clues to advance The Barrier?
+**R9 · Upkeep** — Decision made: Spend 3 clues and advance
+**R9 · Upkeep** — Advance now because Skids has .45 Automatic and enough resources for one extra boss action.
+**R9 · Upkeep** — "Skids" O'Toole spent 3 clue.
+**R9 · Upkeep** — Parlor was revealed.
+**R9 · Upkeep** — Ghoul Priest spawned at Hallway.
+**R9 · Upkeep** — Ghoul Priest engaged "Skids" O'Toole.
+**R9 · Upkeep** — Act advanced to What Have You Done?.
+**R10 · Mythos** — Round 10 began.
+**R10 · Mythos** — Placed 1 doom on the agenda.
+**R10 · Mythos** — Agenda advanced to They're Getting Out!.
+**R10 · Mythos** — "Skids" O'Toole drew encounter card Grave-Eater.
+**R10 · Mythos** — Grave-Eater spawned at Hallway.
+**R10 · Mythos** — Grave-Eater engaged "Skids" O'Toole.
+**R10 · Mythos** — "Skids" O'Toole drew encounter card Rotting Remains.
+**R10 · Mythos** — Started willpower test 2 vs 3.
+[R10·Mythos | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · "Skids" O'Toole] Commit cards to Rotting Remains (willpower vs 3).
+**R10 · Mythos** — Decision made: Done
+**R10 · Mythos** — No will icons are available for Rotting Remains, so resolve raw and rely on Beat Cop soak if needed.
+**R10 · Mythos** — Revealed -2.
+**R10 · Mythos** — Rotting Remains: failure by 3 - willpower 2 + committed 0 + boosts 0 + token -2 = 0 vs 3.
+[R10·Mythos | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · "Skids" O'Toole] Assign damage/horror from Rotting Remains.
+**R10 · Mythos** — Decision made: Assign 1 horror to Beat Cop
+**R10 · Mythos** — Put the first horror on Beat Cop to preserve Skids's last sanity buffer.
+**R10 · Mythos** — Assigned 1 horror to Beat Cop.
+[R10·Mythos | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · "Skids" O'Toole] Assign damage/horror from Rotting Remains.
+**R10 · Mythos** — Decision made: Assign 1 horror to "Skids" O'Toole
+**R10 · Mythos** — Assign the second horror to Skids so Beat Cop remains alive for the combat boost.
+**R10 · Mythos** — Assigned 1 horror to "Skids" O'Toole.
+[R10·Mythos | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor3/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · "Skids" O'Toole] Assign damage/horror from Rotting Remains.
+**R10 · Mythos** — Decision made: Assign 1 horror to "Skids" O'Toole
+**R10 · Mythos** — Assign the third horror to Skids to keep Beat Cop's +1 combat active for the boss fight.
+**R10 · Mythos** — Assigned 1 horror to "Skids" O'Toole.
+[R10·Mythos | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · "Skids" O'Toole] Fast-ability window — use a fast ability or pass:
+**R10 · Mythos** — Decision made: Pass (continue)
+**R10 · Mythos** — Keep Beat Cop in play because the combat boost is needed more than one ping before actions.
+**R10 · Investigation** — Investigation phase began.
+[R10·Investigation a3/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole · 3 actions left] Choose an action:
+**R10 · Investigation** — Decision made: Evade Ghoul Priest (evade 4) — test Agility(4)
+**R10 · Investigation** — Evade Ghoul Priest first so Retaliate is turned off before committing to boss attacks.
+**R10 · Investigation** — Spent 1 action: Evade Ghoul Priest.
+**R10 · Investigation** — Started agility test 4 vs 4.
+[R10·Investigation a2/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h4 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4).
+**R10 · Investigation** — Decision made: Commit Elusive (+1)
+**R10 · Investigation** — Commit Elusive because the boss evade is the turn's safety gate.
+**R10 · Investigation** — Committed Elusive.
+[R10·Investigation a2/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h3 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4).
+**R10 · Investigation** — Decision made: Commit Hard Knocks (+1)
+**R10 · Investigation** — Commit Hard Knocks as the second agility icon to improve the Ghoul Priest evade odds.
+**R10 · Investigation** — Committed Hard Knocks.
+[R10·Investigation a2/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x11 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Resolve at 6 vs 4 because the key evade is sufficiently covered.
+**R10 · Investigation** — Revealed skull.
+**R10 · Investigation** — Evade Ghoul Priest: success by 0 - agility 4 + committed 2 + boosts 0 + token -2 = 4 vs 4.
+**R10 · Investigation** — Ghoul Priest disengaged.
+[R10·Investigation a2/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole · 2 actions left] Choose an action:
+**R10 · Investigation** — Decision made: Fight Grave-Eater with .45 Automatic (4 ammo) — test Combat(5) vs 2, 2 dmg
+**R10 · Investigation** — Kill Grave-Eater with .45 so only the exhausted boss remains after this turn.
+**R10 · Investigation** — Spent 1 action: Fight with .45 Automatic (target: Grave-Eater).
+**R10 · Investigation** — Started combat test 5 vs 2.
+[R10·Investigation a1/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 2).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Do not commit to the Grave-Eater shot because 5 vs 2 is already strong and Knives can boost the boss shots.
+**R10 · Investigation** — Revealed +1.
+**R10 · Investigation** — Fight with .45 Automatic: success by 4 - combat 5 + committed 0 + boosts 0 + token 1 = 6 vs 2.
+**R10 · Investigation** — Grave-Eater took 2 damage.
+**R10 · Investigation** — Grave-Eater was defeated.
+[R10·Investigation a1/3 | "Skids" O'Toole 01003 | Hallway | clu0 res2 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole · 1 action left] Choose an action:
+**R10 · Investigation** — Decision made: Use "Skids" O'Toole ability (spend 2 resources for +1 action)
+**R10 · Investigation** — Buy an extra action so Skids can take two .45 shots at the exhausted Ghoul Priest this turn.
+**R10 · Investigation** — "Skids" spent 2 resources to gain 1 action.
+[R10·Investigation a2/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole · 2 actions left] Choose an action:
+**R10 · Investigation** — Decision made: Fight Ghoul Priest with .45 Automatic (3 ammo) — test Combat(5) vs 4, 2 dmg
+**R10 · Investigation** — Shoot the exhausted Ghoul Priest with .45 because two hits plus Beat Cop ping can finish it.
+**R10 · Investigation** — Spent 1 action: Fight with .45 Automatic (target: Ghoul Priest).
+**R10 · Investigation** — Started combat test 5 vs 4.
+[R10·Investigation a1/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h2 d15 x13 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4).
+**R10 · Investigation** — Decision made: Commit Knife (+1)
+**R10 · Investigation** — Commit one Knife to improve the first Ghoul Priest shot while saving the other for the second shot.
+**R10 · Investigation** — Committed Knife.
+[R10·Investigation a1/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h1 d15 x13 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Keep the second Knife for the next .45 shot.
+**R10 · Investigation** — Revealed 0.
+**R10 · Investigation** — Fight with .45 Automatic: success by 2 - combat 5 + committed 1 + boosts 0 + token 0 = 6 vs 4.
+**R10 · Investigation** — Ghoul Priest took 2 damage.
+[R10·Investigation a1/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h1 d15 x14 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole · 1 action left] Choose an action:
+**R10 · Investigation** — Decision made: Fight Ghoul Priest with .45 Automatic (2 ammo) — test Combat(5) vs 4, 2 dmg
+**R10 · Investigation** — Take the second .45 shot so a hit plus Beat Cop's ping defeats Ghoul Priest.
+**R10 · Investigation** — Spent 1 action: Fight with .45 Automatic (target: Ghoul Priest).
+**R10 · Investigation** — Started combat test 5 vs 4.
+[R10·Investigation a0/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h1 d15 x14 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4).
+**R10 · Investigation** — Decision made: Commit Knife (+1)
+**R10 · Investigation** — Commit the final Knife because this shot sets up the Beat Cop kill.
+**R10 · Investigation** — Committed Knife.
+[R10·Investigation a0/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x14 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Commit cards to Fight with .45 Automatic (combat vs 4).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Resolve at 6 vs 4 against the exhausted boss to avoid Retaliate risk.
+**R10 · Investigation** — Revealed skull.
+**R10 · Investigation** — Fight with .45 Automatic: success by 1 - combat 5 + committed 1 + boosts 0 + token -1 = 5 vs 4.
+**R10 · Investigation** — Ghoul Priest took 2 damage.
+[R10·Investigation a0/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x15 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · "Skids" O'Toole] Fast-ability window — use a fast ability or pass:
+**R10 · Investigation** — Decision made: Discard Beat Cop to deal 1 damage
+**R10 · Investigation** — Discard Beat Cop to deal the final damage to Ghoul Priest before it readies.
+**R10 · Investigation** — Ghoul Priest took 1 damage.
+**R10 · Investigation** — Ghoul Priest was defeated.
+**R10 · Investigation** — Beat Cop dealt 1 damage.
+[R10·Investigation a0/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x16 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: The Ghoul Priest is defeated. Choose a resolution.
+**R10 · Investigation** — Decision made: Refuse to burn it (R2)
+**R10 · Investigation** — Choose R2 because refusing to burn the house avoids trauma while keeping earned victory XP.
+[R10·Investigation a0/3 | "Skids" O'Toole 01003 | Hallway | clu0 res0 | dmg1/8 hor5/6 | h0 d15 x16 | Act3 Agd3 doom0/10]
+**R10 · Investigation** — GAME OVER: R2: the house still stands
+**R10 · Investigation** — Note added.
+**R10 · Investigation** — Note added.
+**R10 · Investigation** — Note added.
+**R10 · Investigation** — Note added.
+**R10 · Investigation** — Note added.

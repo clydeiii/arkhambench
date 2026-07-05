@@ -1,19 +1,123 @@
 {
   "act": {
-    "clues_required": 3,
-    "code": "50012",
-    "name": "Mysterious Gateway",
-    "stage": 1
+    "clues_required": null,
+    "code": "01110",
+    "name": "What Have You Done?",
+    "stage": 3
   },
   "active_skill_test": null,
   "agenda": {
-    "code": "01105",
-    "doom": 0,
-    "name": "What's Going On?!",
-    "stage": 1,
-    "threshold": 3
+    "code": "01107",
+    "doom": 3,
+    "name": "They're Getting Out!",
+    "stage": 3,
+    "threshold": 10
   },
   "card_instances": {
+    "ec0002": {
+      "attachments": [],
+      "card_code": "01119",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0002",
+      "owner": "roland",
+      "uses": {},
+      "zone": "victory"
+    },
+    "ec0010": {
+      "attachments": [],
+      "card_code": "50040",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0010",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0012": {
+      "attachments": [],
+      "card_code": "50040",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0012",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0016": {
+      "attachments": [],
+      "card_code": "01164",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0016",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0023": {
+      "attachments": [],
+      "card_code": "01167",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0023",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0025": {
+      "attachments": [],
+      "card_code": "01168",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0025",
+      "owner": "roland",
+      "uses": {},
+      "zone": "attachment"
+    },
+    "ec0029": {
+      "attachments": [],
+      "card_code": "50022",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0029",
+      "owner": "roland",
+      "uses": {},
+      "zone": "victory"
+    },
+    "pc0003": {
+      "attachments": [],
+      "card_code": "01058",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0003",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
     "pc0004": {
       "attachments": [],
       "card_code": "01058",
@@ -24,8 +128,77 @@
       "horror": 0,
       "id": "pc0004",
       "owner": "agnes",
+      "uses": {
+        "secrets": 2
+      },
+      "zone": "play"
+    },
+    "pc0005": {
+      "attachments": [],
+      "card_code": "01059",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0005",
+      "owner": "agnes",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
+    },
+    "pc0006": {
+      "attachments": [],
+      "card_code": "01059",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0006",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0008": {
+      "attachments": [],
+      "card_code": "01060",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0008",
+      "owner": "agnes",
+      "uses": {
+        "charges": 1
+      },
+      "zone": "play"
+    },
+    "pc0009": {
+      "attachments": [],
+      "card_code": "01062",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0009",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "play"
+    },
+    "pc0010": {
+      "attachments": [],
+      "card_code": "01062",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0010",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
     },
     "pc0011": {
       "attachments": [],
@@ -38,7 +211,20 @@
       "id": "pc0011",
       "owner": "agnes",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
+    },
+    "pc0012": {
+      "attachments": [],
+      "card_code": "01063",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0012",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
     },
     "pc0014": {
       "attachments": [],
@@ -51,7 +237,7 @@
       "id": "pc0014",
       "owner": "agnes",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0015": {
       "attachments": [],
@@ -64,20 +250,72 @@
       "id": "pc0015",
       "owner": "agnes",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
-    "pc0018": {
+    "pc0019": {
       "attachments": [],
-      "card_code": "01072",
+      "card_code": "01074",
       "clues": 0,
       "damage": 0,
       "doom": 0,
       "exhausted": false,
       "horror": 0,
-      "id": "pc0018",
+      "id": "pc0019",
       "owner": "agnes",
       "uses": {},
       "zone": "hand"
+    },
+    "pc0024": {
+      "attachments": [],
+      "card_code": "01086",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0024",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0028": {
+      "attachments": [],
+      "card_code": "01088",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0028",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0033": {
+      "attachments": [],
+      "card_code": "01098",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0033",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "setaside_lita": {
+      "attachments": [],
+      "card_code": "01117",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "setaside_lita",
+      "owner": "roland",
+      "uses": {},
+      "zone": "story"
     }
   },
   "chaos_bag": {
@@ -100,109 +338,128 @@
       "eldersign"
     ]
   },
-  "decision_queue": [
-    {
-      "id": "opening-mulligan",
-      "kind": "scenario",
-      "options": [
-        {
-          "label": "Keep hand and draw replacements",
-          "payload": {
-            "choice": "keep_hand",
-            "kind": "scenario"
-          }
-        },
-        {
-          "label": "Set aside Arcane Initiate",
-          "payload": {
-            "card": "pc0011",
-            "choice": "toggle_mulligan_card",
-            "kind": "scenario"
-          }
-        },
-        {
-          "label": "Set aside Drawn to the Flame",
-          "payload": {
-            "card": "pc0014",
-            "choice": "toggle_mulligan_card",
-            "kind": "scenario"
-          }
-        },
-        {
-          "label": "Set aside Forbidden Knowledge",
-          "payload": {
-            "card": "pc0004",
-            "choice": "toggle_mulligan_card",
-            "kind": "scenario"
-          }
-        },
-        {
-          "label": "Set aside Fearless",
-          "payload": {
-            "card": "pc0015",
-            "choice": "toggle_mulligan_card",
-            "kind": "scenario"
-          }
-        },
-        {
-          "label": "Set aside Leather Coat",
-          "payload": {
-            "card": "pc0018",
-            "choice": "toggle_mulligan_card",
-            "kind": "scenario"
-          }
-        }
-      ],
-      "prompt": "Opening hand: Arcane Initiate, Drawn to the Flame, Forbidden Knowledge, Fearless, Leather Coat. Set aside any number of cards, then draw replacements together."
-    }
-  ],
+  "decision_queue": [],
   "difficulty": "standard",
   "encounter_deck": [],
-  "encounter_deck_count": 32,
-  "encounter_discard": [],
-  "enemies": {},
+  "encounter_deck_count": 24,
+  "encounter_discard": [
+    "ec0023",
+    "ec0016",
+    "ec0012",
+    "ec0010"
+  ],
+  "enemies": {
+    "ec0001": {
+      "attachments": [],
+      "card_code": "01118",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": true,
+      "horror": 0,
+      "id": "ec0001",
+      "location_id": "hallway"
+    },
+    "setaside_ghoul_priest": {
+      "attachments": [],
+      "card_code": "01116",
+      "clues": 0,
+      "damage": 1,
+      "doom": 0,
+      "engaged_with": "agnes",
+      "exhausted": false,
+      "horror": 0,
+      "id": "setaside_ghoul_priest",
+      "location_id": "parlor"
+    }
+  },
   "investigator": {
-    "actions_remaining": 3,
+    "actions_remaining": 0,
     "agility": 3,
     "card_code": "01004",
     "clues": 0,
     "combat": 2,
-    "damage": 0,
-    "deck_count": 28,
-    "discard": [],
-    "engaged_enemies": [],
+    "damage": 3,
+    "deck_count": 18,
+    "discard": [
+      "pc0014",
+      "pc0011",
+      "pc0033",
+      "pc0015",
+      "pc0003",
+      "pc0012",
+      "pc0005",
+      "pc0028",
+      "pc0010",
+      "pc0006"
+    ],
+    "engaged_enemies": [
+      "setaside_ghoul_priest"
+    ],
     "exhausted": false,
     "hand": [
-      "pc0011",
-      "pc0014",
-      "pc0004",
-      "pc0015",
-      "pc0018"
+      "pc0019",
+      "pc0024"
     ],
     "health": 6,
-    "horror": 0,
+    "horror": 7,
     "id": "agnes",
     "intellect": 2,
-    "location_id": "study",
+    "location_id": "parlor",
     "name": "Agnes Baker",
-    "play_area": [],
-    "resources": 5,
+    "play_area": [
+      "pc0008",
+      "pc0004",
+      "pc0009"
+    ],
+    "resources": 3,
     "sanity": 8,
     "threat_area": [],
     "willpower": 5
   },
   "limits": {
-    "mulligan_available": [
-      "pc0011",
-      "pc0014",
-      "pc0004",
-      "pc0015",
-      "pc0018"
-    ],
+    "actions_taken": 33,
+    "encounter_cards_drawn": 12,
+    "enemies_defeated": 2,
+    "fastwin:mythos_end:11": true,
+    "last_skill_test": {
+      "auto_success": false,
+      "base": 3,
+      "boosts": 0,
+      "callback_kind": "evade",
+      "committed_icons": 0,
+      "difficulty": 1,
+      "extra_tokens": [],
+      "margin": 1,
+      "modifier": -1,
+      "skill": "agility",
+      "source": "Evade Flesh-Eater",
+      "success": true,
+      "token": "-1",
+      "value": 2
+    },
+    "mythos_doom_placed:11": true,
+    "mythos_encounter_drawn:11": true,
     "return_variant:attic": "original",
-    "return_variant:cellar": "return"
+    "return_variant:cellar": "return",
+    "temp_skill_boost:pc0008": 0
   },
   "locations": {
+    "attic": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "01113",
+      "connections": [
+        "hallway"
+      ],
+      "enemy_ids": [],
+      "id": "attic",
+      "investigator_ids": [],
+      "name": "Attic",
+      "revealed": true,
+      "shroud": 1
+    },
     "bathroom": {
       "attached_instance_ids": [],
       "clues": 0,
@@ -214,8 +471,8 @@
       "id": "bathroom",
       "investigator_ids": [],
       "name": "Bathroom",
-      "revealed": false,
-      "shroud": null
+      "revealed": true,
+      "shroud": 1
     },
     "bedroom": {
       "attached_instance_ids": [],
@@ -228,6 +485,35 @@
       "id": "bedroom",
       "investigator_ids": [],
       "name": "Bedroom",
+      "revealed": true,
+      "shroud": 2
+    },
+    "cellar": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50020",
+      "connections": [
+        "hallway",
+        "ghoul_pits"
+      ],
+      "enemy_ids": [],
+      "id": "cellar",
+      "investigator_ids": [],
+      "name": "Cellar",
+      "revealed": true,
+      "shroud": 2
+    },
+    "ghoul_pits": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50021",
+      "connections": [
+        "cellar"
+      ],
+      "enemy_ids": [],
+      "id": "ghoul_pits",
+      "investigator_ids": [],
+      "name": "Deep Below Your House",
       "revealed": false,
       "shroud": null
     },
@@ -238,27 +524,67 @@
       "connections": [
         "study",
         "bedroom",
-        "bathroom"
+        "bathroom",
+        "hallway"
       ],
       "enemy_ids": [],
       "id": "guest_hall",
       "investigator_ids": [],
       "name": "Guest Hall",
-      "revealed": false,
-      "shroud": null
+      "revealed": true,
+      "shroud": 1
+    },
+    "hallway": {
+      "attached_instance_ids": [
+        "ec0025"
+      ],
+      "clues": 0,
+      "code": "50017",
+      "connections": [
+        "guest_hall",
+        "attic",
+        "parlor",
+        "cellar"
+      ],
+      "enemy_ids": [
+        "ec0001"
+      ],
+      "id": "hallway",
+      "investigator_ids": [],
+      "name": "Hallway",
+      "revealed": true,
+      "shroud": 1
+    },
+    "parlor": {
+      "attached_instance_ids": [
+        "setaside_lita"
+      ],
+      "clues": 0,
+      "code": "01115",
+      "connections": [
+        "hallway"
+      ],
+      "enemy_ids": [
+        "setaside_ghoul_priest"
+      ],
+      "id": "parlor",
+      "investigator_ids": [
+        "agnes"
+      ],
+      "name": "Parlor",
+      "revealed": true,
+      "shroud": 2
     },
     "study": {
       "attached_instance_ids": [],
-      "clues": 1,
+      "clues": 0,
       "code": "50013",
       "connections": [
         "guest_hall"
       ],
       "enemy_ids": [],
       "id": "study",
-      "investigator_ids": [
-        "agnes"
-      ],
+      "investigator_ids": [],
       "name": "Study (Aberrant Gateway)",
       "revealed": true,
       "shroud": 3
@@ -267,15 +593,42 @@
   "pending_damage": null,
   "phase": "Investigation",
   "removed_from_game": [],
-  "result": null,
-  "round": 1,
+  "result": {
+    "actions_taken": 33,
+    "campaign_log": {
+      "ghoul_priest_still_alive": true,
+      "house": "standing",
+      "lita": "earned"
+    },
+    "damage_taken": 3,
+    "encounter_cards_drawn": 12,
+    "enemies_defeated": 2,
+    "ghoul_priest_defeated": false,
+    "horror_taken": 7,
+    "hospital_debts_xp_penalty": 0,
+    "lita_earned": true,
+    "lita_recruited": false,
+    "outcome": "no_resolution",
+    "resolution": "no_resolution",
+    "rounds_played": 11,
+    "score": 5,
+    "summary": "Agnes Baker resigned",
+    "trauma": {},
+    "victory_points": 3,
+    "xp": 5
+  },
+  "round": 11,
   "scenario": "return_to_the_gathering",
   "schema_version": 2,
-  "status": "in_progress",
+  "status": "ended",
   "trauma": {},
   "turn": {
-    "action_index": 0,
+    "action_index": 3,
     "investigator_id": "agnes"
   },
-  "victory_display": []
+  "victory_display": [
+    "ec0029",
+    "ec0002",
+    "attic"
+  ]
 }

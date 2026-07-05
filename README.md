@@ -85,8 +85,8 @@ on a single frozen engine version, and every game is step-through browsable in t
 |---|---|---:|---:|---|
 | Fable 5 (claude) | 2 3 6 7 2 3 2 3 **9** 4 | 4.10 | **6.50** | R1 g3, R2 g9 |
 | Sonnet 5 (claude) | 3 2 0 0 2 0 1 0 **8** 3 | 1.90 | **5.50** | R2 g9 |
+| GPT-5.5 (codex) | 9 4 4 0 1 3 2 6 **5** 3 | 3.70 | **4.00** | R2 g1, R2 g8 |
 | Opus 4.8 (claude) | 5 1 6 3 4 4 2 3 4 3 | 3.50 | **3.50** | R1 g3 |
-| GPT-5.5 (codex) | 9 4 4 0 1 3 2 … *(lane in progress)* | — | — | R2 g1 |
 
 ### Do models actually get better across ten games?
 
@@ -107,7 +107,7 @@ difficulty, not learning.
 | Fable 5 | +0.19 | +0.29 | **+0.20** (R +1, D −1, S −3, A +2, W +2) |
 | Sonnet 5 | +0.26 | +0.18 | **+1.00** (R −3, D −1, S 0, A +8, W +1) |
 | Opus 4.8 | −0.09 | −0.24 | **−0.60** (R −1, D +1, S −3, A +1, W −1) |
-| GPT-5.5 | *(pending)* | *(pending)* | *(pending)* |
+| GPT-5.5 | −0.18 | −0.11 | **+0.20** (R −6, D −2, S +2, A +5, W +2) |
 
 ![Second-visit deltas](results/second_visit_deltas.svg)
 
@@ -116,15 +116,17 @@ Honest reading of n=10 runs:
 - **No agent shows consistent improvement.** Fable's positive slope is real but
   small; Opus is flat-to-declining; Sonnet's +1.00 paired delta is carried entirely
   by one game (its Agnes going 0 → 8) — remove that pair and its delta is −0.75.
-- **The wins cluster where the metric looks.** Three of the four victories landed in
-  games the rotation made Agnes/late games — and two of them in the scored window.
-  Notebooks demonstrably *transport specific plans* (both Claude window-wins executed
-  a Priest-kill-then-R2 line their notebooks had described), which is different from
-  raising average play quality. Models learn **recipes**, not **skill** — at least
-  in ten games.
+- **Notebooks transport recipes, not skill.** Six wins across 40 games, and the
+  pattern is plans, not general improvement: both Claude scored-window wins executed
+  a Priest-kill-then-R2 line their notebooks had described, and GPT-5.5's game-8 win
+  re-ran the kill it had already proven. Average play quality did not rise for any
+  agent; specific successful lines *did* replay. Models learn **recipes**, not
+  **skill** — at least in ten games.
 - **Cold-start capability ≠ learning.** GPT-5.5's opening game (a 9-point R2 win
-  with an empty notebook) is the single best game of the benchmark so far — followed
-  by regression toward the field. High game-1 skill and positive learning curves are
+  with an empty notebook) is the single best game of the benchmark — and drives its
+  *negative* slope, since nothing after matched it. Its paired second-visit delta is
+  actually +0.20 (identical to Fable's): its play held steady while its hot start
+  made the trend line fall. High game-1 skill and positive learning curves are
   independent axes, and this benchmark separates them.
 - **Shared seeds make capability gaps legible.** On seed 1003 (Skids), Fable and
   Opus independently found the same R1 kill line (both scored 6 in 16 rounds);
