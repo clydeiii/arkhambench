@@ -59,28 +59,36 @@ Report format — write EXACTLY this structure and nothing else:
   `- Evidence: <the log lines and why they violate the rule>`
 Be precise and conservative: a finding you cannot ground in quoted card text or a
 named RR entry is not a finding. Do not report play-quality mistakes — only rules
-enforcement. Do not modify any files."""
+enforcement. Do not modify any files. Do NOT read the engine source (arkham/), card
+data JSON (data/), tests, or specs — audit strictly from the transcript, the
+docs_agent/ documents, and `./ahlcg card` lookups, like a judge who has the rulebook
+but not the implementation."""
 
 
 def audit_run(run_dir: Path, model: str, adjudications: str) -> tuple[str, int]:
     prompt = build_prompt(run_dir, adjudications)
-    allowed = (
-        f"Read(docs_agent/**),Read({run_dir}/log.md),Read({run_dir}/bug_reports.md),Bash(./ahlcg card:*)"
-    )
-    disallowed = "Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Bash(./ahlcg new:*),Bash(./ahlcg do:*)"
-    argv = [
-        "claude",
-        "-p",
-        prompt,
-        "--model",
-        model,
-        "--allowedTools",
-        allowed,
-        "--disallowedTools",
-        disallowed,
-        "--max-turns",
-        "60",
-    ]
+    if model == "codex":
+        # GPT-5.5 via the codex CLI; default sandbox is read-only, which is all
+        # an auditor needs (the script itself writes audit.md from stdout).
+        argv = ["codex", "exec", prompt]
+    else:
+        allowed = (
+            f"Read(docs_agent/**),Read({run_dir}/log.md),Read({run_dir}/bug_reports.md),Bash(./ahlcg card:*)"
+        )
+        disallowed = "Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Bash(./ahlcg new:*),Bash(./ahlcg do:*)"
+        argv = [
+            "claude",
+            "-p",
+            prompt,
+            "--model",
+            model,
+            "--allowedTools",
+            allowed,
+            "--disallowedTools",
+            disallowed,
+            "--max-turns",
+            "60",
+        ]
     proc = subprocess.run(argv, capture_output=True, text=True, cwd=ROOT)
     return proc.stdout.strip(), proc.returncode
 
