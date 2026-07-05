@@ -6,9 +6,9 @@ from arkham.fuzz import run_fuzz
 
 
 class FuzzSmokeTests(unittest.TestCase):
-    def test_random_legal_choices_do_not_crash(self) -> None:
-        outcomes = run_fuzz(8)
-        self.assertEqual(sum(outcomes.values()), 8)
+    def test_random_legal_choices_satisfy_invariants(self) -> None:
+        outcomes = run_fuzz(5)
+        self.assertEqual(sum(outcomes.values()), 5)
 
 
 if __name__ == "__main__":

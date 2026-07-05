@@ -420,3 +420,211 @@
 **R7 · Investigation** — Started agility test 4 vs 2.
 [R7·Investigation a1/3 | Wendy Adams 01005 | Cellar | clu2 res1 | dmg0/7 hor0/7 | h2 d21 x8 | Act2 Agd2 doom3/7]
 **R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams] Commit cards to Evade Grave-Eater (agility vs 2).
+**R7 · Investigation** — Decision made: Commit Manual Dexterity (+2)
+**R7 · Investigation** — Manual Dexterity makes the Grave-Eater evade nearly certain and replaces itself if it succeeds.
+**R7 · Investigation** — Committed Manual Dexterity.
+[R7·Investigation a1/3 | Wendy Adams 01005 | Cellar | clu2 res1 | dmg0/7 hor0/7 | h1 d21 x8 | Act2 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams] Commit cards to Evade Grave-Eater (agility vs 2).
+**R7 · Investigation** — Decision made: Done
+**R7 · Investigation** — Flashlight is better saved for future clues or Wendy redraw fuel than overcommitted to an already strong evade.
+**R7 · Investigation** — Revealed +1.
+[R7·Investigation a1/3 | Wendy Adams 01005 | Cellar | clu2 res1 | dmg0/7 hor0/7 | h1 d21 x8 | Act2 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams] Use Wendy Adams reaction after revealing +1?
+**R7 · Investigation** — Decision made: Pass
+**R7 · Investigation** — The +1 already succeeds, so I should keep the card and redraw ability for a dangerous token.
+**R7 · Investigation** — Evade Grave-Eater: success by 5 - agility 4 + committed 2 + boosts 0 + token 1 = 7 vs 2.
+**R7 · Investigation** — Grave-Eater disengaged.
+**R7 · Investigation** — Wendy Adams drew Rabbit's Foot.
+[R7·Investigation a1/3 | Wendy Adams 01005 | Cellar | clu2 res1 | dmg0/7 hor0/7 | h2 d20 x9 | Act2 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Wendy Adams · 1 action left] Choose an action:
+**R7 · Investigation** — Decision made: Move to Hallway
+**R7 · Investigation** — Taking the Hallway now keeps the Act 2 route alive; waiting in Cellar would trap me between Grave-Eater and the Hunter.
+**R7 · Investigation** — Spent 1 action: Move to Hallway.
+**R7 · Investigation** — Wendy Adams moved to Hallway.
+**R7 · Enemy** — Enemy phase began.
+**R7 · Enemy** — Corpse-Hungry Ghoul moved to Hallway.
+**R7 · Enemy** — Corpse-Hungry Ghoul engaged Wendy Adams.
+**R7 · Enemy** — Corpse-Hungry Ghoul attacked Wendy Adams.
+**R7 · Enemy** — Wendy Adams took 2 damage and 2 horror.
+**R7 · Enemy** — Corpse-Hungry Ghoul exhausted after attacking.
+**R7 · Upkeep** — Upkeep phase began.
+**R7 · Upkeep** — All exhausted cards readied.
+**R7 · Upkeep** — Wendy Adams drew Perception.
+**R7 · Upkeep** — Wendy Adams gained 1 resource.
+**R8 · Mythos** — Round 8 began.
+**R8 · Mythos** — Placed 1 doom on the agenda.
+**R8 · Mythos** — Wendy Adams drew encounter card Acolyte of Umôrdhoth.
+**R8 · Mythos** — Acolyte of Umôrdhoth spawned at Hallway.
+**R8 · Mythos** — Acolyte of Umôrdhoth engaged Wendy Adams.
+**R8 · Investigation** — Investigation phase began.
+[R8·Investigation a3/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h3 d19 x9 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams · 3 actions left] Choose an action:
+**R8 · Investigation** — Decision made: Evade Corpse-Hungry Ghoul (evade 3) — test Agility(4)
+**R8 · Investigation** — Corpse-Hungry Ghoul is the harder evade and must be exhausted before I can safely reach Attic.
+**R8 · Investigation** — Spent 1 action: Evade Corpse-Hungry Ghoul.
+**R8 · Investigation** — Started agility test 4 vs 3.
+[R8·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h3 d19 x9 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams] Commit cards to Evade Corpse-Hungry Ghoul (agility vs 3).
+**R8 · Investigation** — Decision made: Commit Rabbit's Foot (+1)
+**R8 · Investigation** — The wild icon raises the Corpse-Hungry evade to a safer breakpoint.
+**R8 · Investigation** — Committed Rabbit's Foot.
+[R8·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h2 d19 x9 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams] Commit cards to Evade Corpse-Hungry Ghoul (agility vs 3).
+**R8 · Investigation** — Decision made: Done
+**R8 · Investigation** — The remaining cards do not help agility, and I need one available for Wendy's redraw if the token is bad.
+**R8 · Investigation** — Revealed cultist.
+[R8·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h2 d19 x9 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams] Use Wendy Adams reaction after revealing cultist?
+**R8 · Investigation** — Decision made: Pass
+**R8 · Investigation** — Cultist still succeeds on this boosted evade, so no redraw is needed.
+**R8 · Investigation** — Evade Corpse-Hungry Ghoul: success by 1 - agility 4 + committed 1 + boosts 0 + token -1 = 4 vs 3.
+**R8 · Investigation** — Corpse-Hungry Ghoul disengaged.
+[R8·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h2 d19 x10 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams · 2 actions left] Choose an action:
+**R8 · Investigation** — Decision made: Evade Acolyte of Umôrdhoth (evade 2) — test Agility(4)
+**R8 · Investigation** — Acolyte is an easier evade, and I need to preserve clue tools for Attic.
+**R8 · Investigation** — Spent 1 action: Evade Acolyte of Umôrdhoth.
+**R8 · Investigation** — Started agility test 4 vs 2.
+[R8·Investigation a1/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h2 d19 x10 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams] Commit cards to Evade Acolyte of Umôrdhoth (agility vs 2).
+**R8 · Investigation** — Decision made: Done
+**R8 · Investigation** — No hand card improves this agility test, and Wendy can redraw a failing token.
+**R8 · Investigation** — Revealed 0.
+[R8·Investigation a1/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h2 d19 x10 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams] Use Wendy Adams reaction after revealing 0?
+**R8 · Investigation** — Decision made: Pass
+**R8 · Investigation** — The 0 succeeds, so I should keep both clue cards for the next turn.
+**R8 · Investigation** — Evade Acolyte of Umôrdhoth: success by 2 - agility 4 + committed 0 + boosts 0 + token 0 = 4 vs 2.
+**R8 · Investigation** — Acolyte of Umôrdhoth disengaged.
+[R8·Investigation a1/3 | Wendy Adams 01005 | Hallway | clu2 res2 | dmg2/7 hor2/7 | h2 d19 x10 | Act2 Agd2 doom4/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Wendy Adams · 1 action left] Choose an action:
+**R8 · Investigation** — Decision made: Move to Attic
+**R8 · Investigation** — With both Hallway enemies exhausted, I can use the last action to reach Attic and look for the third clue.
+**R8 · Investigation** — Spent 1 action: Move to Attic.
+**R8 · Investigation** — Wendy Adams moved to Attic.
+**R8 · Investigation** — Attic was revealed.
+**R8 · Investigation** — Far Above Your House was put into play.
+**R8 · Enemy** — Enemy phase began.
+**R8 · Upkeep** — Upkeep phase began.
+**R8 · Upkeep** — All exhausted cards readied.
+**R8 · Upkeep** — Wendy Adams drew Scavenging.
+**R8 · Upkeep** — Wendy Adams gained 1 resource.
+**R9 · Mythos** — Round 9 began.
+**R9 · Mythos** — Placed 1 doom on the agenda.
+**R9 · Mythos** — Wendy Adams drew encounter card Chill from Below.
+**R9 · Mythos** — Started willpower test 4 vs 3.
+[R9·Mythos | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h3 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Mythos** — Decision presented: [Round 9 · Mythos · Wendy Adams] Commit cards to Chill from Below (willpower vs 3).
+**R9 · Mythos** — Decision made: Done
+**R9 · Mythos** — I have no willpower icons to commit, so Wendy's redraw is the protection against a bad Chill token.
+**R9 · Mythos** — Revealed cultist.
+[R9·Mythos | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h3 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Mythos** — Decision presented: [Round 9 · Mythos · Wendy Adams] Use Wendy Adams reaction after revealing cultist?
+**R9 · Mythos** — Decision made: Pass
+**R9 · Mythos** — Cultist still succeeds on Chill, preserving all three cards for the clue turn.
+**R9 · Mythos** — Chill from Below: success by 0 - willpower 4 + committed 0 + boosts 0 + token -1 = 3 vs 3.
+**R9 · Investigation** — Investigation phase began.
+[R9·Investigation a3/3 | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h3 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams · 3 actions left] Choose an action:
+**R9 · Investigation** — Decision made: Investigate Attic (shroud 3) — test Intellect(3) vs 3
+**R9 · Investigation** — I need the third clue this turn, and committing Perception preserves actions for the Hallway enemies.
+**R9 · Investigation** — Spent 1 action: Investigate Attic.
+**R9 · Investigation** — Started intellect test 3 vs 3.
+[R9·Investigation a2/3 | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h3 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams] Commit cards to Investigate Attic (intellect vs 3).
+**R9 · Investigation** — Decision made: Commit Perception (+2)
+**R9 · Investigation** — Perception boosts the key Attic clue test and replaces itself on success.
+**R9 · Investigation** — Committed Perception.
+[R9·Investigation a2/3 | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h2 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams] Commit cards to Investigate Attic (intellect vs 3).
+**R9 · Investigation** — Decision made: Commit Scavenging (+1)
+**R9 · Investigation** — Scavenging's icon moves the Attic investigate to a much safer breakpoint for the must-have clue.
+**R9 · Investigation** — Committed Scavenging.
+[R9·Investigation a2/3 | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h1 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams] Commit cards to Investigate Attic (intellect vs 3).
+**R9 · Investigation** — Decision made: Done
+**R9 · Investigation** — Flashlight is the redraw discard if the boosted investigate still reveals a failing token.
+**R9 · Investigation** — Revealed 0.
+[R9·Investigation a2/3 | Wendy Adams 01005 | Attic | clu2 res3 | dmg2/7 hor2/7 | h1 d18 x10 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams] Use Wendy Adams reaction after revealing 0?
+**R9 · Investigation** — Decision made: Pass
+**R9 · Investigation** — The 0 succeeds and secures the Attic clue, so no redraw is needed.
+**R9 · Investigation** — Investigate Attic: success by 3 - intellect 3 + committed 3 + boosts 0 + token 0 = 6 vs 3.
+**R9 · Investigation** — Wendy Adams discovered 1 clue.
+**R9 · Investigation** — Wendy Adams drew "Look what I found!".
+[R9·Investigation a2/3 | Wendy Adams 01005 | Attic | clu3 res3 | dmg2/7 hor2/7 | h2 d17 x12 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams · 2 actions left] Choose an action:
+**R9 · Investigation** — Decision made: Move to Hallway
+**R9 · Investigation** — With three clues, I need to be in Hallway for Act 2 to break the barrier.
+**R9 · Investigation** — Spent 1 action: Move to Hallway.
+**R9 · Investigation** — Wendy Adams moved to Hallway.
+**R9 · Investigation** — Acolyte of Umôrdhoth engaged Wendy Adams.
+**R9 · Investigation** — Corpse-Hungry Ghoul engaged Wendy Adams.
+[R9·Investigation a1/3 | Wendy Adams 01005 | Hallway | clu3 res3 | dmg2/7 hor2/7 | h2 d17 x12 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams · 1 action left] Choose an action:
+**R9 · Investigation** — Decision made: Evade Corpse-Hungry Ghoul (evade 3) — test Agility(4)
+**R9 · Investigation** — Corpse-Hungry Ghoul hits hardest, so evading it leaves only the smaller Acolyte attack if Act 2 does not advance first.
+**R9 · Investigation** — Spent 1 action: Evade Corpse-Hungry Ghoul.
+**R9 · Investigation** — Started agility test 4 vs 3.
+[R9·Investigation a0/3 | Wendy Adams 01005 | Hallway | clu3 res3 | dmg2/7 hor2/7 | h2 d17 x12 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams] Commit cards to Evade Corpse-Hungry Ghoul (agility vs 3).
+**R9 · Investigation** — Decision made: Done
+**R9 · Investigation** — No available card improves agility, and both hand cards are redraw fuel for Wendy.
+**R9 · Investigation** — Revealed skull.
+[R9·Investigation a0/3 | Wendy Adams 01005 | Hallway | clu3 res3 | dmg2/7 hor2/7 | h2 d17 x12 | Act2 Agd2 doom5/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Wendy Adams] Use Wendy Adams reaction after revealing skull?
+**R9 · Investigation** — Decision made: Discard Flashlight to cancel and redraw
+**R9 · Investigation** — Skull fails with two Ghouls at my location, and Flashlight is less useful than keeping Look what I found for later clue safety.
+**R9 · Investigation** — Wendy canceled the chaos token and redrew.
+**R9 · Investigation** — Revealed eldersign.
+**R9 · Investigation** — Evade Corpse-Hungry Ghoul: success by 1 - agility 4 + committed 0 + boosts 0 + token 0 = 4 vs 3.
+**R9 · Investigation** — Corpse-Hungry Ghoul disengaged.
+**R9 · Enemy** — Enemy phase began.
+**R9 · Enemy** — Acolyte of Umôrdhoth attacked Wendy Adams.
+**R9 · Enemy** — Wendy Adams took 1 damage and 1 horror.
+**R9 · Enemy** — Acolyte of Umôrdhoth exhausted after attacking.
+**R9 · Upkeep** — Upkeep phase began.
+**R9 · Upkeep** — All exhausted cards readied.
+**R9 · Upkeep** — Corpse-Hungry Ghoul engaged Wendy Adams.
+**R9 · Upkeep** — Wendy Adams drew Knife.
+**R9 · Upkeep** — Wendy Adams gained 1 resource.
+[R9·Upkeep | Wendy Adams 01005 | Hallway | clu3 res4 | dmg3/7 hor3/7 | h2 d16 x13 | Act2 Agd2 doom5/7]
+**R9 · Upkeep** — Decision presented: Spend 3 clues to advance The Barrier?
+**R9 · Upkeep** — Decision made: Spend 3 clues and advance
+**R9 · Upkeep** — Spending the three clues now breaks the barrier and avoids losing another round to the agenda.
+**R9 · Upkeep** — Wendy Adams spent 3 clue.
+**R9 · Upkeep** — Parlor was revealed.
+**R9 · Upkeep** — Ghoul Priest spawned at Hallway.
+**R9 · Upkeep** — Ghoul Priest engaged Wendy Adams.
+**R9 · Upkeep** — Act advanced to What Have You Done?.
+**R10 · Mythos** — Round 10 began.
+**R10 · Mythos** — Placed 1 doom on the agenda.
+**R10 · Mythos** — Wendy Adams drew encounter card Rotting Remains.
+**R10 · Mythos** — Started willpower test 4 vs 3.
+[R10·Mythos | Wendy Adams 01005 | Hallway | clu0 res4 | dmg3/7 hor3/7 | h2 d16 x13 | Act3 Agd2 doom6/7]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · Wendy Adams] Commit cards to Rotting Remains (willpower vs 3).
+**R10 · Mythos** — Decision made: Done
+**R10 · Mythos** — No hand card helps willpower, so Wendy's redraw is the only protection against lethal horror.
+**R10 · Mythos** — Revealed skull.
+[R10·Mythos | Wendy Adams 01005 | Hallway | clu0 res4 | dmg3/7 hor3/7 | h2 d16 x13 | Act3 Agd2 doom6/7]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · Wendy Adams] Use Wendy Adams reaction after revealing skull?
+**R10 · Mythos** — Decision made: Discard Knife to cancel and redraw
+**R10 · Mythos** — Skull fails with the clustered Ghouls, and Knife is the least important card compared with preserving one hand card.
+**R10 · Mythos** — Wendy canceled the chaos token and redrew.
+**R10 · Mythos** — Revealed autofail.
+**R10 · Mythos** — Rotting Remains: failure (autofail) by 3 - autofail (skill value 0) vs 3.
+**R10 · Mythos** — Wendy Adams took 0 damage and 3 horror.
+**R10 · Investigation** — Investigation phase began.
+[R10·Investigation a3/3 | Wendy Adams 01005 | Hallway | clu0 res4 | dmg3/7 hor6/7 | h1 d16 x14 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Wendy Adams · 3 actions left] Choose an action:
+**R10 · Investigation** — Decision made: Draw 1 card
+**R10 · Investigation** — I need a real escape card like Elusive or Survival Instinct; triple-evading still leaves me trapped at 6 horror.
+**R10 · Investigation** — Spent 1 action: Draw 1 card.
+[R10·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu0 res4 | dmg3/7 hor6/7 | h1 d16 x14 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: Choose the next enemy to make an attack of opportunity.
+**R10 · Investigation** — Decision made: Attack next: Acolyte of Umôrdhoth
+**R10 · Investigation** — All attacks defeat me at 6 horror, so I choose the smallest attack of opportunity.
+**R10 · Investigation** — Acolyte of Umôrdhoth attacked Wendy Adams.
+**R10 · Investigation** — Wendy Adams took 1 damage and 1 horror.
+[R10·Investigation a2/3 | Wendy Adams 01005 | Hallway | clu0 res4 | dmg4/7 hor7/7 | h1 d16 x14 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — GAME OVER: Wendy Adams was defeated

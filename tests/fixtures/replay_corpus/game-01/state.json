@@ -1,0 +1,238 @@
+{
+  "act": {
+    "clues_required": 2,
+    "code": "01108",
+    "name": "Trapped",
+    "stage": 1
+  },
+  "active_skill_test": {
+    "autofail": false,
+    "base": 3,
+    "boosts": [],
+    "committed": [
+      "pc0032"
+    ],
+    "difficulty": 2,
+    "modifier": 0,
+    "on_failure": {},
+    "on_success": {
+      "kind": "investigate"
+    },
+    "skill": "intellect",
+    "source": "Investigate Study",
+    "token": null
+  },
+  "agenda": {
+    "code": "01105",
+    "doom": 1,
+    "name": "What's Going On?!",
+    "stage": 1,
+    "threshold": 3
+  },
+  "card_instances": {
+    "ec0016": {
+      "attachments": [],
+      "card_code": "01164",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0016",
+      "owner": "roland",
+      "uses": {},
+      "zone": "threat"
+    },
+    "pc0005": {
+      "attachments": [],
+      "card_code": "01017",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0005",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0009": {
+      "attachments": [],
+      "card_code": "01020",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0009",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0014": {
+      "attachments": [],
+      "card_code": "01023",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0014",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0022": {
+      "attachments": [],
+      "card_code": "01039",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0022",
+      "owner": "roland",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0029": {
+      "attachments": [],
+      "card_code": "01089",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0029",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    }
+  },
+  "chaos_bag": {
+    "tokens": [
+      "+1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "-1",
+      "-2",
+      "-2",
+      "-3",
+      "-4",
+      "skull",
+      "skull",
+      "cultist",
+      "tablet",
+      "autofail",
+      "eldersign"
+    ]
+  },
+  "decision_queue": [
+    {
+      "id": "commit-cards",
+      "kind": "commit_cards",
+      "options": [
+        {
+          "label": "Done",
+          "payload": {
+            "kind": "commit_done"
+          }
+        }
+      ],
+      "prompt": "[Round 2 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Study (intellect vs 2)."
+    }
+  ],
+  "difficulty": "standard",
+  "encounter_deck": [],
+  "encounter_deck_count": 27,
+  "encounter_discard": [],
+  "enemies": {},
+  "investigator": {
+    "actions_remaining": 2,
+    "agility": 2,
+    "card_code": "01001",
+    "clues": 1,
+    "combat": 4,
+    "damage": 0,
+    "deck_count": 27,
+    "discard": [
+      "pc0022"
+    ],
+    "engaged_enemies": [],
+    "exhausted": false,
+    "hand": [
+      "pc0005",
+      "pc0009",
+      "pc0014",
+      "pc0029"
+    ],
+    "health": 9,
+    "horror": 0,
+    "id": "roland",
+    "intellect": 3,
+    "location_id": "study",
+    "name": "Roland Banks",
+    "play_area": [],
+    "resources": 6,
+    "sanity": 5,
+    "threat_area": [
+      "ec0016"
+    ],
+    "willpower": 3
+  },
+  "limits": {
+    "actions_taken": 4,
+    "encounter_cards_drawn": 1,
+    "fastwin:mythos_end:2": true,
+    "last_skill_test": {
+      "auto_success": false,
+      "base": 3,
+      "boosts": 0,
+      "callback_kind": null,
+      "committed_icons": 0,
+      "difficulty": 2,
+      "extra_tokens": [],
+      "margin": 2,
+      "modifier": -4,
+      "skill": "intellect",
+      "source": "Investigate Study",
+      "success": false,
+      "token": "-4",
+      "value": 0
+    },
+    "mythos_doom_placed:2": true,
+    "mythos_encounter_drawn:2": true
+  },
+  "locations": {
+    "study": {
+      "attached_instance_ids": [],
+      "clues": 1,
+      "code": "01111",
+      "connections": [],
+      "enemy_ids": [],
+      "id": "study",
+      "investigator_ids": [
+        "roland"
+      ],
+      "name": "Study",
+      "revealed": true,
+      "shroud": 2
+    }
+  },
+  "pending_damage": null,
+  "phase": "Investigation",
+  "removed_from_game": [],
+  "result": null,
+  "round": 2,
+  "scenario": "the_gathering",
+  "schema_version": 2,
+  "status": "in_progress",
+  "trauma": {},
+  "turn": {
+    "action_index": 1,
+    "investigator_id": "roland"
+  },
+  "victory_display": []
+}
