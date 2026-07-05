@@ -57,15 +57,34 @@ def variants(codes: set[str]) -> list[str]:
     return sorted(out)
 
 
-def fetch(name: str, dest: Path, delay: float) -> str:
+def known_missing(dest: Path) -> set[str]:
+    ledger = dest / "missing.txt"
+    if not ledger.exists():
+        return set()
+    return {line.strip() for line in ledger.read_text(encoding="utf-8").splitlines() if line.strip()}
+
+
+def record_missing(dest: Path, name: str) -> None:
+    ledger = dest / "missing.txt"
+    with ledger.open("a", encoding="utf-8") as handle:
+        handle.write(name + "\n")
+
+
+def fetch(name: str, dest: Path, delay: float, missing: set[str]) -> str:
     target = dest / name
     if target.exists() and target.stat().st_size > 0:
         return "cached"
+    if name in missing:
+        # Negative cache: most misses are card backs that do not exist
+        # (single-sided cards) — no point re-asking arkhamdb every deploy.
+        return "known-missing"
     request = urllib.request.Request(BASE + name, headers={"User-Agent": "ArkhamBench viewer cache (private research)"})
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
             payload = response.read()
     except Exception as exc:  # noqa: BLE001 - report and continue
+        if "404" in str(exc) or "500" in str(exc):
+            record_missing(dest, name)
         time.sleep(delay)
         return f"miss ({exc})"
     target.write_bytes(payload)
@@ -86,14 +105,15 @@ def main() -> int:
     if not names:
         print("no exported runs found; nothing to fetch")
         return 0
-    print(f"fetching {len(names)} images into {dest} (delay {args.delay}s)")
+    missing = known_missing(dest)
+    print(f"fetching {len(names)} images into {dest} (delay {args.delay}s; {len(missing)} known-missing skipped)")
     fetched = cached = missed = 0
     for name in names:
-        status = fetch(name, dest, args.delay)
+        status = fetch(name, dest, args.delay, missing)
         if status == "fetched":
             fetched += 1
             print(f"  {name}: fetched")
-        elif status == "cached":
+        elif status in ("cached", "known-missing"):
             cached += 1
         else:
             missed += 1
