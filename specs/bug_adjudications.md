@@ -127,3 +127,34 @@ reporting channel works; the claims just didn't survive the source texts.
     list since their respective phases (V1). Replaced the ad-hoc code!=... chain
     with a named SPECIAL_WINDOW_PLAYS set including 01065 and 01080. Regression
     test: ReactionOnlyPlayTests. Credit: GPT-5.5, game 5, R6.
+
+## Transcript-audit pass #1 (Fable 5 auditing 3 Haiku games, fresh seeds) — 2026-07-04
+
+First run of the cheap-play/expensive-audit pipeline (scripts/audit_game.py).
+Seven findings; all verified against code/state; fixes = specs/fixes_batch_5_audit.md.
+
+13. **Dissonant Voices discarded to the PLAYER discard pile** (game-01) —
+    CONFIRMED; discard_from_threat conflates ownership; encounter cards must return
+    to the encounter discard. Verified in state.json (ec0019).
+14. **Necronomicon fetched to hand never resolved its Revelation** (game-02) —
+    CONFIRMED EXPLOIT: search-to-hand bypasses the weakness-enters-hand rule; the
+    signature weakness was later randomly discarded, never entering play.
+15. **Research Librarian auto-fetches with no decision** (game-02) — CONFIRMED:
+    optional reaction force-fired, engine picked the target (the weakness!) over a
+    legal Medical Texts.
+16. **Sequential mulligan reveals replacements between choices** (game-02) —
+    CONFIRMED deviation: RR requires a single simultaneous declaration.
+17. **Take Resource granted 2 resources after an AoO** (game-03) — CONFIRMED
+    CRITICAL: action effects double-execute whenever an AoO resolves without an
+    interposing decision (resume chain + original stack both run the effect). Class
+    bug affecting every AoO-provoking action with no soak in play, engine-wide,
+    since phase B.
+18. **Frozen in Fear end-of-turn test fired before the post-final-action window**
+    (game-03) — CONFIRMED: end-of-turn Forced effects must wait for the during-turn
+    window to close (same class as #6/#7).
+19. (game-01 pass 2 + game-03 pass 2 found nothing else; game-01 was otherwise
+    fully reconciled — 11 skill tests, all math verified by the auditor.)
+
+Pipeline economics: 3 Haiku games + 3 Fable audits found 6 new confirmed defects —
+including the double-execution class two live hunts missed — at roughly a tenth of
+a live hunt's token cost.
