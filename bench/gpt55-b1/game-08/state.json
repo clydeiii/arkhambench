@@ -1,0 +1,281 @@
+{
+  "act": {
+    "clues_required": 3,
+    "code": "50012",
+    "name": "Mysterious Gateway",
+    "stage": 1
+  },
+  "active_skill_test": null,
+  "agenda": {
+    "code": "01105",
+    "doom": 0,
+    "name": "What's Going On?!",
+    "stage": 1,
+    "threshold": 3
+  },
+  "card_instances": {
+    "pc0006": {
+      "attachments": [],
+      "card_code": "01024",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0006",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0007": {
+      "attachments": [],
+      "card_code": "01025",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0007",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0017": {
+      "attachments": [],
+      "card_code": "01050",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0017",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0020": {
+      "attachments": [],
+      "card_code": "01052",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0020",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0024": {
+      "attachments": [],
+      "card_code": "01086",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0024",
+      "owner": "skids",
+      "uses": {},
+      "zone": "hand"
+    }
+  },
+  "chaos_bag": {
+    "tokens": [
+      "+1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "-1",
+      "-2",
+      "-2",
+      "-3",
+      "-4",
+      "skull",
+      "skull",
+      "cultist",
+      "tablet",
+      "autofail",
+      "eldersign"
+    ]
+  },
+  "decision_queue": [
+    {
+      "id": "opening-mulligan",
+      "kind": "scenario",
+      "options": [
+        {
+          "label": "Keep hand and draw replacements",
+          "payload": {
+            "choice": "keep_hand",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Vicious Blow",
+          "payload": {
+            "card": "pc0007",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Knife",
+          "payload": {
+            "card": "pc0024",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Dynamite Blast",
+          "payload": {
+            "card": "pc0006",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Elusive",
+          "payload": {
+            "card": "pc0017",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Sneak Attack",
+          "payload": {
+            "card": "pc0020",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        }
+      ],
+      "prompt": "Opening hand: Vicious Blow, Knife, Dynamite Blast, Elusive, Sneak Attack. Set aside any number of cards, then draw replacements together."
+    }
+  ],
+  "difficulty": "standard",
+  "encounter_deck": [],
+  "encounter_deck_count": 32,
+  "encounter_discard": [],
+  "enemies": {},
+  "investigator": {
+    "actions_remaining": 3,
+    "agility": 4,
+    "card_code": "01003",
+    "clues": 0,
+    "combat": 3,
+    "damage": 0,
+    "deck_count": 28,
+    "discard": [],
+    "engaged_enemies": [],
+    "exhausted": false,
+    "hand": [
+      "pc0007",
+      "pc0024",
+      "pc0006",
+      "pc0017",
+      "pc0020"
+    ],
+    "health": 8,
+    "horror": 0,
+    "id": "skids",
+    "intellect": 3,
+    "location_id": "study",
+    "name": "\"Skids\" O'Toole",
+    "play_area": [],
+    "resources": 5,
+    "sanity": 6,
+    "threat_area": [],
+    "willpower": 2
+  },
+  "limits": {
+    "mulligan_available": [
+      "pc0007",
+      "pc0024",
+      "pc0006",
+      "pc0017",
+      "pc0020"
+    ],
+    "return_variant:attic": "original",
+    "return_variant:cellar": "return"
+  },
+  "locations": {
+    "bathroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50016",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bathroom",
+      "investigator_ids": [],
+      "name": "Bathroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "bedroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50015",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bedroom",
+      "investigator_ids": [],
+      "name": "Bedroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "guest_hall": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50014",
+      "connections": [
+        "study",
+        "bedroom",
+        "bathroom"
+      ],
+      "enemy_ids": [],
+      "id": "guest_hall",
+      "investigator_ids": [],
+      "name": "Guest Hall",
+      "revealed": false,
+      "shroud": null
+    },
+    "study": {
+      "attached_instance_ids": [],
+      "clues": 1,
+      "code": "50013",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "study",
+      "investigator_ids": [
+        "skids"
+      ],
+      "name": "Study (Aberrant Gateway)",
+      "revealed": true,
+      "shroud": 3
+    }
+  },
+  "pending_damage": null,
+  "phase": "Investigation",
+  "removed_from_game": [],
+  "result": null,
+  "round": 1,
+  "scenario": "return_to_the_gathering",
+  "schema_version": 2,
+  "status": "in_progress",
+  "trauma": {},
+  "turn": {
+    "action_index": 0,
+    "investigator_id": "skids"
+  },
+  "victory_display": []
+}

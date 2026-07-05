@@ -1,0 +1,617 @@
+{"data": {"prompt": "Opening hand: Vicious Blow, Flashlight, Opportunist, Overpower, .41 Derringer. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 1, "status": "[R1\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu0 res5 | dmg0/8 hor0/6 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Set aside Opportunist", "option": 4}, "phase": "Investigation", "round": 1, "seq": 2, "type": "decision_made"}
+{"data": {"message": "Mulligan Opportunist because the other four cards cover clues and fighting while this needs already-favorable tests."}, "phase": "Investigation", "round": 1, "seq": 3, "type": "agent_reason"}
+{"data": {"prompt": "Opening hand: Vicious Blow, Flashlight, Opportunist, Overpower, .41 Derringer. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 4, "status": "[R1\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu0 res5 | dmg0/8 hor0/6 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Keep hand and draw replacements", "option": 1}, "phase": "Investigation", "round": 1, "seq": 5, "type": "decision_made"}
+{"data": {"message": "Keep after pitching only the weakest card so I retain Flashlight, weapon, and attack commits."}, "phase": "Investigation", "round": 1, "seq": 6, "type": "agent_reason"}
+{"data": {"drew": ["pc0018"], "message": "Mulliganed Opportunist; drew Elusive.", "out": ["pc0022"]}, "phase": "Investigation", "round": 1, "seq": 7, "type": "mulligan"}
+{"data": {"message": "Opening hand finalized: Vicious Blow, Flashlight, Overpower, .41 Derringer, Elusive."}, "phase": "Investigation", "round": 1, "seq": 8, "type": "setup_complete"}
+{"data": {"attic": "original", "cellar": "return", "message": "Setup chose the original Attic and the return Cellar."}, "phase": "Investigation", "round": 1, "seq": 9, "type": "setup_variants"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 10, "status": "[R1\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu0 res5 | dmg0/8 hor0/6 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Flashlight (2 res)", "option": 7}, "phase": "Investigation", "round": 1, "seq": 11, "type": "decision_made"}
+{"data": {"message": "Flashlight turns the Study clue into a high-odds test and Skids needs early clues for Act 1."}, "phase": "Investigation", "round": 1, "seq": 12, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Flashlight."}, "phase": "Investigation", "round": 1, "seq": 13, "type": "action_spent"}
+{"data": {"card": "pc0025", "message": "\"Skids\" O'Toole played Flashlight."}, "phase": "Investigation", "round": 1, "seq": 14, "type": "card_played"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 15, "status": "[R1\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu0 res3 | dmg0/8 hor0/6 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate with Flashlight (3 supplies, shroud -2)", "option": 6}, "phase": "Investigation", "round": 1, "seq": 16, "type": "decision_made"}
+{"data": {"message": "Using a Flashlight supply makes this 3 vs 1 so only the worst tokens miss the Study clue."}, "phase": "Investigation", "round": 1, "seq": 17, "type": "agent_reason"}
+{"data": {"action": "flashlight", "cost": 1, "message": "Spent 1 action: Investigate Study (Aberrant Gateway) with Flashlight."}, "phase": "Investigation", "round": 1, "seq": 18, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate with Flashlight Study (Aberrant Gateway)"}, "phase": "Investigation", "round": 1, "seq": 19, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate with Flashlight Study (Aberrant Gateway) (intellect vs 1)."}, "phase": "Investigation", "round": 1, "seq": 20, "status": "[R1\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu0 res3 | dmg0/8 hor0/6 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 1, "seq": 21, "type": "decision_made"}
+{"data": {"message": "No commit because 3 vs 1 is already favorable and Elusive is a valuable escape card."}, "phase": "Investigation", "round": 1, "seq": 22, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 1, "seq": 23, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 2, "message": "Investigate with Flashlight Study (Aberrant Gateway): success by 2 - intellect 3 + committed 0 + boosts 0 + token 0 = 3 vs 1.", "modifier": 0, "skill": "intellect", "source": "Investigate with Flashlight Study (Aberrant Gateway)", "success": true, "token": "0", "value": 3}, "phase": "Investigation", "round": 1, "seq": 24, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole discovered 1 clue."}, "phase": "Investigation", "round": 1, "seq": 25, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 26, "status": "[R1\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu1 res3 | dmg0/8 hor0/6 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play .41 Derringer (3 res)", "option": 7}, "phase": "Investigation", "round": 1, "seq": 27, "type": "decision_made"}
+{"data": {"message": "A weapon in play before mythos prevents early ghouls from forcing inefficient bare-handed fights."}, "phase": "Investigation", "round": 1, "seq": 28, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play .41 Derringer."}, "phase": "Investigation", "round": 1, "seq": 29, "type": "action_spent"}
+{"data": {"card": "pc0014", "message": "\"Skids\" O'Toole played .41 Derringer."}, "phase": "Investigation", "round": 1, "seq": 30, "type": "card_played"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 1, "seq": 31, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 1, "seq": 32, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 1, "seq": 33, "type": "ready_step"}
+{"data": {"card": "pc0009", "message": "\"Skids\" O'Toole drew Switchblade."}, "phase": "Upkeep", "round": 1, "seq": 34, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 1, "seq": 35, "type": "resource_gained"}
+{"data": {"message": "Round 2 began."}, "phase": "Mythos", "round": 2, "seq": 36, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 2, "seq": 37, "type": "doom_placed"}
+{"data": {"card": "ec0029", "message": "\"Skids\" O'Toole drew encounter card Corpse-Hungry Ghoul."}, "phase": "Mythos", "round": 2, "seq": 38, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul spawned at Bedroom."}, "phase": "Mythos", "round": 2, "seq": 39, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 2, "seq": 40, "type": "phase_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 41, "status": "[R2\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Study (Aberrant Gateway) | clu1 res1 | dmg0/8 hor0/6 | h4 d27 x0 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 2, "seq": 42, "type": "decision_made"}
+{"data": {"message": "Move to Guest Hall so Skids can reach the remaining Act 1 clues and spend them there later."}, "phase": "Investigation", "round": 2, "seq": 43, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 44, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "\"Skids\" O'Toole moved to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 45, "type": "investigator_moved"}
+{"data": {"location": "guest_hall", "message": "Guest Hall was revealed."}, "phase": "Investigation", "round": 2, "seq": 46, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 47, "status": "[R2\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu1 res1 | dmg0/8 hor0/6 | h4 d27 x0 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bathroom", "option": 4}, "phase": "Investigation", "round": 2, "seq": 48, "type": "decision_made"}
+{"data": {"message": "Bathroom is the accessible clue route while the Bedroom has the Corpse-Hungry Ghoul waiting."}, "phase": "Investigation", "round": 2, "seq": 49, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bathroom."}, "phase": "Investigation", "round": 2, "seq": 50, "type": "action_spent"}
+{"data": {"location": "bathroom", "message": "\"Skids\" O'Toole moved to Bathroom."}, "phase": "Investigation", "round": 2, "seq": 51, "type": "investigator_moved"}
+{"data": {"location": "bathroom", "message": "Bathroom was revealed."}, "phase": "Investigation", "round": 2, "seq": 52, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 53, "status": "[R2\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Bathroom | clu1 res1 | dmg0/8 hor0/6 | h4 d27 x0 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bathroom (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 2, "seq": 54, "type": "decision_made"}
+{"data": {"message": "Raw 3 vs 1 is acceptable here and saving Flashlight helps with harder clues after this."}, "phase": "Investigation", "round": 2, "seq": 55, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bathroom."}, "phase": "Investigation", "round": 2, "seq": 56, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Bathroom"}, "phase": "Investigation", "round": 2, "seq": 57, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate Bathroom (intellect vs 1)."}, "phase": "Investigation", "round": 2, "seq": 58, "status": "[R2\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Bathroom | clu1 res1 | dmg0/8 hor0/6 | h4 d27 x0 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 2, "seq": 59, "type": "decision_made"}
+{"data": {"message": "Hold Elusive because this test is already favorable and the event can rescue a bad enemy turn."}, "phase": "Investigation", "round": 2, "seq": 60, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 2, "seq": 61, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 2, "message": "Investigate Bathroom: success by 2 - intellect 3 + committed 0 + boosts 0 + token 0 = 3 vs 1.", "modifier": 0, "skill": "intellect", "source": "Investigate Bathroom", "success": true, "token": "0", "value": 3}, "phase": "Investigation", "round": 2, "seq": 62, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole discovered 1 clue."}, "phase": "Investigation", "round": 2, "seq": 63, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 2, "seq": 64, "status": "[R2\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Bathroom | clu2 res1 | dmg0/8 hor0/6 | h4 d27 x0 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 2, "seq": 65, "type": "decision_made"}
+{"data": {"message": "Do not spend the last resource on Switchblade while Derringer and Flashlight already fill the useful hand roles."}, "phase": "Investigation", "round": 2, "seq": 66, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 2, "seq": 67, "type": "phase_started"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul moved to Guest Hall."}, "phase": "Enemy", "round": 2, "seq": 68, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 2, "seq": 69, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 2, "seq": 70, "type": "ready_step"}
+{"data": {"card": "pc0016", "message": "\"Skids\" O'Toole drew Hard Knocks."}, "phase": "Upkeep", "round": 2, "seq": 71, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 2, "seq": 72, "type": "resource_gained"}
+{"data": {"message": "Round 3 began."}, "phase": "Mythos", "round": 3, "seq": 73, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 3, "seq": 74, "type": "doom_placed"}
+{"data": {"card": "ec0001", "message": "\"Skids\" O'Toole drew encounter card Flesh-Eater."}, "phase": "Mythos", "round": 3, "seq": 75, "type": "encounter_drawn"}
+{"data": {"location": "attic", "message": "Attic was put into play."}, "phase": "Mythos", "round": 3, "seq": 76, "type": "location_added"}
+{"data": {"location": "attic", "message": "The Study's gateway pulled Attic into play."}, "phase": "Mythos", "round": 3, "seq": 77, "type": "study_forced"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater spawned at Attic."}, "phase": "Mythos", "round": 3, "seq": 78, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 3, "seq": 79, "type": "phase_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 80, "status": "[R3\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Bathroom | clu2 res2 | dmg0/8 hor0/6 | h5 d26 x0 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use \"Skids\" O'Toole ability (spend 2 resources for +1 action)", "option": 6}, "phase": "Investigation", "round": 3, "seq": 81, "type": "decision_made"}
+{"data": {"message": "Buying an action lets Skids kill the Guest Hall hunter and still reach the next Act clue this round."}, "phase": "Investigation", "round": 3, "seq": 82, "type": "agent_reason"}
+{"data": {"message": "\"Skids\" spent 2 resources to gain 1 action."}, "phase": "Investigation", "round": 3, "seq": 83, "type": "skids_ability"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 4 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 84, "status": "[R3\u00b7Investigation a4/3 | \"Skids\" O'Toole 01003 | Bathroom | clu2 res0 | dmg0/8 hor0/6 | h5 d26 x0 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 3, "seq": 85, "type": "decision_made"}
+{"data": {"message": "Enter Guest Hall to engage and remove the hunter that blocks the Bedroom clue route."}, "phase": "Investigation", "round": 3, "seq": 86, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 87, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "\"Skids\" O'Toole moved to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 88, "type": "investigator_moved"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul engaged \"Skids\" O'Toole."}, "phase": "Investigation", "round": 3, "seq": 89, "type": "enemy_engaged"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 90, "status": "[R3\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu2 res0 | dmg0/8 hor0/6 | h5 d26 x0 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Corpse-Hungry Ghoul with .41 Derringer (3 ammo; +1 dmg on succeed by 2) \u2014 test Combat(5) vs 4, 1 dmg", "option": 9}, "phase": "Investigation", "round": 3, "seq": 91, "type": "decision_made"}
+{"data": {"message": "Derringer plus commits can kill this victory hunter now instead of letting it chase Skids all scenario."}, "phase": "Investigation", "round": 3, "seq": 92, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .41 Derringer (target: Corpse-Hungry Ghoul)."}, "phase": "Investigation", "round": 3, "seq": 93, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 4.", "source": "Fight with .41 Derringer"}, "phase": "Investigation", "round": 3, "seq": 94, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .41 Derringer (combat vs 4)."}, "phase": "Investigation", "round": 3, "seq": 95, "status": "[R3\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu2 res0 | dmg0/8 hor0/6 | h5 d26 x0 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Vicious Blow (+1)", "option": 1}, "phase": "Investigation", "round": 3, "seq": 96, "type": "decision_made"}
+{"data": {"message": "Vicious Blow turns a strong Derringer success into enough damage to kill the victory ghoul."}, "phase": "Investigation", "round": 3, "seq": 97, "type": "agent_reason"}
+{"data": {"card": "pc0007", "message": "Committed Vicious Blow."}, "phase": "Investigation", "round": 3, "seq": 98, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .41 Derringer (combat vs 4)."}, "phase": "Investigation", "round": 3, "seq": 99, "status": "[R3\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu2 res0 | dmg0/8 hor0/6 | h4 d26 x0 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Overpower (+2)", "option": 1}, "phase": "Investigation", "round": 3, "seq": 100, "type": "decision_made"}
+{"data": {"message": "Overpower pushes the attack high enough that nearly every non-autofail token kills."}, "phase": "Investigation", "round": 3, "seq": 101, "type": "agent_reason"}
+{"data": {"card": "pc0031", "message": "Committed Overpower."}, "phase": "Investigation", "round": 3, "seq": 102, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .41 Derringer (combat vs 4)."}, "phase": "Investigation", "round": 3, "seq": 103, "status": "[R3\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu2 res0 | dmg0/8 hor0/6 | h3 d26 x0 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 3, "seq": 104, "type": "decision_made"}
+{"data": {"message": "Save Hard Knocks because the current attack is already strong and future combat or evade tests need support."}, "phase": "Investigation", "round": 3, "seq": 105, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -1, "token": "skull"}, "phase": "Investigation", "round": 3, "seq": 106, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 3, "difficulty": 4, "extra_tokens": [], "margin": 3, "message": "Fight with .41 Derringer: success by 3 - combat 5 + committed 3 + boosts 0 + token -1 = 7 vs 4.", "modifier": -1, "skill": "combat", "source": "Fight with .41 Derringer", "success": true, "token": "skull", "value": 7}, "phase": "Investigation", "round": 3, "seq": 107, "type": "skill_test_result"}
+{"data": {"message": "Succeed-by bonus added 1 damage."}, "phase": "Investigation", "round": 3, "seq": 108, "type": "succeed_by_bonus"}
+{"data": {"message": "Vicious Blow added 1 damage."}, "phase": "Investigation", "round": 3, "seq": 109, "type": "vicious_blow"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul took 3 damage."}, "phase": "Investigation", "round": 3, "seq": 110, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul was defeated."}, "phase": "Investigation", "round": 3, "seq": 111, "type": "enemy_defeated"}
+{"data": {"card": "pc0010", "message": "\"Skids\" O'Toole drew Switchblade."}, "phase": "Investigation", "round": 3, "seq": 112, "type": "card_drawn"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 113, "status": "[R3\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu2 res0 | dmg0/8 hor0/6 | h4 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bedroom", "option": 3}, "phase": "Investigation", "round": 3, "seq": 114, "type": "decision_made"}
+{"data": {"message": "Move into Bedroom now while the Guest Hall is clear so Skids can find the third Act clue."}, "phase": "Investigation", "round": 3, "seq": 115, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bedroom."}, "phase": "Investigation", "round": 3, "seq": 116, "type": "action_spent"}
+{"data": {"location": "bedroom", "message": "\"Skids\" O'Toole moved to Bedroom."}, "phase": "Investigation", "round": 3, "seq": 117, "type": "investigator_moved"}
+{"data": {"location": "bedroom", "message": "Bedroom was revealed."}, "phase": "Investigation", "round": 3, "seq": 118, "type": "location_revealed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 119, "status": "[R3\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Bedroom | clu2 res0 | dmg0/8 hor0/6 | h4 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate with Flashlight (2 supplies, shroud -2)", "option": 5}, "phase": "Investigation", "round": 3, "seq": 120, "type": "decision_made"}
+{"data": {"message": "Flashlight reduces Bedroom to shroud 0 and protects the Act clue from most of the chaos bag."}, "phase": "Investigation", "round": 3, "seq": 121, "type": "agent_reason"}
+{"data": {"action": "flashlight", "cost": 1, "message": "Spent 1 action: Investigate Bedroom with Flashlight."}, "phase": "Investigation", "round": 3, "seq": 122, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 0.", "source": "Investigate with Flashlight Bedroom"}, "phase": "Investigation", "round": 3, "seq": 123, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate with Flashlight Bedroom (intellect vs 0)."}, "phase": "Investigation", "round": 3, "seq": 124, "status": "[R3\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Bedroom | clu2 res0 | dmg0/8 hor0/6 | h4 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 3, "seq": 125, "type": "decision_made"}
+{"data": {"message": "Do not spend Elusive on a shroud-0 test when it can still solve movement or engagement problems."}, "phase": "Investigation", "round": 3, "seq": 126, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 3, "seq": 127, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 0, "extra_tokens": [], "margin": 4, "message": "Investigate with Flashlight Bedroom: success by 4 - intellect 3 + committed 0 + boosts 0 + token 1 = 4 vs 0.", "modifier": 1, "skill": "intellect", "source": "Investigate with Flashlight Bedroom", "success": true, "token": "+1", "value": 4}, "phase": "Investigation", "round": 3, "seq": 128, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole discovered 1 clue."}, "phase": "Investigation", "round": 3, "seq": 129, "type": "clue_discovered"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 130, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 131, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 132, "type": "ready_step"}
+{"data": {"card": "pc0003", "message": "\"Skids\" O'Toole drew .45 Automatic."}, "phase": "Upkeep", "round": 3, "seq": 133, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 134, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 135, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 136, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 4, "seq": 137, "status": "[R4\u00b7Mythos | \"Skids\" O'Toole 01003 | Bedroom | clu3 res1 | dmg0/8 hor0/6 | h5 d24 x2 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Take 2 horror", "option": 2}, "phase": "Mythos", "round": 4, "seq": 138, "type": "decision_made"}
+{"data": {"message": "Take horror rather than risk discarding .45 Automatic, Elusive, or Hard Knocks from a useful hand."}, "phase": "Mythos", "round": 4, "seq": 139, "type": "agent_reason"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 4, "seq": 140, "type": "agenda_advanced"}
+{"data": {"message": "\"Skids\" O'Toole took 0 damage and 2 horror.", "source": "What's Going On?!"}, "phase": "Mythos", "round": 4, "seq": 141, "type": "damage_assigned"}
+{"data": {"card": "ec0023", "message": "\"Skids\" O'Toole drew encounter card Crypt Chill."}, "phase": "Mythos", "round": 4, "seq": 142, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 2 vs 4.", "source": "Crypt Chill"}, "phase": "Mythos", "round": 4, "seq": 143, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Commit cards to Crypt Chill (willpower vs 4)."}, "phase": "Mythos", "round": 4, "seq": 144, "status": "[R4\u00b7Mythos | \"Skids\" O'Toole 01003 | Bedroom | clu3 res1 | dmg0/8 hor2/6 | h5 d24 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 4, "seq": 145, "type": "decision_made"}
+{"data": {"message": "No willpower icons are available, so committing cannot realistically protect an asset from Crypt Chill."}, "phase": "Mythos", "round": 4, "seq": 146, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed eldersign.", "modifier": 2, "token": "eldersign"}, "phase": "Mythos", "round": 4, "seq": 147, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Crypt Chill: success by 0 - willpower 2 + committed 0 + boosts 0 + token 2 = 4 vs 4.", "modifier": 2, "skill": "willpower", "source": "Crypt Chill", "success": true, "token": "eldersign", "value": 4}, "phase": "Mythos", "round": 4, "seq": 148, "type": "skill_test_result"}
+{"data": {"amount": 2, "message": "\"Skids\" gained 2 resources from his elder sign."}, "phase": "Mythos", "round": 4, "seq": 149, "type": "elder_sign"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 4, "seq": 150, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 151, "status": "[R4\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Bedroom | clu3 res3 | dmg0/8 hor2/6 | h5 d24 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 3}, "phase": "Investigation", "round": 4, "seq": 152, "type": "decision_made"}
+{"data": {"message": "Draw before Act 1 because the wall test can discard random cards and a padded hand protects key tools."}, "phase": "Investigation", "round": 4, "seq": 153, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 4, "seq": 154, "type": "action_spent"}
+{"data": {"card": "pc0023", "message": "\"Skids\" O'Toole drew Knife."}, "phase": "Investigation", "round": 4, "seq": 155, "type": "card_drawn"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 156, "status": "[R4\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Bedroom | clu3 res3 | dmg0/8 hor2/6 | h6 d23 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 4, "seq": 157, "type": "decision_made"}
+{"data": {"message": "Return Act 1 requires spending the three clues from Guest Hall, so move there now."}, "phase": "Investigation", "round": 4, "seq": 158, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 159, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "\"Skids\" O'Toole moved to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 160, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 161, "status": "[R4\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Guest Hall | clu3 res3 | dmg0/8 hor2/6 | h6 d23 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Advance act by spending 3 clues", "option": 1}, "phase": "Investigation", "round": 4, "seq": 162, "type": "decision_made"}
+{"data": {"message": "Spend the Act clues now to open the house before the encounter deck adds more pressure."}, "phase": "Investigation", "round": 4, "seq": 163, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "\"Skids\" O'Toole spent 3 clue."}, "phase": "Investigation", "round": 4, "seq": 164, "type": "clues_spent"}
+{"data": {"location": "hallway", "message": "Hole in the Wall was put into play."}, "phase": "Investigation", "round": 4, "seq": 165, "type": "location_added"}
+{"data": {"message": "\"Skids\" O'Toole moved into the Hole in the Wall."}, "phase": "Investigation", "round": 4, "seq": 166, "type": "forced_move"}
+{"data": {"location": "hallway", "message": "Hallway was revealed."}, "phase": "Investigation", "round": 4, "seq": 167, "type": "location_revealed"}
+{"data": {"location": "cellar", "message": "Cellar was put into play."}, "phase": "Investigation", "round": 4, "seq": 168, "type": "location_added"}
+{"data": {"location": "parlor", "message": "Parlor was put into play."}, "phase": "Investigation", "round": 4, "seq": 169, "type": "location_added"}
+{"data": {"message": "Act advanced to The Barrier."}, "phase": "Investigation", "round": 4, "seq": 170, "type": "act_advanced"}
+{"data": {"message": "Started willpower test 2 vs 4.", "source": "Breaking the Wall"}, "phase": "Investigation", "round": 4, "seq": 171, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Breaking the Wall (willpower vs 4)."}, "phase": "Investigation", "round": 4, "seq": 172, "status": "[R4\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res3 | dmg0/8 hor2/6 | h6 d23 x2 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 4, "seq": 173, "type": "decision_made"}
+{"data": {"message": "No willpower icons are available, so throwing useful cards into a likely failed test is worse than absorbing random discard."}, "phase": "Investigation", "round": 4, "seq": 174, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 4, "seq": 175, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 2, "message": "Breaking the Wall: failure by 2 - willpower 2 + committed 0 + boosts 0 + token 0 = 2 vs 4.", "modifier": 0, "skill": "willpower", "source": "Breaking the Wall", "success": false, "token": "0", "value": 2}, "phase": "Investigation", "round": 4, "seq": 176, "type": "skill_test_result"}
+{"data": {"card": "pc0018", "message": "Breaking the Wall forced a random discard of Elusive."}, "phase": "Investigation", "round": 4, "seq": 177, "type": "card_discarded"}
+{"data": {"card": "pc0023", "message": "Breaking the Wall forced a random discard of Knife."}, "phase": "Investigation", "round": 4, "seq": 178, "type": "card_discarded"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 179, "status": "[R4\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res3 | dmg0/8 hor2/6 | h4 d23 x4 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Hallway (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 4, "seq": 180, "type": "decision_made"}
+{"data": {"message": "Hallway is shroud 1, so taking a clue now advances Act 2 progress without spending the last Flashlight supply."}, "phase": "Investigation", "round": 4, "seq": 181, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Hallway."}, "phase": "Investigation", "round": 4, "seq": 182, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Hallway"}, "phase": "Investigation", "round": 4, "seq": 183, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate Hallway (intellect vs 1)."}, "phase": "Investigation", "round": 4, "seq": 184, "status": "[R4\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res3 | dmg0/8 hor2/6 | h4 d23 x4 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 4, "seq": 185, "type": "decision_made"}
+{"data": {"message": "No commit because 3 vs 1 is good enough and the remaining hand supports later setup."}, "phase": "Investigation", "round": 4, "seq": 186, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 4, "seq": 187, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate Hallway: success by 1 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "skill": "intellect", "source": "Investigate Hallway", "success": true, "token": "-1", "value": 2}, "phase": "Investigation", "round": 4, "seq": 188, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 4, "seq": 189, "status": "[R4\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res3 | dmg0/8 hor2/6 | h4 d23 x4 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 3}, "phase": "Investigation", "round": 4, "seq": 190, "type": "decision_made"}
+{"data": {"message": "Do not spend resources to recover from one empty-location action; save money for Hard Knocks, .45, or future extra actions."}, "phase": "Investigation", "round": 4, "seq": 191, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 4, "seq": 192, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 4, "seq": 193, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 4, "seq": 194, "type": "ready_step"}
+{"data": {"card": "pc0032", "message": "\"Skids\" O'Toole drew Overpower."}, "phase": "Upkeep", "round": 4, "seq": 195, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 4, "seq": 196, "type": "resource_gained"}
+{"data": {"message": "Round 5 began."}, "phase": "Mythos", "round": 5, "seq": 197, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 5, "seq": 198, "type": "doom_placed"}
+{"data": {"card": "ec0026", "message": "\"Skids\" O'Toole drew encounter card Obscuring Fog."}, "phase": "Mythos", "round": 5, "seq": 199, "type": "encounter_drawn"}
+{"data": {"card": "ec0026", "location": "hallway", "message": "Obscuring Fog attached to Hallway."}, "phase": "Mythos", "round": 5, "seq": 200, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 5, "seq": 201, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 202, "status": "[R5\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res4 | dmg0/8 hor2/6 | h5 d22 x4 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Hard Knocks (2 res)", "option": 10}, "phase": "Investigation", "round": 5, "seq": 203, "type": "decision_made"}
+{"data": {"message": "Hard Knocks gives Skids reusable combat and agility boosts for the victory enemies and boss."}, "phase": "Investigation", "round": 5, "seq": 204, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Hard Knocks."}, "phase": "Investigation", "round": 5, "seq": 205, "type": "action_spent"}
+{"data": {"card": "pc0016", "message": "\"Skids\" O'Toole played Hard Knocks."}, "phase": "Investigation", "round": 5, "seq": 206, "type": "card_played"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 207, "status": "[R5\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg0/8 hor2/6 | h4 d22 x4 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Cellar", "option": 4}, "phase": "Investigation", "round": 5, "seq": 208, "type": "decision_made"}
+{"data": {"message": "Cellar should provide the third Act clue path without immediately fighting Flesh-Eater."}, "phase": "Investigation", "round": 5, "seq": 209, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Cellar."}, "phase": "Investigation", "round": 5, "seq": 210, "type": "action_spent"}
+{"data": {"location": "cellar", "message": "\"Skids\" O'Toole moved to Cellar."}, "phase": "Investigation", "round": 5, "seq": 211, "type": "investigator_moved"}
+{"data": {"location": "cellar", "message": "Cellar was revealed."}, "phase": "Investigation", "round": 5, "seq": 212, "type": "location_revealed"}
+{"data": {"location": "ghoul_pits", "message": "Deep Below Your House was put into play."}, "phase": "Investigation", "round": 5, "seq": 213, "type": "location_added"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 214, "status": "[R5\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Cellar | clu0 res2 | dmg0/8 hor2/6 | h4 d22 x4 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate with Flashlight (1 supplies, shroud -2)", "option": 6}, "phase": "Investigation", "round": 5, "seq": 215, "type": "decision_made"}
+{"data": {"message": "Final Flashlight supply makes the Return Cellar clue a shroud-0 test for reliable Act progress."}, "phase": "Investigation", "round": 5, "seq": 216, "type": "agent_reason"}
+{"data": {"action": "flashlight", "cost": 1, "message": "Spent 1 action: Investigate Cellar with Flashlight."}, "phase": "Investigation", "round": 5, "seq": 217, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 0.", "source": "Investigate with Flashlight Cellar"}, "phase": "Investigation", "round": 5, "seq": 218, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate with Flashlight Cellar (intellect vs 0)."}, "phase": "Investigation", "round": 5, "seq": 219, "status": "[R5\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Cellar | clu0 res2 | dmg0/8 hor2/6 | h4 d22 x4 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 5, "seq": 220, "type": "decision_made"}
+{"data": {"message": "No commit because shroud 0 already protects the clue and the hand is needed for combat."}, "phase": "Investigation", "round": 5, "seq": 221, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 5, "seq": 222, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 0, "extra_tokens": [], "margin": 2, "message": "Investigate with Flashlight Cellar: success by 2 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 0.", "modifier": -1, "skill": "intellect", "source": "Investigate with Flashlight Cellar", "success": true, "token": "-1", "value": 2}, "phase": "Investigation", "round": 5, "seq": 223, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole discovered 1 clue."}, "phase": "Investigation", "round": 5, "seq": 224, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 5, "seq": 225, "status": "[R5\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Cellar | clu1 res2 | dmg0/8 hor2/6 | h4 d22 x4 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 3}, "phase": "Investigation", "round": 5, "seq": 226, "type": "decision_made"}
+{"data": {"message": "Save resources for Hard Knocks and future extra actions instead of moving with no follow-up action."}, "phase": "Investigation", "round": 5, "seq": 227, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 5, "seq": 228, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 5, "seq": 229, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 5, "seq": 230, "type": "ready_step"}
+{"data": {"card": "pc0021", "message": "\"Skids\" O'Toole drew Opportunist."}, "phase": "Upkeep", "round": 5, "seq": 231, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 5, "seq": 232, "type": "resource_gained"}
+{"data": {"message": "Round 6 began."}, "phase": "Mythos", "round": 6, "seq": 233, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 6, "seq": 234, "type": "doom_placed"}
+{"data": {"card": "ec0003", "message": "\"Skids\" O'Toole drew encounter card Swarm of Rats."}, "phase": "Mythos", "round": 6, "seq": 235, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats spawned at Cellar."}, "phase": "Mythos", "round": 6, "seq": 236, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats engaged \"Skids\" O'Toole."}, "phase": "Mythos", "round": 6, "seq": 237, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 6, "seq": 238, "type": "phase_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 239, "status": "[R6\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Cellar | clu1 res3 | dmg0/8 hor2/6 | h5 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Swarm of Rats (fight 1, 1 dmg) \u2014 test Combat(3)", "option": 4}, "phase": "Investigation", "round": 6, "seq": 240, "type": "decision_made"}
+{"data": {"message": "Use a basic fight on rats to preserve Derringer ammo for the 4-health victory enemy."}, "phase": "Investigation", "round": 6, "seq": 241, "type": "agent_reason"}
+{"data": {"action": "fight", "cost": 1, "message": "Spent 1 action: Fight Swarm of Rats."}, "phase": "Investigation", "round": 6, "seq": 242, "type": "action_spent"}
+{"data": {"message": "Started combat test 3 vs 1.", "source": "Fight Swarm of Rats"}, "phase": "Investigation", "round": 6, "seq": 243, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight Swarm of Rats (combat vs 1)."}, "phase": "Investigation", "round": 6, "seq": 244, "status": "[R6\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Cellar | clu1 res3 | dmg0/8 hor2/6 | h5 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 4}, "phase": "Investigation", "round": 6, "seq": 245, "type": "decision_made"}
+{"data": {"message": "Do not commit to a 3 vs 1 rat fight; save icons and resources for harder enemies."}, "phase": "Investigation", "round": 6, "seq": 246, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed cultist.", "modifier": -1, "token": "cultist"}, "phase": "Investigation", "round": 6, "seq": 247, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Fight Swarm of Rats: success by 1 - combat 3 + committed 0 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "skill": "combat", "source": "Fight Swarm of Rats", "success": true, "token": "cultist", "value": 2}, "phase": "Investigation", "round": 6, "seq": 248, "type": "skill_test_result"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats took 1 damage."}, "phase": "Investigation", "round": 6, "seq": 249, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats was defeated."}, "phase": "Investigation", "round": 6, "seq": 250, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 251, "status": "[R6\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Cellar | clu1 res3 | dmg0/8 hor2/6 | h5 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Deep Below Your House", "option": 3}, "phase": "Investigation", "round": 6, "seq": 252, "type": "decision_made"}
+{"data": {"message": "Reveal Deep Below because Return side locations can add victory points and shape the best scoring route."}, "phase": "Investigation", "round": 6, "seq": 253, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Deep Below Your House."}, "phase": "Investigation", "round": 6, "seq": 254, "type": "action_spent"}
+{"data": {"location": "ghoul_pits", "message": "\"Skids\" O'Toole moved to Deep Below Your House."}, "phase": "Investigation", "round": 6, "seq": 255, "type": "investigator_moved"}
+{"data": {"location": "ghoul_pits", "message": "Ghoul Pits was revealed."}, "phase": "Investigation", "round": 6, "seq": 256, "type": "location_revealed"}
+{"data": {"message": "Started agility test 4 vs 3.", "source": "Ghoul Pits"}, "phase": "Investigation", "round": 6, "seq": 257, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Ghoul Pits (agility vs 3)."}, "phase": "Investigation", "round": 6, "seq": 258, "status": "[R6\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res3 | dmg0/8 hor2/6 | h5 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Opportunist (+1)", "option": 4}, "phase": "Investigation", "round": 6, "seq": 259, "type": "decision_made"}
+{"data": {"message": "Commit Opportunist on the Ghoul Pits reveal test to reduce rat-spawn risk and maybe return it on a strong success."}, "phase": "Investigation", "round": 6, "seq": 260, "type": "agent_reason"}
+{"data": {"card": "pc0021", "message": "Committed Opportunist."}, "phase": "Investigation", "round": 6, "seq": 261, "type": "card_committed"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Ghoul Pits (agility vs 3)."}, "phase": "Investigation", "round": 6, "seq": 262, "status": "[R6\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res3 | dmg0/8 hor2/6 | h4 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hard Knocks (+1 agility)", "option": 4}, "phase": "Investigation", "round": 6, "seq": 263, "type": "decision_made"}
+{"data": {"message": "Spend one Hard Knocks resource so only the worst tokens fail the Ghoul Pits reveal test."}, "phase": "Investigation", "round": 6, "seq": 264, "type": "agent_reason"}
+{"data": {"card_code": "01049", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 6, "seq": 265, "type": "skill_boost"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Ghoul Pits (agility vs 3)."}, "phase": "Investigation", "round": 6, "seq": 266, "status": "[R6\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res2 | dmg0/8 hor2/6 | h4 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 5}, "phase": "Investigation", "round": 6, "seq": 267, "type": "decision_made"}
+{"data": {"message": "Stop at 6 vs 3 to preserve resources for Flesh-Eater and Ghoul Priest."}, "phase": "Investigation", "round": 6, "seq": 268, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 6, "seq": 269, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 1, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Ghoul Pits: success by 3 - agility 4 + committed 1 + boosts 1 + token 0 = 6 vs 3.", "modifier": 0, "skill": "agility", "source": "Ghoul Pits", "success": true, "token": "0", "value": 6}, "phase": "Investigation", "round": 6, "seq": 270, "type": "skill_test_result"}
+{"data": {"card": "pc0021", "message": "Opportunist returned to hand."}, "phase": "Investigation", "round": 6, "seq": 271, "type": "opportunist_returned"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 272, "status": "[R6\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res2 | dmg0/8 hor2/6 | h5 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Take resource (gain 1)", "option": 4}, "phase": "Investigation", "round": 6, "seq": 273, "type": "decision_made"}
+{"data": {"message": "Take a resource rather than attempt a poor 3 vs 4 Ghoul Pits investigate with no clue support."}, "phase": "Investigation", "round": 6, "seq": 274, "type": "agent_reason"}
+{"data": {"action": "resource", "cost": 1, "message": "Spent 1 action: Take resource."}, "phase": "Investigation", "round": 6, "seq": 275, "type": "action_spent"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Investigation", "round": 6, "seq": 276, "type": "resource_gained"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 6, "seq": 277, "status": "[R6\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res3 | dmg0/8 hor2/6 | h5 d21 x4 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 3}, "phase": "Investigation", "round": 6, "seq": 278, "type": "decision_made"}
+{"data": {"message": "Keep resources flexible instead of playing Switchblade into a hand slot I do not need right now."}, "phase": "Investigation", "round": 6, "seq": 279, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 6, "seq": 280, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 6, "seq": 281, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 6, "seq": 282, "type": "ready_step"}
+{"data": {"card": "pc0011", "message": "\"Skids\" O'Toole drew Burglary."}, "phase": "Upkeep", "round": 6, "seq": 283, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 6, "seq": 284, "type": "resource_gained"}
+{"data": {"message": "Round 7 began."}, "phase": "Mythos", "round": 7, "seq": 285, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 7, "seq": 286, "type": "doom_placed"}
+{"data": {"card": "ec0010", "message": "\"Skids\" O'Toole drew encounter card Chill from Below."}, "phase": "Mythos", "round": 7, "seq": 287, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Chill from Below"}, "phase": "Mythos", "round": 7, "seq": 288, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 7, "seq": 289, "status": "[R7\u00b7Mythos | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res4 | dmg0/8 hor2/6 | h6 d20 x4 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Opportunist (+1)", "option": 1}, "phase": "Mythos", "round": 7, "seq": 290, "type": "decision_made"}
+{"data": {"message": "Commit Opportunist to reduce Chill from Below random discards and protect the combat hand."}, "phase": "Mythos", "round": 7, "seq": 291, "type": "agent_reason"}
+{"data": {"card": "pc0021", "message": "Committed Opportunist."}, "phase": "Mythos", "round": 7, "seq": 292, "type": "card_committed"}
+{"data": {"prompt": "[Round 7 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 7, "seq": 293, "status": "[R7\u00b7Mythos | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res4 | dmg0/8 hor2/6 | h5 d20 x4 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 7, "seq": 294, "type": "decision_made"}
+{"data": {"message": "Resolve at 3 vs 3 because no other willpower help is available."}, "phase": "Mythos", "round": 7, "seq": 295, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -4.", "modifier": -4, "token": "-4"}, "phase": "Mythos", "round": 7, "seq": 296, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Chill from Below: failure by 3 - willpower 2 + committed 1 + boosts 0 + token -4 = 0 vs 3.", "modifier": -4, "skill": "willpower", "source": "Chill from Below", "success": false, "token": "-4", "value": 0}, "phase": "Mythos", "round": 7, "seq": 297, "type": "skill_test_result"}
+{"data": {"card": "pc0011", "message": "Chill from Below forced a random discard of Burglary."}, "phase": "Mythos", "round": 7, "seq": 298, "type": "card_discarded"}
+{"data": {"card": "pc0009", "message": "Chill from Below forced a random discard of Switchblade."}, "phase": "Mythos", "round": 7, "seq": 299, "type": "card_discarded"}
+{"data": {"card": "pc0003", "message": "Chill from Below forced a random discard of .45 Automatic."}, "phase": "Mythos", "round": 7, "seq": 300, "type": "card_discarded"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 7, "seq": 301, "type": "phase_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 302, "status": "[R7\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Ghoul Pits | clu1 res4 | dmg0/8 hor2/6 | h2 d20 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Cellar", "option": 2}, "phase": "Investigation", "round": 7, "seq": 303, "type": "decision_made"}
+{"data": {"message": "Start moving back toward Hallway so next turn can be an Attic fight turn with full actions."}, "phase": "Investigation", "round": 7, "seq": 304, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Cellar."}, "phase": "Investigation", "round": 7, "seq": 305, "type": "action_spent"}
+{"data": {"location": "cellar", "message": "\"Skids\" O'Toole moved to Cellar."}, "phase": "Investigation", "round": 7, "seq": 306, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 307, "status": "[R7\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Cellar | clu1 res4 | dmg0/8 hor2/6 | h2 d20 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 7, "seq": 308, "type": "decision_made"}
+{"data": {"message": "End near Attic so next round starts from the correct staging point."}, "phase": "Investigation", "round": 7, "seq": 309, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 7, "seq": 310, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "\"Skids\" O'Toole moved to Hallway."}, "phase": "Investigation", "round": 7, "seq": 311, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 312, "status": "[R7\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res4 | dmg0/8 hor2/6 | h2 d20 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Switchblade (fast)", "option": 8}, "phase": "Investigation", "round": 7, "seq": 313, "type": "decision_made"}
+{"data": {"message": "Play Switchblade as a fast backup weapon, ideally replacing the empty Flashlight before Attic combat."}, "phase": "Investigation", "round": 7, "seq": 314, "type": "agent_reason"}
+{"data": {"prompt": "Choose a card to discard for Switchblade."}, "phase": "Investigation", "round": 7, "seq": 315, "status": "[R7\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res4 | dmg0/8 hor2/6 | h2 d20 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "slot-discard-for-play", "label": "Discard Flashlight", "option": 1}, "phase": "Investigation", "round": 7, "seq": 316, "type": "decision_made"}
+{"data": {"message": "Discard the empty Flashlight so both weapons are available for the Attic and boss fights."}, "phase": "Investigation", "round": 7, "seq": 317, "type": "agent_reason"}
+{"data": {"card": "pc0025", "message": "Flashlight was discarded for slot capacity."}, "phase": "Investigation", "round": 7, "seq": 318, "type": "asset_discarded"}
+{"data": {"card": "pc0010", "message": "\"Skids\" O'Toole played Switchblade."}, "phase": "Investigation", "round": 7, "seq": 319, "type": "card_played"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 320, "status": "[R7\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res3 | dmg0/8 hor2/6 | h1 d20 x9 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 5}, "phase": "Investigation", "round": 7, "seq": 321, "type": "decision_made"}
+{"data": {"message": "Draw to rebuild hand size and find more icons before taking the Attic enemy fight."}, "phase": "Investigation", "round": 7, "seq": 322, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 7, "seq": 323, "type": "action_spent"}
+{"data": {"card": "pc0017", "message": "\"Skids\" O'Toole drew Elusive."}, "phase": "Investigation", "round": 7, "seq": 324, "type": "card_drawn"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 7, "seq": 325, "status": "[R7\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res3 | dmg0/8 hor2/6 | h2 d19 x9 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 8}, "phase": "Investigation", "round": 7, "seq": 326, "type": "decision_made"}
+{"data": {"message": "Hold Elusive and keep resources for Hard Knocks rather than buying a low-impact extra action."}, "phase": "Investigation", "round": 7, "seq": 327, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 7, "seq": 328, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 7, "seq": 329, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 7, "seq": 330, "type": "ready_step"}
+{"data": {"card": "pc0015", "message": "\"Skids\" O'Toole drew Hard Knocks."}, "phase": "Upkeep", "round": 7, "seq": 331, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 7, "seq": 332, "type": "resource_gained"}
+{"data": {"message": "Round 8 began."}, "phase": "Mythos", "round": 8, "seq": 333, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 8, "seq": 334, "type": "doom_placed"}
+{"data": {"card": "ec0016", "message": "\"Skids\" O'Toole drew encounter card Frozen in Fear."}, "phase": "Mythos", "round": 8, "seq": 335, "type": "encounter_drawn"}
+{"data": {"card": "ec0016", "message": "Frozen in Fear entered \"Skids\" O'Toole's threat area."}, "phase": "Mythos", "round": 8, "seq": 336, "type": "treachery_threat"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 8, "seq": 337, "type": "phase_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 338, "status": "[R8\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res4 | dmg0/8 hor2/6 | h3 d18 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 5}, "phase": "Investigation", "round": 8, "seq": 339, "type": "decision_made"}
+{"data": {"message": "Draw first because Frozen makes the Attic fight inefficient and Skids needs more icons after losing .45."}, "phase": "Investigation", "round": 8, "seq": 340, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 8, "seq": 341, "type": "action_spent"}
+{"data": {"card": "pc0006", "message": "\"Skids\" O'Toole drew Dynamite Blast."}, "phase": "Investigation", "round": 8, "seq": 342, "type": "card_drawn"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 343, "status": "[R8\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res4 | dmg0/8 hor2/6 | h4 d17 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Take resource (gain 1)", "option": 6}, "phase": "Investigation", "round": 8, "seq": 344, "type": "decision_made"}
+{"data": {"message": "Take the fifth resource so Dynamite Blast can soften Flesh-Eater from Hallway without entering Attic."}, "phase": "Investigation", "round": 8, "seq": 345, "type": "agent_reason"}
+{"data": {"action": "resource", "cost": 1, "message": "Spent 1 action: Take resource."}, "phase": "Investigation", "round": 8, "seq": 346, "type": "action_spent"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Investigation", "round": 8, "seq": 347, "type": "resource_gained"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 348, "status": "[R8\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res5 | dmg0/8 hor2/6 | h4 d17 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Dynamite Blast at Attic", "option": 8}, "phase": "Investigation", "round": 8, "seq": 349, "type": "decision_made"}
+{"data": {"message": "Blast Attic to put 3 damage on Flesh-Eater from safety before entering to finish it."}, "phase": "Investigation", "round": 8, "seq": 350, "type": "agent_reason"}
+{"data": {"action": "dynamite", "cost": 1, "message": "Spent 1 action: Play Dynamite Blast at Attic."}, "phase": "Investigation", "round": 8, "seq": 351, "type": "action_spent"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater took 3 damage."}, "phase": "Investigation", "round": 8, "seq": 352, "type": "enemy_damaged"}
+{"data": {"card": "pc0006", "location": "attic", "message": "Dynamite Blast dealt 3 damage at Attic."}, "phase": "Investigation", "round": 8, "seq": 353, "type": "event_played"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Frozen in Fear"}, "phase": "Investigation", "round": 8, "seq": 354, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 8, "seq": 355, "status": "[R8\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res0 | dmg0/8 hor2/6 | h3 d17 x10 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 8, "seq": 356, "type": "decision_made"}
+{"data": {"message": "No will icons are available for Frozen in Fear, so resolve the weak test without wasting combat cards."}, "phase": "Investigation", "round": 8, "seq": 357, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 8, "seq": 358, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Frozen in Fear: failure by 1 - willpower 2 + committed 0 + boosts 0 + token 0 = 2 vs 3.", "modifier": 0, "skill": "willpower", "source": "Frozen in Fear", "success": false, "token": "skull", "value": 2}, "phase": "Investigation", "round": 8, "seq": 359, "type": "skill_test_result"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 8, "seq": 360, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 8, "seq": 361, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 8, "seq": 362, "type": "ready_step"}
+{"data": {"card": "pc0020", "message": "\"Skids\" O'Toole drew Sneak Attack."}, "phase": "Upkeep", "round": 8, "seq": 363, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 8, "seq": 364, "type": "resource_gained"}
+{"data": {"message": "Round 9 began."}, "phase": "Mythos", "round": 9, "seq": 365, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 9, "seq": 366, "type": "doom_placed"}
+{"data": {"card": "ec0027", "message": "\"Skids\" O'Toole drew encounter card Locked Door."}, "phase": "Mythos", "round": 9, "seq": 367, "type": "encounter_drawn"}
+{"data": {"card": "ec0027", "location": "ghoul_pits", "message": "Locked Door attached to Ghoul Pits."}, "phase": "Mythos", "round": 9, "seq": 368, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 9, "seq": 369, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 370, "status": "[R9\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu1 res1 | dmg0/8 hor2/6 | h4 d16 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Attic", "option": 2}, "phase": "Investigation", "round": 9, "seq": 371, "type": "decision_made"}
+{"data": {"message": "Move into Attic despite Frozen because Flesh-Eater is already at 3 damage and can be finished this turn."}, "phase": "Investigation", "round": 9, "seq": 372, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 2, "message": "Spent 2 actions: Move to Attic."}, "phase": "Investigation", "round": 9, "seq": 373, "type": "action_spent"}
+{"data": {"location": "attic", "message": "\"Skids\" O'Toole moved to Attic."}, "phase": "Investigation", "round": 9, "seq": 374, "type": "investigator_moved"}
+{"data": {"location": "attic", "message": "Attic was revealed."}, "phase": "Investigation", "round": 9, "seq": 375, "type": "location_revealed"}
+{"data": {"message": "\"Skids\" O'Toole took 0 damage and 1 horror.", "source": "Attic"}, "phase": "Investigation", "round": 9, "seq": 376, "type": "damage_assigned"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater engaged \"Skids\" O'Toole."}, "phase": "Investigation", "round": 9, "seq": 377, "type": "enemy_engaged"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 378, "status": "[R9\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res1 | dmg0/8 hor3/6 | h4 d16 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Flesh-Eater with .41 Derringer (2 ammo; +1 dmg on succeed by 2) \u2014 test Combat(5) vs 4, 1 dmg", "option": 7}, "phase": "Investigation", "round": 9, "seq": 379, "type": "decision_made"}
+{"data": {"message": "Use the Derringer for a high-odds finishing shot before Flesh-Eater can attack for 2 horror."}, "phase": "Investigation", "round": 9, "seq": 380, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .41 Derringer (target: Flesh-Eater)."}, "phase": "Investigation", "round": 9, "seq": 381, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 4.", "source": "Fight with .41 Derringer"}, "phase": "Investigation", "round": 9, "seq": 382, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .41 Derringer (combat vs 4)."}, "phase": "Investigation", "round": 9, "seq": 383, "status": "[R9\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res1 | dmg0/8 hor3/6 | h4 d16 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Overpower (+2)", "option": 1}, "phase": "Investigation", "round": 9, "seq": 384, "type": "decision_made"}
+{"data": {"message": "Overpower raises the finishing shot and can replace itself if it lands."}, "phase": "Investigation", "round": 9, "seq": 385, "type": "agent_reason"}
+{"data": {"card": "pc0032", "message": "Committed Overpower."}, "phase": "Investigation", "round": 9, "seq": 386, "type": "card_committed"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .41 Derringer (combat vs 4)."}, "phase": "Investigation", "round": 9, "seq": 387, "status": "[R9\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res1 | dmg0/8 hor3/6 | h3 d16 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Hard Knocks (+1)", "option": 1}, "phase": "Investigation", "round": 9, "seq": 388, "type": "decision_made"}
+{"data": {"message": "Commit duplicate Hard Knocks so the attack still succeeds through the -4 token without spending a resource."}, "phase": "Investigation", "round": 9, "seq": 389, "type": "agent_reason"}
+{"data": {"card": "pc0015", "message": "Committed Hard Knocks."}, "phase": "Investigation", "round": 9, "seq": 390, "type": "card_committed"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Fight with .41 Derringer (combat vs 4)."}, "phase": "Investigation", "round": 9, "seq": 391, "status": "[R9\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res1 | dmg0/8 hor3/6 | h2 d16 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 9, "seq": 392, "type": "decision_made"}
+{"data": {"message": "Stop boosting because 8 vs 4 already succeeds through every non-autofail token."}, "phase": "Investigation", "round": 9, "seq": 393, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 9, "seq": 394, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 3, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Fight with .41 Derringer: success by 1 - combat 5 + committed 3 + boosts 0 + token -3 = 5 vs 4.", "modifier": -3, "skill": "combat", "source": "Fight with .41 Derringer", "success": true, "token": "-3", "value": 5}, "phase": "Investigation", "round": 9, "seq": 395, "type": "skill_test_result"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater took 1 damage."}, "phase": "Investigation", "round": 9, "seq": 396, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater was defeated."}, "phase": "Investigation", "round": 9, "seq": 397, "type": "enemy_defeated"}
+{"data": {"card": "pc0033", "message": "\"Skids\" O'Toole drew Mob Enforcer."}, "phase": "Investigation", "round": 9, "seq": 398, "type": "card_drawn"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer spawned at Attic."}, "phase": "Investigation", "round": 9, "seq": 399, "type": "enemy_spawned"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer engaged \"Skids\" O'Toole."}, "phase": "Investigation", "round": 9, "seq": 400, "type": "enemy_engaged"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Frozen in Fear"}, "phase": "Investigation", "round": 9, "seq": 401, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 9, "seq": 402, "status": "[R9\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res1 | dmg0/8 hor3/6 | h2 d15 x12 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 9, "seq": 403, "type": "decision_made"}
+{"data": {"message": "No will icons are available for Frozen in Fear after Mob Enforcer appears."}, "phase": "Investigation", "round": 9, "seq": 404, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -4.", "modifier": -4, "token": "-4"}, "phase": "Investigation", "round": 9, "seq": 405, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Frozen in Fear: failure by 3 - willpower 2 + committed 0 + boosts 0 + token -4 = 0 vs 3.", "modifier": -4, "skill": "willpower", "source": "Frozen in Fear", "success": false, "token": "-4", "value": 0}, "phase": "Investigation", "round": 9, "seq": 406, "type": "skill_test_result"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 9, "seq": 407, "type": "phase_started"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer attacked \"Skids\" O'Toole.", "source": "enemy phase"}, "phase": "Enemy", "round": 9, "seq": 408, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 1 damage and 0 horror.", "source": "Mob Enforcer"}, "phase": "Enemy", "round": 9, "seq": 409, "type": "damage_assigned"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer exhausted after attacking."}, "phase": "Enemy", "round": 9, "seq": 410, "type": "enemy_exhausted"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 9, "seq": 411, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 9, "seq": 412, "type": "ready_step"}
+{"data": {"card": "pc0029", "message": "\"Skids\" O'Toole drew Guts."}, "phase": "Upkeep", "round": 9, "seq": 413, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 9, "seq": 414, "type": "resource_gained"}
+{"data": {"message": "Round 10 began."}, "phase": "Mythos", "round": 10, "seq": 415, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 10, "seq": 416, "type": "doom_placed"}
+{"data": {"card": "ec0019", "message": "\"Skids\" O'Toole drew encounter card Dissonant Voices."}, "phase": "Mythos", "round": 10, "seq": 417, "type": "encounter_drawn"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices entered \"Skids\" O'Toole's threat area."}, "phase": "Mythos", "round": 10, "seq": 418, "type": "treachery_threat"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 10, "seq": 419, "type": "phase_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 420, "status": "[R10\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res2 | dmg1/8 hor3/6 | h3 d14 x12 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Mob Enforcer (evade 3) \u2014 test Agility(4)", "option": 4}, "phase": "Investigation", "round": 10, "seq": 421, "type": "decision_made"}
+{"data": {"message": "Evade Mob Enforcer under Frozen so Skids can investigate without taking attacks of opportunity."}, "phase": "Investigation", "round": 10, "seq": 422, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 2, "message": "Spent 2 actions: Evade Mob Enforcer."}, "phase": "Investigation", "round": 10, "seq": 423, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 3.", "source": "Evade Mob Enforcer"}, "phase": "Investigation", "round": 10, "seq": 424, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Mob Enforcer (agility vs 3)."}, "phase": "Investigation", "round": 10, "seq": 425, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res2 | dmg1/8 hor3/6 | h3 d14 x12 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Elusive (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 426, "type": "decision_made"}
+{"data": {"message": "Commit Elusive as an icon because Dissonant blocks playing it and the evade must succeed."}, "phase": "Investigation", "round": 10, "seq": 427, "type": "agent_reason"}
+{"data": {"card": "pc0017", "message": "Committed Elusive."}, "phase": "Investigation", "round": 10, "seq": 428, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Mob Enforcer (agility vs 3)."}, "phase": "Investigation", "round": 10, "seq": 429, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res2 | dmg1/8 hor3/6 | h2 d14 x12 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hard Knocks (+1 agility)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 430, "type": "decision_made"}
+{"data": {"message": "Boost once with Hard Knocks to make the evade strong while keeping one resource for next turn."}, "phase": "Investigation", "round": 10, "seq": 431, "type": "agent_reason"}
+{"data": {"card_code": "01049", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 10, "seq": 432, "type": "skill_boost"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Mob Enforcer (agility vs 3)."}, "phase": "Investigation", "round": 10, "seq": 433, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res1 | dmg1/8 hor3/6 | h2 d14 x12 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hard Knocks (+1 agility)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 434, "type": "decision_made"}
+{"data": {"message": "Spend the second boost so the evade succeeds on every non-autofail token."}, "phase": "Investigation", "round": 10, "seq": 435, "type": "agent_reason"}
+{"data": {"card_code": "01049", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 10, "seq": 436, "type": "skill_boost"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Mob Enforcer (agility vs 3)."}, "phase": "Investigation", "round": 10, "seq": 437, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res0 | dmg1/8 hor3/6 | h2 d14 x12 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 10, "seq": 438, "type": "decision_made"}
+{"data": {"message": "Resolve the fully boosted evade because it is safe against every normal token."}, "phase": "Investigation", "round": 10, "seq": 439, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 10, "seq": 440, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 2, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 4, "message": "Evade Mob Enforcer: success by 4 - agility 4 + committed 1 + boosts 2 + token 0 = 7 vs 3.", "modifier": 0, "skill": "agility", "source": "Evade Mob Enforcer", "success": true, "token": "0", "value": 7}, "phase": "Investigation", "round": 10, "seq": 441, "type": "skill_test_result"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer disengaged."}, "phase": "Investigation", "round": 10, "seq": 442, "type": "enemy_disengaged"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 443, "status": "[R10\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res0 | dmg1/8 hor3/6 | h2 d14 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 10, "seq": 444, "type": "decision_made"}
+{"data": {"message": "Take an Attic clue while Mob Enforcer is exhausted and cannot punish the investigate."}, "phase": "Investigation", "round": 10, "seq": 445, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 10, "seq": 446, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 10, "seq": 447, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 10, "seq": 448, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu1 res0 | dmg1/8 hor3/6 | h2 d14 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 10, "seq": 449, "type": "decision_made"}
+{"data": {"message": "Save Sneak Attack for possible enemy damage later instead of committing it to a 3 vs 1 clue test."}, "phase": "Investigation", "round": 10, "seq": 450, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 10, "seq": 451, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 2, "message": "Investigate Attic: success by 2 - intellect 3 + committed 0 + boosts 0 + token 0 = 3 vs 1.", "modifier": 0, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "0", "value": 3}, "phase": "Investigation", "round": 10, "seq": 452, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole discovered 1 clue."}, "phase": "Investigation", "round": 10, "seq": 453, "type": "clue_discovered"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Frozen in Fear"}, "phase": "Investigation", "round": 10, "seq": 454, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 10, "seq": 455, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu2 res0 | dmg1/8 hor3/6 | h2 d14 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Guts (+2)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 456, "type": "decision_made"}
+{"data": {"message": "Commit Guts to clear Frozen in Fear before the final Act 2 push."}, "phase": "Investigation", "round": 10, "seq": 457, "type": "agent_reason"}
+{"data": {"card": "pc0029", "message": "Committed Guts."}, "phase": "Investigation", "round": 10, "seq": 458, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 10, "seq": 459, "status": "[R10\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Attic | clu2 res0 | dmg1/8 hor3/6 | h1 d14 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 10, "seq": 460, "type": "decision_made"}
+{"data": {"message": "Resolve Frozen at 4 vs 3 because Guts is the only available willpower support."}, "phase": "Investigation", "round": 10, "seq": 461, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed cultist.", "modifier": -1, "token": "cultist"}, "phase": "Investigation", "round": 10, "seq": 462, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 2, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Frozen in Fear: success by 0 - willpower 2 + committed 2 + boosts 0 + token -1 = 3 vs 3.", "modifier": -1, "skill": "willpower", "source": "Frozen in Fear", "success": true, "token": "cultist", "value": 3}, "phase": "Investigation", "round": 10, "seq": 463, "type": "skill_test_result"}
+{"data": {"card": "ec0016", "message": "Frozen in Fear was discarded."}, "phase": "Investigation", "round": 10, "seq": 464, "type": "treachery_discarded"}
+{"data": {"card": "pc0005", "message": "\"Skids\" O'Toole drew Beat Cop."}, "phase": "Investigation", "round": 10, "seq": 465, "type": "card_drawn"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 10, "seq": 466, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 10, "seq": 467, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 10, "seq": 468, "type": "ready_step"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer engaged \"Skids\" O'Toole."}, "phase": "Upkeep", "round": 10, "seq": 469, "type": "enemy_engaged"}
+{"data": {"card": "pc0008", "message": "\"Skids\" O'Toole drew Vicious Blow."}, "phase": "Upkeep", "round": 10, "seq": 470, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 10, "seq": 471, "type": "resource_gained"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices was discarded at end of round."}, "phase": "Upkeep", "round": 10, "seq": 472, "type": "treachery_discarded"}
+{"data": {"message": "Round 11 began."}, "phase": "Mythos", "round": 11, "seq": 473, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 11, "seq": 474, "type": "doom_placed"}
+{"data": {"message": "Agenda advanced to They're Getting Out!."}, "phase": "Mythos", "round": 11, "seq": 475, "type": "agenda_advanced"}
+{"data": {"card": "ec0002", "message": "\"Skids\" O'Toole drew encounter card Icy Ghoul."}, "phase": "Mythos", "round": 11, "seq": 476, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul spawned at Cellar."}, "phase": "Mythos", "round": 11, "seq": 477, "type": "enemy_spawned"}
+{"data": {"card": "ec0010", "message": "\"Skids\" O'Toole drew encounter card Chill from Below."}, "phase": "Mythos", "round": 11, "seq": 478, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Chill from Below"}, "phase": "Mythos", "round": 11, "seq": 479, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Mythos \u00b7 \"Skids\" O'Toole] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 11, "seq": 480, "status": "[R11\u00b7Mythos | \"Skids\" O'Toole 01003 | Attic | clu2 res1 | dmg1/8 hor3/6 | h3 d12 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 11, "seq": 481, "type": "decision_made"}
+{"data": {"message": "No willpower icons are available for Chill from Below, so accept the random discard risk."}, "phase": "Mythos", "round": 11, "seq": 482, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Mythos", "round": 11, "seq": 483, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Chill from Below: failure by 3 - willpower 2 + committed 0 + boosts 0 + token -2 = 0 vs 3.", "modifier": -2, "skill": "willpower", "source": "Chill from Below", "success": false, "token": "-2", "value": 0}, "phase": "Mythos", "round": 11, "seq": 484, "type": "skill_test_result"}
+{"data": {"card": "pc0008", "message": "Chill from Below forced a random discard of Vicious Blow."}, "phase": "Mythos", "round": 11, "seq": 485, "type": "card_discarded"}
+{"data": {"card": "pc0020", "message": "Chill from Below forced a random discard of Sneak Attack."}, "phase": "Mythos", "round": 11, "seq": 486, "type": "card_discarded"}
+{"data": {"card": "pc0005", "message": "Chill from Below forced a random discard of Beat Cop."}, "phase": "Mythos", "round": 11, "seq": 487, "type": "card_discarded"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 11, "seq": 488, "type": "phase_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 11, "seq": 489, "status": "[R11\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Attic | clu2 res1 | dmg1/8 hor3/6 | h0 d12 x17 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 11, "seq": 490, "type": "decision_made"}
+{"data": {"message": "Take Mob Enforcer's attack of opportunity because the final Attic clue is required to advance Act 2."}, "phase": "Investigation", "round": 11, "seq": 491, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 11, "seq": 492, "type": "action_spent"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer attacked \"Skids\" O'Toole.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 11, "seq": 493, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 1 damage and 0 horror.", "source": "Mob Enforcer"}, "phase": "Investigation", "round": 11, "seq": 494, "type": "damage_assigned"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 11, "seq": 495, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 11, "seq": 496, "status": "[R11\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Attic | clu2 res1 | dmg2/8 hor3/6 | h0 d12 x17 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 11, "seq": 497, "type": "decision_made"}
+{"data": {"message": "No cards are in hand, so resolve the 3 vs 1 investigate as-is."}, "phase": "Investigation", "round": 11, "seq": 498, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -4.", "modifier": -4, "token": "-4"}, "phase": "Investigation", "round": 11, "seq": 499, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate Attic: failure by 1 - intellect 3 + committed 0 + boosts 0 + token -4 = 0 vs 1.", "modifier": -4, "skill": "intellect", "source": "Investigate Attic", "success": false, "token": "-4", "value": 0}, "phase": "Investigation", "round": 11, "seq": 500, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 11, "seq": 501, "status": "[R11\u00b7Investigation a2/3 | \"Skids\" O'Toole 01003 | Attic | clu2 res1 | dmg2/8 hor3/6 | h0 d12 x17 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 11, "seq": 502, "type": "decision_made"}
+{"data": {"message": "Try the final Attic clue again because success still leaves one action to reach Hallway."}, "phase": "Investigation", "round": 11, "seq": 503, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 11, "seq": 504, "type": "action_spent"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer attacked \"Skids\" O'Toole.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 11, "seq": 505, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 1 damage and 0 horror.", "source": "Mob Enforcer"}, "phase": "Investigation", "round": 11, "seq": 506, "type": "damage_assigned"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 11, "seq": 507, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 11, "seq": 508, "status": "[R11\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu2 res1 | dmg3/8 hor3/6 | h0 d12 x17 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 11, "seq": 509, "type": "decision_made"}
+{"data": {"message": "Resolve the second 3 vs 1 attempt with no hand left to improve it."}, "phase": "Investigation", "round": 11, "seq": 510, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 11, "seq": 511, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 2, "message": "Investigate Attic: success by 2 - intellect 3 + committed 0 + boosts 0 + token 0 = 3 vs 1.", "modifier": 0, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "0", "value": 3}, "phase": "Investigation", "round": 11, "seq": 512, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole discovered 1 clue."}, "phase": "Investigation", "round": 11, "seq": 513, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 11, "seq": 514, "status": "[R11\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Attic | clu3 res1 | dmg3/8 hor3/6 | h0 d12 x17 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 11, "seq": 515, "type": "decision_made"}
+{"data": {"message": "Move to Hallway with three clues so Act 2 can advance at round end despite Mob's attack."}, "phase": "Investigation", "round": 11, "seq": 516, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 11, "seq": 517, "type": "action_spent"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer attacked \"Skids\" O'Toole.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 11, "seq": 518, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 1 damage and 0 horror.", "source": "Mob Enforcer"}, "phase": "Investigation", "round": 11, "seq": 519, "type": "damage_assigned"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer moved to Hallway."}, "phase": "Investigation", "round": 11, "seq": 520, "type": "enemy_moved"}
+{"data": {"location": "hallway", "message": "\"Skids\" O'Toole moved to Hallway."}, "phase": "Investigation", "round": 11, "seq": 521, "type": "investigator_moved"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 11, "seq": 522, "type": "phase_started"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer attacked \"Skids\" O'Toole.", "source": "enemy phase"}, "phase": "Enemy", "round": 11, "seq": 523, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 1 damage and 0 horror.", "source": "Mob Enforcer"}, "phase": "Enemy", "round": 11, "seq": 524, "type": "damage_assigned"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer exhausted after attacking."}, "phase": "Enemy", "round": 11, "seq": 525, "type": "enemy_exhausted"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul moved to Hallway."}, "phase": "Enemy", "round": 11, "seq": 526, "type": "enemy_moved"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul engaged \"Skids\" O'Toole."}, "phase": "Enemy", "round": 11, "seq": 527, "type": "enemy_engaged"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 11, "seq": 528, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 11, "seq": 529, "type": "ready_step"}
+{"data": {"card": "pc0022", "message": "\"Skids\" O'Toole drew Opportunist."}, "phase": "Upkeep", "round": 11, "seq": 530, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 11, "seq": 531, "type": "resource_gained"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 11, "seq": 532, "type": "doom_placed"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 11, "seq": 533, "status": "[R11\u00b7Upkeep | \"Skids\" O'Toole 01003 | Hallway | clu3 res2 | dmg5/8 hor3/6 | h1 d11 x17 | Act2 Agd3 doom1/10]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Spend 3 clues and advance", "option": 1}, "phase": "Upkeep", "round": 11, "seq": 534, "type": "decision_made"}
+{"data": {"message": "Advance Act 2 now because the three clues were collected and Skids is in Hallway at round end."}, "phase": "Upkeep", "round": 11, "seq": 535, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "\"Skids\" O'Toole spent 3 clue."}, "phase": "Upkeep", "round": 11, "seq": 536, "type": "clues_spent"}
+{"data": {"location": "parlor", "message": "Parlor was revealed."}, "phase": "Upkeep", "round": 11, "seq": 537, "type": "location_revealed"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest spawned at Hallway."}, "phase": "Upkeep", "round": 11, "seq": 538, "type": "enemy_spawned"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest engaged \"Skids\" O'Toole."}, "phase": "Upkeep", "round": 11, "seq": 539, "type": "enemy_engaged"}
+{"data": {"message": "Act advanced to What Have You Done?."}, "phase": "Upkeep", "round": 11, "seq": 540, "type": "act_advanced"}
+{"data": {"message": "Round 12 began."}, "phase": "Mythos", "round": 12, "seq": 541, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 12, "seq": 542, "type": "doom_placed"}
+{"data": {"card": "ec0016", "message": "\"Skids\" O'Toole drew encounter card Frozen in Fear."}, "phase": "Mythos", "round": 12, "seq": 543, "type": "encounter_drawn"}
+{"data": {"card": "ec0016", "message": "Frozen in Fear entered \"Skids\" O'Toole's threat area."}, "phase": "Mythos", "round": 12, "seq": 544, "type": "treachery_threat"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 12, "seq": 545, "type": "phase_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 12, "seq": 546, "status": "[R12\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg5/8 hor3/6 | h1 d11 x17 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Ghoul Priest (evade 4) \u2014 test Agility(4)", "option": 11}, "phase": "Investigation", "round": 12, "seq": 547, "type": "decision_made"}
+{"data": {"message": "Evade Ghoul Priest first because its 2 damage and 2 horror attack is the most dangerous threat."}, "phase": "Investigation", "round": 12, "seq": 548, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 2, "message": "Spent 2 actions: Evade Ghoul Priest."}, "phase": "Investigation", "round": 12, "seq": 549, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 4.", "source": "Evade Ghoul Priest"}, "phase": "Investigation", "round": 12, "seq": 550, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 12, "seq": 551, "status": "[R12\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg5/8 hor3/6 | h1 d11 x17 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Opportunist (+1)", "option": 1}, "phase": "Investigation", "round": 12, "seq": 552, "type": "decision_made"}
+{"data": {"message": "Commit Opportunist to improve the Ghoul Priest evade while keeping enough resources for Mob Enforcer."}, "phase": "Investigation", "round": 12, "seq": 553, "type": "agent_reason"}
+{"data": {"card": "pc0022", "message": "Committed Opportunist."}, "phase": "Investigation", "round": 12, "seq": 554, "type": "card_committed"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 12, "seq": 555, "status": "[R12\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res2 | dmg5/8 hor3/6 | h0 d11 x17 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hard Knocks (+1 agility)", "option": 1}, "phase": "Investigation", "round": 12, "seq": 556, "type": "decision_made"}
+{"data": {"message": "Boost once to make the Priest evade reasonable while preserving one resource for the second evade."}, "phase": "Investigation", "round": 12, "seq": 557, "type": "agent_reason"}
+{"data": {"card_code": "01049", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 12, "seq": 558, "type": "skill_boost"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 12, "seq": 559, "status": "[R12\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res1 | dmg5/8 hor3/6 | h0 d11 x17 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 12, "seq": 560, "type": "decision_made"}
+{"data": {"message": "Keep the last resource for Mob Enforcer; two medium evades are better than one great and one weak evade."}, "phase": "Investigation", "round": 12, "seq": 561, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 12, "seq": 562, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 1, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Evade Ghoul Priest: success by 0 - agility 4 + committed 1 + boosts 1 + token -2 = 4 vs 4.", "modifier": -2, "skill": "agility", "source": "Evade Ghoul Priest", "success": true, "token": "-2", "value": 4}, "phase": "Investigation", "round": 12, "seq": 563, "type": "skill_test_result"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest disengaged."}, "phase": "Investigation", "round": 12, "seq": 564, "type": "enemy_disengaged"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 12, "seq": 565, "status": "[R12\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res1 | dmg5/8 hor3/6 | h0 d11 x18 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Mob Enforcer (evade 3) \u2014 test Agility(4)", "option": 9}, "phase": "Investigation", "round": 12, "seq": 566, "type": "decision_made"}
+{"data": {"message": "Evade Mob Enforcer so only Icy Ghoul attacks and Skids survives the enemy phase."}, "phase": "Investigation", "round": 12, "seq": 567, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Mob Enforcer."}, "phase": "Investigation", "round": 12, "seq": 568, "type": "action_spent"}
+{"data": {"message": "Started agility test 4 vs 3.", "source": "Evade Mob Enforcer"}, "phase": "Investigation", "round": 12, "seq": 569, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Mob Enforcer (agility vs 3)."}, "phase": "Investigation", "round": 12, "seq": 570, "status": "[R12\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res1 | dmg5/8 hor3/6 | h0 d11 x18 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hard Knocks (+1 agility)", "option": 1}, "phase": "Investigation", "round": 12, "seq": 571, "type": "decision_made"}
+{"data": {"message": "Spend the last resource so Mob Enforcer's evade is 5 vs 3 and has acceptable odds."}, "phase": "Investigation", "round": 12, "seq": 572, "type": "agent_reason"}
+{"data": {"card_code": "01049", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 12, "seq": 573, "type": "skill_boost"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Evade Mob Enforcer (agility vs 3)."}, "phase": "Investigation", "round": 12, "seq": 574, "status": "[R12\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg5/8 hor3/6 | h0 d11 x18 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 12, "seq": 575, "type": "decision_made"}
+{"data": {"message": "Resolve the boosted Mob evade to leave only Icy Ghoul attacking this round."}, "phase": "Investigation", "round": 12, "seq": 576, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 12, "seq": 577, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 1, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Evade Mob Enforcer: success by 0 - agility 4 + committed 0 + boosts 1 + token -2 = 3 vs 3.", "modifier": -2, "skill": "agility", "source": "Evade Mob Enforcer", "success": true, "token": "-2", "value": 3}, "phase": "Investigation", "round": 12, "seq": 578, "type": "skill_test_result"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer disengaged."}, "phase": "Investigation", "round": 12, "seq": 579, "type": "enemy_disengaged"}
+{"data": {"message": "Started willpower test 2 vs 3.", "source": "Frozen in Fear"}, "phase": "Investigation", "round": 12, "seq": 580, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 \"Skids\" O'Toole] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 12, "seq": 581, "status": "[R12\u00b7Investigation a0/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res0 | dmg5/8 hor3/6 | h0 d11 x18 | Act3 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 12, "seq": 582, "type": "decision_made"}
+{"data": {"message": "No hand or resources remain for Frozen in Fear, so resolve it unboosted."}, "phase": "Investigation", "round": 12, "seq": 583, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 12, "seq": 584, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Frozen in Fear: failure by 3 - willpower 2 + committed 0 + boosts 0 + token -2 = 0 vs 3.", "modifier": -2, "skill": "willpower", "source": "Frozen in Fear", "success": false, "token": "-2", "value": 0}, "phase": "Investigation", "round": 12, "seq": 585, "type": "skill_test_result"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 12, "seq": 586, "type": "phase_started"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul attacked \"Skids\" O'Toole.", "source": "enemy phase"}, "phase": "Enemy", "round": 12, "seq": 587, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 2 damage and 1 horror.", "source": "Icy Ghoul"}, "phase": "Enemy", "round": 12, "seq": 588, "type": "damage_assigned"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul exhausted after attacking."}, "phase": "Enemy", "round": 12, "seq": 589, "type": "enemy_exhausted"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest moved to Parlor."}, "phase": "Enemy", "round": 12, "seq": 590, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 12, "seq": 591, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 12, "seq": 592, "type": "ready_step"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer engaged \"Skids\" O'Toole."}, "phase": "Upkeep", "round": 12, "seq": 593, "type": "enemy_engaged"}
+{"data": {"card": "pc0030", "message": "\"Skids\" O'Toole drew Guts."}, "phase": "Upkeep", "round": 12, "seq": 594, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "\"Skids\" O'Toole gained 1 resource."}, "phase": "Upkeep", "round": 12, "seq": 595, "type": "resource_gained"}
+{"data": {"message": "Placed 2 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 12, "seq": 596, "type": "doom_placed"}
+{"data": {"message": "Round 13 began."}, "phase": "Mythos", "round": 13, "seq": 597, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 13, "seq": 598, "type": "doom_placed"}
+{"data": {"card": "ec0007", "message": "\"Skids\" O'Toole drew encounter card Grave-Eater."}, "phase": "Mythos", "round": 13, "seq": 599, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater spawned at Hallway."}, "phase": "Mythos", "round": 13, "seq": 600, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater engaged \"Skids\" O'Toole."}, "phase": "Mythos", "round": 13, "seq": 601, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 13, "seq": 602, "type": "phase_started"}
+{"data": {"prompt": "[Round 13 \u00b7 Investigation \u00b7 \"Skids\" O'Toole \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 13, "seq": 603, "status": "[R13\u00b7Investigation a3/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res1 | dmg7/8 hor4/6 | h1 d10 x18 | Act3 Agd3 doom5/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Parlor", "option": 3}, "phase": "Investigation", "round": 13, "seq": 604, "type": "decision_made"}
+{"data": {"message": "Try to reach Parlor for the resign action, accepting that attacks of opportunity are likely fatal at 7 damage."}, "phase": "Investigation", "round": 13, "seq": 605, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 2, "message": "Spent 2 actions: Move to Parlor."}, "phase": "Investigation", "round": 13, "seq": 606, "type": "action_spent"}
+{"data": {"prompt": "Choose the next enemy to make an attack of opportunity."}, "phase": "Investigation", "round": 13, "seq": 607, "status": "[R13\u00b7Investigation a1/3 | \"Skids\" O'Toole 01003 | Hallway | clu0 res1 | dmg7/8 hor4/6 | h1 d10 x18 | Act3 Agd3 doom5/10]", "type": "decision_presented"}
+{"data": {"decision_id": "aoo-attack-order", "label": "Attack next: Mob Enforcer", "option": 2}, "phase": "Investigation", "round": 13, "seq": 608, "type": "decision_made"}
+{"data": {"message": "Choose the smallest attack first, though any attack is fatal at 7 damage."}, "phase": "Investigation", "round": 13, "seq": 609, "type": "agent_reason"}
+{"data": {"enemy": "pc0033", "message": "Mob Enforcer attacked \"Skids\" O'Toole.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 13, "seq": 610, "type": "enemy_attack"}
+{"data": {"message": "\"Skids\" O'Toole took 1 damage and 0 horror.", "source": "Mob Enforcer"}, "phase": "Investigation", "round": 13, "seq": 611, "type": "damage_assigned"}
+{"data": {"message": "\"Skids\" O'Toole was defeated", "summary": "\"Skids\" O'Toole was defeated"}, "phase": "Investigation", "round": 13, "seq": 612, "type": "game_end"}
+{"data": {}, "phase": "Investigation", "round": 13, "seq": 613, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 13, "seq": 614, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 13, "seq": 615, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 13, "seq": 616, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 13, "seq": 617, "type": "note_added"}

@@ -1,0 +1,2 @@
+[R1·Investigation a3/3 | "Skids" O'Toole 01003 | Study (Aberrant Gateway) | clu0 res5 | dmg0/8 hor0/6 | h5 d28 x0 | Act1 Agd1 doom0/3]
+**R1 · Investigation** — Decision presented: Opening hand: Vicious Blow, Knife, Dynamite Blast, Elusive, Sneak Attack. Set aside any number of cards, then draw replacements together.

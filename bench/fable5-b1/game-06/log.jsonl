@@ -1,0 +1,452 @@
+{"data": {"prompt": "Opening hand: Perception, First Aid, Perception, Machete, Magnifying Glass. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 1, "status": "[R1\u00b7Investigation a3/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res5 | dmg0/9 hor0/5 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Set aside First Aid", "option": 3}, "phase": "Investigation", "round": 1, "seq": 2, "type": "decision_made"}
+{"data": {"message": "First Aid is too slow early; dig for .45/allies/economy instead"}, "phase": "Investigation", "round": 1, "seq": 3, "type": "agent_reason"}
+{"data": {"prompt": "Opening hand: Perception, First Aid, Perception, Machete, Magnifying Glass. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 4, "status": "[R1\u00b7Investigation a3/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res5 | dmg0/9 hor0/5 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Set aside Perception", "option": 4}, "phase": "Investigation", "round": 1, "seq": 5, "type": "decision_made"}
+{"data": {"message": "Second Perception is redundant; dig for weapon/ally/economy"}, "phase": "Investigation", "round": 1, "seq": 6, "type": "agent_reason"}
+{"data": {"prompt": "Opening hand: Perception, First Aid, Perception, Machete, Magnifying Glass. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 7, "status": "[R1\u00b7Investigation a3/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res5 | dmg0/9 hor0/5 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Keep hand and draw replacements", "option": 1}, "phase": "Investigation", "round": 1, "seq": 8, "type": "decision_made"}
+{"data": {"message": "Keep Machete + Magnifying Glass + one Perception, redraw 2"}, "phase": "Investigation", "round": 1, "seq": 9, "type": "agent_reason"}
+{"data": {"drew": ["pc0021", "pc0022"], "message": "Mulliganed First Aid, Perception; drew Deduction, Deduction.", "out": ["pc0006", "pc0031"]}, "phase": "Investigation", "round": 1, "seq": 10, "type": "mulligan"}
+{"data": {"message": "Opening hand finalized: Perception, Machete, Magnifying Glass, Deduction, Deduction."}, "phase": "Investigation", "round": 1, "seq": 11, "type": "setup_complete"}
+{"data": {"attic": "original", "cellar": "return", "message": "Setup chose the original Attic and the return Cellar."}, "phase": "Investigation", "round": 1, "seq": 12, "type": "setup_variants"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 13, "status": "[R1\u00b7Investigation a3/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res5 | dmg0/9 hor0/5 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Magnifying Glass (fast)", "option": 6}, "phase": "Investigation", "round": 1, "seq": 14, "type": "decision_made"}
+{"data": {"message": "Fast +1 intellect for 1 res; makes Study test 4v3"}, "phase": "Investigation", "round": 1, "seq": 15, "type": "agent_reason"}
+{"data": {"card": "pc0018", "message": "Roland Banks played Magnifying Glass."}, "phase": "Investigation", "round": 1, "seq": 16, "type": "card_played"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 17, "status": "[R1\u00b7Investigation a3/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res4 | dmg0/9 hor0/5 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Study (Aberrant Gateway): spend 2 actions to draw 3 cards", "option": 5}, "phase": "Investigation", "round": 1, "seq": 18, "type": "decision_made"}
+{"data": {"message": "Notebook: Study draw-3 is best R1 value before leaving"}, "phase": "Investigation", "round": 1, "seq": 19, "type": "agent_reason"}
+{"data": {"action": "study_draw", "cost": 2, "message": "Spent 2 actions: Study (Aberrant Gateway) - draw 3 cards."}, "phase": "Investigation", "round": 1, "seq": 20, "type": "action_spent"}
+{"data": {"card": "pc0011", "message": "Roland Banks drew Guard Dog."}, "phase": "Investigation", "round": 1, "seq": 21, "type": "card_drawn"}
+{"data": {"card": "pc0019", "message": "Roland Banks drew Barricade."}, "phase": "Investigation", "round": 1, "seq": 22, "type": "card_drawn"}
+{"data": {"card": "pc0028", "message": "Roland Banks drew Emergency Cache."}, "phase": "Investigation", "round": 1, "seq": 23, "type": "card_drawn"}
+{"data": {"message": "The Study's gateway ability drew 3 cards."}, "phase": "Investigation", "round": 1, "seq": 24, "type": "study_draw"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 25, "status": "[R1\u00b7Investigation a1/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res4 | dmg0/9 hor0/5 | h7 d25 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Study (Aberrant Gateway) (shroud 3) \u2014 test Intellect(4) vs 3", "option": 1}, "phase": "Investigation", "round": 1, "seq": 26, "type": "decision_made"}
+{"data": {"message": "Grab Study clue at 4v3; will commit Perception for safety"}, "phase": "Investigation", "round": 1, "seq": 27, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Study (Aberrant Gateway)."}, "phase": "Investigation", "round": 1, "seq": 28, "type": "action_spent"}
+{"data": {"message": "Started intellect test 4 vs 3.", "source": "Investigate Study (Aberrant Gateway)"}, "phase": "Investigation", "round": 1, "seq": 29, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Study (Aberrant Gateway) (intellect vs 3)."}, "phase": "Investigation", "round": 1, "seq": 30, "status": "[R1\u00b7Investigation a0/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res4 | dmg0/9 hor0/5 | h7 d25 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Perception (+2)", "option": 1}, "phase": "Investigation", "round": 1, "seq": 31, "type": "decision_made"}
+{"data": {"message": "+2 makes it 6v3: only -4/autofail fail; Perception draws on pass"}, "phase": "Investigation", "round": 1, "seq": 32, "type": "agent_reason"}
+{"data": {"card": "pc0032", "message": "Committed Perception."}, "phase": "Investigation", "round": 1, "seq": 33, "type": "card_committed"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Study (Aberrant Gateway) (intellect vs 3)."}, "phase": "Investigation", "round": 1, "seq": 34, "status": "[R1\u00b7Investigation a0/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu0 res4 | dmg0/9 hor0/5 | h6 d25 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 4}, "phase": "Investigation", "round": 1, "seq": 35, "type": "decision_made"}
+{"data": {"message": "6v3 is enough; save Deductions for Attic"}, "phase": "Investigation", "round": 1, "seq": 36, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 1, "seq": 37, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 2, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Investigate Study (Aberrant Gateway): success by 3 - intellect 4 + committed 2 + boosts 0 + token 0 = 6 vs 3.", "modifier": 0, "skill": "intellect", "source": "Investigate Study (Aberrant Gateway)", "success": true, "token": "0", "value": 6}, "phase": "Investigation", "round": 1, "seq": 38, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Roland Banks discovered 1 clue."}, "phase": "Investigation", "round": 1, "seq": 39, "type": "clue_discovered"}
+{"data": {"card": "pc0012", "message": "Roland Banks drew Evidence!."}, "phase": "Investigation", "round": 1, "seq": 40, "type": "card_drawn"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 1, "seq": 41, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 1, "seq": 42, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 1, "seq": 43, "type": "ready_step"}
+{"data": {"card": "pc0003", "message": "Roland Banks drew .45 Automatic."}, "phase": "Upkeep", "round": 1, "seq": 44, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 1, "seq": 45, "type": "resource_gained"}
+{"data": {"message": "Round 2 began."}, "phase": "Mythos", "round": 2, "seq": 46, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 2, "seq": 47, "type": "doom_placed"}
+{"data": {"card": "ec0021", "message": "Roland Banks drew encounter card Ancient Evils."}, "phase": "Mythos", "round": 2, "seq": 48, "type": "encounter_drawn"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "Ancient Evils"}, "phase": "Mythos", "round": 2, "seq": 49, "type": "doom_placed"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 2, "seq": 50, "type": "phase_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 51, "status": "[R2\u00b7Investigation a3/3 | Roland Banks 01001 | Study (Aberrant Gateway) | clu1 res5 | dmg0/9 hor0/5 | h8 d23 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 2, "seq": 52, "type": "decision_made"}
+{"data": {"message": "Head to Bedroom for clue 2; Guest Hall has no clue"}, "phase": "Investigation", "round": 2, "seq": 53, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 54, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Roland Banks moved to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 55, "type": "investigator_moved"}
+{"data": {"location": "guest_hall", "message": "Guest Hall was revealed."}, "phase": "Investigation", "round": 2, "seq": 56, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 57, "status": "[R2\u00b7Investigation a2/3 | Roland Banks 01001 | Guest Hall | clu1 res5 | dmg0/9 hor0/5 | h8 d23 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bedroom", "option": 3}, "phase": "Investigation", "round": 2, "seq": 58, "type": "decision_made"}
+{"data": {"message": "Bedroom clue next; investigate there this turn"}, "phase": "Investigation", "round": 2, "seq": 59, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bedroom."}, "phase": "Investigation", "round": 2, "seq": 60, "type": "action_spent"}
+{"data": {"location": "bedroom", "message": "Roland Banks moved to Bedroom."}, "phase": "Investigation", "round": 2, "seq": 61, "type": "investigator_moved"}
+{"data": {"location": "bedroom", "message": "Bedroom was revealed."}, "phase": "Investigation", "round": 2, "seq": 62, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 63, "status": "[R2\u00b7Investigation a1/3 | Roland Banks 01001 | Bedroom | clu1 res5 | dmg0/9 hor0/5 | h8 d23 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bedroom (shroud 2) \u2014 test Intellect(4) vs 2", "option": 1}, "phase": "Investigation", "round": 2, "seq": 64, "type": "decision_made"}
+{"data": {"message": "4v2 = 81%, fail only costs a random discard; no commit needed"}, "phase": "Investigation", "round": 2, "seq": 65, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bedroom."}, "phase": "Investigation", "round": 2, "seq": 66, "type": "action_spent"}
+{"data": {"message": "Started intellect test 4 vs 2.", "source": "Investigate Bedroom"}, "phase": "Investigation", "round": 2, "seq": 67, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Bedroom (intellect vs 2)."}, "phase": "Investigation", "round": 2, "seq": 68, "status": "[R2\u00b7Investigation a0/3 | Roland Banks 01001 | Bedroom | clu1 res5 | dmg0/9 hor0/5 | h8 d23 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 5}, "phase": "Investigation", "round": 2, "seq": 69, "type": "decision_made"}
+{"data": {"message": "81% bare; save Deduction/Evidence for later value"}, "phase": "Investigation", "round": 2, "seq": 70, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 2, "seq": 71, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 1, "message": "Investigate Bedroom: failure by 1 - intellect 4 + committed 0 + boosts 0 + token -3 = 1 vs 2.", "modifier": -3, "skill": "intellect", "source": "Investigate Bedroom", "success": false, "token": "-3", "value": 1}, "phase": "Investigation", "round": 2, "seq": 72, "type": "skill_test_result"}
+{"data": {"card": "pc0009", "message": "The Bedroom forced a random discard of Machete."}, "phase": "Investigation", "round": 2, "seq": 73, "type": "bedroom_forced"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 2, "seq": 74, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 2, "seq": 75, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 2, "seq": 76, "type": "ready_step"}
+{"data": {"card": "pc0007", "message": "Roland Banks drew First Aid."}, "phase": "Upkeep", "round": 2, "seq": 77, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 2, "seq": 78, "type": "resource_gained"}
+{"data": {"message": "Round 3 began."}, "phase": "Mythos", "round": 3, "seq": 79, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 3, "seq": 80, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 3, "seq": 81, "status": "[R3\u00b7Mythos | Roland Banks 01001 | Bedroom | clu1 res6 | dmg0/9 hor0/5 | h8 d22 x2 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Discard 1 random card from hand", "option": 1}, "phase": "Mythos", "round": 3, "seq": 82, "type": "decision_made"}
+{"data": {"message": "Roland's 5 sanity is precious; 1/8 chance of losing .45 beats 2 horror"}, "phase": "Mythos", "round": 3, "seq": 83, "type": "agent_reason"}
+{"data": {"card": "pc0021", "message": "Roland Banks discarded Deduction at random for Agenda 1."}, "phase": "Mythos", "round": 3, "seq": 84, "type": "card_discarded"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 3, "seq": 85, "type": "agenda_advanced"}
+{"data": {"card": "ec0022", "message": "Roland Banks drew encounter card Ancient Evils."}, "phase": "Mythos", "round": 3, "seq": 86, "type": "encounter_drawn"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "Ancient Evils"}, "phase": "Mythos", "round": 3, "seq": 87, "type": "doom_placed"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 3, "seq": 88, "type": "phase_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 89, "status": "[R3\u00b7Investigation a3/3 | Roland Banks 01001 | Bedroom | clu1 res6 | dmg0/9 hor0/5 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bedroom (shroud 2) \u2014 test Intellect(4) vs 2", "option": 1}, "phase": "Investigation", "round": 3, "seq": 90, "type": "decision_made"}
+{"data": {"message": "Must get this clue; will commit Barricade fodder to hit 5v2"}, "phase": "Investigation", "round": 3, "seq": 91, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bedroom."}, "phase": "Investigation", "round": 3, "seq": 92, "type": "action_spent"}
+{"data": {"message": "Started intellect test 4 vs 2.", "source": "Investigate Bedroom"}, "phase": "Investigation", "round": 3, "seq": 93, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Bedroom (intellect vs 2)."}, "phase": "Investigation", "round": 3, "seq": 94, "status": "[R3\u00b7Investigation a2/3 | Roland Banks 01001 | Bedroom | clu1 res6 | dmg0/9 hor0/5 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Barricade (+1)", "option": 2}, "phase": "Investigation", "round": 3, "seq": 95, "type": "decision_made"}
+{"data": {"message": "Barricade is dead weight in this scenario; 5v2 = 87.5%"}, "phase": "Investigation", "round": 3, "seq": 96, "type": "agent_reason"}
+{"data": {"card": "pc0019", "message": "Committed Barricade."}, "phase": "Investigation", "round": 3, "seq": 97, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Bedroom (intellect vs 2)."}, "phase": "Investigation", "round": 3, "seq": 98, "status": "[R3\u00b7Investigation a2/3 | Roland Banks 01001 | Bedroom | clu1 res6 | dmg0/9 hor0/5 | h6 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 3, "seq": 99, "type": "decision_made"}
+{"data": {"message": "5v2 done"}, "phase": "Investigation", "round": 3, "seq": 100, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed cultist.", "modifier": -1, "token": "cultist"}, "phase": "Investigation", "round": 3, "seq": 101, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 1, "difficulty": 2, "extra_tokens": [], "margin": 2, "message": "Investigate Bedroom: success by 2 - intellect 4 + committed 1 + boosts 0 + token -1 = 4 vs 2.", "modifier": -1, "skill": "intellect", "source": "Investigate Bedroom", "success": true, "token": "cultist", "value": 4}, "phase": "Investigation", "round": 3, "seq": 102, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Roland Banks discovered 1 clue."}, "phase": "Investigation", "round": 3, "seq": 103, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 104, "status": "[R3\u00b7Investigation a2/3 | Roland Banks 01001 | Bedroom | clu2 res6 | dmg0/9 hor0/5 | h6 d22 x4 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 3, "seq": 105, "type": "decision_made"}
+{"data": {"message": "Clue 2/3 done; heading to Bathroom for the last one"}, "phase": "Investigation", "round": 3, "seq": 106, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 107, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Roland Banks moved to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 108, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 109, "status": "[R3\u00b7Investigation a1/3 | Roland Banks 01001 | Guest Hall | clu2 res6 | dmg0/9 hor0/5 | h6 d22 x4 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bathroom", "option": 4}, "phase": "Investigation", "round": 3, "seq": 110, "type": "decision_made"}
+{"data": {"message": "Position in Bathroom so R4 opens with the investigate"}, "phase": "Investigation", "round": 3, "seq": 111, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bathroom."}, "phase": "Investigation", "round": 3, "seq": 112, "type": "action_spent"}
+{"data": {"location": "bathroom", "message": "Roland Banks moved to Bathroom."}, "phase": "Investigation", "round": 3, "seq": 113, "type": "investigator_moved"}
+{"data": {"location": "bathroom", "message": "Bathroom was revealed."}, "phase": "Investigation", "round": 3, "seq": 114, "type": "location_revealed"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 115, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 116, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 117, "type": "ready_step"}
+{"data": {"card": "pc0025", "message": "Roland Banks drew Flashlight."}, "phase": "Upkeep", "round": 3, "seq": 118, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 119, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 120, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 121, "type": "doom_placed"}
+{"data": {"card": "ec0009", "message": "Roland Banks drew encounter card Acolyte of Um\u00f4rdhoth."}, "phase": "Mythos", "round": 4, "seq": 122, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth spawned at Bathroom."}, "phase": "Mythos", "round": 4, "seq": 123, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth engaged Roland Banks."}, "phase": "Mythos", "round": 4, "seq": 124, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 4, "seq": 125, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 126, "status": "[R4\u00b7Investigation a3/3 | Roland Banks 01001 | Bathroom | clu2 res7 | dmg0/9 hor0/5 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play .45 Automatic (4 res)", "option": 9}, "phase": "Investigation", "round": 4, "seq": 127, "type": "decision_made"}
+{"data": {"message": "Eat one AoO to set up the game-long weapon; 2 shots at 81% kill the 3hp Acolyte and Roland's reaction takes the Bathroom clue"}, "phase": "Investigation", "round": 4, "seq": 128, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play .45 Automatic."}, "phase": "Investigation", "round": 4, "seq": 129, "type": "action_spent"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth attacked Roland Banks.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 4, "seq": 130, "type": "enemy_attack"}
+{"data": {"message": "Roland Banks took 1 damage and 1 horror.", "source": "Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 4, "seq": 131, "type": "damage_assigned"}
+{"data": {"card": "pc0003", "message": "Roland Banks played .45 Automatic."}, "phase": "Investigation", "round": 4, "seq": 132, "type": "card_played"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 133, "status": "[R4\u00b7Investigation a2/3 | Roland Banks 01001 | Bathroom | clu2 res3 | dmg1/9 hor1/5 | h6 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Acolyte of Um\u00f4rdhoth with .45 Automatic (4 ammo) \u2014 test Combat(5) vs 3, 2 dmg", "option": 7}, "phase": "Investigation", "round": 4, "seq": 134, "type": "decision_made"}
+{"data": {"message": "5v3 with 2dmg, 81% to connect"}, "phase": "Investigation", "round": 4, "seq": 135, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Acolyte of Um\u00f4rdhoth)."}, "phase": "Investigation", "round": 4, "seq": 136, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 3.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 4, "seq": 137, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 3)."}, "phase": "Investigation", "round": 4, "seq": 138, "status": "[R4\u00b7Investigation a1/3 | Roland Banks 01001 | Bathroom | clu2 res3 | dmg1/9 hor1/5 | h6 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 4, "seq": 139, "type": "decision_made"}
+{"data": {"message": "Guard Dog too valuable as fodder; 81% bare is fine"}, "phase": "Investigation", "round": 4, "seq": 140, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 4, "seq": 141, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Fight with .45 Automatic: success by 1 - combat 5 + committed 0 + boosts 0 + token -1 = 4 vs 3.", "modifier": -1, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "-1", "value": 4}, "phase": "Investigation", "round": 4, "seq": 142, "type": "skill_test_result"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth took 2 damage."}, "phase": "Investigation", "round": 4, "seq": 143, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 144, "status": "[R4\u00b7Investigation a1/3 | Roland Banks 01001 | Bathroom | clu2 res3 | dmg1/9 hor1/5 | h6 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Acolyte of Um\u00f4rdhoth with .45 Automatic (3 ammo) \u2014 test Combat(5) vs 3, 2 dmg", "option": 7}, "phase": "Investigation", "round": 4, "seq": 145, "type": "decision_made"}
+{"data": {"message": "Finish the 1hp Acolyte; kill-reaction grabs Bathroom clue for Act 1"}, "phase": "Investigation", "round": 4, "seq": 146, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Acolyte of Um\u00f4rdhoth)."}, "phase": "Investigation", "round": 4, "seq": 147, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 3.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 4, "seq": 148, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 3)."}, "phase": "Investigation", "round": 4, "seq": 149, "status": "[R4\u00b7Investigation a0/3 | Roland Banks 01001 | Bathroom | clu2 res3 | dmg1/9 hor1/5 | h6 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 4, "seq": 150, "type": "decision_made"}
+{"data": {"message": "81% bare; keep Guard Dog as future soak"}, "phase": "Investigation", "round": 4, "seq": 151, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 4, "seq": 152, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Fight with .45 Automatic: success by 1 - combat 5 + committed 0 + boosts 0 + token -1 = 4 vs 3.", "modifier": -1, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "-1", "value": 4}, "phase": "Investigation", "round": 4, "seq": 153, "type": "skill_test_result"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth took 2 damage."}, "phase": "Investigation", "round": 4, "seq": 154, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth was defeated."}, "phase": "Investigation", "round": 4, "seq": 155, "type": "enemy_defeated"}
+{"data": {"prompt": "Choose reactions after defeating an enemy."}, "phase": "Investigation", "round": 4, "seq": 156, "status": "[R4\u00b7Investigation a0/3 | Roland Banks 01001 | Bathroom | clu2 res3 | dmg1/9 hor1/5 | h6 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "enemy-defeated-reactions", "label": "Use Roland Banks reaction to discover 1 clue", "option": 1}, "phase": "Investigation", "round": 4, "seq": 157, "type": "decision_made"}
+{"data": {"message": "Free clue via Roland's ability; save Evidence! for a kill elsewhere"}, "phase": "Investigation", "round": 4, "seq": 158, "type": "agent_reason"}
+{"data": {"amount": 1, "message": "Roland Banks discovered 1 clue."}, "phase": "Investigation", "round": 4, "seq": 159, "type": "clue_discovered"}
+{"data": {"message": "Roland Banks discovered 1 clue after defeating an enemy."}, "phase": "Investigation", "round": 4, "seq": 160, "type": "roland_reaction"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 4, "seq": 161, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 4, "seq": 162, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 4, "seq": 163, "type": "ready_step"}
+{"data": {"card": "pc0023", "message": "Roland Banks drew Knife."}, "phase": "Upkeep", "round": 4, "seq": 164, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 4, "seq": 165, "type": "resource_gained"}
+{"data": {"message": "Round 5 began."}, "phase": "Mythos", "round": 5, "seq": 166, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 5, "seq": 167, "type": "doom_placed"}
+{"data": {"card": "ec0004", "message": "Roland Banks drew encounter card Swarm of Rats."}, "phase": "Mythos", "round": 5, "seq": 168, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats spawned at Bathroom."}, "phase": "Mythos", "round": 5, "seq": 169, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats engaged Roland Banks."}, "phase": "Mythos", "round": 5, "seq": 170, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 5, "seq": 171, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 172, "status": "[R5\u00b7Investigation a3/3 | Roland Banks 01001 | Bathroom | clu3 res4 | dmg1/9 hor1/5 | h7 d20 x4 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Swarm of Rats (fight 1, 1 dmg) \u2014 test Combat(4)", "option": 3}, "phase": "Investigation", "round": 5, "seq": 173, "type": "decision_made"}
+{"data": {"message": "4v1 unarmed kills the 1hp rats, saves ammo"}, "phase": "Investigation", "round": 5, "seq": 174, "type": "agent_reason"}
+{"data": {"action": "fight", "cost": 1, "message": "Spent 1 action: Fight Swarm of Rats."}, "phase": "Investigation", "round": 5, "seq": 175, "type": "action_spent"}
+{"data": {"message": "Started combat test 4 vs 1.", "source": "Fight Swarm of Rats"}, "phase": "Investigation", "round": 5, "seq": 176, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight Swarm of Rats (combat vs 1)."}, "phase": "Investigation", "round": 5, "seq": 177, "status": "[R5\u00b7Investigation a2/3 | Roland Banks 01001 | Bathroom | clu3 res4 | dmg1/9 hor1/5 | h7 d20 x4 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 5, "seq": 178, "type": "decision_made"}
+{"data": {"message": "87.5% bare"}, "phase": "Investigation", "round": 5, "seq": 179, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 5, "seq": 180, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 3, "message": "Fight Swarm of Rats: success by 3 - combat 4 + committed 0 + boosts 0 + token 0 = 4 vs 1.", "modifier": 0, "skill": "combat", "source": "Fight Swarm of Rats", "success": true, "token": "skull", "value": 4}, "phase": "Investigation", "round": 5, "seq": 181, "type": "skill_test_result"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats took 1 damage."}, "phase": "Investigation", "round": 5, "seq": 182, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats was defeated."}, "phase": "Investigation", "round": 5, "seq": 183, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 184, "status": "[R5\u00b7Investigation a2/3 | Roland Banks 01001 | Bathroom | clu3 res4 | dmg1/9 hor1/5 | h7 d20 x4 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 5, "seq": 185, "type": "decision_made"}
+{"data": {"message": "To Guest Hall for the fast Act 1 advance"}, "phase": "Investigation", "round": 5, "seq": 186, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 5, "seq": 187, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Roland Banks moved to Guest Hall."}, "phase": "Investigation", "round": 5, "seq": 188, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 189, "status": "[R5\u00b7Investigation a1/3 | Roland Banks 01001 | Guest Hall | clu3 res4 | dmg1/9 hor1/5 | h7 d20 x4 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Emergency Cache (0 res)", "option": 8}, "phase": "Investigation", "round": 5, "seq": 190, "type": "decision_made"}
+{"data": {"message": "Free +3 res and thins hand before the advance's will(4) discard test"}, "phase": "Investigation", "round": 5, "seq": 191, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Emergency Cache."}, "phase": "Investigation", "round": 5, "seq": 192, "type": "action_spent"}
+{"data": {"amount": 3, "message": "Roland Banks gained 3 resource."}, "phase": "Investigation", "round": 5, "seq": 193, "type": "resource_gained"}
+{"data": {"card": "pc0028", "message": "Roland Banks played Emergency Cache."}, "phase": "Investigation", "round": 5, "seq": 194, "type": "card_played"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 5, "seq": 195, "status": "[R5\u00b7Investigation a0/3 | Roland Banks 01001 | Guest Hall | clu3 res7 | dmg1/9 hor1/5 | h6 d20 x5 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Advance act by spending 3 clues", "option": 1}, "phase": "Investigation", "round": 5, "seq": 196, "type": "decision_made"}
+{"data": {"message": "Advance Act 1 now; clock is hot with 2 Ancient Evils gone"}, "phase": "Investigation", "round": 5, "seq": 197, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Roland Banks spent 3 clue."}, "phase": "Investigation", "round": 5, "seq": 198, "type": "clues_spent"}
+{"data": {"location": "hallway", "message": "Hole in the Wall was put into play."}, "phase": "Investigation", "round": 5, "seq": 199, "type": "location_added"}
+{"data": {"message": "Roland Banks moved into the Hole in the Wall."}, "phase": "Investigation", "round": 5, "seq": 200, "type": "forced_move"}
+{"data": {"location": "hallway", "message": "Hallway was revealed."}, "phase": "Investigation", "round": 5, "seq": 201, "type": "location_revealed"}
+{"data": {"location": "attic", "message": "Attic was put into play."}, "phase": "Investigation", "round": 5, "seq": 202, "type": "location_added"}
+{"data": {"location": "cellar", "message": "Cellar was put into play."}, "phase": "Investigation", "round": 5, "seq": 203, "type": "location_added"}
+{"data": {"location": "parlor", "message": "Parlor was put into play."}, "phase": "Investigation", "round": 5, "seq": 204, "type": "location_added"}
+{"data": {"message": "Act advanced to The Barrier."}, "phase": "Investigation", "round": 5, "seq": 205, "type": "act_advanced"}
+{"data": {"message": "Started willpower test 3 vs 4.", "source": "Breaking the Wall"}, "phase": "Investigation", "round": 5, "seq": 206, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Breaking the Wall (willpower vs 4)."}, "phase": "Investigation", "round": 5, "seq": 207, "status": "[R5\u00b7Investigation a0/3 | Roland Banks 01001 | Hallway | clu0 res7 | dmg1/9 hor1/5 | h6 d20 x5 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit First Aid (+1)", "option": 1}, "phase": "Investigation", "round": 5, "seq": 208, "type": "decision_made"}
+{"data": {"message": "First Aid is my least valuable card \u2014 boost to 4v4 and shrink the discard pool"}, "phase": "Investigation", "round": 5, "seq": 209, "type": "agent_reason"}
+{"data": {"card": "pc0007", "message": "Committed First Aid."}, "phase": "Investigation", "round": 5, "seq": 210, "type": "card_committed"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Breaking the Wall (willpower vs 4)."}, "phase": "Investigation", "round": 5, "seq": 211, "status": "[R5\u00b7Investigation a0/3 | Roland Banks 01001 | Hallway | clu0 res7 | dmg1/9 hor1/5 | h5 d20 x5 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 5, "seq": 212, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Investigation", "round": 5, "seq": 213, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 5, "seq": 214, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 3, "message": "Breaking the Wall: failure by 3 - willpower 3 + committed 1 + boosts 0 + token -3 = 1 vs 4.", "modifier": -3, "skill": "willpower", "source": "Breaking the Wall", "success": false, "token": "-3", "value": 1}, "phase": "Investigation", "round": 5, "seq": 215, "type": "skill_test_result"}
+{"data": {"card": "pc0022", "message": "Breaking the Wall forced a random discard of Deduction."}, "phase": "Investigation", "round": 5, "seq": 216, "type": "card_discarded"}
+{"data": {"card": "pc0012", "message": "Breaking the Wall forced a random discard of Evidence!."}, "phase": "Investigation", "round": 5, "seq": 217, "type": "card_discarded"}
+{"data": {"card": "pc0025", "message": "Breaking the Wall forced a random discard of Flashlight."}, "phase": "Investigation", "round": 5, "seq": 218, "type": "card_discarded"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 5, "seq": 219, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 5, "seq": 220, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 5, "seq": 221, "type": "ready_step"}
+{"data": {"card": "pc0017", "message": "Roland Banks drew Magnifying Glass."}, "phase": "Upkeep", "round": 5, "seq": 222, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 5, "seq": 223, "type": "resource_gained"}
+{"data": {"message": "Round 6 began."}, "phase": "Mythos", "round": 6, "seq": 224, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 6, "seq": 225, "type": "doom_placed"}
+{"data": {"card": "ec0029", "message": "Roland Banks drew encounter card Corpse-Hungry Ghoul."}, "phase": "Mythos", "round": 6, "seq": 226, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul spawned at Bedroom."}, "phase": "Mythos", "round": 6, "seq": 227, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 6, "seq": 228, "type": "phase_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 229, "status": "[R6\u00b7Investigation a3/3 | Roland Banks 01001 | Hallway | clu0 res8 | dmg1/9 hor1/5 | h3 d19 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Attic", "option": 2}, "phase": "Investigation", "round": 6, "seq": 230, "type": "decision_made"}
+{"data": {"message": "Attic first: 2 clues at shroud 1; entry costs 1 horror (budgeted)"}, "phase": "Investigation", "round": 6, "seq": 231, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Attic."}, "phase": "Investigation", "round": 6, "seq": 232, "type": "action_spent"}
+{"data": {"location": "attic", "message": "Roland Banks moved to Attic."}, "phase": "Investigation", "round": 6, "seq": 233, "type": "investigator_moved"}
+{"data": {"location": "attic", "message": "Attic was revealed."}, "phase": "Investigation", "round": 6, "seq": 234, "type": "location_revealed"}
+{"data": {"message": "Roland Banks took 0 damage and 1 horror.", "source": "Attic"}, "phase": "Investigation", "round": 6, "seq": 235, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 236, "status": "[R6\u00b7Investigation a2/3 | Roland Banks 01001 | Attic | clu0 res8 | dmg1/9 hor2/5 | h3 d19 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1) \u2014 test Intellect(4) vs 1", "option": 1}, "phase": "Investigation", "round": 6, "seq": 237, "type": "decision_made"}
+{"data": {"message": "4v1, 87.5%; first of two Attic clues"}, "phase": "Investigation", "round": 6, "seq": 238, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 6, "seq": 239, "type": "action_spent"}
+{"data": {"message": "Started intellect test 4 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 6, "seq": 240, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 6, "seq": 241, "status": "[R6\u00b7Investigation a1/3 | Roland Banks 01001 | Attic | clu0 res8 | dmg1/9 hor2/5 | h3 d19 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 242, "type": "decision_made"}
+{"data": {"message": "87.5% bare; keep MagGlass as icon for a harder test"}, "phase": "Investigation", "round": 6, "seq": 243, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 6, "seq": 244, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 3, "message": "Investigate Attic: success by 3 - intellect 4 + committed 0 + boosts 0 + token 0 = 4 vs 1.", "modifier": 0, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "skull", "value": 4}, "phase": "Investigation", "round": 6, "seq": 245, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Roland Banks discovered 1 clue."}, "phase": "Investigation", "round": 6, "seq": 246, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 247, "status": "[R6\u00b7Investigation a1/3 | Roland Banks 01001 | Attic | clu1 res8 | dmg1/9 hor2/5 | h3 d19 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1) \u2014 test Intellect(4) vs 1", "option": 1}, "phase": "Investigation", "round": 6, "seq": 248, "type": "decision_made"}
+{"data": {"message": "Second Attic clue at 87.5%"}, "phase": "Investigation", "round": 6, "seq": 249, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 6, "seq": 250, "type": "action_spent"}
+{"data": {"message": "Started intellect test 4 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 6, "seq": 251, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 6, "seq": 252, "status": "[R6\u00b7Investigation a0/3 | Roland Banks 01001 | Attic | clu1 res8 | dmg1/9 hor2/5 | h3 d19 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 253, "type": "decision_made"}
+{"data": {"message": "87.5% bare again"}, "phase": "Investigation", "round": 6, "seq": 254, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 6, "seq": 255, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 4, "message": "Investigate Attic: success by 4 - intellect 4 + committed 0 + boosts 0 + token 1 = 5 vs 1.", "modifier": 1, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "+1", "value": 5}, "phase": "Investigation", "round": 6, "seq": 256, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Roland Banks discovered 1 clue."}, "phase": "Investigation", "round": 6, "seq": 257, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Roland Banks] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 6, "seq": 258, "status": "[R6\u00b7Investigation a0/3 | Roland Banks 01001 | Attic | clu2 res8 | dmg1/9 hor2/5 | h3 d19 x9 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 6, "seq": 259, "type": "decision_made"}
+{"data": {"message": "Hand slots full; second MagGlass would evict .45 or first copy"}, "phase": "Investigation", "round": 6, "seq": 260, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 6, "seq": 261, "type": "phase_started"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul moved to Guest Hall."}, "phase": "Enemy", "round": 6, "seq": 262, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 6, "seq": 263, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 6, "seq": 264, "type": "ready_step"}
+{"data": {"card": "pc0006", "message": "Roland Banks drew First Aid."}, "phase": "Upkeep", "round": 6, "seq": 265, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 6, "seq": 266, "type": "resource_gained"}
+{"data": {"message": "Round 7 began."}, "phase": "Mythos", "round": 7, "seq": 267, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 7, "seq": 268, "type": "doom_placed"}
+{"data": {"card": "ec0010", "message": "Roland Banks drew encounter card Chill from Below."}, "phase": "Mythos", "round": 7, "seq": 269, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 3 vs 3.", "source": "Chill from Below"}, "phase": "Mythos", "round": 7, "seq": 270, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Mythos \u00b7 Roland Banks] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 7, "seq": 271, "status": "[R7\u00b7Mythos | Roland Banks 01001 | Attic | clu2 res9 | dmg1/9 hor2/5 | h4 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit First Aid (+1)", "option": 1}, "phase": "Mythos", "round": 7, "seq": 272, "type": "decision_made"}
+{"data": {"message": "4v3 = 62.5% and First Aid is the card I'd want discarded anyway"}, "phase": "Mythos", "round": 7, "seq": 273, "type": "agent_reason"}
+{"data": {"card": "pc0006", "message": "Committed First Aid."}, "phase": "Mythos", "round": 7, "seq": 274, "type": "card_committed"}
+{"data": {"prompt": "[Round 7 \u00b7 Mythos \u00b7 Roland Banks] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 7, "seq": 275, "status": "[R7\u00b7Mythos | Roland Banks 01001 | Attic | clu2 res9 | dmg1/9 hor2/5 | h3 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 7, "seq": 276, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Mythos", "round": 7, "seq": 277, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Mythos", "round": 7, "seq": 278, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 2, "message": "Chill from Below: success by 2 - willpower 3 + committed 1 + boosts 0 + token 1 = 5 vs 3.", "modifier": 1, "skill": "willpower", "source": "Chill from Below", "success": true, "token": "+1", "value": 5}, "phase": "Mythos", "round": 7, "seq": 279, "type": "skill_test_result"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 7, "seq": 280, "type": "phase_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 281, "status": "[R7\u00b7Investigation a3/3 | Roland Banks 01001 | Attic | clu2 res9 | dmg1/9 hor2/5 | h3 d18 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 7, "seq": 282, "type": "decision_made"}
+{"data": {"message": "Heading to Cellar for the third Act 2 clue"}, "phase": "Investigation", "round": 7, "seq": 283, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 7, "seq": 284, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Roland Banks moved to Hallway."}, "phase": "Investigation", "round": 7, "seq": 285, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 286, "status": "[R7\u00b7Investigation a2/3 | Roland Banks 01001 | Hallway | clu2 res9 | dmg1/9 hor2/5 | h3 d18 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Cellar", "option": 4}, "phase": "Investigation", "round": 7, "seq": 287, "type": "decision_made"}
+{"data": {"message": "Into the Cellar; reveal will spawn the unknown Deep Below Your House"}, "phase": "Investigation", "round": 7, "seq": 288, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Cellar."}, "phase": "Investigation", "round": 7, "seq": 289, "type": "action_spent"}
+{"data": {"location": "cellar", "message": "Roland Banks moved to Cellar."}, "phase": "Investigation", "round": 7, "seq": 290, "type": "investigator_moved"}
+{"data": {"location": "cellar", "message": "Cellar was revealed."}, "phase": "Investigation", "round": 7, "seq": 291, "type": "location_revealed"}
+{"data": {"location": "ghoul_pits", "message": "Deep Below Your House was put into play."}, "phase": "Investigation", "round": 7, "seq": 292, "type": "location_added"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 293, "status": "[R7\u00b7Investigation a1/3 | Roland Banks 01001 | Cellar | clu2 res9 | dmg1/9 hor2/5 | h3 d18 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Cellar (shroud 2) \u2014 test Intellect(4) vs 2", "option": 1}, "phase": "Investigation", "round": 7, "seq": 294, "type": "decision_made"}
+{"data": {"message": "4v2 = 81% for the third Act 2 clue"}, "phase": "Investigation", "round": 7, "seq": 295, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Cellar."}, "phase": "Investigation", "round": 7, "seq": 296, "type": "action_spent"}
+{"data": {"message": "Started intellect test 4 vs 2.", "source": "Investigate Cellar"}, "phase": "Investigation", "round": 7, "seq": 297, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Cellar (intellect vs 2)."}, "phase": "Investigation", "round": 7, "seq": 298, "status": "[R7\u00b7Investigation a0/3 | Roland Banks 01001 | Cellar | clu2 res9 | dmg1/9 hor2/5 | h3 d18 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Magnifying Glass (+1)", "option": 1}, "phase": "Investigation", "round": 7, "seq": 299, "type": "decision_made"}
+{"data": {"message": "This clue gates the R8 advance; MagGlass #2 is unplayable anyway \u2014 5v2 = 87.5%"}, "phase": "Investigation", "round": 7, "seq": 300, "type": "agent_reason"}
+{"data": {"card": "pc0017", "message": "Committed Magnifying Glass."}, "phase": "Investigation", "round": 7, "seq": 301, "type": "card_committed"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Investigate Cellar (intellect vs 2)."}, "phase": "Investigation", "round": 7, "seq": 302, "status": "[R7\u00b7Investigation a0/3 | Roland Banks 01001 | Cellar | clu2 res9 | dmg1/9 hor2/5 | h2 d18 x10 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 7, "seq": 303, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Investigation", "round": 7, "seq": 304, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 7, "seq": 305, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 1, "difficulty": 2, "extra_tokens": [], "margin": 2, "message": "Investigate Cellar: success by 2 - intellect 4 + committed 1 + boosts 0 + token -1 = 4 vs 2.", "modifier": -1, "skill": "intellect", "source": "Investigate Cellar", "success": true, "token": "-1", "value": 4}, "phase": "Investigation", "round": 7, "seq": 306, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Roland Banks discovered 1 clue."}, "phase": "Investigation", "round": 7, "seq": 307, "type": "clue_discovered"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 7, "seq": 308, "type": "phase_started"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul moved to Hallway."}, "phase": "Enemy", "round": 7, "seq": 309, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 7, "seq": 310, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 7, "seq": 311, "type": "ready_step"}
+{"data": {"card": "pc0024", "message": "Roland Banks drew Knife."}, "phase": "Upkeep", "round": 7, "seq": 312, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 7, "seq": 313, "type": "resource_gained"}
+{"data": {"message": "Round 8 began."}, "phase": "Mythos", "round": 8, "seq": 314, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 8, "seq": 315, "type": "doom_placed"}
+{"data": {"card": "ec0014", "message": "Roland Banks drew encounter card Rotting Remains."}, "phase": "Mythos", "round": 8, "seq": 316, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 3 vs 3.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 8, "seq": 317, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Mythos \u00b7 Roland Banks] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 8, "seq": 318, "status": "[R8\u00b7Mythos | Roland Banks 01001 | Cellar | clu3 res10 | dmg1/9 hor2/5 | h3 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 8, "seq": 319, "type": "decision_made"}
+{"data": {"message": "No will icons in hand; forced bare test"}, "phase": "Mythos", "round": 8, "seq": 320, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed cultist.", "modifier": -1, "token": "cultist"}, "phase": "Mythos", "round": 8, "seq": 321, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Rotting Remains: failure by 1 - willpower 3 + committed 0 + boosts 0 + token -1 = 2 vs 3.", "modifier": -1, "skill": "willpower", "source": "Rotting Remains", "success": false, "token": "cultist", "value": 2}, "phase": "Mythos", "round": 8, "seq": 322, "type": "skill_test_result"}
+{"data": {"message": "Roland Banks took 0 damage and 1 horror.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 8, "seq": 323, "type": "damage_assigned"}
+{"data": {"message": "Roland Banks took 0 damage and 1 horror.", "source": "Chaos token"}, "phase": "Mythos", "round": 8, "seq": 324, "type": "damage_assigned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 8, "seq": 325, "type": "phase_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 326, "status": "[R8\u00b7Investigation a3/3 | Roland Banks 01001 | Cellar | clu3 res10 | dmg1/9 hor4/5 | h3 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 8, "seq": 327, "type": "decision_made"}
+{"data": {"message": "Must kill CHG before enemy phase: its 2-horror attack is lethal at 4/5"}, "phase": "Investigation", "round": 8, "seq": 328, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 8, "seq": 329, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Roland Banks moved to Hallway."}, "phase": "Investigation", "round": 8, "seq": 330, "type": "investigator_moved"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul engaged Roland Banks."}, "phase": "Investigation", "round": 8, "seq": 331, "type": "enemy_engaged"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 332, "status": "[R8\u00b7Investigation a2/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h3 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Corpse-Hungry Ghoul with .45 Automatic (2 ammo) \u2014 test Combat(5) vs 4, 2 dmg", "option": 9}, "phase": "Investigation", "round": 8, "seq": 333, "type": "decision_made"}
+{"data": {"message": "Shot 1 of 2; committing both Knives for 7v4 = 87.5%"}, "phase": "Investigation", "round": 8, "seq": 334, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Corpse-Hungry Ghoul)."}, "phase": "Investigation", "round": 8, "seq": 335, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 4.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 8, "seq": 336, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 8, "seq": 337, "status": "[R8\u00b7Investigation a1/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h3 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Knife (+1)", "option": 2}, "phase": "Investigation", "round": 8, "seq": 338, "type": "decision_made"}
+{"data": {"message": "Knife 1 of 2"}, "phase": "Investigation", "round": 8, "seq": 339, "type": "agent_reason"}
+{"data": {"card": "pc0023", "message": "Committed Knife."}, "phase": "Investigation", "round": 8, "seq": 340, "type": "card_committed"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 8, "seq": 341, "status": "[R8\u00b7Investigation a1/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h2 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Knife (+1)", "option": 2}, "phase": "Investigation", "round": 8, "seq": 342, "type": "decision_made"}
+{"data": {"message": "Knife 2 of 2 \u2014 7v4, only -4/autofail miss"}, "phase": "Investigation", "round": 8, "seq": 343, "type": "agent_reason"}
+{"data": {"card": "pc0024", "message": "Committed Knife."}, "phase": "Investigation", "round": 8, "seq": 344, "type": "card_committed"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 8, "seq": 345, "status": "[R8\u00b7Investigation a1/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h1 d17 x11 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 8, "seq": 346, "type": "decision_made"}
+{"data": {"message": "Save dog for shot 2; reveal"}, "phase": "Investigation", "round": 8, "seq": 347, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 8, "seq": 348, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 2, "difficulty": 4, "extra_tokens": [], "margin": 4, "message": "Fight with .45 Automatic: success by 4 - combat 5 + committed 2 + boosts 0 + token 1 = 8 vs 4.", "modifier": 1, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "+1", "value": 8}, "phase": "Investigation", "round": 8, "seq": 349, "type": "skill_test_result"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul took 2 damage."}, "phase": "Investigation", "round": 8, "seq": 350, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 351, "status": "[R8\u00b7Investigation a1/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h1 d17 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Corpse-Hungry Ghoul with .45 Automatic (1 ammo) \u2014 test Combat(5) vs 4, 2 dmg", "option": 9}, "phase": "Investigation", "round": 8, "seq": 352, "type": "decision_made"}
+{"data": {"message": "Kill shot on 1hp CHG; committing Guard Dog for 6v4 = 81%"}, "phase": "Investigation", "round": 8, "seq": 353, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with .45 Automatic (target: Corpse-Hungry Ghoul)."}, "phase": "Investigation", "round": 8, "seq": 354, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 4.", "source": "Fight with .45 Automatic"}, "phase": "Investigation", "round": 8, "seq": 355, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 8, "seq": 356, "status": "[R8\u00b7Investigation a0/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h1 d17 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Guard Dog (+1)", "option": 1}, "phase": "Investigation", "round": 8, "seq": 357, "type": "decision_made"}
+{"data": {"message": "Miss = lethal attack; dog's +1 is worth more now than as an asset later"}, "phase": "Investigation", "round": 8, "seq": 358, "type": "agent_reason"}
+{"data": {"card": "pc0011", "message": "Committed Guard Dog."}, "phase": "Investigation", "round": 8, "seq": 359, "type": "card_committed"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with .45 Automatic (combat vs 4)."}, "phase": "Investigation", "round": 8, "seq": 360, "status": "[R8\u00b7Investigation a0/3 | Roland Banks 01001 | Hallway | clu3 res10 | dmg1/9 hor4/5 | h0 d17 x13 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 8, "seq": 361, "type": "decision_made"}
+{"data": {"message": "Reveal \u2014 6v4"}, "phase": "Investigation", "round": 8, "seq": 362, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -1, "token": "skull"}, "phase": "Investigation", "round": 8, "seq": 363, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Fight with .45 Automatic: success by 1 - combat 5 + committed 1 + boosts 0 + token -1 = 5 vs 4.", "modifier": -1, "skill": "combat", "source": "Fight with .45 Automatic", "success": true, "token": "skull", "value": 5}, "phase": "Investigation", "round": 8, "seq": 364, "type": "skill_test_result"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul took 2 damage."}, "phase": "Investigation", "round": 8, "seq": 365, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul was defeated."}, "phase": "Investigation", "round": 8, "seq": 366, "type": "enemy_defeated"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 8, "seq": 367, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 8, "seq": 368, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 8, "seq": 369, "type": "ready_step"}
+{"data": {"card": "pc0029", "message": "Roland Banks drew Guts."}, "phase": "Upkeep", "round": 8, "seq": 370, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 8, "seq": 371, "type": "resource_gained"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 8, "seq": 372, "status": "[R8\u00b7Upkeep | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Do not advance", "option": 2}, "phase": "Upkeep", "round": 8, "seq": 373, "type": "decision_made"}
+{"data": {"message": "Priest spawns engaged and his attack is lethal at 4/5 horror; stall to re-arm and heal first \u2014 A3 furnace is slow with zero ghouls alive"}, "phase": "Upkeep", "round": 8, "seq": 374, "type": "agent_reason"}
+{"data": {"message": "Roland Banks did not advance The Barrier."}, "phase": "Upkeep", "round": 8, "seq": 375, "type": "act_objective_declined"}
+{"data": {"message": "Round 9 began."}, "phase": "Mythos", "round": 9, "seq": 376, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 9, "seq": 377, "type": "doom_placed"}
+{"data": {"message": "Agenda advanced to They're Getting Out!."}, "phase": "Mythos", "round": 9, "seq": 378, "type": "agenda_advanced"}
+{"data": {"card": "ec0009", "message": "Roland Banks drew encounter card Acolyte of Um\u00f4rdhoth."}, "phase": "Mythos", "round": 9, "seq": 379, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth spawned at Hallway."}, "phase": "Mythos", "round": 9, "seq": 380, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth engaged Roland Banks."}, "phase": "Mythos", "round": 9, "seq": 381, "type": "enemy_engaged"}
+{"data": {"card": "ec0002", "message": "Roland Banks drew encounter card Icy Ghoul."}, "phase": "Mythos", "round": 9, "seq": 382, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul spawned at Cellar."}, "phase": "Mythos", "round": 9, "seq": 383, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 9, "seq": 384, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 385, "status": "[R9\u00b7Investigation a3/3 | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Acolyte of Um\u00f4rdhoth (fight 3, 1 dmg) \u2014 test Combat(4)", "option": 5}, "phase": "Investigation", "round": 9, "seq": 386, "type": "decision_made"}
+{"data": {"message": "Wait - unarmed first is wrong; correcting: want .45. Let me re-pick"}, "phase": "Investigation", "round": 9, "seq": 387, "type": "agent_reason"}
+{"data": {"action": "fight", "cost": 1, "message": "Spent 1 action: Fight Acolyte of Um\u00f4rdhoth."}, "phase": "Investigation", "round": 9, "seq": 388, "type": "action_spent"}
+{"data": {"message": "Started combat test 4 vs 3.", "source": "Fight Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 9, "seq": 389, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight Acolyte of Um\u00f4rdhoth (combat vs 3)."}, "phase": "Investigation", "round": 9, "seq": 390, "status": "[R9\u00b7Investigation a2/3 | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 9, "seq": 391, "type": "decision_made"}
+{"data": {"message": "Reveal - 4v3, 62.5%"}, "phase": "Investigation", "round": 9, "seq": 392, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed autofail.", "modifier": 0, "token": "autofail"}, "phase": "Investigation", "round": 9, "seq": 393, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Fight Acolyte of Um\u00f4rdhoth: failure (autofail) by 3 - autofail (skill value 0) vs 3.", "modifier": 0, "skill": "combat", "source": "Fight Acolyte of Um\u00f4rdhoth", "success": false, "token": "autofail", "value": 0}, "phase": "Investigation", "round": 9, "seq": 394, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Roland Banks \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 395, "status": "[R9\u00b7Investigation a2/3 | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Acolyte of Um\u00f4rdhoth (evade 2) \u2014 test Agility(2)", "option": 6}, "phase": "Investigation", "round": 9, "seq": 396, "type": "decision_made"}
+{"data": {"message": "Evade disengages+exhausts: no attack, no AoO on my move-out; the only survival line at 4/5 horror"}, "phase": "Investigation", "round": 9, "seq": 397, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Acolyte of Um\u00f4rdhoth."}, "phase": "Investigation", "round": 9, "seq": 398, "type": "action_spent"}
+{"data": {"message": "Started agility test 2 vs 2.", "source": "Evade Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 9, "seq": 399, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Evade Acolyte of Um\u00f4rdhoth (agility vs 2)."}, "phase": "Investigation", "round": 9, "seq": 400, "status": "[R9\u00b7Investigation a1/3 | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 9, "seq": 401, "type": "decision_made"}
+{"data": {"message": "2v2 tie passes; need +1/0/0/ES = 25%"}, "phase": "Investigation", "round": 9, "seq": 402, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 9, "seq": 403, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 1, "message": "Evade Acolyte of Um\u00f4rdhoth: failure by 1 - agility 2 + committed 0 + boosts 0 + token -1 = 1 vs 2.", "modifier": -1, "skill": "agility", "source": "Evade Acolyte of Um\u00f4rdhoth", "success": false, "token": "-1", "value": 1}, "phase": "Investigation", "round": 9, "seq": 404, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 405, "status": "[R9\u00b7Investigation a1/3 | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Acolyte of Um\u00f4rdhoth (evade 2) \u2014 test Agility(2)", "option": 6}, "phase": "Investigation", "round": 9, "seq": 406, "type": "decision_made"}
+{"data": {"message": "Last action, last chance: fail means the 1-horror attack kills me"}, "phase": "Investigation", "round": 9, "seq": 407, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Acolyte of Um\u00f4rdhoth."}, "phase": "Investigation", "round": 9, "seq": 408, "type": "action_spent"}
+{"data": {"message": "Started agility test 2 vs 2.", "source": "Evade Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 9, "seq": 409, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Evade Acolyte of Um\u00f4rdhoth (agility vs 2)."}, "phase": "Investigation", "round": 9, "seq": 410, "status": "[R9\u00b7Investigation a0/3 | Roland Banks 01001 | Hallway | clu3 res11 | dmg1/9 hor4/5 | h1 d16 x14 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 9, "seq": 411, "type": "decision_made"}
+{"data": {"message": "Reveal \u2014 need +1, 0, 0, or elder sign"}, "phase": "Investigation", "round": 9, "seq": 412, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 9, "seq": 413, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Evade Acolyte of Um\u00f4rdhoth: success by 0 - agility 2 + committed 0 + boosts 0 + token 0 = 2 vs 2.", "modifier": 0, "skill": "agility", "source": "Evade Acolyte of Um\u00f4rdhoth", "success": true, "token": "0", "value": 2}, "phase": "Investigation", "round": 9, "seq": 414, "type": "skill_test_result"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth disengaged."}, "phase": "Investigation", "round": 9, "seq": 415, "type": "enemy_disengaged"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 9, "seq": 416, "type": "phase_started"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul moved to Hallway."}, "phase": "Enemy", "round": 9, "seq": 417, "type": "enemy_moved"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul engaged Roland Banks."}, "phase": "Enemy", "round": 9, "seq": 418, "type": "enemy_engaged"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth moved to Parlor."}, "phase": "Enemy", "round": 9, "seq": 419, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 9, "seq": 420, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 9, "seq": 421, "type": "ready_step"}
+{"data": {"card": "pc0030", "message": "Roland Banks drew Guts."}, "phase": "Upkeep", "round": 9, "seq": 422, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 9, "seq": 423, "type": "resource_gained"}
+{"data": {"message": "Placed 2 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 9, "seq": 424, "type": "doom_placed"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 9, "seq": 425, "status": "[R9\u00b7Upkeep | Roland Banks 01001 | Hallway | clu3 res12 | dmg1/9 hor4/5 | h2 d15 x14 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Spend 3 clues and advance", "option": 1}, "phase": "Upkeep", "round": 9, "seq": 426, "type": "decision_made"}
+{"data": {"message": "Death is near-certain either way; Act 3 insurance vs trapped-0, plus reveals Act 3/Lita info and enables Priest VP if I survive"}, "phase": "Upkeep", "round": 9, "seq": 427, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Roland Banks spent 3 clue."}, "phase": "Upkeep", "round": 9, "seq": 428, "type": "clues_spent"}
+{"data": {"location": "parlor", "message": "Parlor was revealed."}, "phase": "Upkeep", "round": 9, "seq": 429, "type": "location_revealed"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest spawned at Hallway."}, "phase": "Upkeep", "round": 9, "seq": 430, "type": "enemy_spawned"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest engaged Roland Banks."}, "phase": "Upkeep", "round": 9, "seq": 431, "type": "enemy_engaged"}
+{"data": {"message": "Act advanced to What Have You Done?."}, "phase": "Upkeep", "round": 9, "seq": 432, "type": "act_advanced"}
+{"data": {"message": "Round 10 began."}, "phase": "Mythos", "round": 10, "seq": 433, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 10, "seq": 434, "type": "doom_placed"}
+{"data": {"card": "ec0026", "message": "Roland Banks drew encounter card Obscuring Fog."}, "phase": "Mythos", "round": 10, "seq": 435, "type": "encounter_drawn"}
+{"data": {"card": "ec0026", "location": "hallway", "message": "Obscuring Fog attached to Hallway."}, "phase": "Mythos", "round": 10, "seq": 436, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 10, "seq": 437, "type": "phase_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Roland Banks \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 438, "status": "[R10\u00b7Investigation a3/3 | Roland Banks 01001 | Hallway | clu0 res12 | dmg1/9 hor4/5 | h2 d15 x14 | Act3 Agd3 doom3/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Parlor", "option": 3}, "phase": "Investigation", "round": 10, "seq": 439, "type": "decision_made"}
+{"data": {"message": "Death is certain on all lines; attempting the Parlor move costs nothing \u2014 correct AoO kills me same as enemy phase would, and it exercises AoO timing"}, "phase": "Investigation", "round": 10, "seq": 440, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Parlor."}, "phase": "Investigation", "round": 10, "seq": 441, "type": "action_spent"}
+{"data": {"prompt": "Choose the next enemy to make an attack of opportunity."}, "phase": "Investigation", "round": 10, "seq": 442, "status": "[R10\u00b7Investigation a2/3 | Roland Banks 01001 | Hallway | clu0 res12 | dmg1/9 hor4/5 | h2 d15 x14 | Act3 Agd3 doom3/10]", "type": "decision_presented"}
+{"data": {"decision_id": "aoo-attack-order", "label": "Attack next: Icy Ghoul", "option": 1}, "phase": "Investigation", "round": 10, "seq": 443, "type": "decision_made"}
+{"data": {"message": "Icy's 1 horror kills me with damage track low \u2014 single trauma, per defeat-engineering"}, "phase": "Investigation", "round": 10, "seq": 444, "type": "agent_reason"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul attacked Roland Banks.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 10, "seq": 445, "type": "enemy_attack"}
+{"data": {"message": "Roland Banks took 2 damage and 1 horror.", "source": "Icy Ghoul"}, "phase": "Investigation", "round": 10, "seq": 446, "type": "damage_assigned"}
+{"data": {"message": "Roland Banks was defeated", "summary": "Roland Banks was defeated"}, "phase": "Investigation", "round": 10, "seq": 447, "type": "game_end"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 448, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 449, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 450, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 451, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 10, "seq": 452, "type": "note_added"}
