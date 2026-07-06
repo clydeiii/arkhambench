@@ -129,3 +129,11 @@ BUGHUNT game-01 Return/Roland: Run became unplayable R3 during Bedroom investiga
 
 Return/Roland opening lesson: Mag Glass + Machete is a strong keep; Flashlight conflicts with hand slots once both are in play, so committing it for the Study clue was good. Return Act 1 needs 3 clues spent from Guest Hall, but Guest Hall revealed with 0 clues in this run; Bedroom had 1 clue and Obscuring Fog can be cleared by a successful investigate. Cover Up is optional on each clue discovery, so decline it when Act tempo is urgent and use later spare clue discoveries/Roland kill triggers to clear it.
 
+## [2026-07-06T02:13:02+00:00] Run c-loop2-daisy-2 · Round 5
+
+Round 1 Lost to Narôgath - Daisy's low combat/agility made fighting the boss difficult. Need to prioritize defensive tech like Flashlight or evasion cards in future upgrades. Consider removing weak cards to add stronger combat options like Overpower or Bullet-proof Vest.
+
+## [2026-07-06T02:14:21+00:00] Run c-loop2-daisy-3 · Round 2
+
+Devourer Below R2 loss: Necronomicon pulled (3h), failed evasion/fight on Grave-Eater, defeated at 4/5 damage. Doom 0→1→5 immediately. Daisy has 3 physical trauma. Need focused strategy for next attempt.
+

@@ -255,3 +255,60 @@ GPT-5.5 audit findings (campaign loop1-roland), Fable adjudications:
     result summary/resolution belongs to its scenario. **FIXED (batch 7):** MM
     shared helpers now dispatch agenda/objective/finalize through `arkham.effects`;
     DB wizard-doom and six-scenario canary regressions cover the leak.
+
+## Campaign playtest loop — round 2 (Haiku campaigns 9003/9004, post-batch-7)
+
+34. **Phantom fast window after the investigator's turn ends** (loop2-daisy runs
+    1+3) — CONFIRMED, exploit: RR timing chart has NO player window between 2.2.2
+    (turn ends) and 2.3 (phase ends); the engine offers one, and even allowed Mind
+    over Matter ("Play only during your turn") inside it. Remove the post-turn
+    window; enforce during-your-turn play restrictions in all fast windows.
+35. **Enemy-doom placements advance the agenda outside step 1.3** (loop2-daisy run
+    2) — CONFIRMED: RR 1.3 is the only agenda-advance timing absent explicit card
+    permission (precedent: the Gathering's Acolyte adjudication). MM/DB
+    check-on-placement advanced agenda 1 the moment a Disciple spawn-doom hit the
+    threshold. Doom-on-enemy placements must wait for 1.3 (or an explicit
+    "this can advance" card: Masked Horrors, Offer of Power, Jeremiah, Corpse-Taker).
+36. **Hunting Nightgaunt token-doubling not implemented** (loop2-wendy run 2) —
+    CONFIRMED: "double the negative modifier of each revealed chaos token" while
+    evading it; engine applied -1 as -1.
+37. **Young Deep One engagement Forced deals no horror** (loop2-wendy run 3) —
+    CONFIRMED, pro-player: "After Young Deep One engages you: take 1 horror" never
+    fired on spawn-engage or move-engage.
+38. **Weaknesses offered as optional discard costs** (loop2-wendy run 3) —
+    CONFIRMED, exploit: Wendy's token-cancel accepted Amnesia as the discarded
+    card; RR: a player may not optionally discard a weakness from hand unless a
+    card explicitly permits it. Sweep ALL choose-and-discard costs (Wendy, Herman
+    parley, Hunting Shadow-style choices are effects not costs — costs only).
+
+Coverage-game audit findings (10 XP-deck games), Fable adjudications:
+
+39. **Doom stays counted after its card leaves play** (coverage-agnes-DB) —
+    CONFIRMED: RR Leaves Play returns all tokens to the pool; a defeated Arcane
+    Initiate's doom kept counting and advanced the agenda a round early. Applies to
+    all doom-carrying cards (Acolyte, Wizard, Disciple, Corpse-Taker, Initiate).
+40. **Moving an engaged enemy away does not disengage it** (coverage-daisy-DB) —
+    CONFIRMED: Corpse-Taker's Forced end-of-phase move left engagement intact and
+    it attacked from Main Path while Daisy stood at Cliffside, two rounds running.
+41. **Weakness added to hand doesn't resolve as if drawn** (coverage-daisy-DB) —
+    CONFIRMED, pro-player: RR Weakness requires resolving Revelation on non-draw
+    hand entry; Psychosis sat in hand as a dead card instead of entering the threat
+    area (its horror→direct-damage Forced consequently never fired).
+42. **Paid play costs refunded when the played card leaves hand during AoO**
+    (coverage-roland-DB) — CONFIRMED, pro-player: Grave-Eater's AoO random discard
+    hit the being-played Machete and the batch-6 abort-refund returned the 3
+    resources; RR: paid costs stay paid, the play simply fizzles.
+43. **Skill-test modifiers not re-evaluated after ST.4 effects** (coverage-skids-DB
+    F2) — CONFIRMED, display: Lita was discarded soaking ST.4 tablet damage but her
+    +1 combat still appeared in the ST.5 math (outcome unchanged in evidence; could
+    flip marginal tests). Recompute active modifiers at ST.5.
+44. **Leo De Luca's additional action only granted on his entry turn**
+    (coverage-wendy-MM) — CONFIRMED, anti-player: R2-R6 turns began at 3 actions
+    with Leo in play; a later second copy correctly showed 4.
+45. **Setup/display gaps** (multiple) — CONFIRMED, display: (a) setup effects are
+    unlogged — got-away doom on agenda 1a looked "unexplained" to the auditor
+    (skids-DB F1 itself: NOT A BUG, setup doom per campaign guide table); (b)
+    Disciple's forced clue placement resolves silently at agenda>=2; (c) Museum
+    logs the clue gain as if placed on the location; (d) Drawn to the Flame logs 2
+    discovered where 1 existed (pre-batch-7 transcript — verify entry-26's fix
+    generalizes; extend if not).
