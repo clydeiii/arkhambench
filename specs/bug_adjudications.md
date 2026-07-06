@@ -433,3 +433,19 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     clue-discovery reaction logs unconditionally even when discovery is prevented
     (state stays correct). Same family as entry 26 (Deduction) — the fix missed
     this path. Sweep ALL discovery-logging paths for the actual-amount rule.
+57. **glm-trial-1 reports 1/2 (AoO on asset play; Machete "discard cost")** — NOT A
+    BUG ×2: plays provoke AoOs (exemptions are fight/evade/parley/resign); the
+    "discard for Machete" was hand-slot management (2 Magnifying Glasses + Machete
+    > 2 hand slots) — hy3 independently identified that correctly. Notably BOTH
+    open-weights models believe asset plays don't provoke — add an explicit AoO
+    line to docs_agent/playing_guide.md.
+58. **Cross-game .current_run contamination** (glm-trial-1 report + refile note) —
+    CONFIRMED, HARNESS (not engine; Claude's fault): concurrent agent lanes share
+    the repo-root .current_run pointer; glm's commands mutated hy3's swarm game
+    and vice versa. Fix: global --run flag on do/state/note/bug/score overriding
+    the pointer; agent prompts pass it explicitly. First three swarm results
+    (roland gathering/MM/DB) are contaminated and must be rerun.
+59. **glm-trial-1 reports 4-6 (fight deals skill-value damage; fast events never
+    offered; draw provokes AoO)** — NOT A BUG ×3: attacks deal weapon/base damage
+    per the RR, not skill value; Working a Hunch verified offered in a clean game
+    (the report was a contamination artifact); draw actions provoke AoOs.
