@@ -103,3 +103,30 @@ Validation:
   - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
 
 No git commit was made.
+
+## Fixes Batch 9 — Loop 3
+
+- Extended the batch-6 cost-at-initiation sequencing from card plays to
+  action-triggered activation costs, including Midnight Masks cultist-deck,
+  Northside, Museum, and paid parley costs plus common asset-use costs. Paid
+  activation costs are carried through AoO resumes to prevent double payment.
+- Implemented Yithian Observer's attack Forced effect: random hand discard before
+  attack damage/horror, or +1 damage/+1 horror for that attack when no discard is
+  possible.
+- Removed Devourer's explicit no-engage override from Main Path dig/spawn helpers,
+  so ready non-Aloof enemies spawning at the investigator's location engage at the
+  spawn resolution point.
+- Added `tests/test_fixes_batch_9.py` covering adjudication entries 46-48.
+
+Validation:
+
+- `python3 -m unittest discover -s tests` => 295 tests passing.
+- Full six-scenario fuzz matrix, all clean:
+  - `python3 -m arkham.fuzz --games 50 --scenario the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_devourer_below --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
+
+No git commit was made.

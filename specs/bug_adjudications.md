@@ -358,10 +358,18 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     abilities (act cultist-draw clue spend, Museum 2-horror) still pay after the
     AoO. Evidence shows a case where paying first would have defeated Skids before
     the effect — outcome-relevant, not cosmetic.
+    **FIXED (batch 9):** action-triggered activation costs now pay at initiation
+    before AoOs and carry paid-cost markers through AoO resumes; regressions cover
+    cultist-deck clue spend before AoO and Museum horror defeat before effect/AoO.
 47. **Yithian Observer's Forced attack-discard unimplemented** (loop3-skids run 3)
     — CONFIRMED, pro-player: "When Yithian Observer attacks you: discard 1 card at
     random; if you cannot, +1 damage and +1 horror." Three attacks, no discards.
+    **FIXED (batch 9):** Yithian Observer attack resolution discards randomly
+    before damage/horror assignment, or adds +1/+1 for that attack if hand is empty.
 48. **Spawn-engagement queued behind intervening resolutions** (loop3-skids run 3,
     loop3-agnes run 3) — CONFIRMED, display/ordering: ready enemies spawning at the
     investigator's location engage only after other queued effects (agenda advance,
     Wrath, Disciple spawn decision) resolve; RR engagement is immediate.
+    **FIXED (batch 9):** Devourer agenda/act dig spawns now use the shared immediate
+    spawn engagement rule; regression asserts agenda-back Main Path spawn engages
+    immediately after the spawn event and before agenda advancement logging.

@@ -530,7 +530,7 @@ def spawn_got_away_cultists(state: GameState, events: list[dict[str, Any]]) -> N
 
     for card_id, instance in list(state.card_instances.items()):
         if card_id.startswith("gotaway") and instance.zone == "set_aside":
-            spawn_enemy(state, events, instance_id=card_id, location_id="main_path", engaged=False)
+            spawn_enemy(state, events, instance_id=card_id, location_id="main_path")
 
 
 def place_clue_on_act(state: GameState, events: list[dict[str, Any]]) -> None:
@@ -592,7 +592,7 @@ def spawn_umordhoth(state: GameState, events: list[dict[str, Any]]) -> None:
     enemy_id = "setaside_umordhoth"
     if enemy_id in state.enemies:
         return
-    spawn_enemy(state, events, instance_id=enemy_id, location_id="ritual_site", engaged=False)
+    spawn_enemy(state, events, instance_id=enemy_id, location_id="ritual_site")
     if state.scenario == RETURN_SCENARIO:
         resources = max(1, 4 - (state.act.stage if state.act else 3))
         state.card_instances["vault_of_earthly_demise"].zone = "attachment"
@@ -628,7 +628,7 @@ def spawn_enemy_from_top_until(state: GameState, events: list[dict[str, Any]], *
             state.encounter_discard.append(card_id)
             state.card_instances[card_id].zone = "encounter_discard"
     if found:
-        spawn_enemy(state, events, instance_id=found, location_id=location_id, engaged=False)
+        spawn_enemy(state, events, instance_id=found, location_id=location_id)
         if doom and found in state.enemies:
             state.enemies[found].doom += doom
     return found

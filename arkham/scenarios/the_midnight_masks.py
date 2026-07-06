@@ -531,9 +531,10 @@ def execute_location_action(state: GameState, payload: dict[str, Any], events: l
         from ..effects import heal_roland
 
         heal_roland(state, events, horror=3)
-    elif action == "midnight_location_northside" and location.code == "01134" and state.investigator.resources >= 5 and not limit_used(state, location.id):
+    elif action == "midnight_location_northside" and location.code == "01134" and (payload.get("activation_cost_paid") or state.investigator.resources >= 5) and not limit_used(state, location.id):
         mark_limit_used(state, location.id)
-        state.investigator.resources -= 5
+        if not payload.get("activation_cost_paid"):
+            state.investigator.resources -= 5
         gain_clues_from_pool(state, events, 2, source="Northside")
     elif action == "midnight_location_police" and location.code == "50027" and not limit_used(state, location.id):
         asset_id = str(payload.get("asset", ""))
@@ -549,9 +550,12 @@ def execute_location_action(state: GameState, payload: dict[str, Any], events: l
         present_train_move_choice(state)
     elif action == "midnight_location_museum" and location.code == "50029" and not limit_used(state, location.id):
         mark_limit_used(state, location.id)
-        from ..effects import start_damage_assignment
+        if not payload.get("activation_cost_paid"):
+            from ..effects import start_damage_assignment
 
-        start_damage_assignment(state, events, source="Miskatonic Museum", damage=0, horror=2)
+            start_damage_assignment(state, events, source="Miskatonic Museum", damage=0, horror=2)
+            if state.status != "in_progress" or state.pending_damage or state.decision_queue:
+                return
         gain_clues_from_pool(state, events, 1, source="Miskatonic Museum")
     elif action == "midnight_location_warehouse" and location.code == "50030" and not limit_used(state, location.id):
         if warehouse_card_choices(state) and warehouse_doom_targets(state):
@@ -819,7 +823,7 @@ def draw_from_cultist_deck(state: GameState, events: list[dict[str, Any]]) -> No
     deck = list(state.limits.get("cultist_deck", []))
     if not deck or masked_hunter_blocks_clues(state):
         return
-    if not spend_clues(state, 2, events):
+    if not state.limits.pop("cultist_deck_cost_paid", False) and not spend_clues(state, 2, events):
         return
     card_id = deck.pop(0)
     state.limits["cultist_deck"] = deck
@@ -851,11 +855,14 @@ def parley_cultist(state: GameState, enemy_id: str, events: list[dict[str, Any]]
     elif code == "01139":
         from ..effects import spend_clues
 
-        if not masked_hunter_blocks_clues(state) and spend_clues(state, 2, events):
+        if not masked_hunter_blocks_clues(state) and (state.limits.pop("peter_parley_cost_paid", False) or spend_clues(state, 2, events)):
             add_enemy_to_victory(state, events, enemy_id, reason="Peter Warren was parleyed.")
-    elif code == "01140" and state.investigator.resources >= 5:
-        state.investigator.resources -= 5
-        add_enemy_to_victory(state, events, enemy_id, reason="Victoria Devereux was parleyed.")
+    elif code == "01140":
+        cost_paid = bool(state.limits.pop("victoria_parley_cost_paid", False))
+        if cost_paid or state.investigator.resources >= 5:
+            if not cost_paid:
+                state.investigator.resources -= 5
+            add_enemy_to_victory(state, events, enemy_id, reason="Victoria Devereux was parleyed.")
     elif code == "50044":
         add_enemy_to_victory(state, events, enemy_id, reason="Jeremiah Pierce was parleyed.")
         from .. import skill_test

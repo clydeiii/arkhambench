@@ -398,6 +398,9 @@ def resolve_attack(
         return
     damage, horror = enemy_damage_horror(state, enemy_id)
     log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked {state.investigator.name}.", enemy=enemy_id, source=source)
+    extra_damage, extra_horror = yithian_observer_attack_forced(state, events, enemy_id, rng)
+    damage += extra_damage
+    horror += extra_horror
     if state.scenario in MIDNIGHT_MASKS_FAMILY:
         from .scenarios import the_midnight_masks
 
@@ -419,6 +422,29 @@ def resolve_attack(
         return
     if not state.pending_damage and not state.decision_queue:
         after_attack(state, events, enemy_id, resume or {}, source=source, rng=rng)
+
+
+def yithian_observer_attack_forced(
+    state: GameState,
+    events: list[dict[str, Any]],
+    enemy_id: str,
+    rng: Any = None,
+) -> tuple[int, int]:
+    if enemy_id not in state.enemies or state.enemies[enemy_id].card_code != "01177":
+        return 0, 0
+    if not state.investigator.hand:
+        log_event(events, "yithian_observer_forced", "Yithian Observer dealt +1 damage and +1 horror because no card could be discarded.", enemy=enemy_id)
+        return 1, 1
+    card_id = rng.choice(state.investigator.hand) if rng is not None else state.investigator.hand[0]
+    player_cards.discard_from_hand(state, card_id)
+    log_event(
+        events,
+        "card_discarded",
+        f"Yithian Observer's attack forced a random discard of {player_cards.card_name(state, card_id)}.",
+        enemy=enemy_id,
+        card=card_id,
+    )
+    return 0, 0
 
 
 def cancel_pending_attack(state: GameState, events: list[dict[str, Any]], card_id: str, rng: Any = None) -> None:

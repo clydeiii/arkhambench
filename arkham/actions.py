@@ -222,6 +222,8 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
     if action not in NON_ACTIONS | FREE_ACTIONS:
         if not payload.get("cost_paid"):
             spend_action(state, events, action, payload)
+        if not pay_activation_initiation_cost(state, payload, events, rng):
+            return
         if action in {"play", "dynamite", "sneak_attack"} and not payload.get("resource_cost_paid"):
             if not pay_play_resource_cost(state, payload):
                 return
@@ -558,6 +560,113 @@ def refund_play_resource_cost(state: GameState, payload: dict[str, Any]) -> None
     state.investigator.resources += int(payload.get("resource_cost", 0))
     payload["resource_cost_paid"] = False
     payload["resource_cost"] = 0
+
+
+def pay_activation_initiation_cost(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: Any = None,
+) -> bool:
+    action = str(payload.get("action", ""))
+    if payload.get("activation_cost_paid"):
+        return True
+    paid = False
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        paid = pay_midnight_activation_cost(state, payload, events, rng)
+    else:
+        paid = pay_asset_activation_cost(state, payload, events)
+    if not paid:
+        return False
+    if not payload.get("activation_cost_paid"):
+        return True
+    return state.status == "in_progress" and not state.pending_damage and not state.decision_queue
+
+
+def pay_midnight_activation_cost(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: Any = None,
+) -> bool:
+    action = str(payload.get("action", ""))
+    if action == "midnight_cultist_draw":
+        deck = list(state.limits.get("cultist_deck", []))
+        if not deck or not spend_clues(state, 2, events):
+            return False
+        payload["activation_cost_paid"] = True
+        state.limits["cultist_deck_cost_paid"] = True
+        return True
+    if action == "midnight_location_northside":
+        if state.investigator.resources < 5:
+            return False
+        state.investigator.resources -= 5
+        payload["activation_cost_paid"] = True
+        return True
+    if action == "midnight_location_museum":
+        payload["activation_cost_paid"] = True
+        resume_payload = dict(payload)
+        start_damage_assignment(
+            state,
+            events,
+            source="Miskatonic Museum",
+            damage=0,
+            horror=2,
+            resume={"kind": "action", "payload": resume_payload},
+            rng=rng,
+        )
+        return True
+    if action == "midnight_parley":
+        enemy_id = str(payload.get("enemy", ""))
+        if enemy_id not in state.enemies:
+            return False
+        code = state.enemies[enemy_id].card_code
+        if code == "01139":
+            if not spend_clues(state, 2, events):
+                return False
+            payload["activation_cost_paid"] = True
+            state.limits["peter_parley_cost_paid"] = True
+            return True
+        if code == "01140":
+            if state.investigator.resources < 5:
+                return False
+            state.investigator.resources -= 5
+            payload["activation_cost_paid"] = True
+            state.limits["victoria_parley_cost_paid"] = True
+            return True
+    return pay_asset_activation_cost(state, payload, events)
+
+
+def pay_asset_activation_cost(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> bool:
+    action = str(payload.get("action", ""))
+    asset_id = str(payload.get("asset", ""))
+    if action == "asset_fight":
+        return True
+    if asset_id not in state.investigator.play_area:
+        return True
+    asset = state.card_instances[asset_id]
+    if action == "flashlight":
+        if asset.uses.get("supplies", 0) <= 0:
+            return False
+        asset.uses["supplies"] -= 1
+        payload["activation_cost_paid"] = True
+    elif action == "first_aid":
+        if asset.uses.get("supplies", 0) <= 0:
+            return False
+        asset.uses["supplies"] -= 1
+        payload["activation_cost_paid"] = True
+    elif action in {"old_book", "encyclopedia", "book_of_shadows", "burglary", "cat_burglar"}:
+        if asset.exhausted:
+            return False
+        asset.exhausted = True
+        payload["activation_cost_paid"] = True
+    elif action == "scrying":
+        if asset.exhausted or asset.uses.get("charges", 0) <= 0:
+            return False
+        asset.exhausted = True
+        asset.uses["charges"] -= 1
+        payload["activation_cost_paid"] = True
+    return True
 
 
 def action_designator(action: str) -> str:
@@ -1372,9 +1481,12 @@ def asset_fight(state: GameState, payload: dict[str, Any], events: list[dict[str
 def flashlight_investigate(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     asset_id = str(payload["asset"])
     asset = state.card_instances[asset_id]
-    if asset_id not in state.investigator.play_area or asset.uses.get("supplies", 0) <= 0:
+    if asset_id not in state.investigator.play_area:
         return
-    asset.uses["supplies"] -= 1
+    if not payload.get("activation_cost_paid"):
+        if asset.uses.get("supplies", 0) <= 0:
+            return
+        asset.uses["supplies"] -= 1
     location = state.locations[state.investigator.location_id]
     difficulty = max(0, modified_shroud(state, location.id) - 2)
     skill_test.start(state, events, skill="intellect", difficulty=difficulty, source=f"Investigate with Flashlight {location.name}", on_success={"kind": "investigate"})
@@ -1385,12 +1497,13 @@ def burglary_action(state: GameState, payload: dict[str, Any], events: list[dict
     if asset_id not in state.investigator.play_area:
         return
     asset = state.card_instances[asset_id]
-    if asset.card_code != "01045" or asset.exhausted:
+    if asset.card_code != "01045" or (asset.exhausted and not payload.get("activation_cost_paid")):
         return
     location = state.locations[state.investigator.location_id]
     if not location.revealed or location.shroud is None or location_locked(state, location.id):
         return
-    asset.exhausted = True
+    if not payload.get("activation_cost_paid"):
+        asset.exhausted = True
     skill_test.start(
         state,
         events,
@@ -1404,9 +1517,12 @@ def burglary_action(state: GameState, payload: dict[str, Any], events: list[dict
 def first_aid(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     asset_id = str(payload["asset"])
     asset = state.card_instances[asset_id]
-    if asset_id not in state.investigator.play_area or asset.uses.get("supplies", 0) <= 0:
+    if asset_id not in state.investigator.play_area:
         return
-    asset.uses["supplies"] -= 1
+    if not payload.get("activation_cost_paid"):
+        if asset.uses.get("supplies", 0) <= 0:
+            return
+        asset.uses["supplies"] -= 1
     if payload.get("heal") == "damage":
         heal_roland(state, events, damage=1)
     else:
@@ -1443,14 +1559,17 @@ def scrying_action(state: GameState, payload: dict[str, Any], events: list[dict[
     if asset_id not in state.investigator.play_area:
         return
     instance = state.card_instances[asset_id]
-    if instance.card_code != "01061" or instance.exhausted or instance.uses.get("charges", 0) <= 0:
+    if instance.card_code != "01061":
         return
     deck = state.investigator.deck if target == "investigator" else state.encounter_deck
     top = list(deck[:3])
     if not top:
         return
-    instance.exhausted = True
-    instance.uses["charges"] -= 1
+    if not payload.get("activation_cost_paid"):
+        if instance.exhausted or instance.uses.get("charges", 0) <= 0:
+            return
+        instance.exhausted = True
+        instance.uses["charges"] -= 1
     present_scrying_order_decision(state, target, top)
     log_event(events, "scrying_peek", f"Scrying looked at the top {len(top)} cards of the {target} deck.", card=asset_id, target=target)
 
@@ -1609,9 +1728,12 @@ def parley_mob_enforcer(state: GameState, payload: dict[str, Any], events: list[
 
 def old_book_of_lore(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     asset_id = str(payload["asset"])
-    if asset_id not in state.investigator.play_area or state.card_instances[asset_id].exhausted:
+    if asset_id not in state.investigator.play_area:
         return
-    state.card_instances[asset_id].exhausted = True
+    if not payload.get("activation_cost_paid"):
+        if state.card_instances[asset_id].exhausted:
+            return
+        state.card_instances[asset_id].exhausted = True
     candidates = list(state.investigator.deck[:3])
     if not candidates:
         log_event(events, "old_book_empty", "Old Book of Lore found no cards.")
@@ -1664,9 +1786,12 @@ def encyclopedia_action(state: GameState, payload: dict[str, Any], events: list[
     skill = str(payload.get("skill", ""))
     if asset_id not in state.investigator.play_area or state.card_instances[asset_id].card_code != "01042":
         return
-    if state.card_instances[asset_id].exhausted or skill not in {"willpower", "intellect", "combat", "agility"}:
+    if skill not in {"willpower", "intellect", "combat", "agility"}:
         return
-    state.card_instances[asset_id].exhausted = True
+    if not payload.get("activation_cost_paid"):
+        if state.card_instances[asset_id].exhausted:
+            return
+        state.card_instances[asset_id].exhausted = True
     key = f"encyclopedia:{state.phase}:{skill}"
     state.limits[key] = int(state.limits.get(key, 0)) + 2
     log_event(events, "encyclopedia", f"Encyclopedia granted +2 {skill} for this phase.", card=asset_id, skill=skill)
@@ -1677,12 +1802,15 @@ def book_of_shadows_action(state: GameState, payload: dict[str, Any], events: li
     spell_id = str(payload.get("spell", ""))
     if asset_id not in state.investigator.play_area or state.card_instances[asset_id].card_code != "01070":
         return
-    if state.card_instances[asset_id].exhausted or spell_id not in state.investigator.play_area:
+    if spell_id not in state.investigator.play_area:
         return
     traits = str(card_data.get_card(state.card_instances[spell_id].card_code).get("traits", ""))
     if "Spell" not in traits:
         return
-    state.card_instances[asset_id].exhausted = True
+    if not payload.get("activation_cost_paid"):
+        if state.card_instances[asset_id].exhausted:
+            return
+        state.card_instances[asset_id].exhausted = True
     state.card_instances[spell_id].uses["charges"] = state.card_instances[spell_id].uses.get("charges", 0) + 1
     log_event(events, "book_of_shadows", f"Book of Shadows added 1 charge to {player_cards.card_name(state, spell_id)}.", card=asset_id, spell=spell_id)
 
@@ -1692,11 +1820,12 @@ def cat_burglar_action(state: GameState, payload: dict[str, Any], events: list[d
     location_id = str(payload.get("location", ""))
     if asset_id not in state.investigator.play_area or state.card_instances[asset_id].card_code != "01055":
         return
-    if state.card_instances[asset_id].exhausted:
+    if state.card_instances[asset_id].exhausted and not payload.get("activation_cost_paid"):
         return
     if location_id not in state.locations[state.investigator.location_id].connections:
         return
-    state.card_instances[asset_id].exhausted = True
+    if not payload.get("activation_cost_paid"):
+        state.card_instances[asset_id].exhausted = True
     for enemy_id in list(state.investigator.engaged_enemies):
         if enemy_id in state.enemies:
             disengage_enemy(state, events, enemy_id, exhaust=False)
