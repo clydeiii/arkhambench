@@ -137,3 +137,7 @@ Round 1 Lost to Narôgath - Daisy's low combat/agility made fighting the boss di
 
 Devourer Below R2 loss: Necronomicon pulled (3h), failed evasion/fight on Grave-Eater, defeated at 4/5 damage. Doom 0→1→5 immediately. Daisy has 3 physical trauma. Need focused strategy for next attempt.
 
+## [2026-07-06T03:43:38+00:00] Run c-loop3-agnes-3 · Round 4
+
+Campaign failed: loop3-agnes (Roland driven insane on Devourer Below). Agenda pressure (3/4 opening) combined with horror from encounter deck proved too strong. Key lesson: need more horror protection or combat plan for this scenario. Ritual Site strategy requires stronger investigator or horror management. Agnes was killed earlier, so this ends the campaign run.
+

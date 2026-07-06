@@ -347,3 +347,21 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     Disciple clue placement logs in automatic and choice paths, token-pool clue
     gains name the investigator, and Drawn to the Flame logs the actual discovered
     amount. Regression covers all four display cases.
+
+## Campaign playtest loop — round 3 (Haiku campaigns 9005/9006, post-batch-8)
+
+5 of 8 audits CLEAN (incl. both campaign layers). Three findings, all confirmed:
+
+46. **Activate-ability costs paid after attacks of opportunity** (loop3-skids run
+    2) — CONFIRMED: RR AoO fires "after all costs... have been paid, but before the
+    action's effect". Batch 6 fixed this for card-play resource costs; activate
+    abilities (act cultist-draw clue spend, Museum 2-horror) still pay after the
+    AoO. Evidence shows a case where paying first would have defeated Skids before
+    the effect — outcome-relevant, not cosmetic.
+47. **Yithian Observer's Forced attack-discard unimplemented** (loop3-skids run 3)
+    — CONFIRMED, pro-player: "When Yithian Observer attacks you: discard 1 card at
+    random; if you cannot, +1 damage and +1 horror." Three attacks, no discards.
+48. **Spawn-engagement queued behind intervening resolutions** (loop3-skids run 3,
+    loop3-agnes run 3) — CONFIRMED, display/ordering: ready enemies spawning at the
+    investigator's location engage only after other queued effects (agenda advance,
+    Wrath, Disciple spawn decision) resolve; RR engagement is immediate.
