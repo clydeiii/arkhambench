@@ -423,9 +423,8 @@ def resolve_scenario_choice(
             damage=0,
             horror=2,
             resume={"kind": "scenario", "choice": "finish_mythos_after_agenda"},
+            rng=rng,
         )
-        if state.status == "in_progress" and not state.pending_damage and not state.decision_queue:
-            finish_mythos_after_agenda_choice(state, events, rng)
     elif choice == "finish_mythos_after_agenda":
         finish_mythos_after_agenda_choice(state, events, rng)
     elif choice == "act2_advance":
@@ -1100,7 +1099,7 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
     horror = 0
     if "cultist" in tokens and failed:
         horror += 1 if state.difficulty in {"easy", "standard"} else 2
-    if "tablet" in tokens and ghouls_at_roland_location(state) > 0:
+    if "tablet" in tokens and not result.get("reveal_effects_applied") and ghouls_at_roland_location(state) > 0:
         damage += 1
         horror += 0 if state.difficulty in {"easy", "standard"} else 1
     if damage or horror:
@@ -1113,6 +1112,16 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
 
             raise EngineError("skull ghoul search requires the game RNG")
         search_and_draw_ghoul(state, events, rng)
+
+
+def apply_token_reveal_effects(state: GameState, events: list[dict[str, Any]], test: dict[str, Any], rng: ArkhamRng | None = None) -> None:
+    tokens = [str(test.get("token"))] + [str(token) for token in test.get("extra_tokens", [])]
+    if "tablet" in tokens and ghouls_at_roland_location(state) > 0:
+        damage = 1
+        horror = 0 if state.difficulty in {"easy", "standard"} else 1
+        from ..effects import start_damage_assignment
+
+        start_damage_assignment(state, events, source="Chaos token", damage=damage, horror=horror)
 
 
 def ghoul_pits_draw_rats(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, count: int) -> None:

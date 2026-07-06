@@ -660,6 +660,8 @@ def resolve_ordered_aoo(
     attack(state, events, enemy_id, source="attack of opportunity", resume=resume, rng=rng)
     if state.status != "in_progress" or state.decision_queue:
         return
+    if resume:
+        return
     if remaining:
         present_aoo_order_decision(state, remaining, action_payload)
     else:
@@ -681,7 +683,7 @@ def aoo_needs_resume(state: GameState, enemy_id: str) -> bool:
     if legal_dodge_card(state) is not None:
         return True
     damage, horror = enemy_damage_horror(state, enemy_id)
-    return (damage > 0 or horror > 0) and bool(legal_soak_targets(state))
+    return damage > 0 or horror > 0
 
 
 def move(state: GameState, location_id: str, events: list[dict[str, Any]], rng: Any = None) -> None:

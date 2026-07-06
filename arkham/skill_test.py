@@ -362,11 +362,25 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
     test = state.active_skill_test
     if not test:
         return
+    apply_scenario_token_reveal_effects(state, events, rng)
+    if state.status != "in_progress":
+        state.active_skill_test = None
+        return
+    if state.pending_damage or state.decision_queue:
+        state.limits["deferred_skill_test_resolution"] = True
+        return
     result = compute_result(state, test)
     if not result["success"] and legal_lucky_cards(state) and not test.get("resolving_lucky"):
         present_lucky_decision(state, result)
         return
     finalize_resolution(state, events, rng, result)
+
+
+def resume_deferred_resolution(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    if state.pending_damage or state.decision_queue or not state.active_skill_test:
+        return
+    state.limits.pop("deferred_skill_test_resolution", None)
+    resolve(state, events, rng)
 
 
 def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
@@ -400,6 +414,7 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
         "success": success,
         "auto_success": auto_success,
         "margin": margin,
+        "reveal_effects_applied": bool(test.get("scenario_reveal_effects_applied")),
     }
 
 
@@ -540,9 +555,9 @@ def apply_callback(
             clue_count = 1
             if any(state.card_instances[instance_id].card_code == "01039" for instance_id in committed):
                 clue_count += 1
-            discover_clue(state, clue_count, events)
-            if clue_count > 1:
-                log_event(events, "deduction", "Deduction discovered 1 additional clue.")
+            discovered = discover_clue(state, clue_count, events)
+            if clue_count > 1 and discovered > 1:
+                log_event(events, "deduction", f"Deduction discovered {discovered - 1} additional clue.")
             discard_obscuring_fog_at_roland(state, events)
             if player_cards.controls_code(state, "01033"):
                 state.investigator.resources += 1
@@ -1012,7 +1027,10 @@ def apply_elder_sign_success(
 
 
 def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
-    if state.status != "in_progress" or state.decision_queue:
+    if state.status != "in_progress":
+        return
+    if state.decision_queue or state.pending_damage:
+        queue_scenario_token_aftermath(state, result)
         return
     if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
@@ -1026,6 +1044,42 @@ def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]
         from .scenarios import the_devourer_below
 
         the_devourer_below.apply_token_aftermath(state, events, result, rng)
+
+
+def queue_scenario_token_aftermath(state: GameState, result: dict[str, Any]) -> None:
+    pending = list(state.limits.get("pending_scenario_token_aftermath", []))
+    pending.append(dict(result))
+    state.limits["pending_scenario_token_aftermath"] = pending
+
+
+def process_deferred_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    if state.status != "in_progress" or state.decision_queue or state.pending_damage or state.active_skill_test:
+        return
+    pending = list(state.limits.pop("pending_scenario_token_aftermath", []))
+    while pending and state.status == "in_progress" and not state.decision_queue and not state.pending_damage and not state.active_skill_test:
+        result = dict(pending.pop(0))
+        apply_scenario_token_aftermath(state, events, result, rng)
+    if pending:
+        state.limits["pending_scenario_token_aftermath"] = pending
+
+
+def apply_scenario_token_reveal_effects(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    test = state.active_skill_test
+    if not test or test.get("scenario_reveal_effects_applied"):
+        return
+    test["scenario_reveal_effects_applied"] = True
+    if state.scenario in GATHERING_FAMILY:
+        from .scenarios import the_gathering
+
+        the_gathering.apply_token_reveal_effects(state, events, test, rng)
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.apply_token_reveal_effects(state, events, test, rng)
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.apply_token_reveal_effects(state, events, test, rng)
 
 
 def midnight_cultists_in_play(state: GameState) -> bool:

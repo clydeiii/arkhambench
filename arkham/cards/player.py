@@ -323,8 +323,12 @@ def static_skill_bonus(state: GameState, skill: str, source: str) -> int:
     if skill == "intellect":
         if controls_code(state, "01033"):
             bonus += 1
-        if source.startswith("Investigate") and (controls_code(state, "01030") or controls_code(state, "01040")):
-            bonus += 1
+        if source.startswith("Investigate"):
+            bonus += sum(
+                1
+                for instance_id in state.investigator.play_area
+                if state.card_instances[instance_id].card_code in {"01030", "01040"}
+            )
     if skill == "agility" and controls_code(state, "01055"):
         bonus += 1
     bonus += int(state.limits.get(f"encyclopedia:{state.phase}:{skill}", 0))

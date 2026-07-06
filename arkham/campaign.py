@@ -267,18 +267,23 @@ def apply_campaign_log(campaign: dict[str, Any], result: dict[str, Any]) -> None
             log["lita_was_forced_to_find_others"] = True
     block = result.get("campaign") or {}
     if block:
-        log["cultists_interrogated"] = sorted(
-            set(log.get("cultists_interrogated", [])) | set(block.get("cultists_interrogated", []))
-        )
-        log["cultists_got_away"] = sorted(set(block.get("cultists_got_away", [])))
-        log["past_midnight"] = bool(block.get("past_midnight", False))
-        if block.get("ghoul_priest_defeated_here"):
-            log["ghoul_priest_alive"] = False
-        for key in ("arkham_succumbed", "ritual_broken", "umordhoth_repelled", "lita_sacrificed"):
-            if key in block:
-                log[key] = bool(block.get(key))
-        if block.get("elderthing_added") and "elderthing" not in campaign.setdefault("chaos_bag_additions", []):
-            campaign["chaos_bag_additions"].append("elderthing")
+        scenario = str(block.get("scenario") or result.get("scenario") or "")
+        if scenario in {"the_midnight_masks", "return_to_the_midnight_masks"}:
+            log["cultists_interrogated"] = sorted(
+                set(log.get("cultists_interrogated", [])) | set(block.get("cultists_interrogated", []))
+            )
+            if "cultists_got_away" in block:
+                log["cultists_got_away"] = sorted(set(block.get("cultists_got_away", [])))
+            if "past_midnight" in block:
+                log["past_midnight"] = bool(block.get("past_midnight", False))
+            if block.get("ghoul_priest_defeated_here"):
+                log["ghoul_priest_alive"] = False
+        if scenario in {"the_devourer_below", "return_to_the_devourer_below"}:
+            for key in ("arkham_succumbed", "ritual_broken", "umordhoth_repelled", "lita_sacrificed"):
+                if key in block:
+                    log[key] = bool(block.get(key))
+            if block.get("elderthing_added") and "elderthing" not in campaign.setdefault("chaos_bag_additions", []):
+                campaign["chaos_bag_additions"].append("elderthing")
     weaknesses = result.get("weaknesses_added", []) or block.get("weaknesses_added", []) or block.get("weakness_gained", [])
     for weakness in weaknesses:
         campaign["deck"].setdefault("weaknesses", []).append(str(weakness))

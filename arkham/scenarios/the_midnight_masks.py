@@ -820,6 +820,8 @@ def draw_from_cultist_deck(state: GameState, events: list[dict[str, Any]]) -> No
     state.limits["cultist_deck"] = deck
     spawn_named_cultist(state, events, card_id)
     log_event(events, "cultist_deck_draw", f"Drew {card_data.get_card(state.card_instances[card_id].card_code)['name']} from the Cultist deck.", card=card_id)
+    from ..effects import check_act_objective
+
     check_act_objective(state, events)
 
 
@@ -930,6 +932,8 @@ def add_enemy_to_victory(state: GameState, events: list[dict[str, Any]], enemy_i
     from ..effects import log_event
 
     log_event(events, "enemy_victory", reason, enemy=enemy_id)
+    from ..effects import check_act_objective
+
     check_act_objective(state, events)
 
 
@@ -1214,6 +1218,8 @@ def place_doom_on_enemy(
     from ..effects import log_event
 
     log_event(events, "doom_placed", f"Placed {amount} doom on {card_data.get_card(state.enemies[enemy_id].card_code)['name']}.", enemy=enemy_id, source=source)
+    from ..effects import check_agenda_advance
+
     check_agenda_advance(state, events, rng=rng)
 
 
@@ -1253,7 +1259,9 @@ def after_enemy_defeated(state: GameState, events: list[dict[str, Any]], enemy_i
             if enemy.card_code == "50045" and enemy.location_id == location_id:
                 add_enemy_to_victory(state, events, billy_id, reason="Billy Cooper was added to the victory display.")
                 break
-    check_act_objective(state, events)
+    from ..effects import check_act_objective as dispatch_check_act_objective
+
+    dispatch_check_act_objective(state, events)
     return False
 
 
@@ -1274,7 +1282,9 @@ def check_act_objective(state: GameState, events: list[dict[str, Any]]) -> None:
     if state.status != "in_progress":
         return
     if unique_cultists_in_victory(state) >= 6:
-        finalize_result(state, events, outcome="R1", resolution="R1", summary="R1: the cultists were unmasked")
+        from ..effects import finalize_result as dispatch_finalize_result
+
+        dispatch_finalize_result(state, events, outcome="R1", resolution="R1", summary="R1: the cultists were unmasked")
         from ..effects import log_event
 
         log_event(events, "game_end", "R1: the cultists were unmasked")
@@ -1413,7 +1423,7 @@ def cultists_got_away(state: GameState) -> set[str]:
 def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
     tokens = [str(result.get("token"))] + [str(token) for token in result.get("extra_tokens", [])]
     failed = not bool(result.get("success"))
-    if "cultist" in tokens:
+    if "cultist" in tokens and not result.get("reveal_effects_applied"):
         cultists = cultist_enemy_ids(state)
         if state.difficulty in {"easy", "standard"}:
             nearest = nearest_enemies(state, cultists)
@@ -1432,6 +1442,20 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
         log_event(events, "clue_placed", f"Tablet token placed {count} clue on the location.", amount=count)
 
 
+def apply_token_reveal_effects(state: GameState, events: list[dict[str, Any]], test: dict[str, Any], rng: ArkhamRng | None = None) -> None:
+    tokens = [str(test.get("token"))] + [str(token) for token in test.get("extra_tokens", [])]
+    if "cultist" not in tokens:
+        return
+    cultists = cultist_enemy_ids(state)
+    if state.difficulty in {"easy", "standard"}:
+        nearest = nearest_enemies(state, cultists)
+        if nearest:
+            place_doom_on_enemy(state, nearest[0], 1, events, source="Chaos token", rng=rng)
+    else:
+        for enemy_id in cultists:
+            place_doom_on_enemy(state, enemy_id, 1, events, source="Chaos token", rng=rng)
+
+
 def on_wings_aftermath(state: GameState, events: list[dict[str, Any]], *, failed: bool) -> None:
     if failed:
         from ..effects import start_damage_assignment
@@ -1442,7 +1466,8 @@ def on_wings_aftermath(state: GameState, events: list[dict[str, Any]], *, failed
             from ..enemies import disengage_enemy
 
             disengage_enemy(state, events, enemy_id, exhaust=False)
-    move_investigator_to(state, events, "rivertown")
+    if state.investigator.location_id != "rivertown":
+        move_investigator_to(state, events, "rivertown")
 
 
 def move_investigator_to(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:

@@ -297,6 +297,9 @@ def place_doom(
 def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: Any = None) -> None:
     if state.agenda is None or state.agenda.threshold <= 0:
         return
+    if state.active_skill_test:
+        state.limits["deferred_agenda_advance"] = True
+        return
     if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
@@ -322,6 +325,39 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
             log_event(events, "agenda_advanced", "Agenda advanced to The House Stirs.")
         else:
             end_game(state, events, "agenda advanced beyond the fixture deck")
+
+
+def process_deferred_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng: Any = None) -> None:
+    if not state.limits.get("deferred_agenda_advance"):
+        return
+    if state.active_skill_test or state.pending_damage or state.decision_queue or state.status != "in_progress":
+        return
+    state.limits.pop("deferred_agenda_advance", None)
+    check_agenda_advance(state, events, rng=rng)
+
+
+def check_act_objective(state: GameState, events: list[dict[str, Any]]) -> None:
+    if state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.check_act_objective(state, events)
+
+
+def finalize_result(state: GameState, events: list[dict[str, Any]], **kwargs: Any) -> None:
+    if state.scenario in GATHERING_FAMILY:
+        from .scenarios import the_gathering
+
+        the_gathering.finalize_result(state, events, **kwargs)
+    elif state.scenario in MIDNIGHT_MASKS_FAMILY:
+        from .scenarios import the_midnight_masks
+
+        the_midnight_masks.finalize_result(state, events, **kwargs)
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.finalize_result(state, events, **kwargs)
+    else:
+        end_game(state, events, str(kwargs.get("summary", "scenario ended")))
 
 
 def clear_all_doom(state: GameState) -> None:
@@ -365,6 +401,7 @@ def start_damage_assignment(
     horror: int,
     direct: bool = False,
     resume: dict[str, Any] | None = None,
+    rng: Any = None,
 ) -> None:
     if damage <= 0 and horror <= 0:
         return
@@ -378,6 +415,11 @@ def start_damage_assignment(
             resolve_damage_horror_forced_weaknesses(state, events, damage=damage, horror=horror)
         if state.status == "in_progress" and horror > 0:
             present_after_horror_reaction(state, events)
+        if state.status == "in_progress" and resume:
+            if state.decision_queue:
+                state.limits["deferred_resume"] = dict(resume)
+            else:
+                resolve_damage_resume(state, events, resume, rng=rng)
         return
     state.pending_damage = {
         "source": source,
@@ -482,20 +524,37 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         if horror_to_investigator > 0:
             present_after_horror_reaction(state, events)
             if state.decision_queue:
-                if resume.get("kind") == "after_attack":
+                if resume:
                     state.limits["deferred_resume"] = resume
                 return
-        if resume.get("kind") == "after_attack":
-            from .enemies import after_attack
+        resolve_damage_resume(state, events, resume, rng=rng)
 
-            after_attack(
-                state,
-                events,
-                str(resume.get("enemy", "")),
-                dict(resume.get("resume", {})),
-                source=str(resume.get("source", "")),
-                rng=rng,
-            )
+
+def resolve_damage_resume(state: GameState, events: list[dict[str, Any]], resume: dict[str, Any], rng: Any = None) -> None:
+    if not resume or state.status != "in_progress":
+        return
+    kind = resume.get("kind")
+    if kind == "after_attack":
+        from .enemies import after_attack
+
+        after_attack(
+            state,
+            events,
+            str(resume.get("enemy", "")),
+            dict(resume.get("resume", {})),
+            source=str(resume.get("source", "")),
+            rng=rng,
+        )
+    elif kind == "action":
+        from . import actions
+
+        actions.execute(state, dict(resume.get("payload", {})), events, rng)
+    elif kind == "scenario":
+        from .scenarios import SCENARIOS
+
+        scenario = SCENARIOS.get(state.scenario)
+        if scenario is not None:
+            scenario.resolve_choice(state, dict(resume), events, rng)
 
 
 def apply_assigned_damage(state: GameState, pending: dict[str, Any], events: list[dict[str, Any]]) -> tuple[int, int]:

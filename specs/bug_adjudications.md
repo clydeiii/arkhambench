@@ -199,37 +199,49 @@ drops) — running BOTH auditors over the same corpus would likely stack coverag
     from ANY scenario's campaign block, so recording the Devourer Below (whose block
     lacks them) resets the list/flag in the final log. Gameplay unaffected (DB setup
     read the log before being recorded); post-campaign log fidelity only.
+    **FIXED (batch 7):** `apply_campaign_log` now gates Midnight Masks and Devourer
+    campaign fields by the producing scenario family; regression covers MM then DB
+    recording preserving got-away/past-midnight.
 
 GPT-5.5 audit findings (campaign loop1-roland), Fable adjudications:
 
 26. **Deduction logs a phantom "additional clue"** (runs 1+2) — CONFIRMED, display:
     state totals stay correct, but the Deduction handler logs unconditionally even
     when the location has 0 clues or the Masked Hunter blocks discovery. Log actual
-    amounts only.
+    amounts only. **FIXED (batch 7):** Deduction logs only returned discoveries
+    beyond the base clue; blocked/empty discoveries emit no phantom extra clue log.
 27. **Magnifying Glass copies don't stack** (run 1) — CONFIRMED, anti-player:
     cards/player.py:326 uses boolean controls_code for 01030/01040, so a second
-    copy adds nothing. Per RR, each copy in play applies its +1.
+    copy adds nothing. Per RR, each copy in play applies its +1. **FIXED (batch 7):**
+    investigation statics now count every Magnifying Glass copy in play.
 28. **Unconditional chaos-symbol effects resolve after the test** (run 1 F3) —
     CONFIRMED, timing: RR ST.4 resolves symbol effects at reveal, before success is
     determined. Fail-conditional clauses ("If you fail...") stay at results. Engine
-    applies everything post-test today.
+    applies everything post-test today. **FIXED (batch 7):** unconditional scenario
+    token effects moved to final-token reveal with deferred skill-test/agenda
+    continuations; fail-conditional effects remain at result time.
 29. **On Wings of Darkness "moves" the investigator to their current location**
     (run 2 F1) — CONFIRMED, display: skip the move (and its log line) when already
-    at the Central destination.
+    at the Central destination. **FIXED (batch 7):** Rivertown no-op move is skipped
+    while non-Nightgaunt disengagement still resolves.
 30. **Umôrdhoth's Wrath resolves only one failure point via the damage path**
     (run 3 F1) — CONFIRMED, pro-player: the damage-assignment resume
     ({kind: scenario, choice: wrath_continue}) never re-enters the choice loop, so
-    fail-by-3 cost one choice instead of three.
+    fail-by-3 cost one choice instead of three. **FIXED (batch 7):** damage
+    assignment can resume scenario choices; Wrath loops through the full margin.
 31. **Token aftermath silently skipped while a decision is pending** (run 3 F2) —
     CONFIRMED, pro-player: skill_test.apply_scenario_token_aftermath returns early
     if state.decision_queue is non-empty (e.g. the treachery's own damage
     assignment), dropping the DB tablet damage entirely. Aftermath must queue, not
-    vanish.
+    vanish. **FIXED (batch 7):** result-time token aftermath queues behind pending
+    damage/decisions and drains once the queue clears.
 32. **Agnes reaction during an AoO drops the provoking action's continuation**
     (loop1-agnes run 3) — CONFIRMED, anti-player: move action provoked an Acolyte
     AoO; Agnes's "after horror" reaction resolved; the move never continued (action
     spent, investigator still at Main Path, attacker alive). Variant of the fixed
     dropped-continuation bug, triggered by the reaction decision interleaving.
+    **FIXED (batch 7):** AoO attacks that deal damage/horror now always carry a
+    resume; interposed horror reactions preserve the provoking action.
 33. **DB games run the Midnight Masks agenda machine in parallel** (coverage-skids-
     devourer_below, seed 9506) — CONFIRMED, CRITICAL: the Devourer reuses MM helpers
     (place_doom_on_enemy, mysterious_chanting, attach_mask, disciple spawns) whose
@@ -240,4 +252,6 @@ GPT-5.5 audit findings (campaign loop1-roland), Fable adjudications:
     and MM-shaped campaign block). Invisible to invariants-only fuzz; caught by one
     coverage playtest game. Fix: shared helpers dispatch through the scenario-aware
     effects.check_agenda_advance / finalize; add a canary test asserting a game's
-    result summary/resolution belongs to its scenario.
+    result summary/resolution belongs to its scenario. **FIXED (batch 7):** MM
+    shared helpers now dispatch agenda/objective/finalize through `arkham.effects`;
+    DB wizard-doom and six-scenario canary regressions cover the leak.

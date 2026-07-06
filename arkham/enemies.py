@@ -366,7 +366,15 @@ def resolve_aquinnah_attack(state: GameState, events: list[dict[str, Any]], card
     if damage > 0:
         damage_enemy(state, events, target, damage)
     if horror > 0:
-        start_damage_assignment(state, events, source=enemy_name(state, enemy_id), damage=0, horror=horror, resume={"kind": "after_attack", "enemy": enemy_id, "source": str(pending.get("source", "")), "resume": dict(pending.get("resume", {}))})
+        start_damage_assignment(
+            state,
+            events,
+            source=enemy_name(state, enemy_id),
+            damage=0,
+            horror=horror,
+            resume={"kind": "after_attack", "enemy": enemy_id, "source": str(pending.get("source", "")), "resume": dict(pending.get("resume", {}))},
+            rng=rng,
+        )
     else:
         after_attack(state, events, enemy_id, dict(pending.get("resume", {})), source=str(pending.get("source", "")), rng=rng)
 
@@ -396,7 +404,10 @@ def resolve_attack(
         damage=damage,
         horror=horror,
         resume=after_resume,
+        rng=rng,
     )
+    if damage > 0 or horror > 0:
+        return
     if not state.pending_damage and state.decision_queue:
         state.limits["deferred_resume"] = after_resume
         return

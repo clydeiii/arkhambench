@@ -5,7 +5,7 @@ from typing import Any
 
 from . import actions, encounter
 from .cards import player as player_cards
-from .effects import draw_player_card, gain_resource, log_event
+from .effects import draw_player_card, gain_resource, log_event, process_deferred_agenda_advance, resolve_damage_resume
 from .enemies import attack, can_attack_investigator, engage_ready_enemies_at_roland, enemy_name, move_hunters
 from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
@@ -18,7 +18,20 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
         if guard > 100:
             raise RuntimeError("phase loop did not reach a decision")
         if state.active_skill_test or state.pending_damage:
+            if state.active_skill_test and state.limits.get("deferred_skill_test_resolution") and not state.pending_damage:
+                from . import skill_test
+
+                skill_test.resume_deferred_resolution(state, events, rng)
+                continue
             return
+        if state.limits.get("pending_scenario_token_aftermath"):
+            from . import skill_test
+
+            skill_test.process_deferred_scenario_token_aftermath(state, events, rng)
+            continue
+        if state.limits.get("deferred_agenda_advance"):
+            process_deferred_agenda_advance(state, events, rng=rng)
+            continue
         if state.limits.get("after_encounter_draw"):
             encounter.resolve_after_encounter_draw(state, events)
             continue
@@ -37,6 +50,12 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     source=str(deferred.get("source", "")),
                     rng=rng,
                 )
+            elif deferred.get("kind") == "scenario":
+                resolve_damage_resume(state, events, dict(deferred), rng)
+            elif deferred.get("kind") == "skill_test_reveal":
+                from . import skill_test
+
+                skill_test.resume_deferred_resolution(state, events, rng)
             else:
                 actions.execute(state, dict(deferred.get("payload", {})), events, rng)
             continue

@@ -402,7 +402,7 @@ def resolve_scenario_choice(state: GameState, payload: dict[str, Any], events: l
         state.limits["wrath_remaining"] = int(state.limits.get("wrath_remaining", 1)) - 1
         from ..effects import start_damage_assignment
 
-        start_damage_assignment(state, events, source="Umordhoth's Wrath", damage=1, horror=1, resume={"kind": "scenario", "choice": "wrath_continue"})
+        start_damage_assignment(state, events, source="Umordhoth's Wrath", damage=1, horror=1, resume={"kind": "scenario", "choice": "wrath_continue"}, rng=rng)
     elif choice == "wrath_continue":
         continue_wrath(state)
 
@@ -814,6 +814,24 @@ def nearest_enemies_any(state: GameState) -> list[str]:
 
 def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result: dict[str, Any], rng: ArkhamRng | None = None) -> None:
     tokens = [str(result.get("token"))] + [str(token) for token in result.get("extra_tokens", [])]
+    if "cultist" in tokens and not result.get("reveal_effects_applied"):
+        nearest = nearest_enemies_any(state)
+        amount = 1 if state.difficulty in {"easy", "standard"} else 2
+        if nearest:
+            the_midnight_masks.place_doom_on_enemy(state, nearest[0], amount, events, source="Chaos token", rng=rng)
+    if "tablet" in tokens and not result.get("reveal_effects_applied") and monster_at_investigator_location(state):
+        from ..effects import start_damage_assignment
+
+        if state.difficulty in {"easy", "standard"}:
+            start_damage_assignment(state, events, source="Tablet token", damage=1, horror=0)
+        else:
+            start_damage_assignment(state, events, source="Tablet token", damage=1, horror=1)
+    if "skull" in tokens and state.difficulty in {"hard", "expert"} and not result.get("success") and rng is not None:
+        draw_monster_from_deck_or_discard(state, events, rng)
+
+
+def apply_token_reveal_effects(state: GameState, events: list[dict[str, Any]], test: dict[str, Any], rng: ArkhamRng | None = None) -> None:
+    tokens = [str(test.get("token"))] + [str(token) for token in test.get("extra_tokens", [])]
     if "cultist" in tokens:
         nearest = nearest_enemies_any(state)
         amount = 1 if state.difficulty in {"easy", "standard"} else 2
@@ -826,8 +844,6 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
             start_damage_assignment(state, events, source="Tablet token", damage=1, horror=0)
         else:
             start_damage_assignment(state, events, source="Tablet token", damage=1, horror=1)
-    if "skull" in tokens and state.difficulty in {"hard", "expert"} and not result.get("success") and rng is not None:
-        draw_monster_from_deck_or_discard(state, events, rng)
 
 
 def monster_at_investigator_location(state: GameState) -> bool:

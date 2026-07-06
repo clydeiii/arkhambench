@@ -40,3 +40,35 @@
 No git commit was made.
 
 Fixes batch 1
+
+## Fixes Batch 7 — Campaign Loop 1
+
+- Fixed campaign-log family clobbering: Midnight Masks fields and Devourer outcome
+  fields now apply only from their producing scenario family.
+- Corrected display/statics issues: Deduction logs only actual additional clues,
+  duplicate Magnifying Glass copies stack, and On Wings of Darkness skips no-op
+  Rivertown moves.
+- Split scenario chaos-symbol timing: unconditional token effects resolve at
+  final-token reveal before success determination; fail-conditional effects remain
+  at result time. Agenda advancement caused by reveal-time doom is deferred until
+  the active skill test completes.
+- Added deferred continuation handling for result-time token aftermath, Wrath
+  damage choices, and AoO damage/horror reactions so pending decisions do not drop
+  follow-up effects.
+- Swept Midnight Masks helpers reused by Devourer so doom/objective/finalize tails
+  dispatch through `arkham.effects` and stay scenario-aware.
+- Added `tests/test_fixes_batch_7.py` covering adjudication entries 25-33,
+  including the Devourer-vs-Midnight agenda leak and six-scenario dispatch canary.
+
+Validation:
+
+- `python3 -m unittest discover -s tests` => 278 tests passing.
+- Full six-scenario fuzz matrix, all clean:
+  - `python3 -m arkham.fuzz --games 50 --scenario the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_devourer_below --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
+
+No git commit was made.

@@ -283,6 +283,13 @@ class Game:
                 and resume.get("kind") == "scenario"
             ):
                 self._resolve_scenario_choice(dict(resume), events)
+            elif (
+                self.state.status == "in_progress"
+                and self.state.pending_damage is None
+                and not self.state.decision_queue
+                and resume.get("kind") == "skill_test_reveal"
+            ):
+                skill_test.resume_deferred_resolution(self.state, events, self.rng)
         elif kind == "dodge_attack":
             enemies.cancel_pending_attack(self.state, events, str(payload["card"]), self.rng)
         elif kind == "aquinnah_attack":
@@ -330,6 +337,21 @@ class Game:
             self._resolve_scenario_choice(payload, events)
         else:
             raise EngineError(f"unsupported decision payload: {kind}")
+        if (
+            self.state.status == "in_progress"
+            and not self.state.decision_queue
+            and self.state.active_skill_test
+            and self.state.limits.get("deferred_skill_test_resolution")
+        ):
+            skill_test.resume_deferred_resolution(self.state, events, self.rng)
+        if (
+            self.state.status == "in_progress"
+            and not self.state.decision_queue
+            and not self.state.pending_damage
+            and not self.state.active_skill_test
+            and self.state.limits.get("pending_scenario_token_aftermath")
+        ):
+            skill_test.process_deferred_scenario_token_aftermath(self.state, events, self.rng)
 
     def _resolve_scenario_choice(self, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
         from .scenarios import SCENARIOS
