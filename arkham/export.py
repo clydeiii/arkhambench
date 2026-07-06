@@ -78,7 +78,7 @@ def rebuild_index(out_dir: Path) -> list[JsonDict]:
     out_dir.mkdir(parents=True, exist_ok=True)
     rows: list[JsonDict] = []
     for path in sorted(out_dir.glob("*.json")):
-        if path.name == "index.json":
+        if path.name in {"index.json", "campaigns.json"}:
             continue
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))

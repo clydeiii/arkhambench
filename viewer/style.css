@@ -881,3 +881,110 @@ button.zone-title {
   color: #7a5c9e;
   font-style: italic;
 }
+
+/* ---- campaign strip + upgrade modal ---- */
+
+.campaign-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-2);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.camp-title {
+  margin-right: 4px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.camp-title small {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.camp-leg {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink);
+  padding: 3px 10px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.camp-leg.current {
+  border-color: var(--accent-2);
+  box-shadow: inset 0 0 0 1px var(--accent-2);
+}
+
+.camp-leg.good b { color: #2f6b3a; }
+.camp-leg.bad b { color: var(--accent); }
+.camp-leg.mixed b { color: var(--accent-2); }
+
+.camp-leg:hover { background: var(--panel-2); }
+
+.camp-upgrade {
+  border: 1px dashed var(--accent-2);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--accent-2);
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.camp-upgrade:hover { background: rgb(32 95 115 / 8%); }
+
+.camp-sep { color: var(--muted); }
+
+.upgrade-modal .upg-ledger {
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.upgrade-modal .upg-note { color: var(--muted); }
+
+.upgrade-modal h4 {
+  margin: 12px 0 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.upg-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.upg-card {
+  margin: 0;
+  width: 110px;
+  text-align: center;
+}
+
+.upg-card img {
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+}
+
+.upg-card img.hidden-art { display: none; }
+
+.upg-card figcaption {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.upg-card figcaption small { color: var(--muted); }

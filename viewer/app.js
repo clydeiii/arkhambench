@@ -54,8 +54,49 @@ const returnPositions = {
   ghoul_pits: [84, 86],
 };
 
-function scenarioPositions() {
-  return String(state.run?.meta?.scenario || "") === "return_to_the_gathering" ? returnPositions : fixedPositions;
+// The Midnight Masks (both variants): the campaign guide's suggested placement —
+// Northside/Downtown/Easttown across the top, Rivertown at the city's heart,
+// Your House tucked in the corner past the Graveyard.
+const midnightPositions = {
+  northside: [14, 18],
+  downtown: [50, 14],
+  easttown: [84, 22],
+  miskatonic_university: [16, 52],
+  rivertown: [50, 50],
+  graveyard: [82, 56],
+  st_marys_hospital: [16, 85],
+  southside: [48, 86],
+  your_house: [84, 86],
+};
+
+// The Devourer Below: Main Path is the hub on the wood's edge; the four chosen
+// woods fan out to the right; the Ritual Site waits in the deep east once found.
+const devourerBase = {
+  main_path: [14, 50],
+  ritual_site: [87, 50],
+};
+const devourerWoodSlots = [
+  [40, 16],
+  [40, 84],
+  [63, 30],
+  [63, 70],
+];
+
+function scenarioPositions(ids) {
+  const scenario = String(state.run?.meta?.scenario || "");
+  if (scenario.endsWith("the_gathering")) {
+    return scenario === "return_to_the_gathering" ? returnPositions : fixedPositions;
+  }
+  if (scenario.endsWith("midnight_masks")) return midnightPositions;
+  if (scenario.endsWith("devourer_below")) {
+    const positions = { ...devourerBase };
+    const woods = (ids || []).filter((id) => !positions[id]).sort();
+    woods.forEach((id, i) => {
+      positions[id] = devourerWoodSlots[i % devourerWoodSlots.length];
+    });
+    return positions;
+  }
+  return fixedPositions;
 }
 
 init().catch((error) => {
@@ -64,6 +105,7 @@ init().catch((error) => {
 
 async function init() {
   state.index = await fetchJson("data/index.json");
+  state.campaigns = await fetchJson("data/campaigns.json").catch(() => []);
   populateRunSelect();
   bindControls();
 
@@ -85,12 +127,169 @@ async function fetchJson(path) {
 
 function populateRunSelect() {
   el.runSelect.innerHTML = "";
-  for (const row of state.index) {
-    const option = document.createElement("option");
-    option.value = row.name;
-    option.textContent = `${row.name} | seed ${row.seed ?? "?"} | ${row.steps} steps`;
-    el.runSelect.append(option);
+  const legOwner = new Map();
+  for (const campaign of state.campaigns || []) {
+    for (const leg of campaign.legs || []) legOwner.set(leg.run, campaign);
   }
+  const groups = new Map();
+  const singles = [];
+  for (const row of state.index) {
+    const campaign = legOwner.get(row.name);
+    if (campaign) {
+      if (!groups.has(campaign.name)) groups.set(campaign.name, []);
+      groups.get(campaign.name).push(row);
+    } else {
+      singles.push(row);
+    }
+  }
+  for (const [name, rows] of groups) {
+    const campaign = (state.campaigns || []).find((c) => c.name === name);
+    const group = document.createElement("optgroup");
+    group.label = `campaign · ${name} (${campaign?.investigator || "?"}, ${campaign?.difficulty || "?"})`;
+    const order = new Map((campaign?.legs || []).map((leg, i) => [leg.run, i]));
+    rows.sort((a, b) => (order.get(a.name) ?? 0) - (order.get(b.name) ?? 0));
+    for (const row of rows) {
+      const leg = (campaign?.legs || []).find((l) => l.run === row.name);
+      const option = document.createElement("option");
+      option.value = row.name;
+      option.textContent = `${leg ? `${leg.leg}/${campaign.legs.length} ` : ""}${row.name} | ${leg?.resolution ?? row.outcome ?? "?"}`;
+      group.append(option);
+    }
+    el.runSelect.append(group);
+  }
+  if (singles.length) {
+    const group = document.createElement("optgroup");
+    group.label = "single games";
+    for (const row of singles) {
+      const option = document.createElement("option");
+      option.value = row.name;
+      option.textContent = `${row.name} | seed ${row.seed ?? "?"} | ${row.steps} steps`;
+      group.append(option);
+    }
+    el.runSelect.append(group);
+  }
+}
+
+function campaignForRun(runName) {
+  return (state.campaigns || []).find((c) => (c.legs || []).some((leg) => leg.run === runName)) || null;
+}
+
+const RESOLUTION_TONE = {
+  R1: "good",
+  R2: "good",
+  R3: "mixed",
+  no_resolution: "bad",
+};
+
+function renderCampaignStrip() {
+  const strip = document.querySelector("#campaign-strip");
+  const campaign = campaignForRun(state.currentRunName);
+  if (!campaign) {
+    strip.hidden = true;
+    strip.innerHTML = "";
+    return;
+  }
+  strip.hidden = false;
+  strip.innerHTML = "";
+
+  const title = document.createElement("span");
+  title.className = "camp-title";
+  title.innerHTML = `${escapeHtml(campaign.name)} <small>${escapeHtml(campaign.investigator || "")} · ${escapeHtml(campaign.difficulty || "")} · campaign score <b>${campaign.campaign_score ?? "?"}</b></small>`;
+  strip.append(title);
+
+  campaign.legs.forEach((leg, i) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    const tone = RESOLUTION_TONE[String(leg.resolution)] || "mixed";
+    chip.className = `camp-leg ${tone} ${leg.run === state.currentRunName ? "current" : ""}`;
+    chip.innerHTML = `<b>${escapeHtml(shortScenario(leg.scenario))}</b> ${escapeHtml(String(leg.resolution || "?"))} · ${leg.score ?? 0} pts`;
+    chip.title = `${leg.scenario} — XP ${leg.xp_earned ?? 0}, trauma +${leg.trauma_delta?.physical ?? 0}p/+${leg.trauma_delta?.mental ?? 0}m`;
+    chip.addEventListener("click", () => loadRun(leg.run, 0));
+    strip.append(chip);
+
+    const upgrade = (campaign.upgrades || []).find((u) => u.after_leg === leg.leg);
+    if (upgrade) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "camp-upgrade";
+      btn.textContent = upgrade.replacement ? "† replaced" : `⬦ upgrades (${upgrade.xp_spent} XP)`;
+      btn.title = upgrade.replacement
+        ? "Investigator killed or driven insane — a replacement took over"
+        : "Deck changes between scenarios";
+      btn.addEventListener("click", () => openUpgradeModal(campaign, upgrade));
+      strip.append(btn);
+    } else if (i < campaign.legs.length - 1) {
+      const sep = document.createElement("span");
+      sep.className = "camp-sep";
+      sep.textContent = "→";
+      strip.append(sep);
+    }
+  });
+}
+
+function shortScenario(scenario) {
+  const s = String(scenario || "");
+  if (s.endsWith("gathering")) return "The Gathering";
+  if (s.endsWith("midnight_masks")) return "Midnight Masks";
+  if (s.endsWith("devourer_below")) return "Devourer Below";
+  return s;
+}
+
+function openUpgradeModal(campaign, upgrade) {
+  const body = document.createElement("div");
+  body.className = "upgrade-modal";
+  if (upgrade.replacement) {
+    body.innerHTML = `<p class="upg-note">The investigator was killed or driven insane after
+      scenario ${upgrade.after_leg}. A replacement investigator continued the campaign with a
+      fresh deck and 0 XP (banked XP was lost).</p>`;
+  } else {
+    const ledger = document.createElement("p");
+    ledger.className = "upg-ledger";
+    ledger.innerHTML = `XP banked going in: <b>${upgrade.xp_before}</b> · spent: <b>${upgrade.xp_spent}</b> · carried forward: <b>${upgrade.xp_after}</b>`;
+    body.append(ledger);
+    if (!upgrade.purchases.length && !upgrade.removals.length) {
+      const none = document.createElement("p");
+      none.className = "upg-note";
+      none.textContent = "No deck changes — all XP banked.";
+      body.append(none);
+    }
+    if (upgrade.purchases.length) {
+      body.append(upgradeList("Added to the deck", upgrade.purchases, "+"));
+    }
+    if (upgrade.removals.length) {
+      body.append(upgradeList("Removed from the deck", upgrade.removals, "−"));
+    }
+  }
+  openModal(`Between scenarios ${upgrade.after_leg} and ${upgrade.after_leg + 1}`, body);
+}
+
+function upgradeList(heading, cards, sign) {
+  const wrap = document.createElement("div");
+  const h = document.createElement("h4");
+  h.textContent = heading;
+  wrap.append(h);
+  const list = document.createElement("div");
+  list.className = "upg-cards";
+  for (const card of cards) {
+    const item = document.createElement("figure");
+    item.className = "upg-card";
+    const art = document.createElement("img");
+    art.alt = card.name;
+    art.loading = "lazy";
+    setCardImage(art, card.code, () => art.classList.add("hidden-art"), false);
+    item.append(art);
+    const cap = document.createElement("figcaption");
+    const kind =
+      card.kind === "story" ? "story asset" :
+      card.kind === "weakness-gained" ? "weakness gained" :
+      card.kind === "new" ? `bought · ${card.cost} XP` :
+      card.kind ? `upgraded · ${card.cost} XP` : "";
+    cap.innerHTML = `<b>${sign} ${escapeHtml(card.name)}</b>${card.level ? ` (${card.level})` : ""}<br><small>${escapeHtml(kind)}</small>`;
+    item.append(cap);
+    list.append(item);
+  }
+  wrap.append(list);
+  return wrap;
 }
 
 function bindControls() {
@@ -133,6 +332,7 @@ async function loadRun(name, requestedStep) {
   state.currentRunName = row.name;
   state.run = await fetchJson(`data/${row.file}`);
   el.runSelect.value = row.name;
+  renderCampaignStrip();
   populateRoundSelect();
   setStep(requestedStep, { updateHash: true });
 }
@@ -288,7 +488,7 @@ function renderMap(step, prev) {
 
 function mapPositions(ids) {
   const result = {};
-  const fixed = scenarioPositions();
+  const fixed = scenarioPositions(ids);
   const unknown = ids.filter((id) => !fixed[id]);
   ids.forEach((id) => {
     result[id] = fixed[id] ? [...fixed[id]] : [50, 50];
@@ -745,6 +945,13 @@ function tokenBadge(text) {
   badge.className = "overlay-badge";
   badge.textContent = text;
   return badge;
+}
+
+function openModal(title, node) {
+  el.modalTitle.textContent = title;
+  el.modalBody.innerHTML = "";
+  el.modalBody.append(node);
+  el.modalBackdrop.hidden = false;
 }
 
 function openPile(title, ids, snapshot) {
