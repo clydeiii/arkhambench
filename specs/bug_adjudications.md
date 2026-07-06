@@ -190,3 +190,54 @@ Four findings; three confirmed, one ruled correct-as-implemented. Fixes = batch 
 Auditor-diversity observation: GPT-5.5's finds (cost timing, simultaneity,
 action-economy edge cases) are a different genre from Fable's (window/sequence
 drops) — running BOTH auditors over the same corpus would likely stack coverage.
+
+## Campaign playtest loop — round 1 (2026-07-05, Haiku campaigns 9001/9002)
+
+25. **DB record pass clobbers MM campaign-log fields** (loop1-agnes) — CONFIRMED
+    (found by Claude reviewing campaign.json before audits): `apply_campaign_log`
+    applies the Midnight-Masks-shaped fields (`cultists_got_away`, `past_midnight`)
+    from ANY scenario's campaign block, so recording the Devourer Below (whose block
+    lacks them) resets the list/flag in the final log. Gameplay unaffected (DB setup
+    read the log before being recorded); post-campaign log fidelity only.
+
+GPT-5.5 audit findings (campaign loop1-roland), Fable adjudications:
+
+26. **Deduction logs a phantom "additional clue"** (runs 1+2) — CONFIRMED, display:
+    state totals stay correct, but the Deduction handler logs unconditionally even
+    when the location has 0 clues or the Masked Hunter blocks discovery. Log actual
+    amounts only.
+27. **Magnifying Glass copies don't stack** (run 1) — CONFIRMED, anti-player:
+    cards/player.py:326 uses boolean controls_code for 01030/01040, so a second
+    copy adds nothing. Per RR, each copy in play applies its +1.
+28. **Unconditional chaos-symbol effects resolve after the test** (run 1 F3) —
+    CONFIRMED, timing: RR ST.4 resolves symbol effects at reveal, before success is
+    determined. Fail-conditional clauses ("If you fail...") stay at results. Engine
+    applies everything post-test today.
+29. **On Wings of Darkness "moves" the investigator to their current location**
+    (run 2 F1) — CONFIRMED, display: skip the move (and its log line) when already
+    at the Central destination.
+30. **Umôrdhoth's Wrath resolves only one failure point via the damage path**
+    (run 3 F1) — CONFIRMED, pro-player: the damage-assignment resume
+    ({kind: scenario, choice: wrath_continue}) never re-enters the choice loop, so
+    fail-by-3 cost one choice instead of three.
+31. **Token aftermath silently skipped while a decision is pending** (run 3 F2) —
+    CONFIRMED, pro-player: skill_test.apply_scenario_token_aftermath returns early
+    if state.decision_queue is non-empty (e.g. the treachery's own damage
+    assignment), dropping the DB tablet damage entirely. Aftermath must queue, not
+    vanish.
+32. **Agnes reaction during an AoO drops the provoking action's continuation**
+    (loop1-agnes run 3) — CONFIRMED, anti-player: move action provoked an Acolyte
+    AoO; Agnes's "after horror" reaction resolved; the move never continued (action
+    spent, investigator still at Main Path, attacker alive). Variant of the fixed
+    dropped-continuation bug, triggered by the reaction decision interleaving.
+33. **DB games run the Midnight Masks agenda machine in parallel** (coverage-skids-
+    devourer_below, seed 9506) — CONFIRMED, CRITICAL: the Devourer reuses MM helpers
+    (place_doom_on_enemy, mysterious_chanting, attach_mask, disciple spawns) whose
+    tails call MM's module-local check_agenda_advance regardless of state.scenario.
+    Any enemy-doom placement in a DB game advances a phantom MM agenda: spawns a
+    set-aside Masked Hunter fallback, and at "stage 2" ends the game with MM's
+    "R2: the clock struck midnight" finalize (observed: DB result with MM resolution
+    and MM-shaped campaign block). Invisible to invariants-only fuzz; caught by one
+    coverage playtest game. Fix: shared helpers dispatch through the scenario-aware
+    effects.check_agenda_advance / finalize; add a canary test asserting a game's
+    result summary/resolution belongs to its scenario.
