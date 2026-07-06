@@ -28,7 +28,7 @@ DOUBLE_SIDED_PREFIXES = ("011",)  # Gathering locations/acts/agendas live in 011
 def needed_codes(data_dir: Path) -> set[str]:
     codes: set[str] = set()
     for path in sorted(data_dir.glob("*.json")):
-        if path.name == "index.json":
+        if path.name in {"index.json", "campaigns.json"}:
             continue
         try:
             run = json.loads(path.read_text(encoding="utf-8"))
