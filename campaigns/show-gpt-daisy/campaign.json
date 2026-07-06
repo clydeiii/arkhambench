@@ -5,53 +5,52 @@
   ],
   "deck": {
     "slots": {
-      "01006": 1,
-      "01007": 1,
-      "01016": 2,
-      "01017": 2,
-      "01018": 1,
-      "01019": 1,
-      "01020": 2,
-      "01021": 2,
-      "01022": 2,
-      "01023": 2,
-      "01024": 1,
-      "01025": 1,
-      "01030": 1,
-      "01033": 1,
-      "01037": 1,
+      "01008": 1,
+      "01009": 1,
+      "01031": 2,
+      "01032": 1,
+      "01033": 2,
+      "01034": 2,
+      "01036": 2,
+      "01037": 2,
       "01039": 2,
-      "01040": 1,
+      "01040": 2,
+      "01041": 1,
+      "01042": 1,
+      "01065": 2,
+      "01066": 2,
+      "01086": 1,
       "01087": 2,
       "01088": 2,
-      "01089": 2,
-      "01090": 2
+      "01092": 2,
+      "01093": 2
     },
     "story_assets": [
       "01117"
     ],
     "weaknesses": [
-      "01102",
-      "01096"
+      "01097",
+      "01097"
     ]
   },
   "difficulty": "standard",
-  "investigator": "roland",
+  "investigator": "daisy",
   "killed_investigators": [
-    "roland"
+    "daisy"
   ],
   "log": {
     "arkham_succumbed": true,
     "cultists_got_away": [
-      "Alma Hill",
+      "\"Wolf-Man\" Drew",
       "Jeremiah Pierce",
-      "Nar\u00f4gath",
       "Peter Warren",
-      "Ruth Turner",
+      "The Masked Hunter"
+    ],
+    "cultists_interrogated": [
+      "Alma Hill",
       "Victoria Devereux"
     ],
-    "cultists_interrogated": [],
-    "ghoul_priest_alive": true,
+    "ghoul_priest_alive": false,
     "lita_earned": true,
     "lita_in_deck": true,
     "lita_sacrificed": false,
@@ -60,54 +59,54 @@
     "past_midnight": false,
     "ritual_broken": false,
     "umordhoth_repelled": false,
-    "your_house_standing": true
+    "your_house_standing": false
   },
   "next": null,
   "phase": "complete",
   "scenarios": [
     {
-      "resolution": "no_resolution",
-      "run": "campaigns/show-fable-roland/runs/c-show-fable-roland-1",
+      "resolution": "R1",
+      "run": "campaigns/show-gpt-daisy/runs/c-show-gpt-daisy-1",
       "scenario": "return_to_the_gathering",
       "score": 4,
-      "status": "complete",
-      "trauma_delta": {
-        "mental": 0,
-        "physical": 1
-      },
-      "xp_earned": 5
-    },
-    {
-      "resolution": "R1",
-      "run": "campaigns/show-fable-roland/runs/c-show-fable-roland-2",
-      "scenario": "return_to_the_midnight_masks",
-      "score": 0,
-      "status": "complete",
-      "trauma_delta": {
-        "mental": 2,
-        "physical": 0
-      },
-      "xp_earned": 1
-    },
-    {
-      "resolution": "no_resolution",
-      "run": "campaigns/show-fable-roland/runs/c-show-fable-roland-3",
-      "scenario": "return_to_the_devourer_below",
-      "score": 0,
       "status": "complete",
       "trauma_delta": {
         "mental": 1,
         "physical": 0
       },
+      "xp_earned": 5
+    },
+    {
+      "resolution": "R1",
+      "run": "campaigns/show-gpt-daisy/runs/c-show-gpt-daisy-2",
+      "scenario": "return_to_the_midnight_masks",
+      "score": 3,
+      "status": "complete",
+      "trauma_delta": {
+        "mental": 0,
+        "physical": 0
+      },
+      "xp_earned": 3
+    },
+    {
+      "resolution": "no_resolution",
+      "run": "campaigns/show-gpt-daisy/runs/c-show-gpt-daisy-3",
+      "scenario": "return_to_the_devourer_below",
+      "score": 0,
+      "status": "complete",
+      "trauma_delta": {
+        "mental": 0,
+        "physical": 0
+      },
       "xp_earned": 0
     }
   ],
-  "seed": 9201,
+  "seed": 9212,
   "trauma": {
-    "mental": 3,
-    "physical": 1
+    "mental": 1,
+    "physical": 0
   },
-  "xp_earned_total": 6,
-  "xp_spent_total": 6,
+  "xp_earned_total": 8,
+  "xp_spent_total": 8,
   "xp_unspent": 0
 }

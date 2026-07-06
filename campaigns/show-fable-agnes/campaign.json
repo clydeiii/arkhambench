@@ -5,55 +5,51 @@
   ],
   "deck": {
     "slots": {
-      "01006": 1,
-      "01007": 1,
-      "01016": 2,
-      "01017": 2,
-      "01018": 1,
-      "01019": 1,
-      "01020": 2,
-      "01021": 2,
-      "01022": 2,
-      "01023": 2,
-      "01024": 1,
-      "01025": 1,
-      "01030": 1,
-      "01033": 1,
-      "01037": 1,
-      "01039": 2,
-      "01040": 1,
+      "01012": 1,
+      "01013": 1,
+      "01058": 2,
+      "01059": 2,
+      "01060": 2,
+      "01063": 2,
+      "01064": 2,
+      "01065": 2,
+      "01067": 2,
+      "01072": 2,
+      "01076": 2,
+      "01079": 2,
+      "01080": 1,
       "01087": 2,
       "01088": 2,
-      "01089": 2,
-      "01090": 2
+      "01091": 1,
+      "01093": 2,
+      "50007": 2
     },
-    "story_assets": [
-      "01117"
-    ],
+    "story_assets": [],
     "weaknesses": [
-      "01102",
+      "01098",
       "01096"
     ]
   },
   "difficulty": "standard",
-  "investigator": "roland",
+  "investigator": "agnes",
   "killed_investigators": [
-    "roland"
+    "agnes"
   ],
   "log": {
     "arkham_succumbed": true,
     "cultists_got_away": [
-      "Alma Hill",
+      "\"Wolf-Man\" Drew",
       "Jeremiah Pierce",
       "Nar\u00f4gath",
       "Peter Warren",
-      "Ruth Turner",
       "Victoria Devereux"
     ],
-    "cultists_interrogated": [],
-    "ghoul_priest_alive": true,
-    "lita_earned": true,
-    "lita_in_deck": true,
+    "cultists_interrogated": [
+      "Herman Collins"
+    ],
+    "ghoul_priest_alive": false,
+    "lita_earned": false,
+    "lita_in_deck": false,
     "lita_sacrificed": false,
     "lita_was_forced_to_find_others": false,
     "notes": [],
@@ -66,48 +62,48 @@
   "phase": "complete",
   "scenarios": [
     {
-      "resolution": "no_resolution",
-      "run": "campaigns/show-fable-roland/runs/c-show-fable-roland-1",
+      "resolution": "R2",
+      "run": "campaigns/show-fable-agnes/runs/c-show-fable-agnes-1",
       "scenario": "return_to_the_gathering",
-      "score": 4,
+      "score": 7,
+      "status": "complete",
+      "trauma_delta": {
+        "mental": 0,
+        "physical": 0
+      },
+      "xp_earned": 7
+    },
+    {
+      "resolution": "R1",
+      "run": "campaigns/show-fable-agnes/runs/c-show-fable-agnes-2",
+      "scenario": "return_to_the_midnight_masks",
+      "score": 1,
       "status": "complete",
       "trauma_delta": {
         "mental": 0,
         "physical": 1
       },
-      "xp_earned": 5
-    },
-    {
-      "resolution": "R1",
-      "run": "campaigns/show-fable-roland/runs/c-show-fable-roland-2",
-      "scenario": "return_to_the_midnight_masks",
-      "score": 0,
-      "status": "complete",
-      "trauma_delta": {
-        "mental": 2,
-        "physical": 0
-      },
-      "xp_earned": 1
+      "xp_earned": 2
     },
     {
       "resolution": "no_resolution",
-      "run": "campaigns/show-fable-roland/runs/c-show-fable-roland-3",
+      "run": "campaigns/show-fable-agnes/runs/c-show-fable-agnes-3",
       "scenario": "return_to_the_devourer_below",
       "score": 0,
       "status": "complete",
       "trauma_delta": {
-        "mental": 1,
-        "physical": 0
+        "mental": 0,
+        "physical": 1
       },
       "xp_earned": 0
     }
   ],
-  "seed": 9201,
+  "seed": 9204,
   "trauma": {
-    "mental": 3,
-    "physical": 1
+    "mental": 0,
+    "physical": 2
   },
-  "xp_earned_total": 6,
-  "xp_spent_total": 6,
+  "xp_earned_total": 9,
+  "xp_spent_total": 9,
   "xp_unspent": 0
 }
