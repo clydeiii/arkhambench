@@ -40,7 +40,13 @@ find; report them and play on as the rules intend where possible.
 
 Your game has already been created: it is the current run (runs/$RUN). Do not create
 a new one. Play it to completion now with './ahlcg do <n>' (state: './ahlcg state').
-Keep cross-game lessons in the notebook ('./ahlcg note add ...')."
+Keep cross-game lessons in the notebook ('./ahlcg note add ...').
+
+HARNESS RULES: run './ahlcg ...' commands DIRECTLY in bash, one per call, from the
+repo root. Do NOT write helper scripts, shell functions, aliases, or files of any
+kind (file writes are disabled and attempts waste your session). Every './ahlcg'
+command works standalone — no shell state is needed between calls. If a command
+errors, read the error and try a corrected './ahlcg' call."
 
 opencode run -m "$MODEL" "$PROMPT" > "logs/$RUN.agent.log" 2>&1 || echo "(agent exited nonzero)"
 
