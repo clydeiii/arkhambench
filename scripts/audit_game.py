@@ -93,18 +93,89 @@ def audit_run(run_dir: Path, model: str, adjudications: str) -> tuple[str, int]:
     return proc.stdout.strip(), proc.returncode
 
 
+def build_campaign_prompt(campaign_dir: Path, adjudications: str) -> str:
+    return f"""You are auditing the CAMPAIGN LAYER of a completed Arkham Horror LCG
+campaign for rules-enforcement bugs in the engine that ran it. The scenario
+transcripts are audited separately — your job is everything BETWEEN scenarios.
+
+Campaign state: {campaign_dir}/campaign.json (read in full)
+Materialized decks per scenario: {campaign_dir}/decks/deck-*.json
+Per-scenario results: the result.json in each run dir listed in campaign.json.
+Rules authority: docs_agent/campaign_guide.md (campaign flow + XP rules),
+docs_agent/rules_reference.md, docs_agent/decks_guide.md. Card lookup:
+`./ahlcg card <name-or-code>`.
+
+Audit these dimensions:
+
+1. XP LEDGER — recompute every scenario's earned XP from its result and every
+   purchase's cost (new card = max(1, level); same-title upgrade = level
+   difference, min 1). Verify xp_unspent/xp_earned_total/xp_spent_total are
+   consistent at every step and never negative.
+2. DECK LEGALITY OVER TIME — for each deck-N.json: exactly 30 counted cards
+   (signatures, weaknesses, story assets excluded), max 2 copies per title
+   across levels, class/level access respected for the investigator, signatures
+   present, weaknesses never removed, earned weaknesses/story assets persist to
+   later decks.
+3. CONTINUITY — trauma accumulates correctly from per-scenario deltas and shows
+   up as starting damage/horror in the NEXT scenario's transcript; campaign log
+   facts flow into scenario setup (house standing/burned -> start location,
+   Ghoul Priest alive -> shuffled in, cultists got away -> Devourer doom/spawns,
+   past midnight -> opening-hand discard, elderthing token added); killed
+   investigators never return; Lita appears in decks only after being earned
+   and included.
+
+KNOWN ADJUDICATIONS (do not re-report):
+{adjudications}
+
+Report format: `AUDIT CLEAN` or `## Finding <n> — ...` blocks exactly as in a
+scenario audit (Step/round becomes the campaign step or deck file). Findings must
+be grounded in the campaign guide's stated rules or exact card text. Do not modify
+any files. Do NOT read arkham/, data/cards JSON, tests/, or specs/ other than what
+is listed above."""
+
+
+def audit_campaign(campaign_dir: Path, model: str, adjudications: str) -> tuple[str, int]:
+    prompt = build_campaign_prompt(campaign_dir, adjudications)
+    if model == "codex":
+        argv = ["codex", "exec", prompt]
+    else:
+        allowed = (
+            f"Read(docs_agent/**),Read({campaign_dir}/campaign.json),Read({campaign_dir}/campaign_summary.json),"
+            f"Read({campaign_dir}/decks/**),Read({campaign_dir}/runs/*/result.json),"
+            f"Read({campaign_dir}/runs/*/log.md),Bash(./ahlcg card:*)"
+        )
+        disallowed = "Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Bash(./ahlcg new:*),Bash(./ahlcg do:*)"
+        argv = ["claude", "-p", prompt, "--model", model,
+                "--allowedTools", allowed, "--disallowedTools", disallowed, "--max-turns", "80"]
+    proc = subprocess.run(argv, capture_output=True, text=True, cwd=ROOT)
+    return proc.stdout.strip(), proc.returncode
+
+
+def campaign_run_dirs(campaign_dir: Path) -> list[Path]:
+    import json
+
+    campaign = json.loads((campaign_dir / "campaign.json").read_text(encoding="utf-8"))
+    return [Path(row["run"]) for row in campaign.get("scenarios", [])]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Audit completed games for engine rules bugs.")
-    parser.add_argument("runs", nargs="+", help="run directories (each with log.md)")
+    parser.add_argument("runs", nargs="*", help="run directories (each with log.md)")
+    parser.add_argument("--campaign", help="campaign dir: audit each scenario run, then the campaign layer")
     parser.add_argument("--model", default="claude-fable-5")
     args = parser.parse_args(argv)
+    if not args.runs and not args.campaign:
+        parser.error("give run directories and/or --campaign")
 
     adjudications_path = ROOT / "specs" / "bug_adjudications.md"
     adjudications = adjudications_path.read_text(encoding="utf-8") if adjudications_path.exists() else "(none)"
 
+    run_list = [Path(run) for run in args.runs]
+    if args.campaign:
+        run_list.extend(campaign_run_dirs(Path(args.campaign)))
+
     failures = 0
-    for run in args.runs:
-        run_dir = Path(run)
+    for run_dir in run_list:
         if not (run_dir / "log.md").exists():
             print(f"skip {run_dir}: no log.md", file=sys.stderr)
             continue
@@ -117,6 +188,18 @@ def main(argv: list[str] | None = None) -> int:
         if rc != 0:
             failures += 1
             print(f"warning: auditor exited {rc} for {run_dir}", file=sys.stderr)
+
+    if args.campaign:
+        campaign_dir = Path(args.campaign)
+        print(f"=== auditing campaign layer {campaign_dir} with {args.model}")
+        report, rc = audit_campaign(campaign_dir, args.model, adjudications)
+        out = campaign_dir / "campaign_audit.md"
+        out.write_text(report + "\n", encoding="utf-8")
+        print(report)
+        print(f"--- written to {out}")
+        if rc != 0:
+            failures += 1
+            print(f"warning: campaign auditor exited {rc}", file=sys.stderr)
     return 1 if failures else 0
 
 
