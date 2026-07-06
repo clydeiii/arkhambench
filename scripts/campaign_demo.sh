@@ -69,7 +69,7 @@ Record cross-game lessons in your notebook with './ahlcg note add'."
     codex exec -s workspace-write "$PROMPT" 2>&1 | tee -a "logs/campaign-$NAME.agent.log" >/dev/null
   else
     claude -p "$PROMPT" --model "$AGENT" \
-      --allowedTools "Bash(./ahlcg:*),Read(docs_agent/**),Read(notebooks/**),Read($DIR/runs/*/log.md)" \
+      --allowedTools "Bash(./ahlcg:*),Read(docs_agent/**),Read(notebooks/**),Read($DIR/runs/**)" \
       --disallowedTools "Bash(./ahlcg new:*),Bash(./ahlcg campaign new:*),Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Read($DIR/runs/**/state.json),Read($DIR/runs/**/log.jsonl)" \
       --max-turns 400 2>&1 | tee -a "logs/campaign-$NAME.agent.log" >/dev/null
   fi
