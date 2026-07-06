@@ -7,6 +7,7 @@ from pathlib import Path
 
 from . import data as card_data
 from . import campaign as campaign_mod
+from . import deckbuild as deckbuild_mod
 from .errors import EngineError
 from .game import Game
 from .log import action_count_text, read_jsonl, read_markdown, render_event, status_line
@@ -148,6 +149,20 @@ def build_parser() -> argparse.ArgumentParser:
     upgrade_done = upgrade_sub.add_parser("done")
     upgrade_done.add_argument("--dir", default=None)
     upgrade_done.set_defaults(func=cmd_upgrade_done)
+
+    deckbuild = sub.add_parser("deckbuild")
+    deckbuild_sub = deckbuild.add_subparsers(required=True)
+    deckbuild_options = deckbuild_sub.add_parser("options")
+    deckbuild_options.add_argument("--dir", default=None)
+    deckbuild_options.set_defaults(func=cmd_deckbuild_options)
+    deckbuild_swap = deckbuild_sub.add_parser("swap")
+    deckbuild_swap.add_argument("--in", dest="in_code", required=True)
+    deckbuild_swap.add_argument("--out", dest="out_code", required=True)
+    deckbuild_swap.add_argument("--dir", default=None)
+    deckbuild_swap.set_defaults(func=cmd_deckbuild_swap)
+    deckbuild_done = deckbuild_sub.add_parser("done")
+    deckbuild_done.add_argument("--dir", default=None)
+    deckbuild_done.set_defaults(func=cmd_deckbuild_done)
     return parser
 
 
@@ -418,6 +433,40 @@ def cmd_upgrade_remove(args: argparse.Namespace) -> int:
 def cmd_upgrade_done(args: argparse.Namespace) -> int:
     campaign = campaign_mod.finish_upgrade(_campaign_dir(args.dir))
     print("Upgrade phase complete.")
+    print(campaign_mod.render_status(campaign))
+    return 0
+
+
+def cmd_deckbuild_options(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.load_campaign(_campaign_dir(args.dir))
+    deckbuild_mod.require_deckbuild_phase(campaign)
+    print(f"deck_size: {deckbuild_mod.deck_size(campaign)}/30")
+    print("Swap-in options:")
+    for option in deckbuild_mod.deckbuild_options(campaign):
+        status = "available" if option.available else "at title cap"
+        print(f"{option.code} | {option.name} | {option.faction} | copies {option.current_copies}/2 | {status}")
+    print("")
+    print("Current deck:")
+    for code, name, count, protected in deckbuild_mod.deck_summary(campaign):
+        marker = " protected" if protected else ""
+        print(f"{code} | {name} | x{count}{marker}")
+    return 0
+
+
+def cmd_deckbuild_swap(args: argparse.Namespace) -> int:
+    campaign_dir = _campaign_dir(args.dir)
+    campaign = campaign_mod.load_campaign(campaign_dir)
+    deckbuild_mod.swap(campaign, in_code=args.in_code, out_code=args.out_code)
+    campaign_mod.save_campaign(campaign_dir, campaign)
+    print(f"Swapped in {args.in_code} for {args.out_code}.")
+    print(f"Deck size: {deckbuild_mod.deck_size(campaign)}/30")
+    print(f"XP remaining: {campaign.get('xp_unspent', 0)}")
+    return 0
+
+
+def cmd_deckbuild_done(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.finish_deckbuild(_campaign_dir(args.dir))
+    print("Deckbuild phase complete.")
     print(campaign_mod.render_status(campaign))
     return 0
 

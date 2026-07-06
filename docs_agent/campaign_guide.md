@@ -4,6 +4,9 @@ Campaign mode plays Night of the Zealot as a persistent sequence:
 
 ```
 ./ahlcg campaign new --dir campaigns/<name> --investigator roland --difficulty standard --seed 42
+./ahlcg deckbuild options
+./ahlcg deckbuild swap --in <code> --out <code>
+./ahlcg deckbuild done
 ./ahlcg campaign next
 ./ahlcg state
 ./ahlcg do <n> --why "..."
@@ -19,17 +22,30 @@ Campaign mode plays Night of the Zealot as a persistent sequence:
 the Zealot is the default; add `--original` for the original campaign. Scenario runs are
 created under the campaign directory and `.current_run` is updated for normal play.
 
+## Before the First Scenario
+
+New campaigns start in a free `deckbuild` phase before the first scenario. Use
+`./ahlcg deckbuild options` to see legal implemented level-0 swap-ins and the current
+deck list, then use `./ahlcg deckbuild swap --in <code> --out <code>` as often as needed.
+Swaps cost 0 XP and are only available at campaign start. Run `./ahlcg deckbuild done`
+to lock the deck; `./ahlcg campaign next` also locks it automatically.
+
+Once the campaign has started, level-0 additions happen through the normal upgrade
+window and cost 1 XP under the Rules Reference. Sidegrading level-0 cards during upgrade
+phases is usually XP-inefficient; do that work in the free opening deckbuild window.
+
 ## Flow
 
-1. `campaign next` starts the current scenario with the campaign deck, trauma, seed, and
+1. Before the first scenario, optionally use `deckbuild ...` to make free level-0 swaps.
+2. `campaign next` starts the current scenario with the campaign deck, trauma, seed, and
    campaign log inputs.
-2. Play until `GAME OVER`.
-3. `campaign record` ingests the run's `result.json`, adds earned XP, carries trauma,
+3. Play until `GAME OVER`.
+4. `campaign record` ingests the run's `result.json`, adds earned XP, carries trauma,
    updates the campaign log, and moves to the upgrade phase.
-4. If Lita was earned, choose `./ahlcg campaign lita --include` or `--skip`. Lita does
+5. If Lita was earned, choose `./ahlcg campaign lita --include` or `--skip`. Lita does
    not count toward the 30-card deck size.
-5. Spend or bank XP with `upgrade ...`, then run `upgrade done`.
-6. Repeat `campaign next`.
+6. Spend or bank XP with `upgrade ...`, then run `upgrade done`.
+7. Repeat `campaign next`.
 
 The Devourer Below slot exists for campaign continuity, but the scenario is not playable
 until phase C3. Starting it raises a clear not-implemented error.

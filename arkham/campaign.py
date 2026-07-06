@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from . import data as card_data
+from . import deckbuild as deckbuild_mod
 from .errors import EngineError
 from .game import Game
 from .serialize import atomic_write_json
@@ -88,7 +89,8 @@ def create_campaign(
         },
         "scenarios": [],
         "next": sequence[0],
-        "phase": "scenario",
+        "phase": "deckbuild",
+        "deckbuild_swaps": [],
     }
     validate_deck(campaign, final=True)
     campaign_dir.mkdir(parents=True, exist_ok=True)
@@ -128,6 +130,9 @@ def materialize_deck(campaign_dir: Path, campaign: dict[str, Any], run_dir: Path
 def start_next_scenario(campaign_dir: str | Path) -> tuple[Path, Game]:
     campaign_dir = Path(campaign_dir)
     campaign = load_campaign(campaign_dir)
+    if campaign.get("phase") == "deckbuild":
+        deckbuild_mod.finish_deckbuild(campaign)
+        save_campaign(campaign_dir, campaign)
     if campaign.get("phase") != "scenario":
         raise EngineError(f"campaign is in {campaign.get('phase')} phase; finish that phase first")
     scenario = str(campaign.get("next") or "")
@@ -342,6 +347,13 @@ def finish_upgrade(campaign_dir: str | Path) -> dict[str, Any]:
         raise EngineError(f"campaign is in {campaign.get('phase')} phase, not upgrade")
     validate_deck(campaign, final=True)
     campaign["phase"] = "scenario"
+    save_campaign(campaign_dir, campaign)
+    return campaign
+
+
+def finish_deckbuild(campaign_dir: str | Path) -> dict[str, Any]:
+    campaign = load_campaign(campaign_dir)
+    deckbuild_mod.finish_deckbuild(campaign)
     save_campaign(campaign_dir, campaign)
     return campaign
 

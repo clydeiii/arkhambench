@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from arkham import campaign, upgrade
+from arkham import campaign, deckbuild, upgrade
 from arkham.errors import EngineError
 from arkham.scenarios import the_midnight_masks
 
@@ -59,7 +59,7 @@ class CampaignLifecycleTests(CampaignTempCase):
     def test_campaign_lifecycle_record_upgrade_done_and_midnight_inputs(self) -> None:
         camp_dir = self.campaign_dir()
         state = campaign.create_campaign(camp_dir, investigator="roland", difficulty="standard", seed=42)
-        self.assertEqual(state["phase"], "scenario")
+        self.assertEqual(state["phase"], "deckbuild")
         self.assertEqual(upgrade.counted_deck_size(state["deck"], "roland"), 30)
 
         run_dir, game = campaign.start_next_scenario(camp_dir)
@@ -394,6 +394,87 @@ class UpgradeMathAndLegalityTests(CampaignTempCase):
         self.assertFalse(options["01029"].affordable)
         with self.assertRaisesRegex(EngineError, "not enough XP"):
             upgrade.buy_card(camp, "01029", remove="01024")
+
+
+class CampaignStartDeckbuildTests(CampaignTempCase):
+    def test_deckbuild_swap_legality_and_free_swaps(self) -> None:
+        camp_dir = self.campaign_dir()
+        camp = campaign.create_campaign(camp_dir, investigator="wendy", difficulty="standard", seed=21)
+        self.assertEqual(camp["phase"], "deckbuild")
+        camp["xp_unspent"] = 4
+        camp["xp_earned_total"] = 4
+        camp["deck"]["story_assets"].append("01117")
+        camp["deck"]["weaknesses"].append("01096")
+
+        with self.assertRaisesRegex(EngineError, "not legal for wendy"):
+            deckbuild.swap(camp, in_code="01060", out_code="01087")
+        with self.assertRaisesRegex(EngineError, "exceeds 2 copies by title: Scavenging"):
+            deckbuild.swap(camp, in_code="01073", out_code="01087")
+        for protected_code in ("01014", "01015", "01096", "01117"):
+            with self.assertRaisesRegex(EngineError, "protected"):
+                deckbuild.swap(camp, in_code="01044", out_code=protected_code)
+        with self.assertRaisesRegex(EngineError, "unknown card code: 99999"):
+            deckbuild.swap(camp, in_code="99999", out_code="01087")
+        with self.assertRaisesRegex(EngineError, "unknown card code: 99999"):
+            deckbuild.swap(camp, in_code="01044", out_code="99999")
+
+        deckbuild.swap(camp, in_code="01044", out_code="01087")
+        deckbuild.swap(camp, in_code="01045", out_code="01086")
+        self.assertEqual(camp["xp_unspent"], 4)
+        self.assertEqual(camp["xp_spent_total"], 0)
+        self.assertEqual(
+            camp["deckbuild_swaps"],
+            [{"in": "01044", "out": "01087"}, {"in": "01045", "out": "01086"}],
+        )
+
+    def test_deckbuild_options_show_legal_level_zero_cards_with_title_counts(self) -> None:
+        camp = campaign.create_campaign(self.campaign_dir(), investigator="wendy", difficulty="standard", seed=22)
+        options = {option.code: option for option in deckbuild.deckbuild_options(camp)}
+        self.assertIn("01044", options)
+        self.assertEqual(options["01044"].current_copies, 0)
+        self.assertTrue(options["01044"].available)
+        self.assertIn("01073", options)
+        self.assertEqual(options["01073"].current_copies, 2)
+        self.assertFalse(options["01073"].available)
+        self.assertNotIn("01060", options)
+        self.assertNotIn("01057", options)
+        self.assertNotIn("01014", options)
+        self.assertNotIn("01015", options)
+        self.assertNotIn("01117", options)
+
+    def test_deckbuild_lifecycle_materialization_and_command_phase_rejections(self) -> None:
+        camp_dir = self.campaign_dir()
+        camp = campaign.create_campaign(camp_dir, investigator="wendy", difficulty="standard", seed=23)
+        deckbuild.swap(camp, in_code="01044", out_code="01087")
+        campaign.save_campaign(camp_dir, camp)
+
+        run_dir, _ = campaign.start_next_scenario(camp_dir)
+        locked = campaign.load_campaign(camp_dir)
+        self.assertEqual(locked["phase"], "scenario")
+        deck_slots = json.loads((camp_dir / "decks" / "deck-1.json").read_text(encoding="utf-8"))["slots"]
+        self.assertEqual(deck_slots["01044"], 1)
+        self.assertEqual(deck_slots["01087"], 1)
+        self.write_result(run_dir)
+        recorded = campaign.record_current_run(camp_dir, run_arg=str(run_dir))
+        self.assertEqual(recorded["phase"], "upgrade")
+
+        for state in (locked, recorded):
+            with self.assertRaisesRegex(EngineError, "not deckbuild"):
+                deckbuild.deckbuild_options(state)
+            with self.assertRaisesRegex(EngineError, "not deckbuild"):
+                deckbuild.swap(state, in_code="01045", out_code="01086")
+
+    def test_deckbuild_done_and_campaign_next_auto_lock(self) -> None:
+        manual_dir = self.campaign_dir("manual")
+        campaign.create_campaign(manual_dir, investigator="roland", difficulty="standard", seed=24)
+        done = campaign.finish_deckbuild(manual_dir)
+        self.assertEqual(done["phase"], "scenario")
+
+        auto_dir = self.campaign_dir("auto")
+        campaign.create_campaign(auto_dir, investigator="roland", difficulty="standard", seed=25)
+        campaign.start_next_scenario(auto_dir)
+        auto = campaign.load_campaign(auto_dir)
+        self.assertEqual(auto["phase"], "scenario")
 
 
 if __name__ == "__main__":

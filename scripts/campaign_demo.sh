@@ -52,6 +52,11 @@ $(cat "$RUN_DIR/mission.md" 2>/dev/null || echo '(no active run)')
 You are playing a full campaign. Your campaign directory is $DIR and the current
 scenario run has already been created (do NOT run 'ahlcg new' or 'ahlcg campaign new').
 Do the following, in order, stopping only when told:
+0. If phase is 'deckbuild' (campaign start only): you may freely swap level-0 cards
+   in your deck for other legal level-0 cards at NO XP cost ('./ahlcg deckbuild
+   options', './ahlcg deckbuild swap --in <code> --out <code>', then './ahlcg
+   deckbuild done'). This is your one chance to tune the deck for free — mid-campaign
+   level-0 additions cost 1 XP each and are rarely worth it.
 1. If the campaign status above says phase 'scenario': play the current run to
    completion with './ahlcg do <n>' (use './ahlcg state' to look around), then run
    './ahlcg campaign record'.

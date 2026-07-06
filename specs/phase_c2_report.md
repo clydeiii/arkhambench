@@ -94,6 +94,19 @@ OK
   thresholds against printed health/sanity.
 - Corrected The Gathering Lita campaign log states: R2 records `not_earned`, R3
   records `forced_to_find_others`, and R3 still marks Lita earned for the replacement.
+
+## Phase C5 — campaign-start deckbuild
+
+- Added campaign-start `deckbuild` phase:
+  - `campaign new` now creates the campaign in `phase: deckbuild` with
+    `deckbuild_swaps: []`.
+  - `deckbuild options` lists implemented legal level-0 swap-ins and the current deck.
+  - `deckbuild swap --in <code> --out <code>` applies free 0-XP swaps, records them in
+    `deckbuild_swaps`, and reuses upgrade legality/validation helpers.
+  - `deckbuild done` validates the final 30-card deck and moves to `scenario`.
+  - `campaign next` auto-locks deckbuild before starting the first scenario.
+- Added docs warning that mid-campaign level-0 sidegrades still cost XP, plus the clue
+  spending warning in `playing_guide.md`.
 - Added replacement guards for killed investigators and selecting the still-current
   investigator.
 - Added record-time scenario mismatch protection and preserved lifetime

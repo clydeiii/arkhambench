@@ -70,6 +70,8 @@ sharp and actionable.
 - During a skill test you'll get a commit window (add cards from hand for their icons,
   or pay resources for eligible boosts before the token is revealed). Committed cards are
   discarded win or lose.
+- Spent clues go to the token pool. They NEVER return to the location. Investigating a
+  0-clue location discovers nothing.
 - At phase boundaries (end of your turn, before enemy attacks, end of mythos) you may get
   a fast-ability window (e.g. Beat Cop's ping) — use it or pass.
 - The engine only asks when there's a real choice; forced effects happen automatically
