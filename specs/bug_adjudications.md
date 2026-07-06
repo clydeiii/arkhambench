@@ -373,3 +373,33 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     **FIXED (batch 9):** Devourer agenda/act dig spawns now use the shared immediate
     spawn engagement rule; regression asserts agenda-back Main Path spawn engages
     immediately after the spawn event and before agenda advancement logging.
+
+## Hard-difficulty playtest round (Haiku campaigns 9101/9102, hard)
+
+49. **On Wings of Darkness resolves movement before its damage/horror** (hard1-
+    roland run 2) — CONFIRMED, display/ordering: pre-"Then" text (1 horror + 1
+    damage) must fully resolve before the disengage/move.
+50. **Card-driven investigations bypass location skill substitution** (hard1-
+    roland run 3) — CONFIRMED: Flashlight's Investigate at Cliffside tested
+    intellect; Cliffside substitutes agility for ANY investigation (Old House/
+    Tangled Thicket likewise). Route every investigate-type test through the
+    scenario's investigation-skill hook.
+51. **Search effects auto-select instead of offering the player's choice**
+    (hard1-wendy run 1) — CONFIRMED: RR Search lets the searching player choose
+    among eligibles; hard-skull Ghoul search, DB hard-skull Monster search,
+    Mysterious Chanting, and Mask of Umordhoth searches all auto-pick the first
+    match. Offer a decision when 2+ distinct eligible cards exist.
+52. **Offer of Power resolves as a placeholder (unimplemented)** (hard1-wendy run
+    3) — CONFIRMED, pro-player: the mandatory Revelation (draw 2 + 2 doom-can-
+    advance, or 2 horror) was skipped entirely; log literally says "no placeholder
+    effect". Sweep ALL encounter cards reachable in every scenario deck for
+    placeholder resolution and implement what's missing; add a suite test that no
+    composable deck card resolves as placeholder.
+53. **Duplicate engaged enemies collapse to one AoO attack** (hard1-wendy run 3) —
+    CONFIRMED, pro-player: two ready engaged Grave-Eaters produced one attack in
+    the AoO queue.
+54. **Simultaneous damage/horror defeat assigns both trauma types** (hard1-wendy
+    campaign audit) — PARTIAL: the double trauma is CONFIRMED (RR: the player
+    chooses physical OR mental on simultaneous defeat); the "killed unsupported"
+    half is NOT A BUG (DB no-resolution explicitly kills each surviving/defeated
+    investigator per the campaign guide).
