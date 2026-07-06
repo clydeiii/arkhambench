@@ -123,12 +123,26 @@ def build_new_argv(
         investigator,
         "--notebook",
         str(notebook),
+        "--no-confirmations",
     ]
+
+
+OPENCODE_HARNESS_RULES = """
+
+HARNESS RULES: run './ahlcg ...' commands DIRECTLY in bash, one per call, from the
+repo root. Do NOT write helper scripts, shell functions, or files of any kind (file
+writes are disabled and waste your session). Never run './ahlcg new' — your game
+already exists. Honor system (like every benched agent): play only from './ahlcg'
+command output and docs_agent/ — do not read arkham/, data/, runs/, bench/, or any
+state.json/log.jsonl."""
 
 
 def build_agent_argv(agent: str, label: str, prompt: str, max_turns: int) -> list[str]:
     if agent == "codex":
         return ["codex", "exec", "-s", "workspace-write", prompt]
+    if agent.startswith("openrouter/"):
+        opencode = str(Path.home() / ".opencode" / "bin" / "opencode")
+        return [opencode, "run", "-m", agent, prompt + OPENCODE_HARNESS_RULES]
     allowed = f"Bash(./ahlcg:*),Read(docs_agent/**),Read(bench/{label}/notebook.md)"
     # Also hard-block creating new games: the assigned run is the only game.
     disallowed = "Bash(./ahlcg new:*),Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Read(runs/**),Read(bench/**)"
@@ -389,9 +403,22 @@ def pid_active(pid: int) -> bool:
     return True
 
 
-def run_streamed(argv: list[str], log_path: Path | None = None) -> int:
+def agent_env(agent: str, run_dir: Path) -> dict | None:
+    if not agent.startswith("openrouter/"):
+        return None
+    import os
+
+    env = dict(os.environ)
+    env["AHLCG_RUN"] = str(run_dir)
+    key_path = ROOT / "auth" / "openrouter.key"
+    if key_path.exists():
+        env["OPENROUTER_API_KEY"] = key_path.read_text(encoding="utf-8").strip()
+    return env
+
+
+def run_streamed(argv: list[str], log_path: Path | None = None, env: dict | None = None) -> int:
     if log_path is None:
-        return subprocess.run(argv, cwd=ROOT, check=False).returncode
+        return subprocess.run(argv, cwd=ROOT, check=False, env=env).returncode
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("a", encoding="utf-8") as handle:
         handle.write(f"$ {shlex.join(argv)}\n")
@@ -403,6 +430,7 @@ def run_streamed(argv: list[str], log_path: Path | None = None) -> int:
             stderr=subprocess.STDOUT,
             text=True,
             bufsize=1,
+            env=env,
         )
         assert process.stdout is not None
         for line in process.stdout:
@@ -462,7 +490,7 @@ def run_bench(args: argparse.Namespace) -> int:
                     raise RuntimeError(f"new failed for game {game} with exit {new_rc}")
 
             prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note)
-            rc = run_streamed(build_agent_argv(args.agent, args.label, prompt, args.max_turns), log_path)
+            rc = run_streamed(build_agent_argv(args.agent, args.label, prompt, args.max_turns), log_path, env=agent_env(args.agent, run_dir))
             if rc != 0:
                 print(f"warning: agent exited {rc} for game {game}", file=sys.stderr)
 
@@ -472,6 +500,7 @@ def run_bench(args: argparse.Namespace) -> int:
                 rc = run_streamed(
                     build_agent_argv(args.agent, args.label, build_continue_prompt(), args.max_turns),
                     log_path,
+                    env=agent_env(args.agent, run_dir),
                 )
                 if rc != 0:
                     print(f"warning: continue {continues} exited {rc} for game {game}", file=sys.stderr)
