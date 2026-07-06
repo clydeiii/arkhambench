@@ -11,6 +11,7 @@ RUN="${2:?run name}"
 SEED="${3:-$RANDOM}"
 INVESTIGATOR="${4:-roland}"
 SCENARIO="${5:-return_to_the_midnight_masks}"
+DIFFICULTY="${6:-standard}"
 
 export PATH="$HOME/.opencode/bin:$PATH"
 export OPENROUTER_API_KEY="$(cat auth/openrouter.key)"
@@ -19,7 +20,7 @@ mkdir -p logs notebooks
 
 if [ ! -f "runs/$RUN/state.json" ]; then
   ./ahlcg new --run "runs/$RUN" --scenario "$SCENARIO" --investigator "$INVESTIGATOR" \
-    --seed "$SEED" --notebook "notebooks/$SAFE_MODEL.md" >/dev/null
+    --difficulty "$DIFFICULTY" --seed "$SEED" --notebook "notebooks/$SAFE_MODEL.md" >/dev/null
 else
   printf '%s' "runs/$RUN" > .current_run
 fi
