@@ -6,7 +6,7 @@ from typing import Any
 from . import data as card_data
 from .cards import player as player_cards
 from .errors import EngineError
-from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, CardInstance, DecisionOption, GameState, PendingDecision
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, CardInstance, DecisionOption, GameState, PendingDecision
 
 
 class RuleEventList(list[dict[str, Any]]):
@@ -98,12 +98,13 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
         state.investigator.discard.append(instance_id)
         state.investigator.resources = 0
         log_event(events, "weakness_revealed", "Paranoia discarded all resources.", card=instance_id)
-    elif instance.card_code == "01098":
+    elif instance.card_code in {"01098", "01099", "01100"}:
         if instance_id in state.investigator.hand:
             state.investigator.hand.remove(instance_id)
         instance.zone = "threat"
         state.investigator.threat_area.append(instance_id)
-        log_event(events, "weakness_revealed", "Haunted entered the threat area.", card=instance_id)
+        name = str(card_data.get_card(instance.card_code).get("name", instance.card_code))
+        log_event(events, "weakness_revealed", f"{name} entered the threat area.", card=instance_id)
     elif instance.card_code == "01015":
         if instance_id in state.investigator.hand:
             state.investigator.hand.remove(instance_id)
@@ -306,6 +307,11 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
 
         the_midnight_masks.check_agenda_advance(state, events, rng=rng)
         return
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.check_agenda_advance(state, events, rng=rng)
+        return
     while state.agenda.doom >= state.agenda.threshold and state.status == "in_progress":
         clear_all_doom(state)
         state.agenda.stage += 1
@@ -327,13 +333,18 @@ def clear_all_doom(state: GameState) -> None:
         instance.doom = 0
 
 
-def advance_act(state: GameState, events: list[dict[str, Any]]) -> None:
+def advance_act(state: GameState, events: list[dict[str, Any]], rng: Any = None) -> None:
     if state.act is None:
         return
     if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
         the_gathering.advance_act(state, events)
+        return
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.advance_act(state, events, rng=rng)
         return
     state.act.stage += 1
     if state.act.stage == 2:
@@ -363,6 +374,8 @@ def start_damage_assignment(
         state.investigator.horror += horror
         log_event(events, "damage_assigned", f"{state.investigator.name} took {damage} damage and {horror} horror.", source=source)
         check_investigator_defeat(state, events)
+        if state.status == "in_progress":
+            resolve_damage_horror_forced_weaknesses(state, events, damage=damage, horror=horror)
         if state.status == "in_progress" and horror > 0:
             present_after_horror_reaction(state, events)
         return
@@ -460,7 +473,10 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
     else:
         state.pending_damage = None
         resume = dict(pending.get("resume", {}))
-        horror_to_investigator = apply_assigned_damage(state, pending, events)
+        damage_to_investigator, horror_to_investigator = apply_assigned_damage(state, pending, events)
+        if state.status != "in_progress":
+            return
+        resolve_damage_horror_forced_weaknesses(state, events, damage=damage_to_investigator, horror=horror_to_investigator)
         if state.status != "in_progress":
             return
         if horror_to_investigator > 0:
@@ -482,8 +498,9 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
             )
 
 
-def apply_assigned_damage(state: GameState, pending: dict[str, Any], events: list[dict[str, Any]]) -> int:
+def apply_assigned_damage(state: GameState, pending: dict[str, Any], events: list[dict[str, Any]]) -> tuple[int, int]:
     assignments = list(pending.get("assigned", []))
+    damage_to_investigator = 0
     horror_to_investigator = 0
     guard_dog_damage = 0
     for assignment in assignments:
@@ -492,6 +509,7 @@ def apply_assigned_damage(state: GameState, pending: dict[str, Any], events: lis
         if target == "roland":
             if point_type == "damage":
                 state.investigator.damage += 1
+                damage_to_investigator += 1
             elif point_type == "horror":
                 state.investigator.horror += 1
                 horror_to_investigator += 1
@@ -515,7 +533,26 @@ def apply_assigned_damage(state: GameState, pending: dict[str, Any], events: lis
                 log_event(events, "guard_dog_reaction", "Guard Dog dealt 1 damage to the attacking enemy.", enemy=enemy_id)
     destroy_defeated_assets(state, events)
     check_investigator_defeat(state, events)
-    return horror_to_investigator
+    return damage_to_investigator, horror_to_investigator
+
+
+def resolve_damage_horror_forced_weaknesses(state: GameState, events: list[dict[str, Any]], *, damage: int, horror: int) -> None:
+    if state.status != "in_progress":
+        return
+    if horror > 0 and player_cards.threat_ids(state, "01099"):
+        state.investigator.damage += 1
+        log_event(events, "weakness_forced", "Psychosis dealt 1 direct damage.", card=player_cards.threat_ids(state, "01099")[0])
+        check_investigator_defeat(state, events)
+        if state.status == "in_progress":
+            resolve_damage_horror_forced_weaknesses(state, events, damage=1, horror=0)
+    if state.status != "in_progress":
+        return
+    if damage > 0 and player_cards.threat_ids(state, "01100"):
+        state.investigator.horror += 1
+        log_event(events, "weakness_forced", "Hypochondria dealt 1 direct horror.", card=player_cards.threat_ids(state, "01100")[0])
+        check_investigator_defeat(state, events)
+        if state.status == "in_progress":
+            resolve_damage_horror_forced_weaknesses(state, events, damage=0, horror=1)
 
 
 def destroy_defeated_assets(state: GameState, events: list[dict[str, Any]]) -> None:
@@ -557,6 +594,10 @@ def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> No
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.finalize_result(state, events, outcome="R1", resolution="R1", summary=summary)
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.finalize_result(state, events, outcome="no_resolution", resolution="no_resolution", summary=summary)
     log_event(events, "game_end", summary)
 
 
@@ -585,7 +626,7 @@ def heal_roland(state: GameState, events: list[dict[str, Any]], *, damage: int =
 
 
 def present_after_horror_reaction(state: GameState, events: list[dict[str, Any]]) -> None:
-    if state.investigator.card_code != "01004":
+    if state.investigator.card_code != "01004" or player_cards.investigator_text_blank(state):
         return
     key = f"agnes_horror:{state.phase}:{state.round}"
     if state.limits.get(key):

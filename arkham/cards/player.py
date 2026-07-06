@@ -118,7 +118,10 @@ PLAYER_CARD_CODES = [
     "01096",
     "01097",
     "01098",
+    "01099",
+    "01100",
     "01101",
+    "01103",
 ]
 
 
@@ -172,6 +175,14 @@ def hand_ids(state: GameState, code: str) -> list[str]:
 
 def controls_code(state: GameState, code: str) -> bool:
     return bool(play_area_ids(state, code))
+
+
+def investigator_text_blank(state: GameState) -> bool:
+    location_id = state.investigator.location_id
+    for enemy_id, enemy in state.enemies.items():
+        if enemy.card_code == "01103" and enemy.location_id == location_id:
+            return True
+    return False
 
 
 def topmost_discard_event_id(state: GameState) -> str | None:

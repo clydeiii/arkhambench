@@ -7,7 +7,7 @@ from . import actions, encounter
 from .cards import player as player_cards
 from .effects import draw_player_card, gain_resource, log_event
 from .enemies import attack, can_attack_investigator, engage_ready_enemies_at_roland, enemy_name, move_hunters
-from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
 
@@ -57,6 +57,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     return
                 if start_frozen_end_turn_test(state, events):
                     return
+                if state.scenario in DEVOURER_FAMILY:
+                    from .scenarios import the_devourer_below
+
+                    the_devourer_below.end_investigator_turn(state, events)
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
         elif state.phase == "Enemy":
@@ -70,6 +74,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     from .scenarios import the_midnight_masks
 
                     the_midnight_masks.end_enemy_phase(state, events, rng)
+                elif state.scenario in DEVOURER_FAMILY:
+                    from .scenarios import the_devourer_below
+
+                    the_devourer_below.end_enemy_phase(state, events, rng)
                 if state.decision_queue or state.status != "in_progress":
                     return
                 state.phase = "Upkeep"
@@ -81,6 +89,10 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     from .scenarios import the_gathering
 
                     the_gathering.end_round(state, events)
+                elif state.scenario in DEVOURER_FAMILY:
+                    from .scenarios import the_devourer_below
+
+                    the_devourer_below.end_round(state, events)
                 if state.decision_queue or state.status != "in_progress":
                     return
                 state.round += 1
@@ -160,6 +172,10 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
         and not enemy.exhausted
         and can_attack_investigator(state, enemy_id)
     ]
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        ready_attackers.extend(the_devourer_below.massive_attackers(state, attacked))
     if len(ready_attackers) > 1:
         present_enemy_attack_order(state, ready_attackers)
         return
@@ -279,10 +295,14 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.end_mythos_phase(state, events, rng)
+    if state.status == "in_progress" and not state.decision_queue and state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.end_mythos_phase(state, events, rng)
 
 
 def starting_actions(state: GameState) -> int:
-    total = 4 if state.investigator.card_code == "01002" else 3
+    total = 4 if state.investigator.card_code == "01002" and not player_cards.investigator_text_blank(state) else 3
     if player_cards.controls_code(state, "01048"):
         total += 1
     return total

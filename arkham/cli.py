@@ -44,6 +44,9 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--house-burned", action="store_true", help="Midnight Masks campaign input: Your House burned down.")
     new.add_argument("--ghoul-priest-alive", action="store_true", help="Midnight Masks campaign input: Ghoul Priest is still alive.")
     new.add_argument("--lita-forced-to-find-others", action="store_true", help="Midnight Masks campaign input: Lita was forced to find others.")
+    new.add_argument("--cultists-got-away", default="", help="Devourer Below campaign input: comma-separated cultist names.")
+    new.add_argument("--past-midnight", action="store_true", help="Devourer Below campaign input: it is past midnight.")
+    new.add_argument("--lita-in-deck", action="store_true", help="Devourer Below standalone input: include Lita Chantler.")
     new.add_argument("--run", dest="run", default=None)
     new.add_argument("--notebook", dest="notebook", default=None, help="persistent notebook bound to this run (recorded in meta.json)")
     new.set_defaults(func=cmd_new)
@@ -176,6 +179,9 @@ def cmd_new(args: argparse.Namespace) -> int:
         house_burned=args.house_burned,
         ghoul_priest_alive=args.ghoul_priest_alive,
         lita_forced_to_find_others=args.lita_forced_to_find_others,
+        cultists_got_away=args.cultists_got_away,
+        past_midnight=args.past_midnight,
+        lita_in_deck=args.lita_in_deck,
     )
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
     print(f"Created run: {run_dir}")

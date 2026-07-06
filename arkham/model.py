@@ -7,6 +7,7 @@ from typing import Any
 # Scenarios sharing The Gathering engine hooks (agenda/act/token/resolution logic).
 GATHERING_FAMILY = {"the_gathering", "return_to_the_gathering"}
 MIDNIGHT_MASKS_FAMILY = {"the_midnight_masks", "return_to_the_midnight_masks"}
+DEVOURER_FAMILY = {"the_devourer_below", "return_to_the_devourer_below"}
 
 JsonDict = dict[str, Any]
 

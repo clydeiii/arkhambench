@@ -4,7 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from arkham import actions, encounter, skill_test
+from arkham import actions, encounter, enemies, skill_test
 from arkham.effects import resolve_agnes_horror_reaction, resolve_amnesia_keep, start_damage_assignment
 from arkham.errors import EngineError
 from arkham.game import Game
@@ -257,6 +257,46 @@ class PhaseV1Tests(unittest.TestCase):
         s.investigator.actions_remaining = 1
         actions.execute(s, {"action": "parley_mob", "enemy": mob}, [])
         self.assertIn(mob, s.investigator.discard)
+
+    def test_remaining_core_basic_weakness_revelations(self) -> None:
+        from arkham.effects import draw_player_card
+
+        s = state()
+        psychosis = add_card(s, "01099", "deck")
+        draw_player_card(s, [])
+        self.assertIn(psychosis, s.investigator.threat_area)
+        start_damage_assignment(s, [], source="test", damage=0, horror=1, direct=True)
+        self.assertEqual(s.investigator.horror, 1)
+        self.assertEqual(s.investigator.damage, 1)
+        s.investigator.actions_remaining = 2
+        actions.execute(s, {"action": "discard_psychosis", "card": psychosis}, [])
+        self.assertIn(psychosis, s.investigator.discard)
+
+        s = state()
+        hypochondria = add_card(s, "01100", "deck")
+        draw_player_card(s, [])
+        self.assertIn(hypochondria, s.investigator.threat_area)
+        start_damage_assignment(s, [], source="test", damage=1, horror=0, direct=True)
+        self.assertEqual(s.investigator.damage, 1)
+        self.assertEqual(s.investigator.horror, 1)
+        s.investigator.actions_remaining = 2
+        actions.execute(s, {"action": "discard_hypochondria", "card": hypochondria}, [])
+        self.assertIn(hypochondria, s.investigator.discard)
+
+        s = state()
+        detective = add_card(s, "01103", "deck")
+        draw_player_card(s, [])
+        self.assertIn(detective, s.investigator.engaged_enemies)
+        self.assertTrue(actions.player_cards.investigator_text_blank(s))
+        s.locations[s.investigator.location_id].clues = 1
+        ghoul = add_enemy(s, "01160", s.investigator.location_id, engaged=True)
+        enemies.defeat_enemy(s, [], ghoul)
+        self.assertFalse(any(decision.id == "enemy-defeated-reaction" for decision in s.decision_queue))
+
+    def test_madness_pool_contains_all_core_madness_weaknesses(self) -> None:
+        from arkham.scenarios import the_devourer_below as devourer
+
+        self.assertEqual(set(devourer.MADNESS_WEAKNESSES), {"01096", "01097", "01099", "01100"})
 
 
 if __name__ == "__main__":

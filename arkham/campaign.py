@@ -146,6 +146,15 @@ def start_next_scenario(campaign_dir: str | Path) -> tuple[Path, Game]:
                 "lita_forced_to_find_others": bool(log.get("lita_was_forced_to_find_others", False)),
             }
         )
+    if scenario in {"the_devourer_below", "return_to_the_devourer_below"}:
+        kwargs.update(
+            {
+                "cultists_got_away": list(log.get("cultists_got_away", [])),
+                "past_midnight": bool(log.get("past_midnight", False)),
+                "ghoul_priest_alive": bool(log.get("ghoul_priest_alive", False)),
+                "lita_in_deck": bool(log.get("lita_in_deck", False)),
+            }
+        )
     game = Game.new(
         seed=scenario_seed(campaign),
         difficulty=str(campaign["difficulty"]),
@@ -265,7 +274,13 @@ def apply_campaign_log(campaign: dict[str, Any], result: dict[str, Any]) -> None
         log["past_midnight"] = bool(block.get("past_midnight", False))
         if block.get("ghoul_priest_defeated_here"):
             log["ghoul_priest_alive"] = False
-    for weakness in result.get("weaknesses_added", []) or block.get("weaknesses_added", []):
+        for key in ("arkham_succumbed", "ritual_broken", "umordhoth_repelled", "lita_sacrificed"):
+            if key in block:
+                log[key] = bool(block.get(key))
+        if block.get("elderthing_added") and "elderthing" not in campaign.setdefault("chaos_bag_additions", []):
+            campaign["chaos_bag_additions"].append("elderthing")
+    weaknesses = result.get("weaknesses_added", []) or block.get("weaknesses_added", []) or block.get("weakness_gained", [])
+    for weakness in weaknesses:
         campaign["deck"].setdefault("weaknesses", []).append(str(weakness))
 
 

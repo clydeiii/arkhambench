@@ -1,7 +1,7 @@
 """Chaos bag helpers will be implemented in phase B."""
 from __future__ import annotations
 
-from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, GameState
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, GameState
 from .rng import ArkhamRng
 
 
@@ -57,6 +57,19 @@ def token_modifier(state: GameState, token: str) -> tuple[int, bool]:
             return (-2, False)
         if token == "tablet":
             return (-3 if state.difficulty in {"easy", "standard"} else -4, False)
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        if token == "skull":
+            if state.difficulty in {"easy", "standard"}:
+                return (-the_devourer_below.monster_enemies_in_play(state), False)
+            return (-3, False)
+        if token == "cultist":
+            return (-2 if state.difficulty in {"easy", "standard"} else -4, False)
+        if token == "tablet":
+            return (-3 if state.difficulty in {"easy", "standard"} else -5, False)
+        if token == "elderthing":
+            return (-5 if state.difficulty in {"easy", "standard"} else -7, False)
     if token in {"skull", "cultist", "tablet", "elderthing"}:
         modifiers = {"skull": -1, "cultist": -2, "tablet": -3, "elderthing": -4}
         return (modifiers[token], False)

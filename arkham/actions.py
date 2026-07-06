@@ -8,9 +8,9 @@ from . import data as card_data
 from .cards import encounter_cards, player as player_cards
 from .effects import add_player_card_to_hand, advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
 from .log import action_count_text
-from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_name, evade_enemy, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
+from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_evade_value, enemy_fight_value, enemy_name, evade_enemy, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
-from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from . import skill_test
 
 
@@ -45,22 +45,23 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         options.append(DecisionOption(f"Advance act by spending {state.act.clues_required} clues", {"kind": "action", "action": "advance_act"}))
     if location.revealed and location.shroud is not None and not location_locked(state, location.id):
         shroud = modified_shroud(state, location.id)
-        intellect = player_cards.effective_base_skill(state, "intellect", f"Investigate {location.name}")
-        options.append(DecisionOption(f"Investigate {location.name} (shroud {shroud}) — test Intellect({intellect}) vs {shroud}", {"kind": "action", "action": "investigate"}))
+        skill = investigation_skill(state)
+        base = player_cards.effective_base_skill(state, skill, f"Investigate {location.name}")
+        options.append(DecisionOption(f"Investigate {location.name} (shroud {shroud}) — test {skill.capitalize()}({base}) vs {shroud}", {"kind": "action", "action": "investigate"}))
     for target in sorted(location.connections, key=lambda loc: (state.locations[loc].code, loc)):
         if state.scenario in GATHERING_FAMILY and target == "parlor" and not state.locations[target].revealed:
             continue
         options.append(DecisionOption(f"Move to {state.locations[target].name}", {"kind": "action", "action": "move", "location": target}))
     for enemy_id in fight_targets(state):
-        card = enemy_card(state, enemy_id)
         combat = player_cards.effective_base_skill(state, "combat", f"Fight {enemy_name(state, enemy_id)}")
-        options.append(DecisionOption(f"Fight {enemy_name(state, enemy_id)} (fight {card.get('enemy_fight', 1)}, 1 dmg) — test Combat({combat})", {"kind": "action", "action": "fight", "enemy": enemy_id}))
-    for enemy_id in list(investigator.engaged_enemies):
+        fight = enemy_fight_value(state, enemy_id)
+        options.append(DecisionOption(f"Fight {enemy_name(state, enemy_id)} (fight {fight}, 1 dmg) — test Combat({combat})", {"kind": "action", "action": "fight", "enemy": enemy_id}))
+    for enemy_id in evade_targets(state):
         if not can_be_evaded(state, enemy_id):
             continue
-        card = enemy_card(state, enemy_id)
         agility = player_cards.effective_base_skill(state, "agility", f"Evade {enemy_name(state, enemy_id)}")
-        options.append(DecisionOption(f"Evade {enemy_name(state, enemy_id)} (evade {card.get('enemy_evade', 1)}) — test Agility({agility})", {"kind": "action", "action": "evade", "enemy": enemy_id}))
+        evade = enemy_evade_value(state, enemy_id)
+        options.append(DecisionOption(f"Evade {enemy_name(state, enemy_id)} (evade {evade}) — test Agility({agility})", {"kind": "action", "action": "evade", "enemy": enemy_id}))
     for enemy_id in sorted(location.enemy_ids):
         if enemy_id not in investigator.engaged_enemies and state.enemies[enemy_id].engaged_with is None:
             options.append(DecisionOption(f"Engage {enemy_name(state, enemy_id)}", {"kind": "action", "action": "engage", "enemy": enemy_id}))
@@ -77,6 +78,10 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.add_action_options(state, options)
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.add_action_options(state, options)
     add_resign_option(state, options)
     add_fast_options(state, options)
     playable_ids = list(investigator.hand)
@@ -130,6 +135,17 @@ def affordable_actions(state: GameState, options: list[DecisionOption]) -> list[
 def fight_targets(state: GameState) -> list[str]:
     ids = set(state.investigator.engaged_enemies)
     ids.update(state.locations[state.investigator.location_id].enemy_ids)
+    return sorted(enemy_id for enemy_id in ids if enemy_id in state.enemies)
+
+
+def evade_targets(state: GameState) -> list[str]:
+    ids = set(state.investigator.engaged_enemies)
+    for enemy_id in state.locations[state.investigator.location_id].enemy_ids:
+        if enemy_id not in state.enemies:
+            continue
+        enemy = state.enemies[enemy_id]
+        if enemy.engaged_with is None and not enemy.exhausted and "Massive" in str(enemy_card(state, enemy_id).get("text", "")):
+            ids.add(enemy_id)
     return sorted(enemy_id for enemy_id in ids if enemy_id in state.enemies)
 
 
@@ -214,18 +230,18 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
                 return
     if action == "investigate":
         loc = state.locations[state.investigator.location_id]
-        skill_test.start(state, events, skill="intellect", difficulty=modified_shroud(state, loc.id), source=f"Investigate {loc.name}", on_success={"kind": "investigate"})
+        skill_test.start(state, events, skill=investigation_skill(state), difficulty=modified_shroud(state, loc.id), source=f"Investigate {loc.name}", on_success={"kind": "investigate"})
     elif action == "move":
-        move(state, str(payload["location"]), events)
+        move(state, str(payload["location"]), events, rng=rng)
     elif action == "fight":
         enemy_id = str(payload["enemy"])
-        difficulty = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+        difficulty = enemy_fight_value(state, enemy_id)
         skill_test.start(state, events, skill="combat", difficulty=difficulty, source=f"Fight {enemy_name(state, enemy_id)}", on_success={"kind": "fight", "enemy": enemy_id, "damage": 1}, on_failure={"kind": "fight", "enemy": enemy_id})
     elif action == "evade":
         enemy_id = str(payload["enemy"])
         if not can_be_evaded(state, enemy_id):
             raise EngineError(f"{enemy_name(state, enemy_id)} cannot be evaded right now")
-        difficulty = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+        difficulty = enemy_evade_value(state, enemy_id)
         skill_test.start(state, events, skill="agility", difficulty=difficulty, source=f"Evade {enemy_name(state, enemy_id)}", on_success={"kind": "evade", "enemy": enemy_id})
     elif action == "engage":
         engage_enemy(state, events, str(payload["enemy"]))
@@ -245,6 +261,11 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         from .scenarios import the_midnight_masks
 
         if the_midnight_masks.execute_action(state, payload, events, rng):
+            return
+    elif action.startswith("devourer_") and state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        if the_devourer_below.execute_action(state, payload, events, rng):
             return
     elif action == "play":
         play_card(state, str(payload["card"]), events, rng, cost_paid=bool(payload.get("resource_cost_paid")), paid_cost=int(payload.get("resource_cost", 0)))
@@ -276,8 +297,8 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         backstab(state, payload, events)
     elif action == "cunning_distraction":
         cunning_distraction(state, payload, events)
-    elif action == "discard_haunted":
-        discard_haunted(state, payload, events)
+    elif action in {"discard_haunted", "discard_psychosis", "discard_hypochondria"}:
+        discard_threat_weakness(state, payload, events)
     elif action == "locked_door":
         skill = str(payload["skill"])
         skill_test.start(state, events, skill=skill, difficulty=4, source="Locked Door", on_success={"kind": "locked_door", "door": payload["door"]})
@@ -295,7 +316,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         resolve_fast_ability(state, payload, events)
     elif action == "advance_act":
         if state.act and state.act.clues_required is not None and spend_clues(state, state.act.clues_required, events):
-            advance_act(state, events)
+            advance_act(state, events, rng=rng)
     elif action == "pass":
         state.investigator.actions_remaining = 0
         log_event(events, "turn_passed", f"{state.investigator.name} ended their turn.")
@@ -304,6 +325,10 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
             from .scenarios import the_midnight_masks
 
             the_midnight_masks.resign(state, events)
+        elif state.scenario in DEVOURER_FAMILY:
+            from .scenarios import the_devourer_below
+
+            the_devourer_below.resign(state, events)
         else:
             from .scenarios import the_gathering
 
@@ -316,6 +341,7 @@ def unrestricted_actions_available(state: GameState, action: str, payload: dict[
     available = state.investigator.actions_remaining
     if (
         state.investigator.card_code == "01002"
+        and not player_cards.investigator_text_blank(state)
         and not state.limits.get(f"daisy_tome:{state.round}")
         and not is_tome_action(state, payload or {})
     ):
@@ -419,11 +445,25 @@ def describe_action(state: GameState, action: str, payload: dict[str, Any]) -> s
         return f"Parley with {enemy_name(state, enemy_id)}" if enemy_id in state.enemies else "Parley"
     if action.startswith("midnight_location_"):
         return "Use location ability"
+    if action.startswith("devourer_"):
+        return "Use scenario ability"
     return action.replace("_", " ").title()
 
 
+def investigation_skill(state: GameState) -> str:
+    if state.scenario in DEVOURER_FAMILY:
+        code = state.locations[state.investigator.location_id].code
+        if code == "01152":
+            return "willpower"
+        if code == "01153":
+            return "agility"
+        if code == "01154":
+            return "combat"
+    return "intellect"
+
+
 def effective_action_cost(state: GameState, action: str) -> int:
-    cost = 2 if action in {"discard_haunted", "study_draw"} else 1
+    cost = 2 if action in {"discard_haunted", "discard_psychosis", "discard_hypochondria", "study_draw"} else 1
     designator = action_designator(action)
     key = f"frozen:{state.round}:move_fight_evade"
     if designator in {"move", "fight", "evade"} and not state.limits.get(key):
@@ -442,7 +482,7 @@ def mark_action_cost_paid(state: GameState, action: str, cost: int) -> None:
     key = f"frozen:{state.round}:move_fight_evade"
     if cost > 1 and designator in {"move", "fight", "evade"}:
         state.limits[key] = True
-    if state.investigator.card_code == "01002" and action in {"old_book", "medical_texts", "necronomicon"}:
+    if state.investigator.card_code == "01002" and not player_cards.investigator_text_blank(state) and action in {"old_book", "medical_texts", "necronomicon"}:
         state.limits[f"daisy_tome:{state.round}"] = True
 
 
@@ -520,7 +560,7 @@ def action_designator(action: str) -> str:
         return "evade"
     if action in {"parley_lita", "parley_mob"}:
         return "parley"
-    if action in {"book_of_shadows", "discard_haunted", "encyclopedia", "necronomicon", "scrying", "study_draw"}:
+    if action in {"book_of_shadows", "discard_haunted", "discard_psychosis", "discard_hypochondria", "encyclopedia", "necronomicon", "scrying", "study_draw"}:
         return "activate"
     return action
 
@@ -528,6 +568,7 @@ def action_designator(action: str) -> str:
 def only_daisy_tome_action_remains(state: GameState) -> bool:
     return (
         state.investigator.card_code == "01002"
+        and not player_cards.investigator_text_blank(state)
         and state.investigator.actions_remaining == 1
         and not state.limits.get(f"daisy_tome:{state.round}")
     )
@@ -549,6 +590,10 @@ def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], actio
         if (enemy := state.enemies.get(enemy_id)) is not None and not enemy.exhausted
         and can_attack_investigator(state, enemy_id)
     ]
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        attackers.extend(the_devourer_below.massive_attackers(state, set()))
     if not attackers:
         return False
     resume_payload = dict(payload)
@@ -639,10 +684,15 @@ def aoo_needs_resume(state: GameState, enemy_id: str) -> bool:
     return (damage > 0 or horror > 0) and bool(legal_soak_targets(state))
 
 
-def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:
+def move(state: GameState, location_id: str, events: list[dict[str, Any]], rng: Any = None) -> None:
     current = state.investigator.location_id
     if location_id not in state.locations[current].connections:
         return
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        if the_devourer_below.before_move_from_twisting(state, location_id, events):
+            return
     state.locations[current].investigator_ids.remove(state.investigator.id)
     discard_barricades_at_location(state, current, events)
     state.investigator.location_id = location_id
@@ -657,6 +707,10 @@ def move(state: GameState, location_id: str, events: list[dict[str, Any]]) -> No
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.after_enter_location(state, events, location_id)
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.after_enter_location(state, events, location_id, rng=rng)
     engage_ready_enemies_at_roland(state, events)
 
 
@@ -968,6 +1022,7 @@ def add_fast_options(state: GameState, options: list[DecisionOption], *, during_
             )
         if (
             state.investigator.card_code == "01003"
+            and not player_cards.investigator_text_blank(state)
             and state.investigator.resources >= 2
             and not state.limits.get(f"skids_action:{state.round}")
         ):
@@ -1102,7 +1157,7 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
         elif code == "01060" and instance.uses.get("charges", 0) > 0:
             for enemy_id in fight_targets(state):
                 willpower = player_cards.effective_base_skill(state, "willpower", f"Shrivelling {enemy_name(state, enemy_id)}")
-                fight = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+                fight = enemy_fight_value(state, enemy_id)
                 options.append(
                     DecisionOption(
                         f"Fight {enemy_name(state, enemy_id)} with Shrivelling ({instance.uses['charges']} charges) — test Willpower({willpower}) vs {fight}, 2 dmg",
@@ -1173,7 +1228,7 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
         if state.card_instances[card_id].card_code == "01051" and state.investigator.resources >= 3 and not dissonant_blocks(state, "01051"):
             for enemy_id in fight_targets(state):
                 agility = player_cards.effective_base_skill(state, "agility", f"Backstab {enemy_name(state, enemy_id)}")
-                fight = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+                fight = enemy_fight_value(state, enemy_id)
                 suffix = " from discard" if from_discard else ""
                 options.append(DecisionOption(f"Play Backstab{suffix} on {enemy_name(state, enemy_id)} — test Agility({agility}) vs {fight}, 3 dmg", {"kind": "action", "action": "backstab", "card": card_id, "enemy": enemy_id}))
         if state.card_instances[card_id].card_code == "01052" and state.investigator.resources >= 2 and not dissonant_blocks(state, "01052"):
@@ -1183,7 +1238,7 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
             for enemy_id in list(state.investigator.engaged_enemies):
                 if enemy_id in state.enemies and can_be_evaded(state, enemy_id):
                     willpower = player_cards.effective_base_skill(state, "willpower", f"Blinding Light {enemy_name(state, enemy_id)}")
-                    evade = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+                    evade = enemy_evade_value(state, enemy_id)
                     damage = 2 if code == "01069" else 1
                     options.append(DecisionOption(f"Play Blinding Light to evade {enemy_name(state, enemy_id)} — test Willpower({willpower}) vs {evade}, {damage} dmg", {"kind": "action", "action": "blinding_light", "card": card_id, "enemy": enemy_id}))
         if state.card_instances[card_id].card_code == "01078" and state.investigator.resources >= 5 and not dissonant_blocks(state, "01078") and enemies_at_location(state):
@@ -1195,7 +1250,7 @@ def _weapon_fight_label(state: GameState, enemy_id: str, weapon: str, boost: int
     # Show the effective test math so agents don't have to add the weapon boost
     # themselves: base combat (incl. statics) + weapon boost vs enemy fight.
     effective = player_cards.effective_base_skill(state, "combat", f"Fight {enemy_name(state, enemy_id)}") + boost
-    fight = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+    fight = enemy_fight_value(state, enemy_id)
     parts = f"Fight {enemy_name(state, enemy_id)} with {weapon}"
     if extra:
         parts += f" ({extra})"
@@ -1211,13 +1266,18 @@ def add_locked_door_options(state: GameState, options: list[DecisionOption]) -> 
 
 
 def add_threat_action_options(state: GameState, options: list[DecisionOption]) -> None:
-    for instance_id in player_cards.threat_ids(state, "01098"):
-        options.append(
-            DecisionOption(
-                "Discard Haunted (2 actions)",
-                {"kind": "action", "action": "discard_haunted", "card": instance_id},
+    for code, action, name in [
+        ("01098", "discard_haunted", "Haunted"),
+        ("01099", "discard_psychosis", "Psychosis"),
+        ("01100", "discard_hypochondria", "Hypochondria"),
+    ]:
+        for instance_id in player_cards.threat_ids(state, code):
+            options.append(
+                DecisionOption(
+                    f"Discard {name} (2 actions)",
+                    {"kind": "action", "action": action, "card": instance_id},
+                )
             )
-        )
     for instance_id in player_cards.threat_ids(state, "01009"):
         instance = state.card_instances[instance_id]
         if instance.horror > 0:
@@ -1283,7 +1343,7 @@ def asset_fight(state: GameState, payload: dict[str, Any], events: list[dict[str
         if asset.uses.get(use, 0) <= 0:
             return
         asset.uses[use] -= 1
-    difficulty = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+    difficulty = enemy_fight_value(state, enemy_id)
     boost = int(payload.get("boost", 0))
     state.limits[f"temp_skill_boost:{asset_id}"] = boost
     on_success = {"kind": "fight", "enemy": enemy_id, "damage": int(payload.get("damage", 1))}
@@ -1440,7 +1500,7 @@ def blinding_light(state: GameState, payload: dict[str, Any], events: list[dict[
         state.investigator.resources += cost
         return
     damage = 2 if state.card_instances[card_id].card_code == "01069" else 1
-    difficulty = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+    difficulty = enemy_evade_value(state, enemy_id)
     skill_test.start(
         state,
         events,
@@ -1475,7 +1535,7 @@ def backstab(state: GameState, payload: dict[str, Any], events: list[dict[str, A
     if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
         state.investigator.resources += 3
         return
-    difficulty = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+    difficulty = enemy_fight_value(state, enemy_id)
     skill_test.start(
         state,
         events,
@@ -1512,11 +1572,13 @@ def cunning_distraction(state: GameState, payload: dict[str, Any], events: list[
     log_event(events, "event_played", "Played Cunning Distraction.", card=card_id, enemies=evaded)
 
 
-def discard_haunted(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+def discard_threat_weakness(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
     card_id = str(payload.get("card", ""))
-    if card_id in state.investigator.threat_area and state.card_instances[card_id].card_code == "01098":
+    names = {"01098": "Haunted", "01099": "Psychosis", "01100": "Hypochondria"}
+    if card_id in state.investigator.threat_area and state.card_instances[card_id].card_code in names:
+        name = names[state.card_instances[card_id].card_code]
         player_cards.discard_from_threat(state, card_id)
-        log_event(events, "treachery_discarded", "Haunted was discarded.", card=card_id)
+        log_event(events, "treachery_discarded", f"{name} was discarded.", card=card_id)
 
 
 def parley_mob_enforcer(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -1801,7 +1863,7 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
                 log_event(events, "stray_cat", f"Stray Cat automatically evaded {enemy_name(state, enemy_id)}.", enemy=enemy_id)
     elif ability == "skids_action":
         key = f"skids_action:{state.round}"
-        if state.investigator.card_code == "01003" and state.investigator.resources >= 2 and not state.limits.get(key):
+        if state.investigator.card_code == "01003" and not player_cards.investigator_text_blank(state) and state.investigator.resources >= 2 and not state.limits.get(key):
             state.investigator.resources -= 2
             state.investigator.actions_remaining += 1
             state.limits[key] = True
@@ -2021,6 +2083,10 @@ def move_without_engaged_enemies(state: GameState, location_id: str, events: lis
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.after_enter_location(state, events, location_id)
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.after_enter_location(state, events, location_id)
     engage_ready_enemies_at_roland(state, events)
 
 

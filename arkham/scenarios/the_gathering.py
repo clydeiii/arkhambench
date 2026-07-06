@@ -893,7 +893,7 @@ def finish_mythos_after_agenda_choice(state: GameState, events: list[dict[str, A
     engage_ready_enemies_at_roland(state, events)
     if state.status == "in_progress" and not state.decision_queue:
         state.phase = "Investigation"
-        state.investigator.actions_remaining = starting_actions(state.investigator.card_code)
+        state.investigator.actions_remaining = 4 if state.investigator.card_code == "01002" and not player_cards.investigator_text_blank(state) else 3
         if player_cards.controls_code(state, "01048"):
             state.investigator.actions_remaining += 1
         state.turn.action_index = 0

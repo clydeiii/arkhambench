@@ -49,7 +49,7 @@ SCENARIOS: dict[str, ScenarioDef] = {
     ),
     "return_to_the_devourer_below": ScenarioDef(
         id="return_to_the_devourer_below",
-        build_state=the_devourer_below.build_state,
+        build_state=the_devourer_below.build_return_state,
         resolve_choice=the_devourer_below.resolve_scenario_choice,
     ),
 }

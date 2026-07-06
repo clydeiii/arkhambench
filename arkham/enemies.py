@@ -7,7 +7,7 @@ from typing import Any
 from . import data as card_data
 from .cards import player as player_cards
 from .effects import discover_clue, log_event, place_doom, start_damage_assignment
-from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, EnemyInstance, GameState, PendingDecision
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, EnemyInstance, GameState, PendingDecision
 
 
 def enemy_card(state: GameState, enemy_id: str) -> dict[str, Any]:
@@ -55,15 +55,39 @@ def can_be_evaded(state: GameState, enemy_id: str) -> bool:
     return True
 
 
+def enemy_fight_value(state: GameState, enemy_id: str) -> int:
+    value = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        value += the_devourer_below.enemy_fight_bonus(state, enemy_id)
+    return value
+
+
+def enemy_evade_value(state: GameState, enemy_id: str) -> int:
+    value = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        value += the_devourer_below.enemy_evade_bonus(state, enemy_id)
+    return value
+
+
 def enemy_health(state: GameState, enemy_id: str) -> int:
     code = state.enemies[enemy_id].card_code
     if code == "01121b":
         base = 6
     elif code == "50026b":
         base = 7
+    elif code == "01157":
+        base = 10
     else:
         base = int(enemy_card(state, enemy_id).get("enemy_health") or enemy_card(state, enemy_id).get("health") or 1)
     masks = sum(1 for attachment in state.enemies[enemy_id].attachments if state.card_instances[attachment].card_code == "50043")
+    if state.scenario in DEVOURER_FAMILY and code == "01157":
+        from .scenarios import the_devourer_below
+
+        base += the_devourer_below.vault_resources(state)
     return base + 2 * masks
 
 
@@ -76,6 +100,10 @@ def is_aloof(state: GameState, enemy_id: str) -> bool:
     if card_data.get_card(enemy.card_code).get("is_unique"):
         return False
     return any(state.card_instances[attachment].card_code == "50043" for attachment in enemy.attachments)
+
+
+def is_massive(state: GameState, enemy_id: str) -> bool:
+    return "Massive" in str(enemy_card(state, enemy_id).get("text", ""))
 
 
 def enemy_damage_horror(state: GameState, enemy_id: str) -> tuple[int, int]:
@@ -116,7 +144,7 @@ def spawn_enemy(
         if disc:
             discard_spawned_enemy_with_disc(state, events, disc, instance_id)
             return None
-    if engaged is True or (engaged is None and target == state.investigator.location_id and not enemy.exhausted and not is_aloof(state, instance_id)):
+    if engaged is True or (engaged is None and target == state.investigator.location_id and not enemy.exhausted and not is_aloof(state, instance_id) and not is_massive(state, instance_id)):
         engage_enemy(state, events, instance_id)
     return instance_id
 
@@ -157,7 +185,11 @@ def disengage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: st
 def evade_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
     if enemy_id not in state.enemies or not can_be_evaded(state, enemy_id):
         return
-    disengage_enemy(state, events, enemy_id, exhaust=True)
+    if is_massive(state, enemy_id):
+        state.enemies[enemy_id].exhausted = True
+        log_event(events, "enemy_evaded", f"{enemy_name(state, enemy_id)} was evaded and exhausted.", enemy=enemy_id)
+    else:
+        disengage_enemy(state, events, enemy_id, exhaust=True)
     if state.scenario in MIDNIGHT_MASKS_FAMILY and enemy_id in state.enemies:
         from .scenarios import the_midnight_masks
 
@@ -168,7 +200,7 @@ def engage_ready_enemies_at_roland(state: GameState, events: list[dict[str, Any]
     location = state.locations[state.investigator.location_id]
     for enemy_id in sorted(location.enemy_ids):
         enemy = state.enemies[enemy_id]
-        if enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id):
+        if enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id) and not is_massive(state, enemy_id):
             engage_enemy(state, events, enemy_id)
 
 
@@ -179,7 +211,7 @@ def move_enemy_to(state: GameState, events: list[dict[str, Any]], enemy_id: str,
     enemy.location_id = location_id
     state.locations[location_id].enemy_ids.append(enemy_id)
     log_event(events, "enemy_moved", f"{enemy_name(state, enemy_id)} moved to {state.locations[location_id].name}.", enemy=enemy_id)
-    if location_id == state.investigator.location_id and enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id):
+    if location_id == state.investigator.location_id and enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id) and not is_massive(state, enemy_id):
         engage_enemy(state, events, enemy_id)
 
 
@@ -483,11 +515,20 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
 
         if the_midnight_masks.after_enemy_defeated(state, events, enemy_id):
             return
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        if the_devourer_below.after_enemy_defeated(state, events, enemy_id):
+            return
     present_enemy_defeat_reactions(state, events, enemy_id)
 
 
 def damage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str, amount: int) -> None:
     enemy = state.enemies[enemy_id]
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        amount = the_devourer_below.damage_amount_to_enemy(state, enemy_id, amount)
     enemy.damage += amount
     log_event(events, "enemy_damaged", f"{enemy_name(state, enemy_id)} took {amount} damage.", enemy=enemy_id)
     if enemy.damage >= enemy_health(state, enemy_id):
@@ -500,7 +541,7 @@ def present_enemy_defeat_reactions(state: GameState, events: list[dict[str, Any]
     options: list[DecisionOption] = []
     location = state.locations[state.investigator.location_id]
     roland_key = f"roland_reaction:{state.round}"
-    if state.investigator.card_code == "01001" and location.clues > 0 and not state.limits.get(roland_key):
+    if state.investigator.card_code == "01001" and not player_cards.investigator_text_blank(state) and location.clues > 0 and not state.limits.get(roland_key):
         options.append(
             DecisionOption(
                 "Use Roland Banks reaction to discover 1 clue",

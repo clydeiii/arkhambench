@@ -115,6 +115,11 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
 
         if the_midnight_masks.encounter_revelation(state, rng, events, instance_id):
             return
+    if state.scenario in {"the_devourer_below", "return_to_the_devourer_below"}:
+        from .scenarios import the_devourer_below
+
+        if the_devourer_below.encounter_revelation(state, rng, events, instance_id):
+            return
     if type_code == "enemy":
         if code == "01118":
             ensure_return_spawn_location(state, events, "attic")

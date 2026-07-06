@@ -53,6 +53,9 @@ class Game:
         house_burned: bool = False,
         ghoul_priest_alive: bool = False,
         lita_forced_to_find_others: bool = False,
+        cultists_got_away: list[str] | str | None = None,
+        past_midnight: bool = False,
+        lita_in_deck: bool = False,
         trauma: dict[str, Any] | None = None,
         campaign_context: dict[str, Any] | None = None,
     ) -> "Game":
@@ -80,6 +83,15 @@ class Game:
                     "house_burned": house_burned,
                     "ghoul_priest_alive": ghoul_priest_alive,
                     "lita_forced_to_find_others": lita_forced_to_find_others,
+                }
+            )
+        if scenario in {"the_devourer_below", "return_to_the_devourer_below"}:
+            build_kwargs.update(
+                {
+                    "cultists_got_away": cultists_got_away,
+                    "past_midnight": past_midnight,
+                    "ghoul_priest_alive": ghoul_priest_alive,
+                    "lita_in_deck": lita_in_deck,
                 }
             )
         state = SCENARIOS[scenario].build_state(**build_kwargs)
@@ -425,6 +437,12 @@ class Game:
             f"- Past midnight: {log.get('past_midnight')}",
             f"- Cultists interrogated: {', '.join(log.get('cultists_interrogated', [])) or '-'}",
             f"- Cultists got away: {', '.join(log.get('cultists_got_away', [])) or '-'}",
+            "",
+            "The Devourer Below briefing:",
+            "- Doom pressure is severe: agendas are 4/5/5, with Ancient Evils x3 and doom-on-enemy effects counting toward advancement.",
+            "- Decide early between the Ritual Site clue plan, defeating Umordhoth, or sacrificing Lita; resigning is no escape and records Arkham's destruction.",
+            "- Cultists who got away add setup doom and reappear at Main Path when Act 1 advances.",
+            "- In Return, Vault of Earthly Demise makes Umordhoth tougher if it appears while more acts remain.",
             "",
             "Play this run through `./ahlcg` as usual, then run `./ahlcg campaign record` from the repository root.",
         ]

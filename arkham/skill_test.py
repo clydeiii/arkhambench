@@ -16,7 +16,7 @@ from .effects import (
     start_damage_assignment,
 )
 from .enemies import damage_enemy, disengage_enemy, has_retaliate, attack
-from .model import GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
 
 
@@ -162,7 +162,11 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
         and state.difficulty in {"hard", "expert"}
         and current == "cultist"
         and not midnight_cultists_in_play(state)
-    ):
+    ) or (
+        state.scenario in DEVOURER_FAMILY
+        and current == "elderthing"
+        and devourer_ancient_one_in_play(state)
+    ) or devourer_location_extra_token(state, test, extra_tokens):
         extra = draw_token(state, rng)
         extra_modifier, extra_autofail = token_modifier(state, extra)
         modifier += extra_modifier
@@ -270,7 +274,7 @@ def present_token_reveal_reaction(state: GameState, rng: ArkhamRng, events: list
     if not test:
         return
     options: list[DecisionOption] = []
-    if state.investigator.card_code == "01005" and not test.get("wendy_used") and state.investigator.hand:
+    if state.investigator.card_code == "01005" and not player_cards.investigator_text_blank(state) and not test.get("wendy_used") and state.investigator.hand:
         options.extend(
             DecisionOption(
                 f"Discard {card_data.get_card(state.card_instances[card_id].card_code)['name']} to cancel and redraw",
@@ -377,6 +381,7 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
     auto_success = (
         test.get("token") == "eldersign"
         and state.investigator.card_code == "01005"
+        and not player_cards.investigator_text_blank(state)
         and player_cards.controls_code(state, "01014")
     )
     success = (value >= difficulty and not bool(test["autofail"])) or auto_success
@@ -507,6 +512,10 @@ def finalize_resolution(
             state.card_instances[instance_id].zone = "discard"
     state.active_skill_test = None
     apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.after_skill_test(state, events, test, result, rng)
     apply_post_attack_symbol_effects(state, events, test, result)
     apply_scenario_token_aftermath(state, events, result, rng)
     if played_event:
@@ -688,6 +697,31 @@ def apply_callback(
             from .scenarios import the_midnight_masks
 
             the_midnight_masks.graveyard_failure(state)
+    elif kind == "devourer_unhallowed":
+        if not success:
+            start_damage_assignment(state, events, source="Unhallowed Ground", damage=1, horror=1)
+    elif kind == "devourer_twisting":
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.finish_twisting_paths_move(state, events, success=success, rng=rng)
+    elif kind == "devourer_disrupt":
+        if success:
+            from .scenarios import the_devourer_below
+
+            the_devourer_below.place_clue_on_act(state, events)
+    elif kind == "devourer_agenda2":
+        if not success:
+            from .scenarios import the_devourer_below
+
+            the_devourer_below.gain_madness_weakness(state, events, rng, to_hand=True)
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.advance_to_agenda3(state, events)
+    elif kind == "umordhoths_wrath":
+        if not success and margin > 0:
+            from .scenarios import the_devourer_below
+
+            the_devourer_below.present_wrath_choices(state, margin)
     elif kind == "lita_parley":
         if success:
             lita = str(callback.get("lita"))
@@ -964,6 +998,8 @@ def apply_elder_sign_success(
 ) -> None:
     if result.get("token") != "eldersign" or not result.get("success"):
         return
+    if player_cards.investigator_text_blank(state):
+        return
     if state.investigator.card_code == "01002":
         count = player_cards.controlled_tome_count(state)
         for _ in range(count):
@@ -986,6 +1022,10 @@ def apply_scenario_token_aftermath(state: GameState, events: list[dict[str, Any]
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.apply_token_aftermath(state, events, result, rng)
+    elif state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.apply_token_aftermath(state, events, result, rng)
 
 
 def midnight_cultists_in_play(state: GameState) -> bool:
@@ -994,6 +1034,20 @@ def midnight_cultists_in_play(state: GameState) -> bool:
     from .scenarios import the_midnight_masks
 
     return bool(the_midnight_masks.cultist_enemy_ids(state))
+
+
+def devourer_ancient_one_in_play(state: GameState) -> bool:
+    if state.scenario not in DEVOURER_FAMILY:
+        return False
+    return any("Ancient One" in str(card_data.get_card(enemy.card_code).get("traits", "")) for enemy in state.enemies.values())
+
+
+def devourer_location_extra_token(state: GameState, test: dict[str, Any], extra_tokens: list[str]) -> bool:
+    if state.scenario not in DEVOURER_FAMILY or extra_tokens:
+        return False
+    from .scenarios import the_devourer_below
+
+    return the_devourer_below.location_extra_token_applies(state, test)
 
 
 def discard_obscuring_fog_at_roland(state: GameState, events: list[dict[str, Any]]) -> None:
