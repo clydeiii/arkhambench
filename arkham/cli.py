@@ -6,11 +6,13 @@ import sys
 from pathlib import Path
 
 from . import data as card_data
+from . import campaign as campaign_mod
 from .errors import EngineError
 from .game import Game
 from .log import action_count_text, read_jsonl, read_markdown, render_event, status_line
 from .model import GameState
 from .notebook import add_note, compact, resolve_notebook, show
+from . import upgrade as upgrade_mod
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -34,7 +36,7 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
     new.add_argument(
         "--scenario",
-        choices=("the_gathering", "return_to_the_gathering", "the_midnight_masks", "return_to_the_midnight_masks"),
+        choices=("the_gathering", "return_to_the_gathering", "the_midnight_masks", "return_to_the_midnight_masks", "the_devourer_below", "return_to_the_devourer_below"),
         default="the_gathering",
     )
     new.add_argument("--investigator", choices=tuple(card_data.INVESTIGATOR_CODES), default="roland")
@@ -94,6 +96,55 @@ def build_parser() -> argparse.ArgumentParser:
     note_compact.add_argument("--file", "-f", required=True)
     note_compact.add_argument("--notebook", dest="notebook", default=None)
     note_compact.set_defaults(func=cmd_note_compact)
+
+    campaign = sub.add_parser("campaign")
+    campaign_sub = campaign.add_subparsers(required=True)
+    campaign_new = campaign_sub.add_parser("new")
+    campaign_new.add_argument("--dir", required=True)
+    campaign_new.add_argument("--investigator", choices=tuple(card_data.INVESTIGATOR_CODES), required=True)
+    campaign_new.add_argument("--difficulty", choices=("easy", "standard", "hard", "expert"), default="standard")
+    campaign_new.add_argument("--seed", type=int, required=True)
+    campaign_new.add_argument("--original", action="store_true")
+    campaign_new.set_defaults(func=cmd_campaign_new)
+    campaign_status = campaign_sub.add_parser("status")
+    campaign_status.add_argument("--dir", default=None)
+    campaign_status.set_defaults(func=cmd_campaign_status)
+    campaign_next = campaign_sub.add_parser("next")
+    campaign_next.add_argument("--dir", default=None)
+    campaign_next.set_defaults(func=cmd_campaign_next)
+    campaign_record = campaign_sub.add_parser("record")
+    campaign_record.add_argument("--dir", default=None)
+    campaign_record.add_argument("--run", default=None)
+    campaign_record.set_defaults(func=cmd_campaign_record)
+    campaign_lita = campaign_sub.add_parser("lita")
+    campaign_lita.add_argument("--dir", default=None)
+    lita_choice = campaign_lita.add_mutually_exclusive_group(required=True)
+    lita_choice.add_argument("--include", action="store_true")
+    lita_choice.add_argument("--skip", action="store_true")
+    campaign_lita.set_defaults(func=cmd_campaign_lita)
+    campaign_replace = campaign_sub.add_parser("replace")
+    campaign_replace.add_argument("--dir", default=None)
+    campaign_replace.add_argument("--investigator", choices=tuple(card_data.INVESTIGATOR_CODES), required=True)
+    campaign_replace.set_defaults(func=cmd_campaign_replace)
+
+    upgrade = sub.add_parser("upgrade")
+    upgrade_sub = upgrade.add_subparsers(required=True)
+    upgrade_options = upgrade_sub.add_parser("options")
+    upgrade_options.add_argument("--dir", default=None)
+    upgrade_options.set_defaults(func=cmd_upgrade_options)
+    upgrade_buy = upgrade_sub.add_parser("buy")
+    upgrade_buy.add_argument("code")
+    upgrade_buy.add_argument("--remove", default=None)
+    upgrade_buy.add_argument("--replace", default=None)
+    upgrade_buy.add_argument("--dir", default=None)
+    upgrade_buy.set_defaults(func=cmd_upgrade_buy)
+    upgrade_remove = upgrade_sub.add_parser("remove")
+    upgrade_remove.add_argument("code")
+    upgrade_remove.add_argument("--dir", default=None)
+    upgrade_remove.set_defaults(func=cmd_upgrade_remove)
+    upgrade_done = upgrade_sub.add_parser("done")
+    upgrade_done.add_argument("--dir", default=None)
+    upgrade_done.set_defaults(func=cmd_upgrade_done)
     return parser
 
 
@@ -255,6 +306,113 @@ def cmd_note_compact(args: argparse.Namespace) -> int:
         body = Path(args.file).read_text(encoding="utf-8")
     archive = compact(resolve_notebook(args.notebook, run_dir=_notebook_run_dir(None)), body)
     print(f"archived previous notebook: {archive}")
+    return 0
+
+
+def _campaign_dir(arg: str | None) -> Path:
+    return campaign_mod.resolve_campaign_dir(arg)
+
+
+def cmd_campaign_new(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.create_campaign(
+        args.dir,
+        investigator=args.investigator,
+        difficulty=args.difficulty,
+        seed=args.seed,
+        original=args.original,
+    )
+    print(f"Created campaign: {args.dir}")
+    print(campaign_mod.render_status(campaign))
+    return 0
+
+
+def cmd_campaign_status(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.load_campaign(_campaign_dir(args.dir))
+    print(campaign_mod.render_status(campaign))
+    return 0
+
+
+def cmd_campaign_next(args: argparse.Namespace) -> int:
+    run_dir, game = campaign_mod.start_next_scenario(_campaign_dir(args.dir))
+    print(f"Created campaign run: {run_dir}")
+    print(render_state(game.state))
+    print(render_decision(game.current_decision(), game.state))
+    return 0
+
+
+def cmd_campaign_record(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.record_current_run(_campaign_dir(args.dir), run_arg=args.run)
+    print("Recorded scenario result.")
+    print(campaign_mod.render_status(campaign))
+    if campaign.get("phase") == "upgrade":
+        print("Next: ./ahlcg upgrade options")
+    elif campaign.get("phase") == "replace":
+        print("Next: ./ahlcg campaign replace --investigator <id>")
+    return 0
+
+
+def cmd_campaign_lita(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.choose_lita(_campaign_dir(args.dir), include=bool(args.include))
+    print("Updated Lita choice.")
+    print(campaign_mod.render_status(campaign))
+    return 0
+
+
+def cmd_campaign_replace(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.replace_investigator(_campaign_dir(args.dir), investigator=args.investigator)
+    print("Replacement investigator chosen.")
+    print(campaign_mod.render_status(campaign))
+    return 0
+
+
+def _require_upgrade_phase(campaign: dict) -> None:
+    if campaign.get("phase") != "upgrade":
+        raise EngineError(f"campaign is in {campaign.get('phase')} phase, not upgrade")
+
+
+def cmd_upgrade_options(args: argparse.Namespace) -> int:
+    campaign_dir = _campaign_dir(args.dir)
+    campaign = campaign_mod.load_campaign(campaign_dir)
+    _require_upgrade_phase(campaign)
+    print(f"xp_unspent: {campaign.get('xp_unspent', 0)}")
+    print(f"deck_size: {upgrade_mod.counted_deck_size(campaign['deck'], campaign['investigator'])}/30")
+    for option in upgrade_mod.purchase_options(campaign):
+        remove = "yes" if option.removal_required else "no"
+        affordability = ""
+        if not option.affordable:
+            affordability = f" (need {option.cost} XP, have {campaign.get('xp_unspent', 0)})"
+        print(
+            f"{option.code} | {option.name} | level {option.level} | {option.faction} | "
+            f"cost {option.cost}{affordability} | {option.kind} | removal_required {remove}"
+        )
+    return 0
+
+
+def cmd_upgrade_buy(args: argparse.Namespace) -> int:
+    campaign_dir = _campaign_dir(args.dir)
+    campaign = campaign_mod.load_campaign(campaign_dir)
+    _require_upgrade_phase(campaign)
+    upgrade_mod.buy_card(campaign, args.code, remove=args.remove, replace=args.replace)
+    campaign_mod.save_campaign(campaign_dir, campaign)
+    print(f"Bought {args.code}. XP remaining: {campaign.get('xp_unspent', 0)}")
+    print(f"Deck size: {upgrade_mod.counted_deck_size(campaign['deck'], campaign['investigator'])}/30")
+    return 0
+
+
+def cmd_upgrade_remove(args: argparse.Namespace) -> int:
+    campaign_dir = _campaign_dir(args.dir)
+    campaign = campaign_mod.load_campaign(campaign_dir)
+    _require_upgrade_phase(campaign)
+    upgrade_mod.remove_card(campaign, args.code)
+    campaign_mod.save_campaign(campaign_dir, campaign)
+    print(f"Removed {args.code}. Deck size: {upgrade_mod.counted_deck_size(campaign['deck'], campaign['investigator'])}/30")
+    return 0
+
+
+def cmd_upgrade_done(args: argparse.Namespace) -> int:
+    campaign = campaign_mod.finish_upgrade(_campaign_dir(args.dir))
+    print("Upgrade phase complete.")
+    print(campaign_mod.render_status(campaign))
     return 0
 
 

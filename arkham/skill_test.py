@@ -127,6 +127,9 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
     if not test:
         return
     state.decision_queue = [decision for decision in state.decision_queue if decision.id != "commit-cards"]
+    present_pre_reveal_reaction(state)
+    if state.decision_queue:
+        return
     reveal_token_for_test(state, rng, events)
     present_token_reveal_reaction(state, rng, events)
     if state.decision_queue:
@@ -137,6 +140,14 @@ def finish_commit(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]
 def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
     test = state.active_skill_test
     if not test:
+        return
+    if state.limits.get(f"will_to_survive:{state.round}"):
+        test["token"] = None
+        test["extra_tokens"] = []
+        test["modifier"] = 0
+        test["autofail"] = False
+        test["revealless"] = True
+        log_event(events, "chaos_token_skipped", "Will to Survive prevented revealing a chaos token.", modifier=0)
         return
     token = draw_token(state, rng)
     modifier, autofail = token_modifier(state, token)
@@ -166,25 +177,118 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
     log_event(events, "chaos_token", f"Revealed {token}{suffix}.", token=token, modifier=modifier, extra_tokens=extra_tokens)
 
 
+def present_pre_reveal_reaction(state: GameState) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
+    statues = [
+        card_id
+        for card_id in player_cards.play_area_ids(state, "01071")
+        if state.card_instances[card_id].uses.get("charges", 0) > 0
+    ]
+    if not statues:
+        return
+    state.decision_queue = [
+        PendingDecision(
+            id="grotesque-reaction",
+            kind="token_reveal_reaction",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use Grotesque Statue before revealing a chaos token?",
+            options=[
+                DecisionOption("Spend 1 charge on Grotesque Statue", {"kind": "grotesque_reaction", "choice": "use", "card": statues[0]}),
+                DecisionOption("Pass", {"kind": "grotesque_reaction", "choice": "pass"}),
+            ],
+        )
+    ]
+
+
+def resolve_grotesque_reaction(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+) -> None:
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "grotesque-reaction"]
+    if payload.get("choice") != "use":
+        reveal_token_for_test(state, rng, events)
+        present_token_reveal_reaction(state, rng, events)
+        if not state.decision_queue:
+            resolve(state, events, rng)
+        return
+    card_id = str(payload.get("card", ""))
+    if card_id not in state.investigator.play_area or state.card_instances[card_id].uses.get("charges", 0) <= 0:
+        reveal_token_for_test(state, rng, events)
+        present_token_reveal_reaction(state, rng, events)
+        if not state.decision_queue:
+            resolve(state, events, rng)
+        return
+    state.card_instances[card_id].uses["charges"] -= 1
+    tokens = [draw_token(state, rng), draw_token(state, rng)]
+    state.limits["grotesque_tokens"] = tokens
+    options = []
+    for token in tokens:
+        modifier, autofail = token_modifier(state, token)
+        options.append(DecisionOption(f"Resolve {token} ({modifier})", {"kind": "grotesque_choice", "token": token, "modifier": modifier, "autofail": autofail}))
+    state.decision_queue = [
+        PendingDecision(
+            id="grotesque-choice",
+            kind="token_reveal_reaction",
+            prompt="Grotesque Statue revealed 2 chaos tokens. Choose 1 to resolve.",
+            options=options,
+        )
+    ]
+    log_event(events, "grotesque_statue", f"Grotesque Statue revealed {tokens[0]} and {tokens[1]}.", card=card_id, tokens=tokens)
+
+
+def resolve_grotesque_choice(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "grotesque-choice"]
+    token = str(payload.get("token"))
+    tokens = [str(item) for item in state.limits.pop("grotesque_tokens", [])]
+    if token not in tokens:
+        token = tokens[0] if tokens else token
+    modifier, autofail = token_modifier(state, token)
+    test["token"] = token
+    test["extra_tokens"] = []
+    test["modifier"] = modifier
+    test["autofail"] = autofail
+    ignored = [item for item in tokens if item != token]
+    log_event(events, "chaos_token", f"Resolved {token}; ignored {', '.join(ignored) or 'nothing'}.", token=token, modifier=modifier, ignored=ignored)
+    present_token_reveal_reaction(state, rng, events)
+    if not state.decision_queue:
+        resolve(state, events, rng)
+
+
 def present_token_reveal_reaction(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]]) -> None:
     test = state.active_skill_test
-    if not test or state.investigator.card_code != "01005":
+    if not test:
         return
-    if test.get("wendy_used") or not state.investigator.hand:
-        return
-    options = [
-        DecisionOption(
-            f"Discard {card_data.get_card(state.card_instances[card_id].card_code)['name']} to cancel and redraw",
-            {"kind": "wendy_token_reaction", "choice": "redraw", "discard": card_id},
+    options: list[DecisionOption] = []
+    if state.investigator.card_code == "01005" and not test.get("wendy_used") and state.investigator.hand:
+        options.extend(
+            DecisionOption(
+                f"Discard {card_data.get_card(state.card_instances[card_id].card_code)['name']} to cancel and redraw",
+                {"kind": "wendy_token_reaction", "choice": "redraw", "discard": card_id},
+            )
+            for card_id in state.investigator.hand
         )
-        for card_id in state.investigator.hand
-    ]
+    if int(test.get("modifier", 0)) < 0 and state.investigator.resources >= 2:
+        for card_id in player_cards.hand_ids(state, "01056"):
+            options.append(DecisionOption("Play Sure Gamble", {"kind": "sure_gamble_reaction", "choice": "play", "card": card_id}))
+    if not options:
+        return
     options.append(DecisionOption("Pass", {"kind": "wendy_token_reaction", "choice": "pass"}))
     state.decision_queue = [
         PendingDecision(
             id="wendy-token-reaction",
             kind="token_reveal_reaction",
-            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use Wendy Adams reaction after revealing {test.get('token')}?",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use a reaction after revealing {test.get('token')}?",
             options=options,
         )
     ]
@@ -199,7 +303,7 @@ def resolve_wendy_token_reaction(
     test = state.active_skill_test
     if not test:
         return
-    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "wendy-token-reaction"]
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id not in {"wendy-token-reaction", "token-reveal-reaction"}]
     if payload.get("choice") == "redraw" and not test.get("wendy_used"):
         discard_id = str(payload.get("discard", ""))
         if discard_id in state.investigator.hand:
@@ -211,6 +315,26 @@ def resolve_wendy_token_reaction(
             reveal_token_for_test(state, rng, events)
     else:
         test["wendy_passed"] = True
+    resolve(state, events, rng)
+
+
+def resolve_sure_gamble_reaction(
+    state: GameState,
+    payload: dict[str, Any],
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+) -> None:
+    test = state.active_skill_test
+    if not test:
+        return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id not in {"wendy-token-reaction", "token-reveal-reaction"}]
+    card_id = str(payload.get("card", ""))
+    if payload.get("choice") == "play" and card_id in state.investigator.hand and state.investigator.resources >= 2 and int(test.get("modifier", 0)) < 0:
+        state.investigator.resources -= 2
+        player_cards.discard_from_hand(state, card_id)
+        before = int(test.get("modifier", 0))
+        test["modifier"] = abs(before)
+        log_event(events, "sure_gamble", f"Sure Gamble switched the modifier from {before} to {test['modifier']}.", card=card_id)
     resolve(state, events, rng)
 
 
@@ -313,9 +437,9 @@ def present_lucky_decision(state: GameState, result: dict[str, Any]) -> None:
 def legal_lucky_cards(state: GameState) -> list[str]:
     if state.investigator.resources < 1:
         return []
-    ids = player_cards.hand_ids(state, "01080")
+    ids = player_cards.hand_ids(state, "01080") + player_cards.hand_ids(state, "01084")
     top = player_cards.topmost_discard_event_id(state)
-    if top is not None and player_cards.can_play_from_discard_with_amulet(state, top) and state.card_instances[top].card_code == "01080":
+    if top is not None and player_cards.can_play_from_discard_with_amulet(state, top) and state.card_instances[top].card_code in {"01080", "01084"}:
         ids.append(top)
     return ids
 
@@ -332,9 +456,12 @@ def resolve_lucky_would_fail(state: GameState, payload: dict[str, Any], events: 
             if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
                 state.investigator.resources += 1
                 return
-            test.setdefault("boosts", []).append({"card_code": "01080", "skill": test["skill"], "amount": 2})
+            code = state.card_instances[card_id].card_code
+            test.setdefault("boosts", []).append({"card_code": code, "skill": test["skill"], "amount": 2})
             player_cards.place_played_event(state, card_id, events)
             log_event(events, "event_played", "Played Lucky! for +2 skill value.", card=card_id)
+            if code == "01084":
+                draw_player_card(state, events, rng)
             result = compute_result(state, test)
             if not result["success"] and legal_lucky_cards(state):
                 present_lucky_decision(state, result)
@@ -415,6 +542,8 @@ def apply_callback(
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
             damage = int(callback.get("damage", 1))
+            if callback.get("shotgun"):
+                damage = min(5, max(1, margin))
             if callback.get("succeed_by") is not None and margin >= int(callback.get("succeed_by", 0)):
                 bonus = int(callback.get("bonus_damage", 0))
                 damage += bonus
@@ -442,6 +571,7 @@ def apply_callback(
             from . import actions
 
             actions.queue_pickpocketing_reaction(state, enemy_id)
+            actions.queue_close_call_reaction(state, enemy_id)
     elif kind == "blinding_light":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
@@ -451,8 +581,9 @@ def apply_callback(
             from . import actions
 
             actions.queue_pickpocketing_reaction(state, enemy_id)
+            actions.queue_close_call_reaction(state, enemy_id)
             if enemy_id in state.enemies:
-                damage_enemy(state, events, enemy_id, 1)
+                damage_enemy(state, events, enemy_id, int(callback.get("damage", 1)))
     elif kind == "burglary":
         if success:
             state.investigator.resources += 3
@@ -594,6 +725,16 @@ def present_skill_test_aftermath_reactions(state: GameState, result: dict[str, A
     )
     if rabbit:
         options.append(DecisionOption("Exhaust Rabbit's Foot to draw 1 card", {"kind": "after_fail_reaction", "reaction": "rabbit", "card": rabbit}))
+    rabbit3 = next(
+        (
+            card_id
+            for card_id in player_cards.play_area_ids(state, "50010")
+            if not state.card_instances[card_id].exhausted and state.investigator.deck
+        ),
+        None,
+    )
+    if rabbit3:
+        options.append(DecisionOption("Exhaust Rabbit's Foot(3) to search failed-by cards", {"kind": "after_fail_reaction", "reaction": "rabbit3", "card": rabbit3, "count": int(result.get("margin", 1))}))
     if (
         result.get("callback_kind") == "investigate"
         and int(result.get("margin", 0)) <= 2
@@ -632,6 +773,28 @@ def resolve_after_fail_reaction(state: GameState, payload: dict[str, Any], event
             state.card_instances[card_id].exhausted = True
             draw_player_card(state, events, rng)
             log_event(events, "rabbits_foot", "Rabbit's Foot drew 1 card.", card=card_id)
+    elif reaction == "rabbit3":
+        card_id = str(payload.get("card", ""))
+        if card_id in state.investigator.play_area and not state.card_instances[card_id].exhausted:
+            state.card_instances[card_id].exhausted = True
+            count = max(1, int(payload.get("count", 1)))
+            candidates = list(state.investigator.deck[:count])
+            if candidates:
+                state.decision_queue.append(
+                    PendingDecision(
+                        id="rabbits-foot-3-choice",
+                        kind="rabbits_foot_3",
+                        prompt="Choose a card to draw with Rabbit's Foot.",
+                        options=[
+                            DecisionOption(
+                                f"Draw {player_cards.card_name(state, cid)}",
+                                {"kind": "rabbits_foot_3", "card": cid, "candidates": candidates},
+                            )
+                            for cid in candidates
+                        ],
+                    )
+                )
+            log_event(events, "rabbits_foot", f"Rabbit's Foot searched the top {len(candidates)} cards.", card=card_id)
     elif reaction == "look":
         card_id = str(payload.get("card", ""))
         if card_id in legal_look_what_i_found_cards(state) and state.investigator.resources >= 2:
@@ -642,10 +805,25 @@ def resolve_after_fail_reaction(state: GameState, payload: dict[str, Any], event
             discover_clue(state, 2, events)
             player_cards.place_played_event(state, card_id, events)
             log_event(events, "event_played", 'Played "Look what I found!".', card=card_id)
-    if reaction in {"rabbit", "look"} and state.status == "in_progress":
+    if reaction in {"rabbit", "rabbit3", "look"} and state.status == "in_progress":
         result = dict(state.limits.get("last_skill_test", {}))
         if result:
             present_skill_test_aftermath_reactions(state, result, [])
+
+
+def resolve_rabbits_foot_3(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng | None) -> None:
+    chosen = str(payload.get("card", ""))
+    candidates = [str(card_id) for card_id in payload.get("candidates", [])]
+    candidates = [card_id for card_id in candidates if card_id in state.investigator.deck]
+    if chosen not in candidates:
+        return
+    for card_id in candidates:
+        state.investigator.deck.remove(card_id)
+    rest = [card_id for card_id in candidates if card_id != chosen]
+    state.investigator.deck.extend(rest)
+    if rng is not None:
+        rng.shuffle(state.investigator.deck)
+    add_player_card_to_hand(state, events, chosen, event_type="card_drawn", message=f"{state.investigator.name} drew {player_cards.card_name(state, chosen)}.")
 
 
 def present_scavenging_decision(state: GameState) -> None:

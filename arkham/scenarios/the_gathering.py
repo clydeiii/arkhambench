@@ -301,6 +301,12 @@ def build_player_deck(
     missing = sorted(str(code) for code in deck["slots"] if str(code) not in REGISTRY)
     if missing:
         raise EngineError(f"deck contains unimplemented card codes: {', '.join(missing)}")
+    if not deck.get("campaign_deck"):
+        from ..upgrade import XP_CARD_CODES
+
+        xp_codes = sorted(str(code) for code in deck["slots"] if str(code) in XP_CARD_CODES)
+        if xp_codes:
+            raise EngineError(f"deck contains unimplemented card codes: {', '.join(xp_codes)}")
     deck_ids: list[str] = []
     index = 1
     for code, count in deck["slots"].items():
@@ -955,7 +961,7 @@ def finalize_result(
     if outcome == "R3":
         xp = 0
         score = 0
-        lita_earned = False
+        lita_earned = True
     elif outcome == "R2":
         xp = victory_points + 3
         lita_earned = False
@@ -974,6 +980,7 @@ def finalize_result(
     state.status = "ended"
     state.decision_queue = []
     state.result = {
+        "scenario": state.scenario,
         "outcome": outcome,
         "resolution": resolution or outcome,
         "summary": summary,
@@ -997,6 +1004,8 @@ def finalize_result(
             if card_id in state.card_instances
         ),
         "lita_earned": lita_earned,
+        "investigator_killed": outcome == "R3",
+        "investigator_insane": False,
         "encounter_cards_drawn": int(state.limits.get("encounter_cards_drawn", 0)),
         "enemies_defeated": int(state.limits.get("enemies_defeated", 0)),
         "campaign_log": campaign_log(state, outcome, lita_earned),
@@ -1014,7 +1023,7 @@ def campaign_log(state: GameState, outcome: str, lita_earned: bool) -> dict[str,
     )
     return {
         "house": "burned_down" if outcome == "R1" else "standing",
-        "lita": "earned" if lita_earned else "seeking_others",
+        "lita": "forced_to_find_others" if outcome == "R3" else ("earned" if lita_earned else "not_earned"),
         "ghoul_priest_still_alive": (not priest_defeated) if outcome in ("no_resolution", "R3") else False,
     }
 

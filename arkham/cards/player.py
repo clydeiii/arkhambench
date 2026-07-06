@@ -83,6 +83,38 @@ PLAYER_CARD_CODES = [
     "01091",
     "01092",
     "01093",
+    "01026",
+    "01027",
+    "01028",
+    "01029",
+    "01040",
+    "01041",
+    "01042",
+    "01043",
+    "01054",
+    "01055",
+    "01056",
+    "01057",
+    "01068",
+    "01069",
+    "01070",
+    "01071",
+    "01082",
+    "01083",
+    "01084",
+    "01085",
+    "01094",
+    "01095",
+    "50001",
+    "50002",
+    "50003",
+    "50004",
+    "50005",
+    "50006",
+    "50007",
+    "50008",
+    "50009",
+    "50010",
     "01096",
     "01097",
     "01098",
@@ -205,6 +237,8 @@ def discard_event_from_play(state: GameState, instance_id: str, events: list[dic
 def setup_uses(instance: CardInstance) -> None:
     if instance.card_code in {"01006", "01016"}:
         instance.uses["ammo"] = 4
+    elif instance.card_code == "01029":
+        instance.uses["ammo"] = 2
     elif instance.card_code == "01047":
         instance.uses["ammo"] = 3
     elif instance.card_code == "01087":
@@ -217,6 +251,8 @@ def setup_uses(instance: CardInstance) -> None:
         instance.uses["charges"] = 4
     elif instance.card_code == "01061":
         instance.uses["charges"] = 3
+    elif instance.card_code == "01071":
+        instance.uses["charges"] = 4
 
 
 def discard_from_play(state: GameState, instance_id: str) -> None:
@@ -226,7 +262,7 @@ def discard_from_play(state: GameState, instance_id: str) -> None:
     instance.zone = "discard"
     if instance_id not in state.investigator.discard:
         state.investigator.discard.append(instance_id)
-    if instance.card_code == "01048" and state.phase == "Investigation" and state.turn.action_index == 0:
+    if instance.card_code in {"01048", "01054"} and state.phase == "Investigation" and state.turn.action_index == 0:
         state.investigator.actions_remaining = max(0, state.investigator.actions_remaining - 1)
 
 
@@ -264,18 +300,23 @@ def static_skill_bonus(state: GameState, skill: str, source: str) -> int:
     if any(state.card_instances[instance_id].card_code == "01098" for instance_id in state.investigator.threat_area):
         bonus -= 1
     if skill == "combat":
-        if controls_code(state, "01018"):
+        if controls_code(state, "01018") or controls_code(state, "01028"):
             bonus += 1
         if lita_controlled_at_roland_location(state):
             bonus += 1
     if skill == "willpower":
         if controls_code(state, "01059"):
             bonus += 1
+        if controls_code(state, "01027"):
+            bonus += 1
     if skill == "intellect":
         if controls_code(state, "01033"):
             bonus += 1
-        if source.startswith("Investigate") and controls_code(state, "01030"):
+        if source.startswith("Investigate") and (controls_code(state, "01030") or controls_code(state, "01040")):
             bonus += 1
+    if skill == "agility" and controls_code(state, "01055"):
+        bonus += 1
+    bonus += int(state.limits.get(f"encyclopedia:{state.phase}:{skill}", 0))
     return bonus
 
 
@@ -297,39 +338,39 @@ def boost_options(state: GameState) -> list[DecisionOption]:
         return []
     skill = str(test["skill"])
     options: list[DecisionOption] = []
-    if controls_code(state, "01017") and skill in {"willpower", "combat"}:
+    if (controls_code(state, "01017") or controls_code(state, "50001")) and skill in {"willpower", "combat"}:
         options.append(
             DecisionOption(
                 f"Spend 1 resource with Physical Training (+1 {skill})",
-                {"kind": "skill_boost", "card_code": "01017", "skill": skill},
+                {"kind": "skill_boost", "card_code": "50001" if controls_code(state, "50001") else "01017", "skill": skill},
             )
         )
-    if controls_code(state, "01062") and skill in {"willpower", "intellect"}:
+    if (controls_code(state, "01062") or controls_code(state, "50007")) and skill in {"willpower", "intellect"}:
         options.append(
             DecisionOption(
                 f"Spend 1 resource with Arcane Studies (+1 {skill})",
-                {"kind": "skill_boost", "card_code": "01062", "skill": skill},
+                {"kind": "skill_boost", "card_code": "50007" if controls_code(state, "50007") else "01062", "skill": skill},
             )
         )
-    if controls_code(state, "01034") and skill in {"intellect", "agility"}:
+    if (controls_code(state, "01034") or controls_code(state, "50003")) and skill in {"intellect", "agility"}:
         options.append(
             DecisionOption(
                 f"Spend 1 resource with Hyperawareness (+1 {skill})",
-                {"kind": "skill_boost", "card_code": "01034", "skill": skill},
+                {"kind": "skill_boost", "card_code": "50003" if controls_code(state, "50003") else "01034", "skill": skill},
             )
         )
-    if controls_code(state, "01049") and skill in {"combat", "agility"}:
+    if (controls_code(state, "01049") or controls_code(state, "50005")) and skill in {"combat", "agility"}:
         options.append(
             DecisionOption(
                 f"Spend 1 resource with Hard Knocks (+1 {skill})",
-                {"kind": "skill_boost", "card_code": "01049", "skill": skill},
+                {"kind": "skill_boost", "card_code": "50005" if controls_code(state, "50005") else "01049", "skill": skill},
             )
         )
-    if controls_code(state, "01077") and skill in {"willpower", "agility"}:
+    if (controls_code(state, "01077") or controls_code(state, "50009")) and skill in {"willpower", "agility"}:
         options.append(
             DecisionOption(
                 f"Spend 1 resource with Dig Deep (+1 {skill})",
-                {"kind": "skill_boost", "card_code": "01077", "skill": skill},
+                {"kind": "skill_boost", "card_code": "50009" if controls_code(state, "50009") else "01077", "skill": skill},
             )
         )
     return options
@@ -341,15 +382,15 @@ def apply_boost(state: GameState, card_code: str, skill: str) -> bool:
         return False
     if str(test["skill"]) != skill:
         return False
-    if card_code == "01017" and skill not in {"willpower", "combat"}:
+    if card_code in {"01017", "50001"} and skill not in {"willpower", "combat"}:
         return False
-    if card_code == "01062" and skill not in {"willpower", "intellect"}:
+    if card_code in {"01062", "50007"} and skill not in {"willpower", "intellect"}:
         return False
-    if card_code == "01034" and skill not in {"intellect", "agility"}:
+    if card_code in {"01034", "50003"} and skill not in {"intellect", "agility"}:
         return False
-    if card_code == "01049" and skill not in {"combat", "agility"}:
+    if card_code in {"01049", "50005"} and skill not in {"combat", "agility"}:
         return False
-    if card_code == "01077" and skill not in {"willpower", "agility"}:
+    if card_code in {"01077", "50009"} and skill not in {"willpower", "agility"}:
         return False
     if not controls_code(state, card_code):
         return False

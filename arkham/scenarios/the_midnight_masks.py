@@ -1346,6 +1346,7 @@ def finalize_result(
     state.status = "ended"
     state.decision_queue = []
     state.result = {
+        "scenario": state.scenario,
         "outcome": outcome,
         "resolution": resolution or outcome,
         "summary": summary,
@@ -1359,6 +1360,8 @@ def finalize_result(
         "hospital_debts_xp_penalty": hospital_debts_penalty,
         "score": score,
         "resigned": resigned,
+        "investigator_killed": False,
+        "investigator_insane": False,
         "encounter_cards_drawn": int(state.limits.get("encounter_cards_drawn", 0)),
         "enemies_defeated": int(state.limits.get("enemies_defeated", 0)),
         "campaign": campaign_block(state, outcome),

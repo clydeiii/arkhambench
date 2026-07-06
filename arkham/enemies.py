@@ -19,10 +19,14 @@ def enemy_name(state: GameState, enemy_id: str) -> str:
 
 
 def is_hunter(state: GameState, enemy_id: str) -> bool:
+    if mind_wiped(state, enemy_id):
+        return False
     return "Hunter" in str(enemy_card(state, enemy_id).get("text", ""))
 
 
 def has_retaliate(state: GameState, enemy_id: str) -> bool:
+    if mind_wiped(state, enemy_id):
+        return False
     if "Retaliate" in str(enemy_card(state, enemy_id).get("text", "")):
         return True
     enemy = state.enemies[enemy_id]
@@ -64,6 +68,8 @@ def enemy_health(state: GameState, enemy_id: str) -> int:
 
 
 def is_aloof(state: GameState, enemy_id: str) -> bool:
+    if mind_wiped(state, enemy_id):
+        return False
     if "Aloof" in str(enemy_card(state, enemy_id).get("text", "")):
         return True
     enemy = state.enemies[enemy_id]
@@ -74,7 +80,15 @@ def is_aloof(state: GameState, enemy_id: str) -> bool:
 
 def enemy_damage_horror(state: GameState, enemy_id: str) -> tuple[int, int]:
     card = enemy_card(state, enemy_id)
-    return int(card.get("enemy_damage") or 0), int(card.get("enemy_horror") or 0)
+    damage, horror = int(card.get("enemy_damage") or 0), int(card.get("enemy_horror") or 0)
+    if state.limits.get(f"mind_wipe:{state.phase}:{enemy_id}") == "50008":
+        damage = max(0, damage - 1)
+        horror = max(0, horror - 1)
+    return damage, horror
+
+
+def mind_wiped(state: GameState, enemy_id: str) -> bool:
+    return bool(state.limits.get(f"mind_wipe:{state.phase}:{enemy_id}"))
 
 
 def spawn_enemy(
@@ -97,9 +111,27 @@ def spawn_enemy(
     instance.zone = "enemy"
     state.locations[target].enemy_ids.append(instance_id)
     log_event(events, "enemy_spawned", f"{enemy_name(state, instance_id)} spawned at {state.locations[target].name}.", enemy=instance_id)
+    if target == state.investigator.location_id and not is_elite(state, instance_id):
+        disc = next((card_id for card_id in player_cards.play_area_ids(state, "01041")), None)
+        if disc:
+            discard_spawned_enemy_with_disc(state, events, disc, instance_id)
+            return None
     if engaged is True or (engaged is None and target == state.investigator.location_id and not enemy.exhausted and not is_aloof(state, instance_id)):
         engage_enemy(state, events, instance_id)
     return instance_id
+
+
+def discard_spawned_enemy_with_disc(state: GameState, events: list[dict[str, Any]], disc_id: str, enemy_id: str) -> None:
+    enemy = state.enemies.pop(enemy_id)
+    if enemy.location_id in state.locations and enemy_id in state.locations[enemy.location_id].enemy_ids:
+        state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
+    player_cards.discard_from_play(state, disc_id)
+    player_cards.discard_to_owner_pile(state, enemy_id)
+    log_event(events, "disc_of_itzamna", f"Disc of Itzamna discarded {enemy_name_from_code(enemy.card_code)} as it spawned.", card=disc_id, enemy=enemy_id)
+
+
+def enemy_name_from_code(code: str) -> str:
+    return str(card_data.get_card(code).get("name", code))
 
 
 def engage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
@@ -233,7 +265,25 @@ def attack(
             actions.continue_aoo_order(state, events, dict(resume), rng)
         return
     dodge = legal_dodge_card(state)
-    if dodge:
+    aquinnah = legal_aquinnah_target(state, enemy_id)
+    if dodge or aquinnah:
+        options = []
+        if dodge:
+            options.append(
+                DecisionOption(
+                    f"Play Dodge to cancel {enemy_name(state, enemy_id)}'s attack",
+                    {"kind": "dodge_attack", "card": dodge},
+                )
+            )
+        if aquinnah:
+            asset, target = aquinnah
+            options.append(
+                DecisionOption(
+                    f"Use Aquinnah to redirect damage to {enemy_name(state, target)}",
+                    {"kind": "aquinnah_attack", "card": asset, "target": target},
+                )
+            )
+        options.append(DecisionOption("Take the attack", {"kind": "take_attack"}))
         state.limits["pending_attack"] = {
             "enemy": enemy_id,
             "source": source,
@@ -245,16 +295,7 @@ def attack(
                 id="enemy-attack",
                 kind="enemy_attack",
                 prompt=f"{enemy_name(state, enemy_id)} is attacking {state.investigator.name}.",
-                options=[
-                    DecisionOption(
-                        f"Play Dodge to cancel {enemy_name(state, enemy_id)}'s attack",
-                        {"kind": "dodge_attack", "card": dodge},
-                    ),
-                    DecisionOption(
-                        "Take the attack",
-                        {"kind": "take_attack"},
-                    ),
-                ],
+                options=options,
             )
         ]
         return
@@ -266,6 +307,36 @@ def legal_dodge_card(state: GameState) -> str | None:
         return None
     ids = player_cards.hand_ids(state, "01023")
     return ids[0] if ids else None
+
+
+def legal_aquinnah_target(state: GameState, attacker: str) -> tuple[str, str] | None:
+    aquinnah = next((card_id for card_id in player_cards.play_area_ids(state, "01082") if not state.card_instances[card_id].exhausted), None)
+    if not aquinnah:
+        return None
+    for enemy_id in state.locations[state.investigator.location_id].enemy_ids:
+        if enemy_id in state.enemies and enemy_id != attacker:
+            return aquinnah, enemy_id
+    return None
+
+
+def resolve_aquinnah_attack(state: GameState, events: list[dict[str, Any]], card_id: str, target: str, rng: Any = None) -> None:
+    pending = dict(state.limits.get("pending_attack", {}))
+    enemy_id = str(pending.get("enemy", ""))
+    if not pending or enemy_id not in state.enemies or card_id not in state.investigator.play_area or target not in state.enemies:
+        return
+    if state.card_instances[card_id].card_code != "01082" or state.card_instances[card_id].exhausted:
+        return
+    state.limits.pop("pending_attack", None)
+    state.card_instances[card_id].exhausted = True
+    state.card_instances[card_id].horror += 1
+    damage, horror = enemy_damage_horror(state, enemy_id)
+    log_event(events, "aquinnah", f"Aquinnah redirected {damage} damage to {enemy_name(state, target)}.", card=card_id, enemy=target)
+    if damage > 0:
+        damage_enemy(state, events, target, damage)
+    if horror > 0:
+        start_damage_assignment(state, events, source=enemy_name(state, enemy_id), damage=0, horror=horror, resume={"kind": "after_attack", "enemy": enemy_id, "source": str(pending.get("source", "")), "resume": dict(pending.get("resume", {}))})
+    else:
+        after_attack(state, events, enemy_id, dict(pending.get("resume", {})), source=str(pending.get("source", "")), rng=rng)
 
 
 def resolve_attack(

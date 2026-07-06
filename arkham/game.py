@@ -53,6 +53,8 @@ class Game:
         house_burned: bool = False,
         ghoul_priest_alive: bool = False,
         lita_forced_to_find_others: bool = False,
+        trauma: dict[str, Any] | None = None,
+        campaign_context: dict[str, Any] | None = None,
     ) -> "Game":
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
@@ -81,6 +83,11 @@ class Game:
                 }
             )
         state = SCENARIOS[scenario].build_state(**build_kwargs)
+        if trauma:
+            carried = {"physical": int(trauma.get("physical", 0)), "mental": int(trauma.get("mental", 0))}
+            state.limits["carried_trauma"] = carried
+            state.investigator.damage += int(carried.get("physical", 0))
+            state.investigator.horror += int(carried.get("mental", 0))
         game = cls(run_path, state, rng)
         game._initialize_files(
             seed=seed,
@@ -88,6 +95,7 @@ class Game:
             deck_path=deck_path or card_data.default_deck_for_investigator(investigator),
             scenario=scenario,
             notebook=notebook,
+            campaign_context=campaign_context,
         )
         init_events: list[dict[str, Any]] = RuleEventList(state)
         phases.advance_until_decision(state, rng, init_events)
@@ -218,16 +226,26 @@ class Game:
             skill_test.resolve(self.state, events, self.rng)
         elif kind == "wendy_token_reaction":
             skill_test.resolve_wendy_token_reaction(self.state, payload, events, self.rng)
+        elif kind == "sure_gamble_reaction":
+            skill_test.resolve_sure_gamble_reaction(self.state, payload, events, self.rng)
+        elif kind == "grotesque_reaction":
+            skill_test.resolve_grotesque_reaction(self.state, payload, events, self.rng)
+        elif kind == "grotesque_choice":
+            skill_test.resolve_grotesque_choice(self.state, payload, events, self.rng)
         elif kind == "lucky_would_fail":
             skill_test.resolve_lucky_would_fail(self.state, payload, events, self.rng)
         elif kind == "after_fail_reaction":
             skill_test.resolve_after_fail_reaction(self.state, payload, events, self.rng)
+        elif kind == "rabbits_foot_3":
+            skill_test.resolve_rabbits_foot_3(self.state, payload, events, self.rng)
         elif kind == "scavenging_reaction":
             skill_test.resolve_scavenging_reaction(self.state, payload, events)
         elif kind == "survival_instinct":
             skill_test.resolve_survival_instinct(self.state, payload, events)
         elif kind == "pickpocketing_reaction":
             actions.resolve_pickpocketing_reaction(self.state, payload, events, self.rng)
+        elif kind == "close_call_reaction":
+            actions.resolve_close_call_reaction(self.state, payload, events, self.rng)
         elif kind == "ward_revelation":
             from . import encounter
 
@@ -255,6 +273,8 @@ class Game:
                 self._resolve_scenario_choice(dict(resume), events)
         elif kind == "dodge_attack":
             enemies.cancel_pending_attack(self.state, events, str(payload["card"]), self.rng)
+        elif kind == "aquinnah_attack":
+            enemies.resolve_aquinnah_attack(self.state, events, str(payload["card"]), str(payload["target"]), self.rng)
         elif kind == "take_attack":
             enemies.take_pending_attack(self.state, events, self.rng)
         elif kind == "aoo_attack_order":
@@ -360,6 +380,7 @@ class Game:
         deck_path: str | Path | None,
         scenario: str = "the_gathering",
         notebook: str | Path | None = None,
+        campaign_context: dict[str, Any] | None = None,
     ) -> None:
         self.run_dir.mkdir(parents=True, exist_ok=True)
         meta = {
@@ -378,10 +399,36 @@ class Game:
         }
         if notebook is not None:
             meta["notebook"] = str(Path(notebook).resolve())
+        if campaign_context is not None:
+            meta["campaign"] = campaign_context
         atomic_write_json(self.run_dir / "meta.json", meta)
+        if campaign_context is not None:
+            self._write_campaign_mission(campaign_context)
         for path in (self.run_dir / "log.jsonl", self.run_dir / "log.md"):
             if not path.exists():
                 path.write_text("", encoding="utf-8")
+
+    def _write_campaign_mission(self, campaign_context: dict[str, Any]) -> None:
+        log = dict(campaign_context.get("log", {}))
+        lines = [
+            "# Campaign mission",
+            "",
+            f"Campaign: {campaign_context.get('campaign')}",
+            f"Scenario: {campaign_context.get('scenario_number')} of {campaign_context.get('scenario_total')}",
+            f"Carried trauma: physical {campaign_context.get('trauma', {}).get('physical', 0)}, mental {campaign_context.get('trauma', {}).get('mental', 0)}",
+            f"Unspent XP: {campaign_context.get('xp_unspent', 0)}",
+            "",
+            "Relevant campaign log:",
+            f"- Your house standing: {log.get('your_house_standing')}",
+            f"- Ghoul Priest alive: {log.get('ghoul_priest_alive')}",
+            f"- Lita earned: {log.get('lita_earned')} / in deck: {log.get('lita_in_deck')}",
+            f"- Past midnight: {log.get('past_midnight')}",
+            f"- Cultists interrogated: {', '.join(log.get('cultists_interrogated', [])) or '-'}",
+            f"- Cultists got away: {', '.join(log.get('cultists_got_away', [])) or '-'}",
+            "",
+            "Play this run through `./ahlcg` as usual, then run `./ahlcg campaign record` from the repository root.",
+        ]
+        atomic_write_text(self.run_dir / "mission.md", "\n".join(lines) + "\n")
 
     def _read_meta(self) -> dict[str, Any]:
         path = self.run_dir / "meta.json"

@@ -27,6 +27,8 @@ Other commands:
   after reporting.
 - `./ahlcg log --tail 30` — recent transcript (what happened this game).
 - `./ahlcg score` — current metrics; final score once the game ends.
+- `./ahlcg campaign ...` and `./ahlcg upgrade ...` — persistent campaign play and XP
+  spending; see `docs_agent/campaign_guide.md`.
 
 ## Reference documents
 
@@ -34,6 +36,8 @@ Other commands:
   what a keyword like Hunter, Retaliate, or Attack of Opportunity means).
 - `docs_agent/scenario_reference.md` — your investigator, deck, difficulty, the encounter
   deck contents, and how scoring works. **Read this before your first game.**
+- `docs_agent/campaign_guide.md` — campaign flow, XP purchases, deck-size rules, and
+  replacement-investigator warnings.
 
 ## The notebook — your persistent memory
 
