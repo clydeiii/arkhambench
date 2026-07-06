@@ -421,3 +421,15 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     **FIXED (batch 10):** simultaneous defeat now presents a solo physical/mental
     trauma choice and records exactly one selected trauma; explicit scenario kill
     flags remain unchanged.
+
+## Open-weights playtest lane (hy3 via opencode/OpenRouter)
+
+55. **hy3-trial-1 report 1 (AoO on asset play)** — NOT A BUG: playing a card is an
+    action and provokes attacks of opportunity per the RR (exemptions are by action
+    type: fight/evade/parley/resign). hy3 had the rule inverted; useful calibration
+    for adjudicating its future reports.
+56. **Phantom "discovered 1 clue after defeating an enemy" log while Masked Hunter
+    blocks discovery** (hy3-trial-1 report 2) — CONFIRMED, display: the on-defeat
+    clue-discovery reaction logs unconditionally even when discovery is prevented
+    (state stays correct). Same family as entry 26 (Deduction) — the fix missed
+    this path. Sweep ALL discovery-logging paths for the actual-amount rule.
