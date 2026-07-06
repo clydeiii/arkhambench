@@ -121,7 +121,7 @@ class ExporterTests(unittest.TestCase):
 class ViewerDataSchemaTests(unittest.TestCase):
     def test_existing_viewer_data_exports_have_required_step_schema(self) -> None:
         data_dir = ROOT / "viewer" / "data"
-        exports = sorted(path for path in data_dir.glob("*.json") if path.name != "index.json")
+        exports = sorted(path for path in data_dir.glob("*.json") if path.name not in {"index.json", "campaigns.json"})
         if not exports:
             self.skipTest("no viewer/data exports present")
 

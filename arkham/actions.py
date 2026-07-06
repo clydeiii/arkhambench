@@ -47,7 +47,8 @@ def legal_actions(state: GameState) -> list[DecisionOption]:
         shroud = modified_shroud(state, location.id)
         skill = investigation_skill(state)
         base = player_cards.effective_base_skill(state, skill, f"Investigate {location.name}")
-        options.append(DecisionOption(f"Investigate {location.name} (shroud {shroud}) — test {skill.capitalize()}({base}) vs {shroud}", {"kind": "action", "action": "investigate"}))
+        clue_note = f"{location.clues} clue{'s' if location.clues != 1 else ''} here" if location.clues else "no clues here"
+        options.append(DecisionOption(f"Investigate {location.name} (shroud {shroud}, {clue_note}) — test {skill.capitalize()}({base}) vs {shroud}", {"kind": "action", "action": "investigate"}))
     for target in sorted(location.connections, key=lambda loc: (state.locations[loc].code, loc)):
         if state.scenario in GATHERING_FAMILY and target == "parlor" and not state.locations[target].revealed:
             continue

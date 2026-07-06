@@ -134,6 +134,47 @@ any files. Do NOT read arkham/, data/cards JSON, tests/, or specs/ other than wh
 is listed above."""
 
 
+def build_reasoning_prompt(run_dir: Path) -> str:
+    return f"""You are auditing the REASONING of an AI agent that played Arkham Horror:
+The Card Game, looking for RULES MISCONCEPTIONS in its stated rationales — beliefs
+about the game that are factually wrong, whether or not they changed the outcome.
+
+The transcript: {run_dir}/log.md. The agent's one-line rationales appear as italic
+"why" lines after each "Decision made" line. Rules authority:
+docs_agent/rules_reference.md, docs_agent/scenario_reference.md, and exact card text
+via `./ahlcg card <name-or-code>`.
+
+For each rationale that asserts something about the RULES or the GAME STATE, check it:
+- rules beliefs ("clues return to locations", "fighting disengages", "this cancels
+  the token") — verify against the RR/card text;
+- state beliefs ("the location still has clues", "I can afford this") — verify
+  against the transcript's status lines.
+Ignore pure strategy judgments ("safer to leave") and hindsight mistakes; report only
+FALSE FACTUAL BELIEFS. This is not a rules-enforcement audit of the engine — the
+engine may have behaved correctly while the agent believed otherwise.
+
+Report format — exactly:
+- `REASONING CLEAN` if nothing found; otherwise one block per item:
+  `## Misconception <n> — <the false belief, quoted>`
+  `- Step/round: <log reference>`
+  `- Truth: <the correct rule/state, with RR entry or card text>`
+  `- Consequence: <wasted action / bad play / harmless comment>`
+Do not modify files. Do NOT read arkham/, data/, tests/, or specs/."""
+
+
+def audit_reasoning(run_dir: Path, model: str) -> tuple[str, int]:
+    prompt = build_reasoning_prompt(run_dir)
+    if model == "codex":
+        argv = ["codex", "exec", prompt]
+    else:
+        allowed = f"Read(docs_agent/**),Read({run_dir}/log.md),Bash(./ahlcg card:*)"
+        disallowed = "Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**)"
+        argv = ["claude", "-p", prompt, "--model", model,
+                "--allowedTools", allowed, "--disallowedTools", disallowed, "--max-turns", "40"]
+    proc = subprocess.run(argv, capture_output=True, text=True, cwd=ROOT)
+    return proc.stdout.strip(), proc.returncode
+
+
 def audit_campaign(campaign_dir: Path, model: str, adjudications: str) -> tuple[str, int]:
     prompt = build_campaign_prompt(campaign_dir, adjudications)
     if model == "codex":
@@ -162,6 +203,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Audit completed games for engine rules bugs.")
     parser.add_argument("runs", nargs="*", help="run directories (each with log.md)")
     parser.add_argument("--campaign", help="campaign dir: audit each scenario run, then the campaign layer")
+    parser.add_argument("--reasoning", action="store_true",
+                        help="also audit each run's agent rationales for rules misconceptions (-> reasoning_audit.md)")
     parser.add_argument("--model", default="claude-fable-5")
     args = parser.parse_args(argv)
     if not args.runs and not args.campaign:
@@ -188,6 +231,13 @@ def main(argv: list[str] | None = None) -> int:
         if rc != 0:
             failures += 1
             print(f"warning: auditor exited {rc} for {run_dir}", file=sys.stderr)
+        if args.reasoning:
+            print(f"=== reasoning audit {run_dir} with {args.model}")
+            report, rc = audit_reasoning(run_dir, args.model)
+            (run_dir / "reasoning_audit.md").write_text(report + "\n", encoding="utf-8")
+            print(report)
+            if rc != 0:
+                failures += 1
 
     if args.campaign:
         campaign_dir = Path(args.campaign)
