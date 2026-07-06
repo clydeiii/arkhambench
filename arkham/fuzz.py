@@ -62,7 +62,15 @@ def run_fuzz(games: int, *, investigator: str = "roland", scenario: str = "the_g
             difficulty = difficulties[index % len(difficulties)]
             seed = index + 1
             chooser = random.Random(seed * 7919)
-            game = Game.new(seed=seed, difficulty=difficulty, deck_path=None, run_dir=root / f"game-{index}", investigator=investigator, scenario=scenario)
+            game = Game.new(
+                seed=seed,
+                difficulty=difficulty,
+                deck_path=None,
+                run_dir=root / f"game-{index}",
+                investigator=investigator,
+                scenario=scenario,
+                confirmations_enabled=False,
+            )
             context = InvariantContext(seed=seed, difficulty=difficulty, investigator=investigator, scenario=scenario)
             context.victory_seen = set(game.state.victory_display)
             steps = 0

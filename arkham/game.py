@@ -59,6 +59,7 @@ class Game:
         lita_in_deck: bool = False,
         trauma: dict[str, Any] | None = None,
         campaign_context: dict[str, Any] | None = None,
+        confirmations_enabled: bool = True,
     ) -> "Game":
         if difficulty not in CHAOS_BAGS:
             raise EngineError(f"unknown difficulty: {difficulty}")
@@ -96,6 +97,7 @@ class Game:
                 }
             )
         state = SCENARIOS[scenario].build_state(**build_kwargs)
+        state.confirmations_enabled = confirmations_enabled
         if trauma:
             carried = {"physical": int(trauma.get("physical", 0)), "mental": int(trauma.get("mental", 0))}
             state.limits["carried_trauma"] = carried
@@ -228,7 +230,19 @@ class Game:
     def _dispatch_payload(self, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
         kind = payload.get("kind")
         if kind == "action":
+            confirmation = actions.confirmation_decision_for_action(self.state, payload)
+            if confirmation is not None:
+                self.state.decision_queue = [confirmation]
+                from .effects import log_event
+
+                log_event(events, "confirmation", confirmation.prompt)
+                return
             actions.execute(self.state, payload, events, self.rng)
+        elif kind == "confirm_action":
+            if payload.get("choice") == "yes":
+                actions.execute(self.state, dict(payload.get("action_payload", {})), events, self.rng)
+            else:
+                actions.present_action_decision(self.state)
         elif kind == "commit_card":
             skill_test.commit_card(self.state, payload, events)
         elif kind == "commit_done":

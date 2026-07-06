@@ -8,7 +8,7 @@ from . import data as card_data
 from .cards import encounter_cards, player as player_cards
 from .effects import add_player_card_to_hand, advance_act, discover_clue, draw_player_card, gain_resource, heal_roland, legal_soak_targets, log_event, place_doom, resolve_player_weakness_draw, spend_clues, start_damage_assignment
 from .log import action_count_text
-from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_evade_value, enemy_fight_value, enemy_name, evade_enemy, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
+from .enemies import attack, can_attack_investigator, can_be_evaded, damage_enemy, disengage_enemy, enemy_damage_horror, engage_enemy, engage_ready_enemies_at_roland, enemy_card, enemy_evade_value, enemy_fight_value, enemy_name, evade_enemy, is_aloof, is_elite, legal_dodge_card, move_engaged_enemies_with_roland
 from .errors import EngineError
 from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from . import skill_test
@@ -35,6 +35,37 @@ def present_action_decision(state: GameState) -> None:
             options=legal_actions(state),
         )
     ]
+
+
+def confirmation_decision_for_action(state: GameState, payload: dict[str, Any]) -> PendingDecision | None:
+    if not state.confirmations_enabled:
+        return None
+    action = str(payload.get("action", ""))
+    prompts: list[str] = []
+    location = state.locations[state.investigator.location_id]
+    if action in {"investigate", "flashlight"} and location.clues == 0:
+        prompts.append(f"{location.name} has no clues — investigating discovers nothing.")
+    attackers = aoo_attackers(state, action, payload)
+    if attackers:
+        prompts.append(f"This will provoke: {', '.join(aoo_attacker_text(state, enemy_id) for enemy_id in attackers)}.")
+    if not prompts:
+        return None
+    prompt = " ".join(prompts) + " Proceed?"
+    action_payload = dict(payload)
+    return PendingDecision(
+        id="confirm-action",
+        kind="confirmation",
+        prompt=prompt,
+        options=[
+            DecisionOption("Yes, proceed", {"kind": "confirm_action", "choice": "yes", "action_payload": action_payload}),
+            DecisionOption("Cancel", {"kind": "confirm_action", "choice": "cancel", "action_payload": action_payload}),
+        ],
+    )
+
+
+def aoo_attacker_text(state: GameState, enemy_id: str) -> str:
+    damage, horror = enemy_damage_horror(state, enemy_id)
+    return f"{enemy_name(state, enemy_id)} ({damage} dmg/{horror} hor)"
 
 
 def legal_actions(state: GameState) -> list[DecisionOption]:
@@ -705,18 +736,7 @@ def is_tome_action(state: GameState, payload: dict[str, Any]) -> bool:
 
 
 def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], action: str, payload: dict[str, Any], rng: Any = None) -> bool:
-    if action in SAFE_FROM_AOO:
-        return False
-    attackers = [
-        enemy_id
-        for enemy_id in list(state.investigator.engaged_enemies)
-        if (enemy := state.enemies.get(enemy_id)) is not None and not enemy.exhausted
-        and can_attack_investigator(state, enemy_id)
-    ]
-    if state.scenario in DEVOURER_FAMILY:
-        from .scenarios import the_devourer_below
-
-        attackers.extend(the_devourer_below.massive_attackers(state, set()))
+    attackers = aoo_attackers(state, action, payload)
     if not attackers:
         return False
     resume_payload = dict(payload)
@@ -727,6 +747,23 @@ def attacks_of_opportunity(state: GameState, events: list[dict[str, Any]], actio
         return True
     resolve_ordered_aoo(state, events, attackers[0], [], resume_payload, rng=rng)
     return True
+
+
+def aoo_attackers(state: GameState, action: str, payload: dict[str, Any] | None = None) -> list[str]:
+    if action in SAFE_FROM_AOO or action in FREE_ACTIONS | NON_ACTIONS or (payload and payload.get("skip_aoo")):
+        return []
+    attackers = [
+        enemy_id
+        for enemy_id in list(state.investigator.engaged_enemies)
+        if (enemy := state.enemies.get(enemy_id)) is not None and not enemy.exhausted
+        and not is_aloof(state, enemy_id)
+        and can_attack_investigator(state, enemy_id)
+    ]
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        attackers.extend(the_devourer_below.massive_attackers(state, set()))
+    return attackers
 
 
 def present_aoo_order_decision(state: GameState, attackers: list[str], action_payload: dict[str, Any]) -> None:

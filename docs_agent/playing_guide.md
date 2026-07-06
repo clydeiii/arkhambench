@@ -72,6 +72,10 @@ sharp and actionable.
   discarded win or lose.
 - Spent clues go to the token pool. They NEVER return to the location. Investigating a
   0-clue location discovers nothing.
+- The engine asks for confirmation before likely-mistake actions: investigating a
+  location with 0 clues, or taking an action that will provoke attacks of opportunity.
+  "Yes" is sometimes correct, such as accepting an attack to play a critical asset;
+  use `--why` on the confirmation to record that reasoning.
 - At phase boundaries (end of your turn, before enemy attacks, end of mythos) you may get
   a fast-ability window (e.g. Beat Cop's ping) — use it or pass.
 - The engine only asks when there's a real choice; forced effects happen automatically

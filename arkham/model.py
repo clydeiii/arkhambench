@@ -229,6 +229,7 @@ class GameState:
     limits: JsonDict = field(default_factory=dict)
     trauma: JsonDict = field(default_factory=dict)
     result: JsonDict | None = None
+    confirmations_enabled: bool = True
 
     def to_dict(self) -> JsonDict:
         return {
@@ -260,6 +261,7 @@ class GameState:
             "limits": dict(self.limits),
             "trauma": dict(self.trauma),
             "result": self.result,
+            "confirmations_enabled": self.confirmations_enabled,
         }
 
     @classmethod
@@ -300,6 +302,7 @@ class GameState:
             limits=dict(data.get("limits", {})),
             trauma=dict(data.get("trauma", {})),
             result=data.get("result"),
+            confirmations_enabled=bool(data.get("confirmations_enabled", True)),
         )
 
     def public_dict(self) -> JsonDict:

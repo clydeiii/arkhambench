@@ -50,6 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
     new.add_argument("--lita-in-deck", action="store_true", help="Devourer Below standalone input: include Lita Chantler.")
     new.add_argument("--run", dest="run", default=None)
     new.add_argument("--notebook", dest="notebook", default=None, help="persistent notebook bound to this run (recorded in meta.json)")
+    new.add_argument("--no-confirmations", action="store_true", help="disable confirmation prompts for likely-mistake actions")
     new.set_defaults(func=cmd_new)
 
     state = sub.add_parser("state")
@@ -197,6 +198,7 @@ def cmd_new(args: argparse.Namespace) -> int:
         cultists_got_away=args.cultists_got_away,
         past_midnight=args.past_midnight,
         lita_in_deck=args.lita_in_deck,
+        confirmations_enabled=not args.no_confirmations,
     )
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
     print(f"Created run: {run_dir}")
