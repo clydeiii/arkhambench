@@ -130,3 +130,39 @@ Validation:
   - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
 
 No git commit was made.
+
+## Fixes Batch 10 — Hard-Difficulty Playtest Round
+
+- Corrected On Wings of Darkness ordering: failed-test damage/horror resolves
+  before the "Then" disengage and move instructions.
+- Routed all investigate-style tests through the scenario investigation-skill hook,
+  including Flashlight and Burglary, so Cliffside/Old House/Tangled Thicket
+  substitutions apply consistently.
+- Changed encounter search helpers to offer a choice when 2+ distinct named
+  eligible cards exist, covering Gathering hard-skull Ghoul search, Devourer
+  hard-skull Monster search, Mysterious Chanting, Mask of Umordhoth, and Yellow
+  Sign's Madness search.
+- Implemented Offer of Power (`01178`): choose draw 2 plus 2 agenda doom with
+  explicit can-advance, or take 2 horror.
+- Added the requested six-scenario no-placeholder sweep over composable encounter
+  card codes, including cultist decks, agents sets, Ghoul Priest, and got-away
+  spawns. The sweep exposed and fixed two additional missing agent treacheries:
+  The Yellow Sign (`01176`) and Dreams of R'lyeh (`01182`).
+- Added regression coverage that two engaged Grave-Eater instances both attack in
+  an AoO sequence before the interrupted action resumes.
+- Changed simultaneous damage+horror defeat to present a physical/mental trauma
+  choice and record exactly one trauma, leaving scenario-explicit kill flags
+  unchanged.
+
+Validation:
+
+- `python3 -m unittest discover -s tests` => 301 tests passing.
+- Full six-scenario fuzz matrix, all clean:
+  - `python3 -m arkham.fuzz --games 50 --scenario the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_devourer_below --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
+
+No git commit was made.

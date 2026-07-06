@@ -754,6 +754,11 @@ def apply_callback(
             from .scenarios import the_devourer_below
 
             the_devourer_below.present_wrath_choices(state, margin)
+    elif kind == "yellow_sign":
+        if not success:
+            from .scenarios import the_devourer_below
+
+            the_devourer_below.yellow_sign_aftermath(state, events, margin, rng)
     elif kind == "lita_parley":
         if success:
             lita = str(callback.get("lita"))

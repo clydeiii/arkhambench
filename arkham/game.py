@@ -22,6 +22,7 @@ from .effects import (
     resolve_agnes_horror_reaction,
     resolve_amnesia_keep,
     resolve_cover_up_choice,
+    resolve_defeat_trauma_choice,
 )
 
 
@@ -273,23 +274,11 @@ class Game:
                 self.state.status == "in_progress"
                 and self.state.pending_damage is None
                 and not self.state.decision_queue
-                and resume.get("kind") == "action"
-            ):
-                actions.execute(self.state, dict(resume.get("payload", {})), events, self.rng)
-            elif (
-                self.state.status == "in_progress"
-                and self.state.pending_damage is None
-                and not self.state.decision_queue
-                and resume.get("kind") == "scenario"
-            ):
-                self._resolve_scenario_choice(dict(resume), events)
-            elif (
-                self.state.status == "in_progress"
-                and self.state.pending_damage is None
-                and not self.state.decision_queue
                 and resume.get("kind") == "skill_test_reveal"
             ):
                 skill_test.resume_deferred_resolution(self.state, events, self.rng)
+        elif kind == "defeat_trauma":
+            resolve_defeat_trauma_choice(self.state, payload, events)
         elif kind == "dodge_attack":
             enemies.cancel_pending_attack(self.state, events, str(payload["card"]), self.rng)
         elif kind == "aquinnah_attack":

@@ -390,6 +390,10 @@ def resolve_scenario_choice(state: GameState, payload: dict[str, Any], events: l
         discard_encounter_card(state, str(payload.get("card", "")))
     elif choice == "mask_target":
         the_midnight_masks.attach_mask_to_enemy(state, str(payload.get("card", "")), str(payload.get("enemy", "")), events, rng)
+    elif choice == "cultist_search_choice":
+        the_midnight_masks.resolve_cultist_search_choice(state, payload, events, rng)
+    elif choice == "devourer_search_monster":
+        resolve_monster_search_choice(state, payload, events, rng)
     elif choice == "disciple_doom":
         the_midnight_masks.place_doom_on_enemy(state, str(payload.get("enemy", "")), 1, events, source="Disciple of the Devourer", rng=rng)
     elif choice == "disciple_clue":
@@ -413,6 +417,16 @@ def resolve_scenario_choice(state: GameState, payload: dict[str, Any], events: l
         start_damage_assignment(state, events, source="Umordhoth's Wrath", damage=1, horror=1, resume={"kind": "scenario", "choice": "wrath_continue"}, rng=rng)
     elif choice == "wrath_continue":
         continue_wrath(state)
+    elif choice == "offer_power_draw":
+        resolve_offer_of_power_draw(state, events, rng)
+    elif choice == "offer_power_horror":
+        from ..effects import start_damage_assignment
+
+        start_damage_assignment(state, events, source="Offer of Power", damage=0, horror=2)
+    elif choice == "yellow_sign_search":
+        search_madness_weakness_from_deck(state, events, rng)
+    elif choice == "yellow_sign_madness":
+        resolve_yellow_sign_madness_choice(state, payload, events, rng)
 
 
 def discard_random_from_hand(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, count: int, *, source: str) -> None:
@@ -750,6 +764,33 @@ def encounter_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str
 
         skill_test.start(state, events, skill="willpower", difficulty=5, source="Umordhoth's Wrath", on_failure={"kind": "umordhoths_wrath"})
         return True
+    if code == "01178":
+        discard_encounter_card(state, instance_id)
+        state.decision_queue = [
+            PendingDecision(
+                id="offer-of-power",
+                kind="scenario",
+                prompt="Choose for Offer of Power.",
+                options=[
+                    DecisionOption("Draw 2 cards and place 2 doom on the agenda", {"kind": "scenario", "choice": "offer_power_draw"}),
+                    DecisionOption("Take 2 horror", {"kind": "scenario", "choice": "offer_power_horror"}),
+                ],
+            )
+        ]
+        return True
+    if code == "01176":
+        discard_encounter_card(state, instance_id)
+        from .. import skill_test
+
+        skill_test.start(state, events, skill="willpower", difficulty=4, source="The Yellow Sign", on_failure={"kind": "yellow_sign"})
+        return True
+    if code == "01182":
+        state.investigator.threat_area.append(instance_id)
+        state.card_instances[instance_id].zone = "threat"
+        from ..effects import log_event
+
+        log_event(events, "treachery_threat", "Dreams of R'lyeh entered the threat area.", card=instance_id)
+        return True
     if code == "50037":
         discard_encounter_card(state, instance_id)
         if not state.investigator.hand:
@@ -864,19 +905,123 @@ def monster_at_investigator_location(state: GameState) -> bool:
 
 
 def draw_monster_from_deck_or_discard(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
-    from ..encounter import resolve_revelation
-
+    candidates = []
     for card_id in list(state.encounter_deck) + list(state.encounter_discard):
         card = card_data.get_card(state.card_instances[card_id].card_code)
         if card.get("type_code") == "enemy" and "Monster" in str(card.get("traits", "")):
-            if card_id in state.encounter_deck:
-                state.encounter_deck.remove(card_id)
-            if card_id in state.encounter_discard:
-                state.encounter_discard.remove(card_id)
-            state.card_instances[card_id].zone = "encounter_drawn"
-            resolve_revelation(state, rng, events, card_id)
-            rng.shuffle(state.encounter_deck)
-            return
+            candidates.append(card_id)
+    found = the_midnight_masks.single_distinct_search_candidate(state, candidates)
+    if found:
+        draw_searched_monster(state, events, rng, found)
+    elif candidates:
+        present_monster_search_choice(state, candidates)
+
+
+def present_monster_search_choice(state: GameState, candidates: list[str]) -> None:
+    by_name: dict[str, str] = {}
+    for card_id in candidates:
+        name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
+        by_name.setdefault(name, card_id)
+    state.decision_queue = [
+        PendingDecision(
+            id="devourer-monster-search",
+            kind="scenario",
+            prompt="Choose a Monster enemy to draw.",
+            options=[
+                DecisionOption(f"Draw {name}", {"kind": "scenario", "choice": "devourer_search_monster", "card": card_id})
+                for name, card_id in sorted(by_name.items())
+            ],
+        )
+    ]
+
+
+def resolve_monster_search_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    card_id = str(payload.get("card", ""))
+    if card_id in state.encounter_deck or card_id in state.encounter_discard:
+        draw_searched_monster(state, events, rng, card_id)
+
+
+def draw_searched_monster(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, card_id: str) -> None:
+    from ..encounter import resolve_revelation
+
+    if card_id in state.encounter_deck:
+        state.encounter_deck.remove(card_id)
+    if card_id in state.encounter_discard:
+        state.encounter_discard.remove(card_id)
+    state.card_instances[card_id].zone = "encounter_drawn"
+    state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
+    resolve_revelation(state, rng, events, card_id)
+    rng.shuffle(state.encounter_deck)
+
+
+def resolve_offer_of_power_draw(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    from ..effects import draw_player_card, place_doom
+
+    draw_player_card(state, events, rng)
+    if state.status == "in_progress" and not state.decision_queue:
+        draw_player_card(state, events, rng)
+    if state.status == "in_progress" and not state.decision_queue:
+        place_doom(state, 2, events, source="Offer of Power", rng=rng, can_advance=True)
+
+
+def yellow_sign_aftermath(state: GameState, events: list[dict[str, Any]], margin: int, rng: ArkhamRng | None) -> None:
+    if margin <= 0:
+        return
+    from ..effects import start_damage_assignment
+
+    start_damage_assignment(
+        state,
+        events,
+        source="The Yellow Sign",
+        damage=0,
+        horror=2,
+        resume={"kind": "scenario", "choice": "yellow_sign_search"},
+        rng=rng,
+    )
+
+
+def search_madness_weakness_from_deck(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    candidates = [
+        card_id
+        for card_id in state.investigator.deck
+        if "Madness" in str(card_data.get_card(state.card_instances[card_id].card_code).get("traits", ""))
+        and player_cards.is_weakness(state, card_id)
+    ]
+    found = the_midnight_masks.single_distinct_search_candidate(state, candidates)
+    if found:
+        draw_searched_madness_weakness(state, events, rng, found)
+    elif candidates:
+        by_name: dict[str, str] = {}
+        for card_id in candidates:
+            name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
+            by_name.setdefault(name, card_id)
+        state.decision_queue = [
+            PendingDecision(
+                id="yellow-sign-madness-search",
+                kind="scenario",
+                prompt="Choose a Madness weakness to draw.",
+                options=[
+                    DecisionOption(f"Draw {name}", {"kind": "scenario", "choice": "yellow_sign_madness", "card": card_id})
+                    for name, card_id in sorted(by_name.items())
+                ],
+            )
+        ]
+    else:
+        rng.shuffle(state.investigator.deck)
+
+
+def resolve_yellow_sign_madness_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    card_id = str(payload.get("card", ""))
+    if card_id in state.investigator.deck:
+        draw_searched_madness_weakness(state, events, rng, card_id)
+
+
+def draw_searched_madness_weakness(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, card_id: str) -> None:
+    from ..effects import add_player_card_to_hand
+
+    state.investigator.deck.remove(card_id)
+    add_player_card_to_hand(state, events, card_id, event_type="card_drawn", message=f"{state.investigator.name} drew {card_name(state, card_id)}.")
+    rng.shuffle(state.investigator.deck)
 
 
 def location_extra_token_applies(state: GameState, test: dict[str, Any]) -> bool:

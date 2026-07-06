@@ -410,6 +410,8 @@ def resolve_scenario_choice(
         resolve_search_deck_choice(state, payload, events, rng)
     elif choice == "midnight_search_top":
         resolve_search_top_choice(state, payload, events, rng)
+    elif choice == "cultist_search_choice":
+        resolve_cultist_search_choice(state, payload, events, rng)
     elif choice == "midnight_train_move":
         destination = str(payload.get("location", ""))
         if destination in state.locations:
@@ -418,6 +420,8 @@ def resolve_scenario_choice(
         resolve_warehouse_card_choice(state, payload, events)
     elif choice == "midnight_warehouse_enemy":
         resolve_warehouse_enemy_choice(state, payload, events)
+    elif choice == "on_wings_continue":
+        on_wings_disengage_and_move(state, events)
 
 
 def add_action_options(state: GameState, options: list[DecisionOption]) -> None:
@@ -1094,6 +1098,9 @@ def resolve_spawn_at_location(state: GameState, payload: dict[str, Any], events:
     location_id = str(payload.get("location", ""))
     if card_id in state.card_instances and location_id in state.locations:
         spawn_enemy_resolving_forced(state, events, card_id, location_id, rng)
+        pending_mask = dict(state.limits.pop("pending_mask_after_spawn", {}))
+        if pending_mask.get("enemy") == card_id and pending_mask.get("mask") in state.card_instances and card_id in state.enemies:
+            attach_mask_to_enemy(state, str(pending_mask["mask"]), card_id, events, rng)
 
 
 def spawn_enemy_resolving_forced(
@@ -1134,7 +1141,7 @@ def disciple_after_spawn(state: GameState, events: list[dict[str, Any]], enemy_i
 def mysterious_chanting(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, instance_id: str) -> None:
     cultists = cultist_enemy_ids(state)
     if not cultists:
-        searched = search_and_draw_cultist_enemy(state, events, rng)
+        searched = search_and_draw_cultist_enemy(state, events, rng, source="Mysterious Chanting")
         discard_encounter_card(state, instance_id)
         return
     nearest = nearest_enemies(state, cultists)
@@ -1161,7 +1168,9 @@ def mysterious_chanting(state: GameState, events: list[dict[str, Any]], rng: Ark
 def mask_of_umordhoth(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, instance_id: str) -> None:
     cultists = cultist_enemy_ids(state)
     if not cultists:
-        enemy_id = search_and_draw_cultist_enemy(state, events, rng)
+        enemy_id = search_and_draw_cultist_enemy(state, events, rng, source="Mask of Umordhoth", mask_id=instance_id)
+        if state.decision_queue:
+            return
         cultists = [enemy_id] if enemy_id else []
     farthest = farthest_enemies(state, cultists)
     if not farthest:
@@ -1196,21 +1205,77 @@ def attach_mask_to_enemy(state: GameState, mask_id: str, enemy_id: str, events: 
     place_doom_on_enemy(state, enemy_id, 1, events, source="Mask of Umordhoth", rng=rng)
 
 
-def search_and_draw_cultist_enemy(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> str | None:
+def search_and_draw_cultist_enemy(
+    state: GameState,
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+    *,
+    source: str = "Cultist search",
+    mask_id: str | None = None,
+) -> str | None:
+    combined = list(state.encounter_deck) + list(state.encounter_discard)
+    candidates = [
+        card_id
+        for card_id in combined
+        if card_data.get_card(state.card_instances[card_id].card_code).get("type_code") == "enemy"
+        and is_cultist_code(state.card_instances[card_id].card_code)
+    ]
+    found = single_distinct_search_candidate(state, candidates)
+    if not found:
+        if candidates:
+            present_cultist_search_choice(state, candidates, source=source, mask_id=mask_id)
+        return None
+    return draw_searched_cultist_enemy(state, events, rng, found, mask_id=mask_id)
+
+
+def single_distinct_search_candidate(state: GameState, candidates: list[str]) -> str | None:
+    by_name: dict[str, str] = {}
+    for card_id in candidates:
+        name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
+        by_name.setdefault(name, card_id)
+    return next(iter(by_name.values())) if len(by_name) == 1 else None
+
+
+def present_cultist_search_choice(state: GameState, candidates: list[str], *, source: str, mask_id: str | None) -> None:
+    by_name: dict[str, str] = {}
+    for card_id in candidates:
+        name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
+        by_name.setdefault(name, card_id)
+    state.decision_queue = [
+        PendingDecision(
+            id="cultist-search",
+            kind="scenario",
+            prompt=f"Choose a Cultist enemy for {source}.",
+            options=[
+                DecisionOption(
+                    f"Draw {name}",
+                    {"kind": "scenario", "choice": "cultist_search_choice", "card": card_id, "mask": mask_id or ""},
+                )
+                for name, card_id in sorted(by_name.items())
+            ],
+        )
+    ]
+
+
+def resolve_cultist_search_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    card_id = str(payload.get("card", ""))
+    mask_id = str(payload.get("mask") or "") or None
+    if card_id in state.encounter_deck or card_id in state.encounter_discard:
+        enemy_id = draw_searched_cultist_enemy(state, events, rng, card_id, mask_id=mask_id)
+        if mask_id and enemy_id and not state.decision_queue:
+            attach_mask_to_enemy(state, mask_id, enemy_id, events, rng)
+
+
+def draw_searched_cultist_enemy(
+    state: GameState,
+    events: list[dict[str, Any]],
+    rng: ArkhamRng,
+    found: str,
+    *,
+    mask_id: str | None = None,
+) -> str | None:
     from ..encounter import resolve_revelation
 
-    combined = list(state.encounter_deck) + list(state.encounter_discard)
-    found = next(
-        (
-            card_id
-            for card_id in combined
-            if card_data.get_card(state.card_instances[card_id].card_code).get("type_code") == "enemy"
-            and is_cultist_code(state.card_instances[card_id].card_code)
-        ),
-        None,
-    )
-    if not found:
-        return None
     if found in state.encounter_deck:
         state.encounter_deck.remove(found)
     if found in state.encounter_discard:
@@ -1218,6 +1283,9 @@ def search_and_draw_cultist_enemy(state: GameState, events: list[dict[str, Any]]
     state.card_instances[found].zone = "encounter_drawn"
     state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
     resolve_revelation(state, rng, events, found)
+    if mask_id and mask_id in state.card_instances:
+        if state.decision_queue:
+            state.limits["pending_mask_after_spawn"] = {"mask": mask_id, "enemy": found}
     rng.shuffle(state.encounter_deck)
     return found if found in state.enemies else None
 
@@ -1481,7 +1549,19 @@ def on_wings_aftermath(state: GameState, events: list[dict[str, Any]], *, failed
     if failed:
         from ..effects import start_damage_assignment
 
-        start_damage_assignment(state, events, source="On Wings of Darkness", damage=1, horror=1)
+        start_damage_assignment(
+            state,
+            events,
+            source="On Wings of Darkness",
+            damage=1,
+            horror=1,
+            resume={"kind": "scenario", "choice": "on_wings_continue"},
+        )
+        return
+    on_wings_disengage_and_move(state, events)
+
+
+def on_wings_disengage_and_move(state: GameState, events: list[dict[str, Any]]) -> None:
     for enemy_id in list(state.investigator.engaged_enemies):
         if "Nightgaunt" not in str(card_data.get_card(state.enemies[enemy_id].card_code).get("traits", "")):
             from ..enemies import disengage_enemy

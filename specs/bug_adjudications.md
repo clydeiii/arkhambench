@@ -379,27 +379,45 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
 49. **On Wings of Darkness resolves movement before its damage/horror** (hard1-
     roland run 2) — CONFIRMED, display/ordering: pre-"Then" text (1 horror + 1
     damage) must fully resolve before the disengage/move.
+    **FIXED (batch 10):** failed On Wings now queues the damage/horror assignment
+    with a scenario resume, so the non-Nightgaunt disengage and Central move run
+    only after that assignment and any interposed choices fully resolve.
 50. **Card-driven investigations bypass location skill substitution** (hard1-
     roland run 3) — CONFIRMED: Flashlight's Investigate at Cliffside tested
     intellect; Cliffside substitutes agility for ANY investigation (Old House/
     Tangled Thicket likewise). Route every investigate-type test through the
     scenario's investigation-skill hook.
+    **FIXED (batch 10):** Flashlight, Burglary, and basic investigate all use the
+    shared investigation-skill hook and labels now reflect the substituted skill.
 51. **Search effects auto-select instead of offering the player's choice**
     (hard1-wendy run 1) — CONFIRMED: RR Search lets the searching player choose
     among eligibles; hard-skull Ghoul search, DB hard-skull Monster search,
     Mysterious Chanting, and Mask of Umordhoth searches all auto-pick the first
     match. Offer a decision when 2+ distinct eligible cards exist.
+    **FIXED (batch 10):** encounter-deck/discard search helpers now auto-resolve
+    only one distinct named candidate and otherwise present a choice; Mask search
+    continuations survive spawn-location decisions.
 52. **Offer of Power resolves as a placeholder (unimplemented)** (hard1-wendy run
     3) — CONFIRMED, pro-player: the mandatory Revelation (draw 2 + 2 doom-can-
     advance, or 2 horror) was skipped entirely; log literally says "no placeholder
     effect". Sweep ALL encounter cards reachable in every scenario deck for
     placeholder resolution and implement what's missing; add a suite test that no
     composable deck card resolves as placeholder.
+    **FIXED (batch 10):** Offer of Power is fully implemented. The no-placeholder
+    sweep covers all six scenario families plus cultist decks, agents sets, Ghoul
+    Priest, and got-away agenda spawns; it also exposed and fixed The Yellow Sign
+    and Dreams of R'lyeh.
 53. **Duplicate engaged enemies collapse to one AoO attack** (hard1-wendy run 3) —
     CONFIRMED, pro-player: two ready engaged Grave-Eaters produced one attack in
     the AoO queue.
+    **FIXED (batch 10):** AoO regression coverage asserts two engaged Grave-Eater
+    instances produce two attacks before the interrupted action resumes; damage
+    assignment now defers interrupted resumes behind interposed decisions.
 54. **Simultaneous damage/horror defeat assigns both trauma types** (hard1-wendy
     campaign audit) — PARTIAL: the double trauma is CONFIRMED (RR: the player
     chooses physical OR mental on simultaneous defeat); the "killed unsupported"
     half is NOT A BUG (DB no-resolution explicitly kills each surviving/defeated
     investigator per the campaign guide).
+    **FIXED (batch 10):** simultaneous defeat now presents a solo physical/mental
+    trauma choice and records exactly one selected trauma; explicit scenario kill
+    flags remain unchanged.

@@ -449,6 +449,8 @@ def resolve_scenario_choice(
 
         finalize_result(state, events, outcome="R2", resolution="R2", summary="R2: the house still stands")
         log_event(events, "game_end", "R2: the house still stands")
+    elif choice == "gathering_search_ghoul":
+        resolve_ghoul_search_choice(state, payload, events, rng)
 
 
 def toggle_mulligan_card(state: GameState, card_id: str) -> None:
@@ -1152,19 +1154,56 @@ def ghoul_pits_draw_rats(state: GameState, events: list[dict[str, Any]], rng: Ar
 
 
 def search_and_draw_ghoul(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    combined = list(state.encounter_deck) + list(state.encounter_discard)
+    candidates = [
+        card_id
+        for card_id in combined
+        if is_ghoul_card(state.card_instances[card_id].card_code)
+        and card_data.get_card(state.card_instances[card_id].card_code).get("type_code") == "enemy"
+    ]
+    found = single_distinct_search_candidate(state, candidates)
+    if found:
+        draw_searched_encounter_card(state, events, rng, found)
+    elif candidates:
+        present_ghoul_search_choice(state, candidates)
+
+
+def single_distinct_search_candidate(state: GameState, candidates: list[str]) -> str | None:
+    by_name: dict[str, str] = {}
+    for card_id in candidates:
+        name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
+        by_name.setdefault(name, card_id)
+    return next(iter(by_name.values())) if len(by_name) == 1 else None
+
+
+def present_ghoul_search_choice(state: GameState, candidates: list[str]) -> None:
+    by_name: dict[str, str] = {}
+    for card_id in candidates:
+        name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
+        by_name.setdefault(name, card_id)
+    state.decision_queue = [
+        PendingDecision(
+            id="gathering-ghoul-search",
+            kind="scenario",
+            prompt="Choose a Ghoul enemy to draw.",
+            options=[
+                DecisionOption(f"Draw {name}", {"kind": "scenario", "choice": "gathering_search_ghoul", "card": card_id})
+                for name, card_id in sorted(by_name.items())
+            ],
+        )
+    ]
+
+
+def resolve_ghoul_search_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    card_id = str(payload.get("card", ""))
+    if card_id in state.encounter_deck or card_id in state.encounter_discard:
+        draw_searched_encounter_card(state, events, rng, card_id)
+
+
+def draw_searched_encounter_card(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, found: str) -> None:
     from ..encounter import resolve_revelation
 
-    combined = list(state.encounter_deck) + list(state.encounter_discard)
-    found = next(
-        (
-            card_id
-            for card_id in combined
-            if is_ghoul_card(state.card_instances[card_id].card_code)
-            and card_data.get_card(state.card_instances[card_id].card_code).get("type_code") == "enemy"
-        ),
-        None,
-    )
-    if not found:
+    if found not in state.encounter_deck and found not in state.encounter_discard:
         return
     if found in state.encounter_deck:
         state.encounter_deck.remove(found)

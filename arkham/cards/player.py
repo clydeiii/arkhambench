@@ -354,7 +354,8 @@ def effective_base_skill(state: GameState, skill: str, source: str) -> int:
         and state.limits.get(f"mind_over_matter:{state.round}")
     ):
         base_skill = "intellect"
-    return int(getattr(state.investigator, base_skill)) + static_skill_bonus(
+    penalty = -len(threat_ids(state, "01182")) if base_skill == "willpower" else 0
+    return int(getattr(state.investigator, base_skill)) + penalty + static_skill_bonus(
         state, base_skill, source
     )
 

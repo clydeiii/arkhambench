@@ -470,6 +470,12 @@ def investigation_skill(state: GameState) -> str:
     return "intellect"
 
 
+def investigation_skill_label(state: GameState, location_name: str) -> tuple[str, int]:
+    skill = investigation_skill(state)
+    base = player_cards.effective_base_skill(state, skill, f"Investigate {location_name}")
+    return skill, base
+
+
 def effective_action_cost(state: GameState, action: str) -> int:
     cost = 2 if action in {"discard_haunted", "discard_psychosis", "discard_hypochondria", "study_draw"} else 1
     designator = action_designator(action)
@@ -1315,8 +1321,8 @@ def add_asset_action_options(state: GameState, options: list[DecisionOption]) ->
             location = state.locations[state.investigator.location_id]
             if location.revealed and location.shroud is not None:
                 shroud = modified_shroud(state, location.id)
-                intellect = player_cards.effective_base_skill(state, "intellect", f"Burglary {location.name}")
-                options.append(DecisionOption(f"Use Burglary at {location.name} — test Intellect({intellect}) vs {shroud}", {"kind": "action", "action": "burglary", "asset": asset_id}))
+                skill, base = investigation_skill_label(state, location.name)
+                options.append(DecisionOption(f"Use Burglary at {location.name} — test {skill.capitalize()}({base}) vs {shroud}", {"kind": "action", "action": "burglary", "asset": asset_id}))
         elif code == "01055" and not instance.exhausted and state.locations[state.investigator.location_id].connections:
             for location_id in state.locations[state.investigator.location_id].connections:
                 options.append(DecisionOption(f"Use Cat Burglar and move to {state.locations[location_id].name}", {"kind": "action", "action": "cat_burglar", "asset": asset_id, "location": location_id}))
@@ -1489,7 +1495,7 @@ def flashlight_investigate(state: GameState, payload: dict[str, Any], events: li
         asset.uses["supplies"] -= 1
     location = state.locations[state.investigator.location_id]
     difficulty = max(0, modified_shroud(state, location.id) - 2)
-    skill_test.start(state, events, skill="intellect", difficulty=difficulty, source=f"Investigate with Flashlight {location.name}", on_success={"kind": "investigate"})
+    skill_test.start(state, events, skill=investigation_skill(state), difficulty=difficulty, source=f"Investigate with Flashlight {location.name}", on_success={"kind": "investigate"})
 
 
 def burglary_action(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -1507,7 +1513,7 @@ def burglary_action(state: GameState, payload: dict[str, Any], events: list[dict
     skill_test.start(
         state,
         events,
-        skill="intellect",
+        skill=investigation_skill(state),
         difficulty=modified_shroud(state, location.id),
         source=f"Burglary {location.name}",
         on_success={"kind": "burglary"},

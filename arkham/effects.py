@@ -411,6 +411,8 @@ def start_damage_assignment(
         state.investigator.horror += horror
         log_event(events, "damage_assigned", f"{state.investigator.name} took {damage} damage and {horror} horror.", source=source)
         check_investigator_defeat(state, events)
+        if state.decision_queue:
+            return
         if state.status == "in_progress":
             resolve_damage_horror_forced_weaknesses(state, events, damage=damage, horror=horror)
         if state.status == "in_progress" and horror > 0:
@@ -517,6 +519,10 @@ def assign_damage_choice(state: GameState, payload: dict[str, Any], events: list
         resume = dict(pending.get("resume", {}))
         damage_to_investigator, horror_to_investigator = apply_assigned_damage(state, pending, events)
         if state.status != "in_progress":
+            return
+        if state.decision_queue:
+            if resume:
+                state.limits["deferred_resume"] = resume
             return
         resolve_damage_horror_forced_weaknesses(state, events, damage=damage_to_investigator, horror=horror_to_investigator)
         if state.status != "in_progress":
@@ -635,9 +641,33 @@ def check_investigator_defeat(state: GameState, events: list[dict[str, Any]]) ->
     mental = state.investigator.horror >= state.investigator.sanity
     if physical or mental:
         state.limits["defeat_trauma_applied"] = True
+        if physical and mental:
+            state.limits["pending_defeat_summary"] = f"{state.investigator.name} was defeated"
+            state.decision_queue = [
+                PendingDecision(
+                    id="defeat-trauma-choice",
+                    kind="defeat_trauma",
+                    prompt="Choose trauma for simultaneous defeat.",
+                    options=[
+                        DecisionOption("Suffer 1 physical trauma", {"kind": "defeat_trauma", "type": "physical"}),
+                        DecisionOption("Suffer 1 mental trauma", {"kind": "defeat_trauma", "type": "mental"}),
+                    ],
+                )
+            ]
+            return
         state.trauma["physical"] = int(state.trauma.get("physical", 0)) + (1 if physical else 0)
         state.trauma["mental"] = int(state.trauma.get("mental", 0)) + (1 if mental else 0)
         end_game(state, events, f"{state.investigator.name} was defeated")
+
+
+def resolve_defeat_trauma_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    trauma_type = str(payload.get("type", ""))
+    if trauma_type not in {"physical", "mental"} or state.status != "in_progress":
+        return
+    state.decision_queue = [decision for decision in state.decision_queue if decision.id != "defeat-trauma-choice"]
+    state.trauma[trauma_type] = int(state.trauma.get(trauma_type, 0)) + 1
+    summary = str(state.limits.pop("pending_defeat_summary", f"{state.investigator.name} was defeated"))
+    end_game(state, events, summary)
 
 
 def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> None:
