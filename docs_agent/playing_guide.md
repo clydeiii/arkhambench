@@ -72,6 +72,10 @@ sharp and actionable.
   discarded win or lose.
 - Spent clues go to the token pool. They NEVER return to the location. Investigating a
   0-clue location discovers nothing.
+- While engaged with a ready enemy, EVERY action except fight, evade, parley, and
+  resign provokes an attack of opportunity — including PLAYING A CARD, drawing,
+  gaining a resource, moving, investigating, and activating abilities. (Many players
+  believe asset plays are exempt; they are not.)
 - The engine asks for confirmation before likely-mistake actions: investigating a
   location with 0 clues, or taking an action that will provoke attacks of opportunity.
   "Yes" is sometimes correct, such as accepting an attack to play a critical asset;

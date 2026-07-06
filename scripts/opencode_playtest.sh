@@ -15,6 +15,7 @@ DIFFICULTY="${6:-standard}"
 
 export PATH="$HOME/.opencode/bin:$PATH"
 export OPENROUTER_API_KEY="$(cat auth/openrouter.key)"
+export AHLCG_RUN="runs/$RUN"   # pin every ./ahlcg call to THIS game (no .current_run races)
 SAFE_MODEL="$(printf '%s' "$MODEL" | tr -c 'A-Za-z0-9._-' '_')"
 mkdir -p logs notebooks
 
