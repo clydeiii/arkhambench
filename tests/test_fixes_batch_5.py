@@ -238,7 +238,7 @@ class MulliganAndEndTurnTests(unittest.TestCase):
         self.assertIn(first, s.investigator.deck)
         self.assertIn(weakness, s.investigator.deck)
 
-    def test_inv_end_window_precedes_frozen_in_fear_test(self) -> None:
+    def test_frozen_in_fear_test_fires_without_post_turn_fast_window(self) -> None:
         s = tg.build_return_state(difficulty="standard", rng=ArkhamRng(1), investigator_slug="skids")
         s.decision_queue = []
         s.investigator.actions_remaining = 0
@@ -250,11 +250,7 @@ class MulliganAndEndTurnTests(unittest.TestCase):
 
         phases.advance_until_decision(s, ArkhamRng(1), events)
 
-        self.assertEqual(s.decision_queue[0].id, "fast-window-inv_end")
-        self.assertIsNone(s.active_skill_test)
-        s.decision_queue = []
-        s.limits[f"fastwin:inv_end:{s.round}"] = True
-        phases.advance_until_decision(s, ArkhamRng(1), events)
+        self.assertFalse(s.decision_queue and s.decision_queue[0].id == "fast-window-inv_end")
         self.assertEqual(s.active_skill_test["source"], "Frozen in Fear")
 
 

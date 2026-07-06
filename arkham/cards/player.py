@@ -197,6 +197,11 @@ def can_play_from_discard_with_amulet(state: GameState, instance_id: str) -> boo
     return controls_code(state, "01014") and topmost_discard_event_id(state) == instance_id
 
 
+def is_weakness(state: GameState, instance_id: str) -> bool:
+    card = card_data.get_card(state.card_instances[instance_id].card_code)
+    return str(card.get("subtype_code", "")) in {"weakness", "basicweakness"}
+
+
 def remove_from_hand_or_discard_for_play(state: GameState, instance_id: str) -> bool:
     if instance_id in state.investigator.hand:
         state.investigator.hand.remove(instance_id)
@@ -207,6 +212,11 @@ def remove_from_hand_or_discard_for_play(state: GameState, instance_id: str) -> 
         state.card_instances[instance_id].zone = "limbo"
         return True
     return False
+
+
+def clear_tokens(instance: CardInstance) -> None:
+    instance.doom = 0
+    instance.clues = 0
 
 
 def place_played_event(state: GameState, instance_id: str, events: list[dict[str, Any]]) -> None:
@@ -270,6 +280,7 @@ def discard_from_play(state: GameState, instance_id: str) -> None:
     if instance_id in state.investigator.play_area:
         state.investigator.play_area.remove(instance_id)
     instance = state.card_instances[instance_id]
+    clear_tokens(instance)
     instance.zone = "discard"
     if instance_id not in state.investigator.discard:
         state.investigator.discard.append(instance_id)
@@ -279,6 +290,7 @@ def discard_from_play(state: GameState, instance_id: str) -> None:
 
 def discard_to_owner_pile(state: GameState, instance_id: str) -> None:
     instance = state.card_instances[instance_id]
+    clear_tokens(instance)
     card = card_data.get_card(instance.card_code)
     subtype = str(card.get("subtype_code", ""))
     encounter_owned = card.get("type_code") in {"enemy", "treachery"} and subtype not in {"weakness", "basicweakness"}

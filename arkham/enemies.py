@@ -170,6 +170,8 @@ def engage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
     if enemy_id not in state.investigator.engaged_enemies:
         state.investigator.engaged_enemies.append(enemy_id)
     log_event(events, "enemy_engaged", f"{enemy_name(state, enemy_id)} engaged {state.investigator.name}.", enemy=enemy_id)
+    if enemy.card_code == "01181":
+        start_damage_assignment(state, events, source="Young Deep One", damage=0, horror=1)
 
 
 def disengage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str, *, exhaust: bool) -> None:
@@ -210,6 +212,10 @@ def move_enemy_to(state: GameState, events: list[dict[str, Any]], enemy_id: str,
         state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
     enemy.location_id = location_id
     state.locations[location_id].enemy_ids.append(enemy_id)
+    if enemy.engaged_with is not None and location_id != state.investigator.location_id:
+        enemy.engaged_with = None
+        if enemy_id in state.investigator.engaged_enemies:
+            state.investigator.engaged_enemies.remove(enemy_id)
     log_event(events, "enemy_moved", f"{enemy_name(state, enemy_id)} moved to {state.locations[location_id].name}.", enemy=enemy_id)
     if location_id == state.investigator.location_id and enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id) and not is_massive(state, enemy_id):
         engage_enemy(state, events, enemy_id)
@@ -504,6 +510,8 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         return
     card = enemy_card(state, enemy_id)
     enemy = state.enemies.pop(enemy_id)
+    state.card_instances[enemy_id].doom = 0
+    state.card_instances[enemy_id].clues = 0
     state.limits["last_defeated_enemy_location"] = enemy.location_id
     if enemy.location_id in state.locations and enemy_id in state.locations[enemy.location_id].enemy_ids:
         state.locations[enemy.location_id].enemy_ids.remove(enemy_id)

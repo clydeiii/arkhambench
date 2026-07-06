@@ -39,6 +39,37 @@
 
 No git commit was made.
 
+## Fixes Batch 8 — Loop 2 + XP Coverage
+
+- Removed the phantom post-turn fast window and kept remaining fast windows scoped
+  to their legal timing.
+- Corrected enemy-doom advancement timing: enemy doom waits for the next agenda
+  check unless an effect explicitly permits advancement.
+- Added missing rules enforcement for Hunting Nightgaunt token doubling, Young
+  Deep One engagement horror, weakness filtering for optional discard costs, token
+  cleanup on leave play, and effect-based enemy move disengagement.
+- Routed weaknesses added to hand through revelation, moved paid plays to limbo
+  before AoO with no post-cost refunds, fixed Leo De Luca (0/1) turn-start actions,
+  and recomputed static skill modifiers at ST.5.
+- Filled the requested display gaps for setup effects, Disciple clue placement,
+  token-pool clue gains, and actual-amount Drawn to the Flame logging.
+- Added `tests/test_fixes_batch_8.py` covering adjudication entries 34-45; updated
+  older regressions and fuzz invariants to reflect the adjudicated limbo/window and
+  enemy-doom timing behavior.
+
+Validation:
+
+- `python3 -m unittest discover -s tests` => 290 tests passing.
+- Full six-scenario fuzz matrix, all clean:
+  - `python3 -m arkham.fuzz --games 50 --scenario the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_devourer_below --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
+
+No git commit was made.
+
 Fixes batch 1
 
 ## Fixes Batch 7 — Campaign Loop 1

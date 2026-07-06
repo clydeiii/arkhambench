@@ -225,6 +225,12 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
         if action in {"play", "dynamite", "sneak_attack"} and not payload.get("resource_cost_paid"):
             if not pay_play_resource_cost(state, payload):
                 return
+        if action in {"play", "dynamite", "sneak_attack"} and not payload.get("card_moved_to_limbo"):
+            card_id = str(payload.get("card", ""))
+            if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
+                refund_play_resource_cost(state, payload)
+                return
+            payload["card_moved_to_limbo"] = True
         if not payload.get("skip_aoo"):
             if attacks_of_opportunity(state, events, action, payload, rng=rng):
                 return
@@ -488,7 +494,7 @@ def mark_action_cost_paid(state: GameState, action: str, cost: int) -> None:
 
 def validate_play_initiation(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> bool:
     def fail() -> bool:
-        if payload.get("resource_cost_paid"):
+        if payload.get("resource_cost_paid") and not payload.get("card_moved_to_limbo"):
             refund_play_resource_cost(state, payload)
         return False
 
@@ -501,7 +507,8 @@ def validate_play_initiation(state: GameState, payload: dict[str, Any], events: 
         return fail()
     if card.get("type_code") != "event" and payload.get("action") in {"dynamite", "sneak_attack"}:
         return fail()
-    if card_id not in state.investigator.hand and not player_cards.can_play_from_discard_with_amulet(state, card_id):
+    in_limbo = state.card_instances[card_id].zone == "limbo"
+    if card_id not in state.investigator.hand and not player_cards.can_play_from_discard_with_amulet(state, card_id) and not in_limbo:
         return fail()
     if dissonant_blocks(state, code):
         return fail()
@@ -727,21 +734,16 @@ def play_card(
 ) -> None:
     in_hand = instance_id in state.investigator.hand
     from_discard = player_cards.can_play_from_discard_with_amulet(state, instance_id)
-    if not in_hand and not from_discard:
-        if cost_paid:
-            state.investigator.resources += paid_cost
+    in_limbo = instance_id in state.card_instances and state.card_instances[instance_id].zone == "limbo"
+    if not in_hand and not from_discard and not in_limbo:
         return
     instance = state.card_instances[instance_id]
     card = card_data.cards_by_code().get(instance.card_code, {})
     if dissonant_blocks(state, instance.card_code):
-        if cost_paid:
-            state.investigator.resources += paid_cost
         return
     if card.get("type_code") == "asset":
         if not can_enter_play_unique(state, instance.card_code):
             log_event(events, "play_blocked", f"{card.get('name', instance.card_code)} is unique and already in play.", card=instance_id)
-            if cost_paid:
-                state.investigator.resources += paid_cost
             return
         slot_discards = required_slot_discards(state, instance_id)
         if slot_discards:
@@ -754,8 +756,8 @@ def play_card(
         state.investigator.resources -= cost
         paid_cost = cost
     if not player_cards.remove_from_hand_or_discard_for_play(state, instance_id):
-        state.investigator.resources += paid_cost
-        return
+        if state.card_instances[instance_id].zone != "limbo":
+            return
     if card.get("type_code") == "asset":
         instance.zone = "play"
         state.investigator.play_area.append(instance_id)
@@ -868,7 +870,7 @@ def resolve_slot_discard(state: GameState, payload: dict[str, Any], events: list
         name = player_cards.card_name(state, discard)
         player_cards.discard_from_threat(state, discard)
         log_event(events, "asset_discarded", f"{name} was discarded for slot capacity.", card=discard)
-    if play in state.investigator.hand:
+    if play in state.investigator.hand or (play in state.card_instances and state.card_instances[play].zone == "limbo"):
         play_card(
             state,
             play,
@@ -990,6 +992,8 @@ def discard_choices_for_slot_overflow(
 def can_discard_for_slots(state: GameState, asset_id: str) -> bool:
     instance = state.card_instances.get(asset_id)
     if not instance:
+        return False
+    if player_cards.is_weakness(state, asset_id):
         return False
     return not (instance.card_code == "01009" and instance.horror > 0)
 
@@ -1525,7 +1529,11 @@ def playable_event(state: GameState, card_id: str) -> bool:
     card = card_data.get_card(state.card_instances[card_id].card_code)
     if card.get("type_code") != "event":
         return False
-    return card_id in state.investigator.hand or player_cards.can_play_from_discard_with_amulet(state, card_id)
+    return (
+        card_id in state.investigator.hand
+        or player_cards.can_play_from_discard_with_amulet(state, card_id)
+        or state.card_instances[card_id].zone == "limbo"
+    )
 
 
 def backstab(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -1708,8 +1716,9 @@ def dynamite_blast(state: GameState, payload: dict[str, Any], events: list[dict[
         state.investigator.resources -= cost
         paid_cost = cost
     if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
-        state.investigator.resources += paid_cost
-        return
+        if state.card_instances[card_id].zone != "limbo":
+            state.investigator.resources += paid_cost
+            return
     for enemy_id in list(state.locations[location_id].enemy_ids):
         if enemy_id in state.enemies:
             damage_enemy(state, events, enemy_id, 3)
@@ -2105,8 +2114,9 @@ def sneak_attack(state: GameState, payload: dict[str, Any], events: list[dict[st
         state.investigator.resources -= 2
         paid_cost = 2
     if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
-        state.investigator.resources += paid_cost
-        return
+        if state.card_instances[card_id].zone != "limbo":
+            state.investigator.resources += paid_cost
+            return
     damage_enemy(state, events, enemy_id, 2)
     player_cards.place_played_event(state, card_id, events)
     log_event(events, "event_played", "Played Sneak Attack.", card=card_id, enemy=enemy_id)

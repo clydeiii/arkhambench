@@ -63,15 +63,6 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             if state.investigator.actions_remaining > 0:
                 actions.present_action_decision(state)
             else:
-                # The RR timing chart keeps one player window open after the
-                # LAST action, still during the turn (this is how Skids legally
-                # buys a 4th action, and where an objective can be triggered).
-                # Only "end your turn" forced effects (Return Bathroom) skip it.
-                forced_end = bool(state.limits.get(f"turn_forcibly_ended:{state.round}"))
-                if not forced_end and present_fast_window(state, "inv_end", during_turn=True):
-                    return
-                if state.investigator.actions_remaining > 0:
-                    continue
                 if resolve_dark_memory_end_turn(state, events):
                     return
                 if start_frozen_end_turn_test(state, events):
@@ -322,7 +313,7 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
 
 def starting_actions(state: GameState) -> int:
     total = 4 if state.investigator.card_code == "01002" and not player_cards.investigator_text_blank(state) else 3
-    if player_cards.controls_code(state, "01048"):
+    if player_cards.controls_code(state, "01048") or player_cards.controls_code(state, "01054"):
         total += 1
     return total
 

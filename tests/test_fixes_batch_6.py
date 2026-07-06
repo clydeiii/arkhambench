@@ -61,7 +61,8 @@ class PlayCostTimingTests(unittest.TestCase):
 
         self.assertEqual(s.investigator.resources, 8)
         self.assertIsNotNone(s.pending_damage)
-        self.assertIn(dark_memory, s.investigator.hand)
+        self.assertNotIn(dark_memory, s.investigator.hand)
+        self.assertEqual(s.card_instances[dark_memory].zone, "limbo")
 
         s.decision_queue.pop(0)
         assign_damage_choice(s, {"kind": "assign_damage", "type": "damage", "target": beat_cop}, events, ArkhamRng(1))

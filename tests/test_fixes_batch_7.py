@@ -223,10 +223,12 @@ class FixesBatch7Tests(unittest.TestCase):
         state.agenda.doom = 3
         events: list[dict] = []
         db.end_mythos_phase(state, events, ArkhamRng(1))
-        self.assertEqual(state.agenda.name, "The Ritual Begins")
+        self.assertEqual(state.agenda.name, "The Arkham Woods")
         self.assertNotIn("setaside_agenda_enemy", state.enemies)
         self.assertNotEqual(state.result and state.result.get("summary"), "R2: the clock struck midnight")
-        self.assertEqual(state.enemies[wizard].doom, 0)
+        self.assertEqual(state.enemies[wizard].doom, 1)
+        effects.check_agenda_advance(state, events, rng=ArkhamRng(1))
+        self.assertEqual(state.agenda.name, "The Ritual Begins")
 
     def test_agenda_dispatch_canary_keeps_each_scenario_in_its_family(self) -> None:
         cases = [

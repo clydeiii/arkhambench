@@ -54,6 +54,7 @@ def start(
         "autofail": False,
         "on_success": on_success or {},
         "on_failure": on_failure or {},
+        "base_boost": base_boost,
     }
     log_event(events, "skill_test_started", f"Started {skill} test {base} vs {difficulty}.", source=source)
     present_commit_decision(state)
@@ -150,7 +151,7 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
         log_event(events, "chaos_token_skipped", "Will to Survive prevented revealing a chaos token.", modifier=0)
         return
     token = draw_token(state, rng)
-    modifier, autofail = token_modifier(state, token)
+    modifier, autofail = adjusted_token_modifier(state, token)
     extra_tokens: list[str] = []
     current = token
     while (
@@ -168,7 +169,7 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
         and devourer_ancient_one_in_play(state)
     ) or devourer_location_extra_token(state, test, extra_tokens):
         extra = draw_token(state, rng)
-        extra_modifier, extra_autofail = token_modifier(state, extra)
+        extra_modifier, extra_autofail = adjusted_token_modifier(state, extra)
         modifier += extra_modifier
         autofail = autofail or extra_autofail
         extra_tokens.append(extra)
@@ -179,6 +180,19 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
     test["autofail"] = autofail
     suffix = f" then {', '.join(extra_tokens)}" if extra_tokens else ""
     log_event(events, "chaos_token", f"Revealed {token}{suffix}.", token=token, modifier=modifier, extra_tokens=extra_tokens)
+
+
+def adjusted_token_modifier(state: GameState, token: str) -> tuple[int, bool]:
+    modifier, autofail = token_modifier(state, token)
+    test = state.active_skill_test or {}
+    if autofail or modifier >= 0:
+        return modifier, autofail
+    if test.get("on_success", {}).get("kind") != "evade" and test.get("on_failure", {}).get("kind") != "evade":
+        return modifier, autofail
+    enemy_id = str(test.get("on_success", {}).get("enemy") or test.get("on_failure", {}).get("enemy") or "")
+    if enemy_id in state.enemies and state.enemies[enemy_id].card_code == "01172":
+        return modifier * 2, autofail
+    return modifier, autofail
 
 
 def present_pre_reveal_reaction(state: GameState) -> None:
@@ -230,7 +244,7 @@ def resolve_grotesque_reaction(
     state.limits["grotesque_tokens"] = tokens
     options = []
     for token in tokens:
-        modifier, autofail = token_modifier(state, token)
+        modifier, autofail = adjusted_token_modifier(state, token)
         options.append(DecisionOption(f"Resolve {token} ({modifier})", {"kind": "grotesque_choice", "token": token, "modifier": modifier, "autofail": autofail}))
     state.decision_queue = [
         PendingDecision(
@@ -257,7 +271,7 @@ def resolve_grotesque_choice(
     tokens = [str(item) for item in state.limits.pop("grotesque_tokens", [])]
     if token not in tokens:
         token = tokens[0] if tokens else token
-    modifier, autofail = token_modifier(state, token)
+    modifier, autofail = adjusted_token_modifier(state, token)
     test["token"] = token
     test["extra_tokens"] = []
     test["modifier"] = modifier
@@ -281,6 +295,7 @@ def present_token_reveal_reaction(state: GameState, rng: ArkhamRng, events: list
                 {"kind": "wendy_token_reaction", "choice": "redraw", "discard": card_id},
             )
             for card_id in state.investigator.hand
+            if not player_cards.is_weakness(state, card_id)
         )
     if int(test.get("modifier", 0)) < 0 and state.investigator.resources >= 2:
         for card_id in player_cards.hand_ids(state, "01056"):
@@ -388,7 +403,9 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
     skill = str(test["skill"])
     committed = sum(icon_count(cards[state.card_instances[instance_id].card_code], skill) for instance_id in test["committed"])
     boosts = player_cards.boost_total(test)
-    value = max(0, int(test["base"]) + committed + boosts + int(test["modifier"]))
+    base = player_cards.effective_base_skill(state, skill, str(test["source"])) + int(test.get("base_boost", 0))
+    test["base"] = base
+    value = max(0, base + committed + boosts + int(test["modifier"]))
     if bool(test["autofail"]):
         value = 0
     difficulty = int(test["difficulty"])
@@ -404,7 +421,7 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
         "source": test["source"],
         "skill": skill,
         "difficulty": difficulty,
-        "base": test["base"],
+        "base": base,
         "committed_icons": committed,
         "boosts": boosts,
         "token": test["token"],

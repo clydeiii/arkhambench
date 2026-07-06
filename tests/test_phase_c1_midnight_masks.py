@@ -114,6 +114,8 @@ class MidnightMasksRulesTests(unittest.TestCase):
         state.card_instances[acolyte].card_code = "01169"
         mm.spawn_enemy_resolving_forced(state, events, acolyte, "rivertown", ArkhamRng(1))
 
+        self.assertEqual(state.agenda.stage, 1)
+        mm.check_agenda_advance(state, events, rng=ArkhamRng(1))
         self.assertEqual(state.agenda.stage, 2)
         self.assertEqual(state.agenda.code, "01122")
         self.assertEqual(mm.total_doom(state), 0)

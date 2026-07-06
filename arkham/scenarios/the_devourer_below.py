@@ -374,6 +374,11 @@ def resolve_scenario_choice(state: GameState, payload: dict[str, Any], events: l
             log_event(events, "mulligan", f"Mulliganed {out_names}; drew {in_names}.", out=selected, drew=drawn)
         if state.limits.get("campaign_inputs", {}).get("past_midnight"):
             discard_random_from_hand(state, events, rng, 2, source="Past Midnight")
+        got_away = list(state.limits.get("campaign_inputs", {}).get("cultists_got_away", []))
+        if got_away:
+            log_event(events, "setup_effect", f"Setup placed {state.agenda.doom if state.agenda else 0} doom from cultists who got away: {', '.join(got_away)}.")
+        if "elderthing" in state.chaos_bag.tokens:
+            log_event(events, "setup_effect", "Setup added 1 elderthing token to the chaos bag.")
         log_event(events, "setup_complete", "Opening hand finalized.")
     elif choice in {"toggle_mulligan_card", "mulligan_card"}:
         toggle_mulligan_card(state, str(payload.get("card")))
@@ -392,6 +397,9 @@ def resolve_scenario_choice(state: GameState, payload: dict[str, Any], events: l
         if enemy_id in state.enemies and state.investigator.clues > 0:
             state.investigator.clues -= 1
             state.locations[state.enemies[enemy_id].location_id].clues += 1
+            from ..effects import log_event
+
+            log_event(events, "clue_placed", "Disciple of the Devourer placed 1 clue on its location.", enemy=enemy_id)
     elif choice == "wrath_discard":
         card_id = str(payload.get("card", ""))
         if card_id in state.investigator.hand:
@@ -792,7 +800,9 @@ def gain_madness_weakness(state: GameState, events: list[dict[str, Any]], rng: A
     zone = "hand" if to_hand else "deck"
     state.card_instances[instance_id] = CardInstance(id=instance_id, card_code=code, zone=zone, owner=state.investigator.id)
     if to_hand:
-        state.investigator.hand.append(instance_id)
+        from ..effects import add_player_card_to_hand
+
+        add_player_card_to_hand(state, events, instance_id)
     else:
         state.investigator.deck.append(instance_id)
     gained = list(state.limits.get("weakness_gained", []))

@@ -263,23 +263,36 @@ GPT-5.5 audit findings (campaign loop1-roland), Fable adjudications:
     (turn ends) and 2.3 (phase ends); the engine offers one, and even allowed Mind
     over Matter ("Play only during your turn") inside it. Remove the post-turn
     window; enforce during-your-turn play restrictions in all fast windows.
+    **FIXED (batch 8):** removed the `inv_end` fast window from the phase loop;
+    remaining fast windows still distinguish during-turn card plays from any-window
+    triggered abilities. Regression covers no post-turn fast decision.
 35. **Enemy-doom placements advance the agenda outside step 1.3** (loop2-daisy run
     2) — CONFIRMED: RR 1.3 is the only agenda-advance timing absent explicit card
     permission (precedent: the Gathering's Acolyte adjudication). MM/DB
     check-on-placement advanced agenda 1 the moment a Disciple spawn-doom hit the
     threshold. Doom-on-enemy placements must wait for 1.3 (or an explicit
     "this can advance" card: Masked Horrors, Offer of Power, Jeremiah, Corpse-Taker).
+    **FIXED (batch 8):** enemy-doom helper no longer checks agenda advancement by
+    default; explicit agenda-doom effects still opt in with `can_advance`.
+    Regression covers threshold enemy doom waiting for the next agenda check.
 36. **Hunting Nightgaunt token-doubling not implemented** (loop2-wendy run 2) —
     CONFIRMED: "double the negative modifier of each revealed chaos token" while
     evading it; engine applied -1 as -1.
+    **FIXED (batch 8):** evade tests against Hunting Nightgaunt double each
+    negative token modifier, including alternate reveal paths. Regression covers
+    `-1` resolving as `-2`.
 37. **Young Deep One engagement Forced deals no horror** (loop2-wendy run 3) —
     CONFIRMED, pro-player: "After Young Deep One engages you: take 1 horror" never
     fired on spawn-engage or move-engage.
+    **FIXED (batch 8):** `engage_enemy` fires Young Deep One's Forced horror on
+    engagement. Regression covers direct engagement.
 38. **Weaknesses offered as optional discard costs** (loop2-wendy run 3) —
     CONFIRMED, exploit: Wendy's token-cancel accepted Amnesia as the discarded
     card; RR: a player may not optionally discard a weakness from hand unless a
     card explicitly permits it. Sweep ALL choose-and-discard costs (Wendy, Herman
     parley, Hunting Shadow-style choices are effects not costs — costs only).
+    **FIXED (batch 8):** optional discard-cost pickers now filter weaknesses
+    (Wendy, Herman, Warehouse, slot overflow). Regression covers Wendy and Herman.
 
 Coverage-game audit findings (10 XP-deck games), Fable adjudications:
 
@@ -287,24 +300,42 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     CONFIRMED: RR Leaves Play returns all tokens to the pool; a defeated Arcane
     Initiate's doom kept counting and advanced the agenda a round early. Applies to
     all doom-carrying cards (Acolyte, Wizard, Disciple, Corpse-Taker, Initiate).
+    **FIXED (batch 8):** player-card and encounter-card leave-play helpers clear
+    card tokens; defeated enemies no longer leave doom in agenda math. Regression
+    covers Arcane Initiate and a defeated doom enemy.
 40. **Moving an engaged enemy away does not disengage it** (coverage-daisy-DB) —
     CONFIRMED: Corpse-Taker's Forced end-of-phase move left engagement intact and
     it attacked from Main Path while Daisy stood at Cliffside, two rounds running.
+    **FIXED (batch 8):** effect-based enemy moves clear engagement when the enemy
+    is moved away from the investigator's location. Regression covers an engaged
+    enemy moved to another location.
 41. **Weakness added to hand doesn't resolve as if drawn** (coverage-daisy-DB) —
     CONFIRMED, pro-player: RR Weakness requires resolving Revelation on non-draw
     hand entry; Psychosis sat in hand as a dead card instead of entering the threat
     area (its horror→direct-damage Forced consequently never fired).
+    **FIXED (batch 8):** Devourer agenda-2 Madness gains to hand route through
+    `add_player_card_to_hand`, preserving revelation handling; deck additions stay
+    deck-only. Regression covers Psychosis entering the threat area.
 42. **Paid play costs refunded when the played card leaves hand during AoO**
     (coverage-roland-DB) — CONFIRMED, pro-player: Grave-Eater's AoO random discard
     hit the being-played Machete and the batch-6 abort-refund returned the 3
     resources; RR: paid costs stay paid, the play simply fizzles.
+    **FIXED (batch 8):** paid plays move the card to limbo before AoO, so random
+    hand discards cannot select it; resumed/fizzled plays no longer refund paid
+    resources. Regression covers both limbo selection and no-refund fizzle.
 43. **Skill-test modifiers not re-evaluated after ST.4 effects** (coverage-skids-DB
     F2) — CONFIRMED, display: Lita was discarded soaking ST.4 tablet damage but her
     +1 combat still appeared in the ST.5 math (outcome unchanged in evidence; could
     flip marginal tests). Recompute active modifiers at ST.5.
+    **FIXED (batch 8):** `compute_result` recalculates static base skill at ST.5
+    while retaining paid boosts and ability base boosts. Regression covers Lita
+    leaving play before final combat math.
 44. **Leo De Luca's additional action only granted on his entry turn**
     (coverage-wendy-MM) — CONFIRMED, anti-player: R2-R6 turns began at 3 actions
     with Leo in play; a later second copy correctly showed 4.
+    **FIXED (batch 8):** turn-start action calculation recognizes both Leo copies;
+    existing clawback behavior remains intact. Regression covers the level-1 copy
+    and no clawback after actions are already spent.
 45. **Setup/display gaps** (multiple) — CONFIRMED, display: (a) setup effects are
     unlogged — got-away doom on agenda 1a looked "unexplained" to the auditor
     (skids-DB F1 itself: NOT A BUG, setup doom per campaign guide table); (b)
@@ -312,3 +343,7 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     logs the clue gain as if placed on the location; (d) Drawn to the Flame logs 2
     discovered where 1 existed (pre-batch-7 transcript — verify entry-26's fix
     generalizes; extend if not).
+    **FIXED (batch 8):** setup logs note got-away doom and elderthing addition,
+    Disciple clue placement logs in automatic and choice paths, token-pool clue
+    gains name the investigator, and Drawn to the Flame logs the actual discovered
+    amount. Regression covers all four display cases.

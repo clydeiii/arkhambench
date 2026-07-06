@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .. import data as card_data
+from ..cards import player as player_cards
 from ..cards.player import card_name
 from ..cards.registry import REGISTRY
 from ..errors import EngineError
@@ -568,7 +569,7 @@ def gain_clues_from_pool(state: GameState, events: list[dict[str, Any]], amount:
     state.investigator.clues += amount
     from ..effects import log_event
 
-    log_event(events, "clues_gained", f"{source} gained {amount} clue from the token pool.", amount=amount, source=source)
+    log_event(events, "clues_gained", f"{state.investigator.name} gained {amount} clue from the token pool.", amount=amount, source=source)
 
 
 def location_limit_key(location_id: str, *, per_turn: bool = False, round_no: int = 0) -> str:
@@ -736,7 +737,11 @@ def willpower_icon_count(state: GameState, card_id: str) -> int:
 
 
 def warehouse_card_choices(state: GameState) -> list[str]:
-    return [card_id for card_id in state.investigator.hand if willpower_icon_count(state, card_id) > 0]
+    return [
+        card_id
+        for card_id in state.investigator.hand
+        if willpower_icon_count(state, card_id) > 0 and not player_cards.is_weakness(state, card_id)
+    ]
 
 
 def warehouse_doom_targets(state: GameState) -> list[str]:
@@ -880,6 +885,8 @@ def present_herman_discard_choice(state: GameState, enemy_id: str) -> None:
     for card_id in state.investigator.hand:
         if card_id in selected:
             continue
+        if player_cards.is_weakness(state, card_id):
+            continue
         options.append(
             DecisionOption(
                 f"Discard {card_name(state, card_id)}",
@@ -922,6 +929,8 @@ def add_enemy_to_victory(state: GameState, events: list[dict[str, Any]], enemy_i
     if enemy_id not in state.enemies:
         return
     enemy = state.enemies.pop(enemy_id)
+    state.card_instances[enemy_id].doom = 0
+    state.card_instances[enemy_id].clues = 0
     if enemy.location_id in state.locations and enemy_id in state.locations[enemy.location_id].enemy_ids:
         state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
     if enemy_id in state.investigator.engaged_enemies:
@@ -1105,6 +1114,9 @@ def disciple_after_spawn(state: GameState, events: list[dict[str, Any]], enemy_i
         if state.investigator.clues > 0 and enemy_id in state.enemies:
             state.investigator.clues -= 1
             state.locations[state.enemies[enemy_id].location_id].clues += 1
+            from ..effects import log_event
+
+            log_event(events, "clue_placed", "Disciple of the Devourer placed 1 clue on its location.", enemy=enemy_id)
         return
     options = [DecisionOption("Place 1 doom on Disciple", {"kind": "scenario", "choice": "disciple_doom", "enemy": enemy_id})]
     if state.investigator.clues > 0:
@@ -1211,6 +1223,7 @@ def place_doom_on_enemy(
     *,
     source: str,
     rng: ArkhamRng | None = None,
+    can_advance: bool = False,
 ) -> None:
     if enemy_id not in state.enemies:
         return
@@ -1218,9 +1231,10 @@ def place_doom_on_enemy(
     from ..effects import log_event
 
     log_event(events, "doom_placed", f"Placed {amount} doom on {card_data.get_card(state.enemies[enemy_id].card_code)['name']}.", enemy=enemy_id, source=source)
-    from ..effects import check_agenda_advance
+    if can_advance:
+        from ..effects import check_agenda_advance
 
-    check_agenda_advance(state, events, rng=rng)
+        check_agenda_advance(state, events, rng=rng)
 
 
 def end_mythos_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None) -> None:

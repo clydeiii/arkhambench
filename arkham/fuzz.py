@@ -302,7 +302,7 @@ def assert_unique_cards(state, *, fail=None) -> None:
         for attachment in location.attached_instance_ids:
             add(attachment, f"attachment:{location.id}")
     for card_id, instance in state.card_instances.items():
-        if instance.zone in {"set_aside", "removed", "removed_unseen", "aside"}:
+        if instance.zone in {"set_aside", "removed", "removed_unseen", "aside", "limbo"}:
             seen.setdefault(card_id, instance.zone)
     missing = set(state.card_instances) - set(seen)
     allowed_missing = {
