@@ -552,3 +552,14 @@ Fable downgraded 2 of GPT's 5 merged confirmations on primary evidence:
     instance disambiguation to enemy log lines so future audits can tell.
     **FIXED (batch 11):** enemy phase remains engaged-only plus Massive co-located
     enemies, and enemy attack/move/engage log lines include the instance id.
+77. **Hunting Shadow omitted "Spend 1 clue" with a clue available** (roland MM
+    replay) — NOT A BUG (Fable reversal of GPT's CONFIRMED-NEW): the Masked
+    Hunter had spawned engaged with Roland that same mythos phase; its aura
+    forbids spending clues, so the damage branch was correctly forced. Both the
+    reporter and the adjudicator missed the aura.
+
+Swarm round 1 CLOSED: ~76 hy3 reports across 21 games -> 2 confirmed engine
+defects (MM skull doom scan; On Wings success no-op — a Claude self-reversal)
++ 1 display defect from the trial (entry 56), all FIXED in batch 11. hy3
+precision ~4%, but free and tireless; the GPT adjudication layer + Fable final
+gate filtered cleanly (3 GPT verdicts reversed on primary evidence).
