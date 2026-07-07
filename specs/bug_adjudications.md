@@ -449,3 +449,48 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     offered; draw provokes AoO)** — NOT A BUG ×3: attacks deal weapon/base damage
     per the RR, not skill value; Working a Hunch verified offered in a clean game
     (the report was a contamination artifact); draw actions provoke AoOs.
+
+## Showcase-campaign audit findings (10 Fable/GPT campaigns, pre-batch-10 engine)
+
+60. **Forbidden Knowledge resolves effect before horror cost** — CONFIRMED, exploit:
+    fast-ability path missed the batch-6/9 cost-at-initiation rule; secret/resource
+    moved before the 1 horror was paid, three separate times.
+61. **Search allowed "Draw no Spell" with an eligible Spell found** (Arcane
+    Initiate vs Dark Memory) — CONFIRMED: RR Search obligates finding when an
+    eligible option exists; decline options are only legal when nothing eligible
+    was found. (Distinct from batch-10's search-choice fix, which added choice
+    among candidates.)
+62. **Act advances before the act-back finishes resolving** (Mysterious Gateway ×3
+    campaigns) — CONFIRMED, ordering/display: the back-side willpower test must
+    complete before the next act is current.
+63. **Dark Memory as hand-size discard** — NOT A BUG (adjudicated): RR 4.5 hand-
+    size maintenance is a compelled discard, not an "optional choose to discard";
+    the weakness prohibition governs optional discards and costs. Noted as an
+    official ambiguity; engine behavior stands.
+64. **"Look what I found!" window not offered after qualifying failed
+    investigations** — CONFIRMED: fail-by-2-or-less at Cliffside produced no play
+    window; suspect the skill-substitution path (agility investigations) broke the
+    "while investigating" trigger detection. Verify Rabbit's Foot-style windows on
+    substituted-skill investigations too.
+65. **Fast assets bypass hand-slot enforcement** (Magnifying Glass over 2 hand
+    slots for 5 rounds) — CONFIRMED, exploit: the fast-play path skips the slot-
+    capacity discard the normal play path enforces.
+66. **Aloof enemies attackable while unengaged** — CONFIRMED, exploit — and the
+    C1 spec itself was wrong (Claude's error): RR Aloof forbids attacking an
+    unengaged aloof enemy. Require an Engage action first; fix spec-derived tests.
+67. **Umôrdhoth's Hunger: discard-to-empty must kill** — CONFIRMED, pro-player —
+    reverses Claude's earlier ruling: the card's two sentences resolve in order
+    (discard, then kill-check), so an investigator whose last card is discarded IS
+    killed. Update the C3-era test.
+68. **Committed-card success effects resolve after interrupted actions resume**
+    (Perception draw after the Twisting Paths move completed) — CONFIRMED,
+    ordering: ST.7 committed-card effects resolve inside the test, before the
+    provoking action continues.
+69. **Shrivelling's symbol-horror resolves after attack results** — CONFIRMED:
+    same reveal-time family as batch-7 item 4; the rider must resolve at reveal
+    (evidence showed it changing Agnes-reaction legality).
+70. **Got-away unique cultists have no parley routes in the Devourer Below**
+    (Alma Hill unparleyable at Main Path) — CONFIRMED: DB's action options don't
+    include the MM parley builders for spawned got-away cultists.
+71. **Wendy's Amulet elder-sign auto-success math display** — CONFIRMED, display:
+    result line printed "5 vs 4" instead of auto-success difficulty-0 treatment.
