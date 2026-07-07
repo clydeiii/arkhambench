@@ -9,6 +9,7 @@ const state = {
 };
 
 const el = {
+  modelSelect: document.querySelector("#model-select"),
   runSelect: document.querySelector("#run-select"),
   first: document.querySelector("#first-step"),
   prev: document.querySelector("#prev-step"),
@@ -106,11 +107,14 @@ init().catch((error) => {
 async function init() {
   state.index = await fetchJson("data/index.json");
   state.campaigns = await fetchJson("data/campaigns.json").catch(() => []);
-  populateRunSelect();
+  populateModelSelect();
+  const hash = readHash();
+  const initialModel = hash.run ? modelForRun(hash.run) : el.modelSelect.value;
+  el.modelSelect.value = initialModel;
+  populateRunSelect(initialModel);
   bindControls();
 
-  const hash = readHash();
-  const selected = findRun(hash.run) || state.index[0];
+  const selected = findRun(hash.run) || state.index.find((row) => modelForRun(row.name) === initialModel) || state.index[0];
   if (!selected) {
     throw new Error("viewer/data/index.json contains no runs");
   }
@@ -125,7 +129,46 @@ async function fetchJson(path) {
   return response.json();
 }
 
-function populateRunSelect() {
+// Model families, matched by run-name prefix (first match wins).
+const MODEL_GROUPS = [
+  ["fable5-", "Fable 5"],
+  ["show-fable-", "Fable 5"],
+  ["gpt55-", "GPT-5.5"],
+  ["show-gpt-", "GPT-5.5"],
+  ["opus48-", "Opus 4.8"],
+  ["sonnet5-", "Sonnet 5"],
+  ["glm52-", "GLM-5.2"],
+  ["glm-", "GLM-5.2"],
+  ["hy3-", "Hunyuan 3"],
+  ["kimi26-", "Kimi k2.6"],
+  ["dsv4f-", "DeepSeek v4-flash"],
+];
+
+function modelForRun(runName) {
+  for (const [prefix, model] of MODEL_GROUPS) {
+    if (runName.startsWith(prefix)) return model;
+  }
+  return "Other";
+}
+
+function populateModelSelect() {
+  const models = [];
+  for (const row of state.index) {
+    const model = modelForRun(row.name);
+    if (!models.includes(model)) models.push(model);
+  }
+  models.sort();
+  el.modelSelect.innerHTML = "";
+  for (const model of models) {
+    const option = document.createElement("option");
+    option.value = model;
+    option.textContent = model;
+    el.modelSelect.append(option);
+  }
+  return models;
+}
+
+function populateRunSelect(model) {
   el.runSelect.innerHTML = "";
   const legOwner = new Map();
   for (const campaign of state.campaigns || []) {
@@ -134,6 +177,7 @@ function populateRunSelect() {
   const groups = new Map();
   const singles = [];
   for (const row of state.index) {
+    if (model && modelForRun(row.name) !== model) continue;
     const campaign = legOwner.get(row.name);
     if (campaign) {
       if (!groups.has(campaign.name)) groups.set(campaign.name, []);
@@ -293,6 +337,10 @@ function upgradeList(heading, cards, sign) {
 }
 
 function bindControls() {
+  el.modelSelect.addEventListener("change", () => {
+    populateRunSelect(el.modelSelect.value);
+    if (el.runSelect.options.length) loadRun(el.runSelect.options[0].value, 0);
+  });
   el.runSelect.addEventListener("change", () => loadRun(el.runSelect.value, 0));
   el.first.addEventListener("click", () => setStep(0));
   el.prev.addEventListener("click", () => setStep(state.stepIndex - 1));
@@ -331,6 +379,11 @@ async function loadRun(name, requestedStep) {
   if (!row) return;
   state.currentRunName = row.name;
   state.run = await fetchJson(`data/${row.file}`);
+  const model = modelForRun(row.name);
+  if (el.modelSelect.value !== model) {
+    el.modelSelect.value = model;
+    populateRunSelect(model);
+  }
   el.runSelect.value = row.name;
   renderCampaignStrip();
   populateRoundSelect();
