@@ -378,6 +378,7 @@ def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | Non
     if not test:
         return
     apply_scenario_token_reveal_effects(state, events, rng)
+    apply_player_token_reveal_effects(state, events)
     if state.status != "in_progress":
         state.active_skill_test = None
         return
@@ -408,13 +409,13 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
     value = max(0, base + committed + boosts + int(test["modifier"]))
     if bool(test["autofail"]):
         value = 0
-    difficulty = int(test["difficulty"])
     auto_success = (
         test.get("token") == "eldersign"
         and state.investigator.card_code == "01005"
         and not player_cards.investigator_text_blank(state)
         and player_cards.controls_code(state, "01014")
     )
+    difficulty = 0 if auto_success else int(test["difficulty"])
     success = (value >= difficulty and not bool(test["autofail"])) or auto_success
     margin = value - difficulty if success else max(0, difficulty - value)
     return {
@@ -543,6 +544,45 @@ def finalize_resolution(
             state.investigator.discard.append(instance_id)
             state.card_instances[instance_id].zone = "discard"
     state.active_skill_test = None
+    apply_committed_skill_effects(state, events, committed_ids, success=success, kind=callback.get("kind"), rng=rng)
+    if state.status != "in_progress":
+        return
+    if state.decision_queue or state.pending_damage:
+        state.limits["deferred_skill_callback"] = {
+            "callback": dict(callback),
+            "success": success,
+            "margin": margin,
+            "committed": committed_ids,
+            "played_event": played_event,
+            "test": dict(test),
+            "result": dict(result),
+        }
+        return
+    apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
+    if state.scenario in DEVOURER_FAMILY:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.after_skill_test(state, events, test, result, rng)
+    apply_post_attack_symbol_effects(state, events, test, result)
+    apply_scenario_token_aftermath(state, events, result, rng)
+    if played_event:
+        player_cards.place_played_event(state, played_event, events)
+    present_skill_test_aftermath_reactions(state, result, committed_ids)
+
+
+def resume_deferred_callback(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    if state.status != "in_progress" or state.decision_queue or state.pending_damage:
+        return
+    pending = state.limits.pop("deferred_skill_callback", None)
+    if not pending:
+        return
+    callback = dict(pending.get("callback", {}))
+    success = bool(pending.get("success"))
+    margin = int(pending.get("margin", 0))
+    committed_ids = [str(item) for item in pending.get("committed", [])]
+    played_event = str(pending.get("played_event", ""))
+    test = dict(pending.get("test", {}))
+    result = dict(pending.get("result", {}))
     apply_callback(state, events, callback, success=success, margin=margin, committed=committed_ids, rng=rng)
     if state.scenario in DEVOURER_FAMILY:
         from .scenarios import the_devourer_below
@@ -671,6 +711,18 @@ def apply_callback(
             from .scenarios import the_gathering
 
             the_gathering.ghoul_pits_draw_rats(state, events, rng, margin)
+    elif kind == "gathering_return_act1":
+        if not success and margin > 0 and rng is not None:
+            source = str(callback.get("source", "Breaking the Wall"))
+            for _ in range(margin):
+                if not state.investigator.hand:
+                    break
+                card_id = rng.choice(state.investigator.hand)
+                player_cards.discard_from_hand(state, card_id)
+                log_event(events, "card_discarded", f"{source} forced a random discard of {player_cards.card_name(state, card_id)}.", card=card_id)
+        from .scenarios import the_gathering
+
+        the_gathering.finish_return_act_1(state, events)
     elif kind == "discard_threat_on_success":
         if success:
             code = str(callback.get("card_code", ""))
@@ -769,14 +821,29 @@ def apply_callback(
             state.card_instances[lita].owner = state.investigator.id
             state.investigator.play_area.append(lita)
             log_event(events, "lita_recruited", f"{state.investigator.name} took control of Lita Chantler.", card=lita)
-    for instance_id in committed:
-        code = state.card_instances[instance_id].card_code
-        if success and code in {"01089", "01090", "01091", "01092"}:
-            draw_player_card(state, events, rng)
-        if success and code == "01067":
-            heal_roland(state, events, horror=1)
     if success and any(state.card_instances[instance_id].card_code == "01081" for instance_id in committed) and kind in {"evade", "blinding_light"}:
         present_survival_instinct_decision(state)
+
+
+def apply_committed_skill_effects(
+    state: GameState,
+    events: list[dict[str, Any]],
+    committed: list[str],
+    *,
+    success: bool,
+    kind: str | None,
+    rng: ArkhamRng | None,
+) -> None:
+    if not success:
+        return
+    for instance_id in committed:
+        if instance_id not in state.card_instances:
+            continue
+        code = state.card_instances[instance_id].card_code
+        if code in {"01089", "01090", "01091", "01092"}:
+            draw_player_card(state, events, rng)
+        if code == "01067":
+            heal_roland(state, events, horror=1)
 
 
 def present_skill_test_aftermath_reactions(state: GameState, result: dict[str, Any], committed: list[str]) -> None:
@@ -807,7 +874,7 @@ def present_skill_test_aftermath_reactions(state: GameState, result: dict[str, A
     if rabbit3:
         options.append(DecisionOption("Exhaust Rabbit's Foot(3) to search failed-by cards", {"kind": "after_fail_reaction", "reaction": "rabbit3", "card": rabbit3, "count": int(result.get("margin", 1))}))
     if (
-        result.get("callback_kind") == "investigate"
+        failed_while_investigating(result)
         and int(result.get("margin", 0)) <= 2
         and state.investigator.resources >= 2
         and state.locations[state.investigator.location_id].clues > 0
@@ -826,6 +893,13 @@ def present_skill_test_aftermath_reactions(state: GameState, result: dict[str, A
             options=options,
         )
     )
+
+
+def failed_while_investigating(result: dict[str, Any]) -> bool:
+    if result.get("callback_kind") in {"investigate", "burglary"}:
+        return True
+    source = str(result.get("source", ""))
+    return source.startswith("Investigate") or source.startswith("Burglary")
 
 
 def legal_look_what_i_found_cards(state: GameState) -> list[str]:
@@ -1017,14 +1091,25 @@ def apply_post_attack_symbol_effects(
     test: dict[str, Any],
     result: dict[str, Any],
 ) -> None:
-    if test.get("symbol_horror") and revealed_symbol(result, {"skull", "cultist", "tablet", "elderthing", "elder_thing", "autofail"}):
-        start_damage_assignment(state, events, source="Shrivelling", damage=0, horror=1)
     bat = dict(test.get("bat_discard_symbols", {}))
     if bat and revealed_symbol(result, {"skull", "autofail"}):
         asset_id = str(bat.get("asset", ""))
         if asset_id in state.investigator.play_area:
             player_cards.discard_from_play(state, asset_id)
             log_event(events, "asset_discarded", "Baseball Bat was discarded after the attack.", card=asset_id)
+
+
+def apply_player_token_reveal_effects(state: GameState, events: list[dict[str, Any]]) -> None:
+    test = state.active_skill_test
+    if not test or test.get("player_reveal_effects_applied"):
+        return
+    test["player_reveal_effects_applied"] = True
+    result = {
+        "token": test.get("token"),
+        "extra_tokens": list(test.get("extra_tokens", [])),
+    }
+    if test.get("symbol_horror") and revealed_symbol(result, {"skull", "cultist", "tablet", "elderthing", "elder_thing", "autofail"}):
+        start_damage_assignment(state, events, source="Shrivelling", damage=0, horror=1)
 
 
 def apply_elder_sign_success(

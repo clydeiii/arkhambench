@@ -39,6 +39,42 @@
 
 No git commit was made.
 
+## Fixes Batch 11 — Showcase-Campaign Audits + hy3 Lane
+
+- Extended cost-at-initiation coverage to the fast-ability path, with Forbidden
+  Knowledge paying horror before its secret/resource effect and fast asset plays
+  reusing normal slot-overflow enforcement.
+- Tightened search presenters so eligible hits must be chosen: Arcane Initiate
+  and Research Librarian no longer offer decline/no-hit options when a legal card
+  was found.
+- Corrected timing reversals: Return Mysterious Gateway's back-side test resolves
+  before The Barrier becomes current; committed skill effects resolve during ST.7
+  before interrupted action callbacks; Shrivelling symbol horror resolves at
+  token reveal; successful On Wings of Darkness is a no-op.
+- Corrected rules reversals for Aloof and Umordhoth's Hunger: unengaged Aloof
+  enemies must be engaged before fighting, and Hunger kills after discarding the
+  investigator's last card.
+- Routed substituted-skill investigations through after-fail investigation
+  windows, including "Look what I found!" and Rabbit's Foot-style reactions.
+- Reused Midnight Masks got-away cultist parley/forced routes inside The Devourer
+  Below and pinned the Midnight Masks skull modifier to highest Cultist doom.
+- Swept clue-discovery logging and same-named enemy auditability: on-defeat clue
+  reactions log only actual discoveries, and enemy attack/move/engage lines now
+  include instance ids.
+
+Validation:
+
+- `python3 -m unittest discover -s tests` => 327 tests passing.
+- Full six-scenario fuzz matrix, all clean:
+  - `python3 -m arkham.fuzz --games 50 --scenario the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_gathering --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_midnight_masks --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario the_devourer_below --invariants-only`
+  - `python3 -m arkham.fuzz --games 50 --scenario return_to_the_devourer_below --invariants-only`
+
+No git commit was made.
+
 ## Fixes Batch 8 — Loop 2 + XP Coverage
 
 - Removed the phantom post-turn fast window and kept remaining fast windows scoped

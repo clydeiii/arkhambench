@@ -433,6 +433,9 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     clue-discovery reaction logs unconditionally even when discovery is prevented
     (state stays correct). Same family as entry 26 (Deduction) — the fix missed
     this path. Sweep ALL discovery-logging paths for the actual-amount rule.
+    **FIXED (batch 11):** Roland's on-defeat reaction now logs only when
+    `discover_clue` returns an actual discovery amount; blocked discovery logs only
+    the prevention event.
 57. **glm-trial-1 reports 1/2 (AoO on asset play; Machete "discard cost")** — NOT A
     BUG ×2: plays provoke AoOs (exemptions are fight/evade/parley/resign); the
     "discard for Machete" was hand-slot management (2 Magnifying Glasses + Machete
@@ -455,14 +458,21 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
 60. **Forbidden Knowledge resolves effect before horror cost** — CONFIRMED, exploit:
     fast-ability path missed the batch-6/9 cost-at-initiation rule; secret/resource
     moved before the 1 horror was paid, three separate times.
+    **FIXED (batch 11):** Forbidden Knowledge pays horror at fast-ability
+    initiation and resumes the secret/resource effect only after the horror window.
 61. **Search allowed "Draw no Spell" with an eligible Spell found** (Arcane
     Initiate vs Dark Memory) — CONFIRMED: RR Search obligates finding when an
     eligible option exists; decline options are only legal when nothing eligible
     was found. (Distinct from batch-10's search-choice fix, which added choice
     among candidates.)
+    **FIXED (batch 11):** Arcane Initiate and Research Librarian no longer offer
+    decline/no-hit options when an eligible card was found; existing forced search
+    presenters already omitted decline.
 62. **Act advances before the act-back finishes resolving** (Mysterious Gateway ×3
     campaigns) — CONFIRMED, ordering/display: the back-side willpower test must
     complete before the next act is current.
+    **FIXED (batch 11):** Return Act 1 now keeps Mysterious Gateway current while
+    Breaking the Wall's test resolves, then switches to The Barrier from ST.7.
 63. **Dark Memory as hand-size discard** — NOT A BUG (adjudicated): RR 4.5 hand-
     size maintenance is a compelled discard, not an "optional choose to discard";
     the weakness prohibition governs optional discards and costs. Noted as an
@@ -472,28 +482,46 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     window; suspect the skill-substitution path (agility investigations) broke the
     "while investigating" trigger detection. Verify Rabbit's Foot-style windows on
     substituted-skill investigations too.
+    **FIXED (batch 11):** failed investigation tests now carry an investigation
+    marker on both success and failure paths, including scenario skill substitutions
+    and Flashlight-style tests.
 65. **Fast assets bypass hand-slot enforcement** (Magnifying Glass over 2 hand
     slots for 5 rounds) — CONFIRMED, exploit: the fast-play path skips the slot-
     capacity discard the normal play path enforces.
+    **FIXED (batch 11):** fast asset plays now pay cost up front and call the normal
+    play/slot-overflow path with paid-cost context.
 66. **Aloof enemies attackable while unengaged** — CONFIRMED, exploit — and the
     C1 spec itself was wrong (Claude's error): RR Aloof forbids attacking an
     unengaged aloof enemy. Require an Engage action first; fix spec-derived tests.
+    **FIXED (batch 11):** fight target generation excludes unengaged Aloof enemies;
+    the basic Engage action remains available and fighting becomes legal after
+    engagement.
 67. **Umôrdhoth's Hunger: discard-to-empty must kill** — CONFIRMED, pro-player —
     reverses Claude's earlier ruling: the card's two sentences resolve in order
     (discard, then kill-check), so an investigator whose last card is discarded IS
     killed. Update the C3-era test.
+    **FIXED (batch 11):** Return Devourer Hunger discards first, then checks for an
+    empty hand and kills discard-to-empty investigators.
 68. **Committed-card success effects resolve after interrupted actions resume**
     (Perception draw after the Twisting Paths move completed) — CONFIRMED,
     ordering: ST.7 committed-card effects resolve inside the test, before the
     provoking action continues.
+    **FIXED (batch 11):** committed skill success effects now resolve before the
+    skill-test callback; callbacks defer if the ST.7 effect opens a decision.
 69. **Shrivelling's symbol-horror resolves after attack results** — CONFIRMED:
     same reveal-time family as batch-7 item 4; the rider must resolve at reveal
     (evidence showed it changing Agnes-reaction legality).
+    **FIXED (batch 11):** Shrivelling's symbol horror moved to the token-reveal
+    step, before attack success/failure and damage.
 70. **Got-away unique cultists have no parley routes in the Devourer Below**
     (Alma Hill unparleyable at Main Path) — CONFIRMED: DB's action options don't
     include the MM parley builders for spawned got-away cultists.
+    **FIXED (batch 11):** Devourer action generation and hooks reuse the Midnight
+    Masks parley/forced routes for got-away unique cultists.
 71. **Wendy's Amulet elder-sign auto-success math display** — CONFIRMED, display:
     result line printed "5 vs 4" instead of auto-success difficulty-0 treatment.
+    **FIXED (batch 11):** Wendy's Amulet elder-sign auto-success reports the test
+    against difficulty 0 in the result math.
 
 ## hy3 swarm round 1 (20 games, 71 reports; GPT-5.5 adjudicated, Fable final gate)
 
@@ -509,12 +537,18 @@ Fable downgraded 2 of GPT's 5 merged confirmations on primary evidence:
 74. **MM standard skull applied -1 with Peter Warren at 2 doom** — CONFIRMED
     (code-check during fix): skull X = highest doom among Cultist enemies in play;
     verify the scan and the doom count at reveal time.
+    **FIXED (batch 11):** standard/easy Midnight Masks skull is pinned to the
+    highest doom on any Cultist enemy in play at reveal time.
 75. **On Wings of Darkness must do NOTHING on a successful test** — CONFIRMED,
     reverses Claude's C1 adjudication (third self-reversal): RR "Then" requires
     the pre-then effect to resolve in full; on success the failure clause never
     resolved, so no damage, no disengage, no move. Update batch-7 entry-29 and
     batch-11 tests accordingly.
+    **FIXED (batch 11):** successful On Wings tests are a no-op; only failures
+    queue damage/horror followed by the Then disengage/move.
 76. **Same-named enemy attack attribution** — NEEDS-CODE-CHECK: with two
     Grave-Eaters (one engaged, one unengaged at Main Path) the enemy-phase queue
     attacked "Grave-Eater" — verify only the engaged instance can attack, and add
     instance disambiguation to enemy log lines so future audits can tell.
+    **FIXED (batch 11):** enemy phase remains engaged-only plus Massive co-located
+    enemies, and enemy attack/move/engage log lines include the instance id.

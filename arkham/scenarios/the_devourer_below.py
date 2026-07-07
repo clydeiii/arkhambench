@@ -443,6 +443,7 @@ def discard_random_from_hand(state: GameState, events: list[dict[str, Any]], rng
 def add_action_options(state: GameState, options: list[DecisionOption]) -> None:
     if state.status != "in_progress":
         return
+    add_got_away_cultist_options(state, options)
     if state.act and state.act.code == "01148" and state.investigator.clues >= 1:
         options.append(DecisionOption("Spend 1 clue to disrupt with willpower", {"kind": "action", "action": "devourer_disrupt", "skill": "willpower"}))
         options.append(DecisionOption("Spend 1 clue to disrupt with agility", {"kind": "action", "action": "devourer_disrupt", "skill": "agility"}))
@@ -455,6 +456,23 @@ def add_action_options(state: GameState, options: list[DecisionOption]) -> None:
         options.append(DecisionOption("Resign", {"kind": "action", "action": "resign"}))
     if umordhoth_at_investigator_location(state) and player_cards.controls_code(state, "01117"):
         options.append(DecisionOption("Throw Lita to Umordhoth", {"kind": "action", "action": "devourer_lita"}))
+
+
+def add_got_away_cultist_options(state: GameState, options: list[DecisionOption]) -> None:
+    for enemy_id in the_midnight_masks.cultist_enemies_at_investigator_location(state):
+        code = state.enemies[enemy_id].card_code
+        if the_midnight_masks.narogath_blocks_parley(state, enemy_id):
+            continue
+        if code == "01138" and len(state.investigator.hand) >= 4:
+            options.append(DecisionOption("Parley with Herman Collins (discard 4 cards)", {"kind": "action", "action": "midnight_parley", "enemy": enemy_id}))
+        elif code == "01139" and state.investigator.clues >= 2:
+            options.append(DecisionOption("Parley with Peter Warren (spend 2 clues)", {"kind": "action", "action": "midnight_parley", "enemy": enemy_id}))
+        elif code == "01140" and state.investigator.resources >= 5:
+            options.append(DecisionOption("Parley with Victoria Devereux (spend 5 resources)", {"kind": "action", "action": "midnight_parley", "enemy": enemy_id}))
+        elif code == "50044":
+            options.append(DecisionOption("Parley with Jeremiah Pierce", {"kind": "action", "action": "midnight_parley", "enemy": enemy_id}))
+        elif code == "50046":
+            options.append(DecisionOption("Parley with Alma Hill", {"kind": "action", "action": "midnight_parley", "enemy": enemy_id}))
 
 
 def execute_action(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> bool:
@@ -476,6 +494,9 @@ def execute_action(state: GameState, payload: dict[str, Any], events: list[dict[
         return True
     if action == "devourer_lita":
         finalize_result(state, events, outcome="R3", resolution="R3", summary="R3: Lita was sacrificed", rng=rng)
+        return True
+    if action == "midnight_parley":
+        the_midnight_masks.parley_cultist(state, str(payload.get("enemy", "")), events, rng)
         return True
     return False
 
@@ -741,7 +762,12 @@ def after_enemy_defeated(state: GameState, events: list[dict[str, Any]], enemy_i
     if state.card_instances[enemy_id].card_code == "01157":
         finalize_result(state, events, outcome="R2", resolution="R2", summary="R2: Umordhoth was defeated")
         return True
+    the_midnight_masks.after_enemy_defeated(state, events, enemy_id)
     return False
+
+
+def after_enemy_evaded(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
+    the_midnight_masks.after_enemy_evaded(state, events, enemy_id)
 
 
 def encounter_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]], instance_id: str) -> bool:
@@ -793,10 +819,10 @@ def encounter_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str
         return True
     if code == "50037":
         discard_encounter_card(state, instance_id)
+        discard_random_from_hand(state, events, rng, 1, source="Umordhoth's Hunger")
         if not state.investigator.hand:
             finalize_result(state, events, outcome="no_resolution", resolution="no_resolution", summary="Umordhoth's Hunger killed the investigator")
             return True
-        discard_random_from_hand(state, events, rng, 1, source="Umordhoth's Hunger")
         for enemy in state.enemies.values():
             enemy.damage = max(0, enemy.damage - 1)
         return True

@@ -102,12 +102,14 @@ class PhaseV6Tests(unittest.TestCase):
         for loc in ("attic", "cellar", "parlor"):
             self.assertIn(loc, s.locations)
             self.assertFalse(s.locations[loc].revealed)
-        self.assertEqual(s.act.stage, 2)
-        self.assertEqual(s.act.name, "The Barrier")
+        self.assertEqual(s.act.stage, 1)
+        self.assertEqual(s.act.name, "Mysterious Gateway")
         self.assertEqual(s.active_skill_test["source"], "Breaking the Wall")
         hand_before = len(s.investigator.hand)
         skill_test.finish_commit(s, SeqRng(["0"]), [])  # Roland wp 3 vs 4 -> fail by 1
         self.assertEqual(len(s.investigator.hand), hand_before - 1)
+        self.assertEqual(s.act.stage, 2)
+        self.assertEqual(s.act.name, "The Barrier")
 
     def test_reveal_cascade_far_above_and_field_of_graves(self) -> None:
         s = return_state()

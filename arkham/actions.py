@@ -166,7 +166,13 @@ def affordable_actions(state: GameState, options: list[DecisionOption]) -> list[
 
 def fight_targets(state: GameState) -> list[str]:
     ids = set(state.investigator.engaged_enemies)
-    ids.update(state.locations[state.investigator.location_id].enemy_ids)
+    for enemy_id in state.locations[state.investigator.location_id].enemy_ids:
+        enemy = state.enemies.get(enemy_id)
+        if not enemy:
+            continue
+        if enemy.engaged_with is None and is_aloof(state, enemy_id):
+            continue
+        ids.add(enemy_id)
     return sorted(enemy_id for enemy_id in ids if enemy_id in state.enemies)
 
 
@@ -270,7 +276,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
                 return
     if action == "investigate":
         loc = state.locations[state.investigator.location_id]
-        skill_test.start(state, events, skill=investigation_skill(state), difficulty=modified_shroud(state, loc.id), source=f"Investigate {loc.name}", on_success={"kind": "investigate"})
+        skill_test.start(state, events, skill=investigation_skill(state), difficulty=modified_shroud(state, loc.id), source=f"Investigate {loc.name}", on_success={"kind": "investigate"}, on_failure={"kind": "investigate"})
     elif action == "move":
         move(state, str(payload["location"]), events, rng=rng)
     elif action == "fight":
@@ -302,7 +308,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
 
         if the_midnight_masks.execute_action(state, payload, events, rng):
             return
-    elif action.startswith("devourer_") and state.scenario in DEVOURER_FAMILY:
+    elif (action.startswith("devourer_") or action == "midnight_parley") and state.scenario in DEVOURER_FAMILY:
         from .scenarios import the_devourer_below
 
         if the_devourer_below.execute_action(state, payload, events, rng):
@@ -1533,7 +1539,7 @@ def flashlight_investigate(state: GameState, payload: dict[str, Any], events: li
         asset.uses["supplies"] -= 1
     location = state.locations[state.investigator.location_id]
     difficulty = max(0, modified_shroud(state, location.id) - 2)
-    skill_test.start(state, events, skill=investigation_skill(state), difficulty=difficulty, source=f"Investigate with Flashlight {location.name}", on_success={"kind": "investigate"})
+    skill_test.start(state, events, skill=investigation_skill(state), difficulty=difficulty, source=f"Investigate with Flashlight {location.name}", on_success={"kind": "investigate"}, on_failure={"kind": "investigate"})
 
 
 def burglary_action(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
@@ -1922,7 +1928,14 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
     ability = str(payload.get("ability"))
     card_id = str(payload.get("card"))
     if ability == "play_fast_asset":
-        play_card(state, card_id, events)
+        if card_id not in state.investigator.hand:
+            return
+        code = state.card_instances[card_id].card_code
+        cost = effective_play_cost(state, code)
+        if state.investigator.resources < cost:
+            return
+        state.investigator.resources -= cost
+        play_card(state, card_id, events, cost_paid=True, paid_cost=cost)
     elif ability == "mind_over_matter" and playable_event(state, card_id) and state.investigator.resources >= 1:
         state.investigator.resources -= 1
         if not player_cards.remove_from_hand_or_discard_for_play(state, card_id):
@@ -2026,9 +2039,21 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
     elif ability == "forbidden_knowledge":
         if card_id in state.investigator.play_area:
             asset = state.card_instances[card_id]
-            if asset.card_code == "01058" and not asset.exhausted and asset.uses.get("secrets", 0) > 0:
+            if asset.card_code == "01058" and (not asset.exhausted or payload.get("activation_cost_paid")) and asset.uses.get("secrets", 0) > 0:
+                if not payload.get("activation_cost_paid"):
+                    asset.exhausted = True
+                    resume_payload = dict(payload)
+                    resume_payload["activation_cost_paid"] = True
+                    start_damage_assignment(
+                        state,
+                        events,
+                        source="Forbidden Knowledge",
+                        damage=0,
+                        horror=1,
+                        resume={"kind": "action", "payload": {"kind": "action", "action": "fast_ability", **resume_payload}},
+                    )
+                    return
                 asset.exhausted = True
-                start_damage_assignment(state, events, source="Forbidden Knowledge", damage=0, horror=1)
                 asset.uses["secrets"] -= 1
                 state.investigator.resources += 1
                 log_event(events, "forbidden_knowledge", "Forbidden Knowledge moved 1 secret to the resource pool.", card=card_id)
@@ -2166,12 +2191,13 @@ def arcane_initiate_action(state: GameState, asset_id: str, events: list[dict[st
         )
         for card_id in found
     ]
-    options.append(
-        DecisionOption(
-            "Draw no Spell",
-            {"kind": "arcane_initiate_choice", "card": "", "candidates": candidates},
+    if not found:
+        options.append(
+            DecisionOption(
+                "Draw no Spell",
+                {"kind": "arcane_initiate_choice", "card": "", "candidates": candidates},
+            )
         )
-    )
     state.decision_queue = [
         PendingDecision(
             id="arcane-initiate-search",
@@ -2315,12 +2341,6 @@ def research_librarian_search(state: GameState, events: list[dict[str, Any]], rn
         )
         for (name, _code), instance_id in found.items()
     ]
-    options.append(
-        DecisionOption(
-            "Decline",
-            {"kind": "research_librarian_choice", "choice": "decline", "candidates": list(found.values())},
-        )
-    )
     state.decision_queue.append(
         PendingDecision(
             id="research-librarian-search",

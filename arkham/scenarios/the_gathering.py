@@ -661,16 +661,22 @@ def advance_act_1_return(state: GameState, events: list[dict[str, Any]]) -> None
     log_event(events, "forced_move", f"{state.investigator.name} moved into the Hole in the Wall.")
     reveal_location(state, events, "hallway")
     engage_ready_enemies_at_roland(state, events)
-    state.act = ActState(code="01109", name="The Barrier", stage=2, clues_required=3)
-    log_event(events, "act_advanced", "Act advanced to The Barrier.")
     skill_test.start(
         state,
         events,
         skill="willpower",
         difficulty=4,
         source="Breaking the Wall",
-        on_failure={"kind": "discard_random_per_fail", "source": "Breaking the Wall"},
+        on_success={"kind": "gathering_return_act1"},
+        on_failure={"kind": "gathering_return_act1", "source": "Breaking the Wall"},
     )
+
+
+def finish_return_act_1(state: GameState, events: list[dict[str, Any]]) -> None:
+    from ..effects import log_event
+
+    state.act = ActState(code="01109", name="The Barrier", stage=2, clues_required=3)
+    log_event(events, "act_advanced", "Act advanced to The Barrier.")
 
 
 def discard_enemies_at_location(state: GameState, location_id: str, events: list[dict[str, Any]]) -> None:

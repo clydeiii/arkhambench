@@ -117,16 +117,24 @@ class PhaseV4Tests(unittest.TestCase):
         s = state()
         knowledge = add_card(s, "01058", "play")
         enemy = add_enemy(s)
-        actions.resolve_fast_ability(s, {"ability": "forbidden_knowledge", "card": knowledge}, [])
+        events: list[dict] = []
+        actions.resolve_fast_ability(s, {"ability": "forbidden_knowledge", "card": knowledge}, events)
+        self.assertEqual(s.investigator.resources, 10)
+        self.assertEqual(s.card_instances[knowledge].uses["secrets"], 4)
+        self.assertEqual(s.investigator.horror, 1)
+        resolve_agnes_horror_reaction(s, s.decision_queue.pop(0).options[0].payload, events)
+        phases.advance_until_decision(s, ArkhamRng(1), events)
         self.assertEqual(s.investigator.resources, 11)
         self.assertEqual(s.card_instances[knowledge].uses["secrets"], 3)
-        self.assertEqual(s.investigator.horror, 1)
-        resolve_agnes_horror_reaction(s, s.decision_queue.pop(0).options[0].payload, [])
         self.assertEqual(s.enemies[enemy].damage, 1)
 
         for _ in range(3):
+            s.decision_queue = []
             s.card_instances[knowledge].exhausted = False
-            actions.resolve_fast_ability(s, {"ability": "forbidden_knowledge", "card": knowledge}, [])
+            actions.resolve_fast_ability(s, {"ability": "forbidden_knowledge", "card": knowledge}, events)
+            if s.decision_queue:
+                resolve_agnes_horror_reaction(s, s.decision_queue.pop(0).options[-1].payload, events)
+                phases.advance_until_decision(s, ArkhamRng(1), events)
         self.assertIn(knowledge, s.investigator.discard)
         self.assertEqual(s.investigator.resources, 14)
 
@@ -135,20 +143,23 @@ class PhaseV4Tests(unittest.TestCase):
         shrivelling = add_card(s, "01060", "play")
         priest = add_enemy(s, "01116")
         s.investigator.actions_remaining = 1
+        events = []
         actions.execute(
             s,
             {"kind": "action", "action": "asset_fight", "asset": shrivelling, "enemy": priest, "damage": 2, "skill": "willpower", "spend_use": "charges", "symbol_horror": True},
-            [],
+            events,
             SeqRng(["skull"]),
         )
         self.assertEqual(s.active_skill_test["skill"], "willpower")
         self.assertEqual(s.investigator.actions_remaining, 0)
         self.assertEqual(s.investigator.damage, 0)
-        skill_test.finish_commit(s, SeqRng(["skull"]), [])
+        skill_test.finish_commit(s, SeqRng(["skull"]), events)
         self.assertEqual(s.card_instances[shrivelling].uses["charges"], 3)
-        self.assertEqual(s.enemies[priest].damage, 2)
         self.assertEqual(s.investigator.horror, 1)
         self.assertEqual(s.decision_queue[0].id, "agnes-after-horror")
+        resolve_agnes_horror_reaction(s, s.decision_queue.pop(0).options[-1].payload, events)
+        phases.advance_until_decision(s, ArkhamRng(1), events)
+        self.assertEqual(s.enemies[priest].damage, 2)
 
     def test_baseball_bat_two_hands_and_discards_after_skull_success(self) -> None:
         s = state()

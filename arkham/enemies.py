@@ -18,6 +18,10 @@ def enemy_name(state: GameState, enemy_id: str) -> str:
     return str(enemy_card(state, enemy_id).get("name", enemy_id))
 
 
+def enemy_log_name(state: GameState, enemy_id: str) -> str:
+    return f"{enemy_name(state, enemy_id)} [{enemy_id}]"
+
+
 def is_hunter(state: GameState, enemy_id: str) -> bool:
     if mind_wiped(state, enemy_id):
         return False
@@ -138,7 +142,7 @@ def spawn_enemy(
     state.enemies[instance_id] = enemy
     instance.zone = "enemy"
     state.locations[target].enemy_ids.append(instance_id)
-    log_event(events, "enemy_spawned", f"{enemy_name(state, instance_id)} spawned at {state.locations[target].name}.", enemy=instance_id)
+    log_event(events, "enemy_spawned", f"{enemy_log_name(state, instance_id)} spawned at {state.locations[target].name}.", enemy=instance_id)
     if target == state.investigator.location_id and not is_elite(state, instance_id):
         disc = next((card_id for card_id in player_cards.play_area_ids(state, "01041")), None)
         if disc:
@@ -169,7 +173,7 @@ def engage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
     enemy.engaged_with = state.investigator.id
     if enemy_id not in state.investigator.engaged_enemies:
         state.investigator.engaged_enemies.append(enemy_id)
-    log_event(events, "enemy_engaged", f"{enemy_name(state, enemy_id)} engaged {state.investigator.name}.", enemy=enemy_id)
+    log_event(events, "enemy_engaged", f"{enemy_log_name(state, enemy_id)} engaged {state.investigator.name}.", enemy=enemy_id)
     if enemy.card_code == "01181":
         start_damage_assignment(state, events, source="Young Deep One", damage=0, horror=1)
 
@@ -181,7 +185,7 @@ def disengage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: st
         state.investigator.engaged_enemies.remove(enemy_id)
     if exhaust:
         enemy.exhausted = True
-    log_event(events, "enemy_disengaged", f"{enemy_name(state, enemy_id)} disengaged.", enemy=enemy_id)
+    log_event(events, "enemy_disengaged", f"{enemy_log_name(state, enemy_id)} disengaged.", enemy=enemy_id)
 
 
 def evade_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
@@ -189,13 +193,17 @@ def evade_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -
         return
     if is_massive(state, enemy_id):
         state.enemies[enemy_id].exhausted = True
-        log_event(events, "enemy_evaded", f"{enemy_name(state, enemy_id)} was evaded and exhausted.", enemy=enemy_id)
+        log_event(events, "enemy_evaded", f"{enemy_log_name(state, enemy_id)} was evaded and exhausted.", enemy=enemy_id)
     else:
         disengage_enemy(state, events, enemy_id, exhaust=True)
     if state.scenario in MIDNIGHT_MASKS_FAMILY and enemy_id in state.enemies:
         from .scenarios import the_midnight_masks
 
         the_midnight_masks.after_enemy_evaded(state, events, enemy_id)
+    elif state.scenario in DEVOURER_FAMILY and enemy_id in state.enemies:
+        from .scenarios import the_devourer_below
+
+        the_devourer_below.after_enemy_evaded(state, events, enemy_id)
 
 
 def engage_ready_enemies_at_roland(state: GameState, events: list[dict[str, Any]]) -> None:
@@ -216,7 +224,7 @@ def move_enemy_to(state: GameState, events: list[dict[str, Any]], enemy_id: str,
         enemy.engaged_with = None
         if enemy_id in state.investigator.engaged_enemies:
             state.investigator.engaged_enemies.remove(enemy_id)
-    log_event(events, "enemy_moved", f"{enemy_name(state, enemy_id)} moved to {state.locations[location_id].name}.", enemy=enemy_id)
+    log_event(events, "enemy_moved", f"{enemy_log_name(state, enemy_id)} moved to {state.locations[location_id].name}.", enemy=enemy_id)
     if location_id == state.investigator.location_id and enemy.engaged_with is None and not enemy.exhausted and not is_aloof(state, enemy_id) and not is_massive(state, enemy_id):
         engage_enemy(state, events, enemy_id)
 
@@ -292,7 +300,7 @@ def attack(
             actions.continue_aoo_order(state, events, dict(resume), rng)
         return
     if not can_attack_investigator(state, enemy_id):
-        log_event(events, "enemy_attack_suppressed", f"{enemy_name(state, enemy_id)} could not attack.", enemy=enemy_id, source=source)
+        log_event(events, "enemy_attack_suppressed", f"{enemy_log_name(state, enemy_id)} could not attack.", enemy=enemy_id, source=source)
         if resume and resume.get("kind") == "action":
             from . import actions
 
@@ -397,7 +405,7 @@ def resolve_attack(
     if enemy_id not in state.enemies or state.enemies[enemy_id].exhausted:
         return
     damage, horror = enemy_damage_horror(state, enemy_id)
-    log_event(events, "enemy_attack", f"{enemy_name(state, enemy_id)} attacked {state.investigator.name}.", enemy=enemy_id, source=source)
+    log_event(events, "enemy_attack", f"{enemy_log_name(state, enemy_id)} attacked {state.investigator.name}.", enemy=enemy_id, source=source)
     extra_damage, extra_horror = yithian_observer_attack_forced(state, events, enemy_id, rng)
     damage += extra_damage
     horror += extra_horror
@@ -511,7 +519,7 @@ def after_attack(
         )
     if source == "enemy phase" and enemy_id in state.enemies:
         state.enemies[enemy_id].exhausted = True
-        log_event(events, "enemy_exhausted", f"{enemy_name(state, enemy_id)} exhausted after attacking.", enemy=enemy_id)
+        log_event(events, "enemy_exhausted", f"{enemy_log_name(state, enemy_id)} exhausted after attacking.", enemy=enemy_id)
     if state.status != "in_progress":
         return
     if state.decision_queue:
@@ -621,8 +629,9 @@ def resolve_enemy_defeated_reaction(state: GameState, payload: dict[str, Any], e
     reaction = str(payload.get("reaction"))
     if reaction == "roland":
         state.limits[f"roland_reaction:{state.round}"] = True
-        discover_clue(state, 1, events)
-        log_event(events, "roland_reaction", f"{state.investigator.name} discovered 1 clue after defeating an enemy.")
+        discovered = discover_clue(state, 1, events)
+        if discovered:
+            log_event(events, "roland_reaction", f"{state.investigator.name} discovered {discovered} clue after defeating an enemy.", amount=discovered)
     elif reaction == "evidence":
         card_id = str(payload.get("card"))
         if card_id in state.investigator.hand and state.investigator.resources >= 1:

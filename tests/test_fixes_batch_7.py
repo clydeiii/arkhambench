@@ -181,7 +181,7 @@ class FixesBatch7Tests(unittest.TestCase):
         self.assertEqual(state.investigator.damage, 1)
         self.assertGreaterEqual(state.investigator.horror, 1)
 
-    def test_on_wings_skips_noop_move_but_still_disengages(self) -> None:
+    def test_on_wings_success_is_noop(self) -> None:
         state = mm.build_state(difficulty="standard", rng=ArkhamRng(1), investigator_slug="roland", house_burned=True)
         state.decision_queue = []
         nightgaunt = add_enemy(state, "01172", "rivertown", engaged=True)
@@ -189,8 +189,9 @@ class FixesBatch7Tests(unittest.TestCase):
         events: list[dict] = []
         mm.on_wings_aftermath(state, events, failed=False)
         self.assertIn(nightgaunt, state.investigator.engaged_enemies)
-        self.assertNotIn(acolyte, state.investigator.engaged_enemies)
+        self.assertIn(acolyte, state.investigator.engaged_enemies)
         self.assertFalse(any(event["type"] == "investigator_moved" for event in events))
+        self.assertFalse(any(event["type"] == "enemy_disengaged" for event in events))
 
     def test_agnes_reaction_during_aoo_preserves_move_resume_and_decline_path(self) -> None:
         for use_reaction in [True, False]:

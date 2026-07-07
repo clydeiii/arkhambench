@@ -987,7 +987,6 @@ def encounter_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str
             difficulty=4,
             source="On Wings of Darkness",
             on_failure={"kind": "on_wings"},
-            on_success={"kind": "on_wings"},
         )
         return True
     if code == "50031":
@@ -1546,19 +1545,18 @@ def apply_token_reveal_effects(state: GameState, events: list[dict[str, Any]], t
 
 
 def on_wings_aftermath(state: GameState, events: list[dict[str, Any]], *, failed: bool) -> None:
-    if failed:
-        from ..effects import start_damage_assignment
-
-        start_damage_assignment(
-            state,
-            events,
-            source="On Wings of Darkness",
-            damage=1,
-            horror=1,
-            resume={"kind": "scenario", "choice": "on_wings_continue"},
-        )
+    if not failed:
         return
-    on_wings_disengage_and_move(state, events)
+    from ..effects import start_damage_assignment
+
+    start_damage_assignment(
+        state,
+        events,
+        source="On Wings of Darkness",
+        damage=1,
+        horror=1,
+        resume={"kind": "scenario", "choice": "on_wings_continue"},
+    )
 
 
 def on_wings_disengage_and_move(state: GameState, events: list[dict[str, Any]]) -> None:

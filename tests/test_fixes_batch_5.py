@@ -177,7 +177,7 @@ class DiscardOwnershipTests(unittest.TestCase):
 
 
 class WeaknessAndSearchTests(unittest.TestCase):
-    def test_research_librarian_is_optional_and_necronomicon_reveals_from_choice(self) -> None:
+    def test_research_librarian_search_choice_reveals_necronomicon(self) -> None:
         s = state()
         s.investigator.card_code = "01002"
         librarian = add_card(s, "01032", "hand", "librarian")
@@ -190,7 +190,7 @@ class WeaknessAndSearchTests(unittest.TestCase):
         labels = [option.label for option in s.decision_queue[0].options]
         self.assertIn("Add Medical Texts to hand", labels)
         self.assertIn("Add The Necronomicon to hand", labels)
-        self.assertIn("Decline", labels)
+        self.assertNotIn("Decline", labels)
         self.assertIn(medical, s.investigator.deck)
         necro_payload = next(option.payload for option in s.decision_queue[0].options if option.payload.get("card") == necro)
         actions.resolve_research_librarian_choice(s, necro_payload, events, SeqRng())

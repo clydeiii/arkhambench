@@ -29,6 +29,11 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
 
             skill_test.process_deferred_scenario_token_aftermath(state, events, rng)
             continue
+        if state.limits.get("deferred_skill_callback"):
+            from . import skill_test
+
+            skill_test.resume_deferred_callback(state, events, rng)
+            continue
         if state.limits.get("deferred_agenda_advance"):
             process_deferred_agenda_advance(state, events, rng=rng)
             continue
