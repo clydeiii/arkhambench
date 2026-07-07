@@ -494,3 +494,27 @@ Coverage-game audit findings (10 XP-deck games), Fable adjudications:
     include the MM parley builders for spawned got-away cultists.
 71. **Wendy's Amulet elder-sign auto-success math display** — CONFIRMED, display:
     result line printed "5 vs 4" instead of auto-success difficulty-0 treatment.
+
+## hy3 swarm round 1 (20 games, 71 reports; GPT-5.5 adjudicated, Fable final gate)
+
+Verdict flow: 71 reports -> GPT: 17 confirmed / 6 code-check / 48 not-a-bug ->
+Fable downgraded 2 of GPT's 5 merged confirmations on primary evidence:
+
+72. **"Weapon +1 damage not applied"** — NOT A BUG (Fable reversal of GPT): the
+    cited fights happened at Corpse-Ridden Clearing, whose printed text caps each
+    attack at 1 damage; the C3 implementation is correct.
+73. **"Non-Hunter enemies moved in enemy phase"** — NOT A BUG (Fable reversal):
+    agenda 3 "They're Getting Out!" forcibly moves each unengaged Ghoul toward the
+    Parlor at end of enemy phase; Flesh-Eater/Acolyte/Corpse-Hungry are Ghouls.
+74. **MM standard skull applied -1 with Peter Warren at 2 doom** — CONFIRMED
+    (code-check during fix): skull X = highest doom among Cultist enemies in play;
+    verify the scan and the doom count at reveal time.
+75. **On Wings of Darkness must do NOTHING on a successful test** — CONFIRMED,
+    reverses Claude's C1 adjudication (third self-reversal): RR "Then" requires
+    the pre-then effect to resolve in full; on success the failure clause never
+    resolved, so no damage, no disengage, no move. Update batch-7 entry-29 and
+    batch-11 tests accordingly.
+76. **Same-named enemy attack attribution** — NEEDS-CODE-CHECK: with two
+    Grave-Eaters (one engaged, one unengaged at Main Path) the enemy-phase queue
+    attacked "Grave-Eater" — verify only the engaged instance can attack, and add
+    instance disambiguation to enemy log lines so future audits can tell.

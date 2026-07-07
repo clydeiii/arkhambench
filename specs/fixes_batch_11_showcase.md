@@ -46,3 +46,17 @@ existing tests asserting the old behavior must be updated (66, 67).
 ## (placeholder) hy3 swarm confirmations
 
 Appended after GPT-5.5 adjudication of the swarm's bug reports.
+
+## hy3 swarm confirmations (ledger 74-76)
+
+13. (74) Midnight Masks standard skull: X = highest doom among Cultist enemies in
+    play at reveal time. Code-check the scan (engaged cultists? attachment doom?)
+    against the transcript (Peter Warren 2 doom -> -1 applied); fix and pin a test.
+14. (75) On Wings of Darkness: on a SUCCESSFUL test, nothing happens (no damage,
+    no disengage, no move). RR "Then" — pre-then failure clause must resolve for
+    the post-then move. Update the batch-7-era tests and entry-29 no-op logic.
+15. (76) Enemy-phase and AoO attack queues: verify only ENGAGED (or Massive
+    co-located) enemies can attack; add instance-id disambiguation to enemy
+    attack/move log lines (two same-named enemies were indistinguishable in the
+    audit trail). Test: engaged + unengaged same-code enemies -> exactly one
+    attack, from the engaged instance, and the log identifies it.
