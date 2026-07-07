@@ -11,7 +11,10 @@ run_agent() {
   local agent="$1" label="$2" attempt=1
   while [ "$attempt" -le "$MAX_ATTEMPTS" ]; do
     echo "=== $label attempt $attempt"
-    python3 scripts/bench.py --agent "$agent" --label "$label" --games "$GAMES" && break
+    python3 scripts/bench.py --agent "$agent" --label "$label" --games "$GAMES" || true
+    local have
+    have=$(ls bench/"$label"/game-*/result.json 2>/dev/null | wc -l | tr -d ' ')
+    [ "$have" -ge "$GAMES" ] && break
     attempt=$((attempt + 1))
   done
   local done_count
