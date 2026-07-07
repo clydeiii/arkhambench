@@ -19,8 +19,8 @@ run_agent() {
   echo "=== $label: $done_count/$GAMES complete"
 }
 
-run_agent openrouter/tencent/hy3:free        hy3-b2
 run_agent openrouter/z-ai/glm-5.2            glm52-b2
 run_agent openrouter/moonshotai/kimi-k2.6    kimi26-b2
 run_agent openrouter/deepseek/deepseek-v4-flash dsv4f-b2
+run_agent openrouter/tencent/hy3:free        hy3-b2
 echo B2-GAUNTLET-DONE

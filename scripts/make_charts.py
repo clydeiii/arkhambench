@@ -11,6 +11,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+B2_AGENTS = [
+    ("glm52-b2", "GLM-5.2", "#b83280"),
+    ("kimi26-b2", "Kimi k2.6", "#dd6b20"),
+    ("dsv4f-b2", "DeepSeek v4-flash", "#319795"),
+    ("hy3-b2", "Hunyuan 3", "#718096"),
+]
+
 AGENTS = [
     ("fable5-b1", "Fable 5", "#6b46c1"),
     ("opus48-b1", "Opus 4.8", "#2b6cb0"),
@@ -127,6 +134,50 @@ def second_visit_deltas(out: Path) -> None:
     out.write_text("\n".join(parts), encoding="utf-8")
 
 
+def game_steps(label: str, game: int) -> int | None:
+    log = ROOT / "bench" / label / f"game-{game:02d}" / "log.md"
+    if not log.exists():
+        return None
+    return sum(1 for line in log.read_text(encoding="utf-8").splitlines() if "Decision presented" in line)
+
+
+def steps_and_score(out: Path, agents: list[tuple[str, str, str]], title: str) -> bool:
+    rows = []
+    for label, name, color in agents:
+        games = load(label)
+        if not games:
+            continue
+        steps = [s for s in (game_steps(label, int(g["game"])) for g in games) if s is not None]
+        if not steps:
+            continue
+        rows.append((name, color, sum(steps) / len(steps), sum(float(g["score"]) for g in games) / len(games)))
+    if not rows:
+        return False
+    width = 760
+    row_h, top, left = 64, 56, 150
+    height = top + row_h * len(rows) + 70
+    max_steps = max(r[2] for r in rows) * 1.15
+    max_score = 10.0
+    bar_w = width - left - 130
+    parts = svg_header(width, height)
+    parts.append(f'<text x="16" y="26" font-size="17" font-weight="bold">{title}</text>')
+    parts.append(f'<text x="16" y="44" font-size="11" fill="#777">per-model averages over the 10-game gauntlet — steps = decisions faced before the game ended; score = XP − trauma (0–10)</text>')
+    y = top
+    for name, color, steps, score in rows:
+        parts.append(f'<text x="{left-10}" y="{y+18}" font-size="13" text-anchor="end" font-weight="bold">{name}</text>')
+        w_steps = steps / max_steps * bar_w
+        parts.append(f'<rect x="{left}" y="{y}" width="{w_steps:.1f}" height="20" fill="{color}"/>')
+        parts.append(f'<text x="{left+w_steps+6:.1f}" y="{y+15}" font-size="12" fill="#333">{steps:.0f} steps</text>')
+        w_score = score / max_score * bar_w
+        parts.append(f'<rect x="{left}" y="{y+24}" width="{w_score:.1f}" height="12" fill="{color}" opacity="0.45"/>')
+        parts.append(f'<text x="{left+w_score+6:.1f}" y="{y+34}" font-size="11" fill="#555">score {score:.2f}</text>')
+        y += row_h
+    parts.append(f'<text x="{left}" y="{y+18}" font-size="10" fill="#999">solid bar: mean decisions per game (longer = survived longer) · faded bar: mean score (0–10 scale)</text>')
+    parts.append("</svg>")
+    out.write_text("\n".join(parts), encoding="utf-8")
+    return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default="results")
@@ -135,6 +186,10 @@ def main() -> int:
     out_dir.mkdir(exist_ok=True)
     scores_by_game(out_dir / "scores_by_game.svg")
     second_visit_deltas(out_dir / "second_visit_deltas.svg")
+    if steps_and_score(out_dir / "steps_vs_score_b1.svg", AGENTS, "Game length vs score — main run (US frontier models)"):
+        print("steps_vs_score_b1.svg written")
+    if steps_and_score(out_dir / "steps_vs_score_b2.svg", B2_AGENTS, "Game length vs score — open-weights run (China open models)"):
+        print("steps_vs_score_b2.svg written")
     print(f"charts written to {out_dir}/")
     return 0
 
