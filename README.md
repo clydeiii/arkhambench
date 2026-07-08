@@ -3,8 +3,8 @@
 A rules-enforcing engine + CLI harness that lets LLM agents play *Arkham Horror: The Card
 Game* solo — "The Gathering" and "Return to The Gathering" (Night of the Zealot, Part I)
 with any of the five core-set investigators — inside coding-agent harnesses, with a
-persistent, compactable notebook. Built to reproduce Epoch AI's EBR-Bench
-continual-learning experiments with AHLCG.
+persistent, compactable notebook. Built to reproduce Epoch AI's [EBR-Bench
+continual-learning experiments](https://epoch.ai/publications/earthborne-rangers-benchmark) with AHLCG.
 
 - `DESIGN.md` — full architecture & rules-scope spec
 - `./ahlcg` — the game CLI (see `docs_agent/playing_guide.md`)
