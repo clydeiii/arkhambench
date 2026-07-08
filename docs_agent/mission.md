@@ -26,7 +26,11 @@ lessons and per-investigator lessons both belong in it (label which is which). U
 3. **Take notes as you learn** — after mistakes, surprises, and at game end (what you'd
    do differently, what worked, key numbers). Notes are for your future self: make them
    concrete and actionable. Compact the notebook (`./ahlcg note compact`) when it gets
-   bloated.
+   bloated — but compact means COMPRESS, not discard: the rewrite you supply replaces
+   the whole notebook, so it must carry forward every still-relevant lesson (especially
+   lessons about investigators you are not currently playing — you will be them again).
+   Old versions stay readable via `./ahlcg note archive` if a compaction dropped
+   something you need.
 4. **Finish the game.** Play until GAME OVER, then run `./ahlcg score`, record your
    final lessons in the notebook, and report your result.
 

@@ -135,6 +135,32 @@ class NotebookTests(unittest.TestCase):
             self.assertTrue(archive.exists())
             self.assertIn("remember this", archive.read_text(encoding="utf-8"))
 
+    def test_archive_list_and_read_back(self) -> None:
+        from arkham.notebook import list_archives, read_archive
+
+        with tempfile.TemporaryDirectory() as tmp:
+            notebook = Path(tmp) / "notebook.md"
+            self.assertEqual(list_archives(notebook), [])
+            with self.assertRaises(ValueError):
+                read_archive(notebook, "latest")
+
+            add_note(notebook, "lesson one", run_name="run-a", round_number=1)
+            compact(notebook, "summary one")
+            add_note(notebook, "lesson two", run_name="run-b", round_number=2)
+            compact(notebook, "summary two")
+
+            archives = list_archives(notebook)
+            self.assertEqual(len(archives), 2)
+            _, oldest = read_archive(notebook, "1")
+            self.assertIn("lesson one", oldest)
+            _, latest = read_archive(notebook, "latest")
+            self.assertIn("lesson two", latest)
+            self.assertIn("summary one", latest)
+            with self.assertRaises(ValueError):
+                read_archive(notebook, "3")
+            with self.assertRaises(ValueError):
+                read_archive(notebook, "bogus")
+
 
 class CliTests(unittest.TestCase):
     def run_cli(self, *args: str, cwd: Path, env: dict[str, str] | None = None) -> subprocess.CompletedProcess[str]:

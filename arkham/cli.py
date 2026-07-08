@@ -87,20 +87,42 @@ def build_parser() -> argparse.ArgumentParser:
     score.add_argument("--run", dest="run", default=None)
     score.set_defaults(func=cmd_score)
 
-    note = sub.add_parser("note")
+    note = sub.add_parser("note", help="persistent notebook — your memory across games")
     note_sub = note.add_subparsers(required=True)
-    note_add = note_sub.add_parser("add")
+    note_add = note_sub.add_parser("add", help="append a note to the notebook")
     note_add.add_argument("text")
     note_add.add_argument("--run", dest="run", default=None)
     note_add.add_argument("--notebook", dest="notebook", default=None)
     note_add.set_defaults(func=cmd_note_add)
-    note_show = note_sub.add_parser("show")
+    note_show = note_sub.add_parser("show", help="print the current notebook")
     note_show.add_argument("--notebook", dest="notebook", default=None)
     note_show.set_defaults(func=cmd_note_show)
-    note_compact = note_sub.add_parser("compact")
-    note_compact.add_argument("--file", "-f", required=True)
+    note_compact = note_sub.add_parser(
+        "compact",
+        help="REPLACE the notebook with a compressed rewrite you supply",
+        description=(
+            "Replaces the ENTIRE notebook with the body from --file (or stdin with -f -). "
+            "Compact means compress, not discard: the new body must preserve every "
+            "still-relevant lesson from the old notebook in condensed form — especially "
+            "per-investigator lessons for investigators you are not currently playing. "
+            "The previous version is archived and stays readable via `note archive`."
+        ),
+    )
+    note_compact.add_argument("--file", "-f", required=True, help="new notebook body ('-' reads stdin)")
     note_compact.add_argument("--notebook", dest="notebook", default=None)
     note_compact.set_defaults(func=cmd_note_compact)
+    note_archive = note_sub.add_parser(
+        "archive",
+        help="list or read archived (pre-compaction) notebooks",
+        description=(
+            "Without arguments, lists archived notebook versions (each `note compact` "
+            "archives the previous notebook). With a number or 'latest', prints that "
+            "archived version — use this to recover lessons a compaction dropped."
+        ),
+    )
+    note_archive.add_argument("which", nargs="?", default=None, help="archive number (oldest=1) or 'latest'")
+    note_archive.add_argument("--notebook", dest="notebook", default=None)
+    note_archive.set_defaults(func=cmd_note_archive)
 
     campaign = sub.add_parser("campaign")
     campaign_sub = campaign.add_subparsers(required=True)
@@ -327,8 +349,39 @@ def cmd_note_compact(args: argparse.Namespace) -> int:
         body = sys.stdin.read()
     else:
         body = Path(args.file).read_text(encoding="utf-8")
-    archive = compact(resolve_notebook(args.notebook, run_dir=_notebook_run_dir(None)), body)
-    print(f"archived previous notebook: {archive}")
+    notebook_path = resolve_notebook(args.notebook, run_dir=_notebook_run_dir(None))
+    old_lines = len(show(notebook_path).splitlines())
+    compact(notebook_path, body)
+    new_lines = len(show(notebook_path).splitlines())
+    print(f"compacted notebook: {old_lines} lines -> {new_lines} lines")
+    print(
+        "previous version archived — if this rewrite dropped any lesson you still need "
+        "(check per-investigator lessons!), recover it with: ./ahlcg note archive latest"
+    )
+    return 0
+
+
+def cmd_note_archive(args: argparse.Namespace) -> int:
+    from .notebook import list_archives, read_archive
+
+    notebook_path = resolve_notebook(args.notebook, run_dir=_notebook_run_dir(None))
+    if args.which is None:
+        archives = list_archives(notebook_path)
+        if not archives:
+            print("no archived notebooks (nothing has been compacted yet)")
+            return 0
+        print(f"{len(archives)} archived notebook version(s), oldest first:")
+        for i, path in enumerate(archives, start=1):
+            lines = len(path.read_text(encoding="utf-8").splitlines())
+            print(f"  {i}. {path.stem} ({lines} lines)")
+        print("read one with: ./ahlcg note archive <number|latest>")
+        return 0
+    try:
+        _, text = read_archive(notebook_path, args.which)
+    except ValueError as exc:
+        print(f"error: {exc}")
+        return 1
+    print(text, end="")
     return 0
 
 
