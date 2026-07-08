@@ -45,13 +45,13 @@ def svg_header(width: int, height: int) -> list[str]:
     ]
 
 
-def scores_by_game(out: Path) -> None:
+def scores_by_game(out: Path, agents=None, title="Score per game (Return to The Gathering, shared seeds)") -> None:
     width, height = 760, 420
     left, right, top, bottom = 60, 170, 40, 70
     plot_w, plot_h = width - left - right, height - top - bottom
     max_score, games = 10, 10
     parts = svg_header(width, height)
-    parts.append(f'<text x="{left}" y="24" font-size="17" font-weight="bold">Score per game (Return to The Gathering, shared seeds)</text>')
+    parts.append(f'<text x="{left}" y="24" font-size="17" font-weight="bold">{title}</text>')
 
     def x(i: int) -> float:  # game index 1..10
         return left + (i - 1) * plot_w / (games - 1)
@@ -71,7 +71,7 @@ def scores_by_game(out: Path) -> None:
     parts.append(f'<text x="{x(9.5)}" y="{top+14}" font-size="10" text-anchor="middle" fill="#8a6bb8">scored window</text>')
 
     legend_y = top + 6
-    for label, name, color in AGENTS:
+    for label, name, color in (agents or AGENTS):
         games_data = load(label)
         pts = [(int(g["game"]), float(g["score"])) for g in games_data]
         if not pts:
@@ -185,6 +185,8 @@ def main() -> int:
     out_dir = ROOT / args.out
     out_dir.mkdir(exist_ok=True)
     scores_by_game(out_dir / "scores_by_game.svg")
+    scores_by_game(out_dir / "scores_by_game_b2.svg", B2_AGENTS,
+                   "Score per game — open-weights run (same seeds and rotation)")
     second_visit_deltas(out_dir / "second_visit_deltas.svg")
     if steps_and_score(out_dir / "steps_vs_score_b1.svg", AGENTS, "Game length vs score — main run (US frontier models)"):
         print("steps_vs_score_b1.svg written")

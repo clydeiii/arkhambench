@@ -413,3 +413,35 @@ Campaign lesson: In Return Midnight Masks with Wendy, avoid drawing cultists whe
 
 show-gpt-wendy finale: Return TDB ended no_resolution R10, 0XP, +1 mental trauma. Key trap: Throw Lita to Umordhoth is an action that provokes AoOs from every engaged enemy; moving to Main Path with escaped cultists still engaged Lita/Wendy, and Peter's 1 damage discarded already-damaged Lita before the sacrifice could resolve. To use Lita, arrive at Main Path/Ritual line with enemies evaded/disengaged first and keep Lita with at least 2 damage soak remaining, or use Elusive/Cunning Distraction before the sacrifice turn. Great Willow is also deadly late because successful treachery tests surge; leave it before agenda 3 if possible.
 
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB/Roland lesson: Relentless Dark Young spawns at Main Path (Brood of Umordhoth) and is a permanent 2dmg/1hor tax once engaged. ENGINE BUG: it follows you on a move and stays engaged (rules: moving to a new location should disengage — enemy left behind, only AoO). Avoid passing Main Path without a burst-kill plan; killing it needs 5+ dmg/turn since it heals 2.
+
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB lesson: Umordhoth's Wrath = willpower 3 vs 5. Fail-by-X = X picks of (1dmg+1hor OR discard 1 card). KEEP >=2 hand cards as insurance — I died at hor 5/5 with only 1 card (had committed First Aid / spent PT). Thin hand + Wrath = death.
+
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB token: tablet = -5 AND 1 dmg + 1 hor in this hard run (corrects older notebook '-3' claim which was likely a different scenario). Brutal; never take a naked test you can't afford to fail by 5.
+
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB Brood of Umordhoth monster-choice: ALWAYS pick Grave-Eater (2/2/2, no doom/Hunter/Retaliate). Avoids Corpse-Taker (doom acceleration to agenda), Goat Spawn (Hunter+Retaliate), Relentless Dark Young (5hp healer), Acolyte (un-evadable with empty hand).
+
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB/Dodge: cancels an AoO for 1 res —巨大 value when engaged (saved me 2dmg/1hor at the Lakeside move). Hold it for AoO cancellation, not just enemy attacks.
+
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB map: clue woods = Lakeside (=Woods2, 1 clue) and others; Quiet Glade (=Woods1) had 0 clues. Main Path hub has 0 clues but is the only route to the clue woods and the Dark Young camps it. Act1 needs 3 clues from the woods.
+
+## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
+
+TDB/Roland death autopsy (hy3-swarm): engaged Dark Young R4 (ate 2dmg/2hor+tablet hor), then R5 Wrath failed by 5 with 1 card -> hor 5/5 insanity. Root: forced through Main Path to reach clue woods, no kill plan for Dark Young, hand thinned before Wrath. Next time: mulligan for a burst weapon (.38/Machete) to kill Dark Young turn-1-of-engagement, and bank >=2 cards into mythos.
+
+
+## [2026-07-07T12:58:24+00:00] Run c-show-fable-agnes-3 · Round 11
+
+Return/Gathering Agnes death autopsy (R11, horror 8/8, no_resolution, XP 4, mental trauma 1, score 3): Shrivelling has a Forced recoil — when a SYMBOL chaos token (skull/cultist/tablet/elder_thing/autofail) is revealed during its fight test, the wielder takes 1 horror. At 7/8 horror I swung Shrivelling at Swarm of Rats (5v1, "trivial"); skull revealed → 0 modifier but 1 recoil horror → 8/8 = dead, no reaction window offered (engine resolved defeat before Agnes's horror-ping reaction). LESSON: never swing Shrivelling at high horror unless a symbol reveal is survivable — at 7/8 sanity ANY symbol token kills. Heal/use Forbidden Knowledge soak/bank horror headroom BEFORE the fight. Also: Agenda 3 'They're Getting Out!' completing is the hard death timer (per skids-1 lesson) — at 6/7 doom entering R10 the realistic plan was to RACE Act 2 advance, not farm another Shrivelling charge; should have moved to Hallway with 2 clues and ended the round to advance Act 2 instead of fighting the Acolyte/Rats.

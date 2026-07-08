@@ -136,6 +136,42 @@ Honest reading of n=10 runs:
   headline beats Opus's despite a 1.6-point worse mean). The 30-game version of this
   run is the obvious next step.
 
+## Benchmark results — open-weights run (2026-07-08)
+
+The same 10-game gauntlet (identical seeds 1001–1010, identical investigator
+rotation, empty starting notebooks) run for four Chinese open-weights models via
+OpenRouter + the opencode harness. One caveat for cross-table comparison: these
+games ran on the current engine, ~30 confirmed rules fixes after the main run
+(most fixed bugs were pro-player), with confirmation prompts disabled to match
+main-run conditions. Comparisons across the two tables are indicative, not
+strictly controlled.
+
+![Score per game — open weights](results/scores_by_game_b2.svg)
+
+| Agent (harness) | Scores by game | Mean | **Final-20%** | Wins |
+|---|---|---:|---:|---|
+| GLM-5.2 (opencode) | 4 2 3 3 4 1 2 2 **6** 4 | 3.10 | **5.00** | R1 g9 |
+| Kimi k2.6 (opencode) | 5 2 0 2 1 4 2 2 **4** 2 | 2.40 | **3.00** | — |
+| DeepSeek v4-flash (opencode) | 1 1 2 2 3 2 2 3 **3** 2 | 2.10 | **2.50** | — |
+| Hunyuan 3 (opencode) | 3 2 1 0 4 0 2 2 **4** 1 | 1.90 | **2.50** | R1 g5 |
+
+**US/China reading.** On the headline final-20% metric the combined board runs:
+Fable 5 (6.50) > Sonnet 5 (5.50) > **GLM-5.2 (5.00)** > GPT-5.5 (4.00) > Opus 4.8
+(3.50) > Kimi k2.6 (3.00) > DeepSeek v4-flash = Hunyuan 3 (2.50). GLM-5.2 is the
+open-weights standout — third overall, ahead of two US frontier closed models —
+and repeated the familiar pattern of converting a notebook-informed game-9 win.
+Hunyuan 3 (free tier) won a game outright on cold start. DeepSeek v4-flash never
+scored below 1 or above 3: the most consistent and least explosive agent we have
+benched. All four open models played materially shorter games than the US four
+(66–83 decisions/game vs 98–104), mostly reflecting earlier deaths.
+
+### Game length vs score
+
+Steps = decisions faced before the game ended (winning takes longer than dying):
+
+![Steps vs score — main run](results/steps_vs_score_b1.svg)
+![Steps vs score — open weights](results/steps_vs_score_b2.svg)
+
 ### The second benchmark: can models playtest?
 
 While building this we found the bounty structure turns the benchmark self-healing:
