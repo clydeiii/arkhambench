@@ -185,26 +185,6 @@ turn out to be distinct: the best bug-finder (Fable 5, 6 confirmed finds) and th
 best cold-start player (GPT-5.5) are different models. Full verdicts:
 [`specs/bug_adjudications.md`](specs/bug_adjudications.md).
 
-## Demo results (2026-07-03, one game each, harness-validation runs — not a controlled comparison)
-
-Scores under the current `max(0, XP − trauma)` formula (the runs were played under
-earlier formulas, and a defeat-trauma double-count inflated opus48/sonnet5 trauma by 1):
-
-| Agent (harness) | Seed | Outcome | XP | Trauma | Lita | Score |
-|---|---|---|---|---|---|---|
-| GPT-5.5 (codex) | 23 | Defeated by agenda 3 at Act 3, Priest at 4/5 dmg | 6 | 1 | yes | **5** |
-| Fable 5 (claude) | 11 | **Won — R1**, Ghoul Priest slain R12 | 6 | 2 | yes | **4** |
-| Opus 4.8 (claude) | 31 | Defeated by horror R11 (two hunters stacked) | 4 | 1 | yes | **3** |
-| Sonnet 5 (claude) | 47 | Defeated by horror R4 (AoO while engaged) | 2 | 1 | yes | **1** |
-
-(The Gathering's no-resolution outcome is canonically forgiving — you escape with Lita
-and your victory display — so defeat is punished mainly through trauma and lost tempo.
-The score spread between careful and careless play comes from VP banked and trauma.)
-
-Caveats: different seeds; GPT-5.5 read the notebook Fable 5 wrote (shared notebook in the
-first two runs — per-agent notebooks were added afterward). Full transcripts in
-`runs/<name>/log.md`, agent reasoning in `logs/<name>.agent.log`, lessons in `notebooks/`.
-
 Card data © Fantasy Flight Games, via the community project
 [arkhamdb-json-data](https://github.com/Kamalisk/arkhamdb-json-data). This project is for
 AI-capabilities research and commentary; it does not distribute scans of the game.
