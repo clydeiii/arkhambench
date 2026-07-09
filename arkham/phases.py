@@ -76,6 +76,8 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     from .scenarios import the_devourer_below
 
                     the_devourer_below.end_investigator_turn(state, events)
+                # Will to Survive lasts "until the end of your turn", not the round.
+                state.limits.pop(f"will_to_survive:{state.round}", None)
                 state.phase = "Enemy"
                 log_event(events, "phase_started", "Enemy phase began.")
         elif state.phase == "Enemy":

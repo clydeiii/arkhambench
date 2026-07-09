@@ -592,3 +592,13 @@ value in the pipeline remains volume, not precision).
     Wendy solo game) — CONFIRMED (cosmetic, log layer only; state unaffected).
     FIXED: both messages now use the active investigator's name; regression
     assert added to the elusive test.
+84. **Will to Survive lasts the whole ROUND instead of "until the end of your
+    turn"** (Sol probe, C7 lane 3) — CONFIRMED: the no-reveal flag was keyed by
+    round only. FIXED: cleared at the investigation->enemy phase transition.
+    Note: Sol's probe test itself had two bugs (committed Guts 01089 believing
+    it was Overpower 01091; hand-set state.phase bypassing the transition) —
+    fixed in review; the underlying engine defect was nonetheless real.
+85. **Mind Wipe blanks attachment-granted Aloof** (Sol probe, C7 lane 3) —
+    CONFIRMED: is_aloof() returned False for mind-wiped enemies before checking
+    the Mask (50043) attachment. Mind Wipe blanks only the printed text box.
+    FIXED: printed-Aloof check gated by mind_wiped; mask grant unaffected.

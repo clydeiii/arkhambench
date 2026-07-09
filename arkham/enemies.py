@@ -96,9 +96,9 @@ def enemy_health(state: GameState, enemy_id: str) -> int:
 
 
 def is_aloof(state: GameState, enemy_id: str) -> bool:
-    if mind_wiped(state, enemy_id):
-        return False
-    if "Aloof" in str(enemy_card(state, enemy_id).get("text", "")):
+    # Mind Wipe blanks only the enemy's PRINTED text box; Aloof granted by an
+    # attached Mask (50043) survives the blanking.
+    if "Aloof" in str(enemy_card(state, enemy_id).get("text", "")) and not mind_wiped(state, enemy_id):
         return True
     enemy = state.enemies[enemy_id]
     if card_data.get_card(enemy.card_code).get("is_unique"):
