@@ -120,8 +120,9 @@ class PhaseC3DevourerTests(unittest.TestCase):
         state.enemies["e"] = EnemyInstance(id="e", card_code="50038", location_id=clearing)
         self.assertEqual(d.damage_amount_to_enemy(state, "e", 3), 1)
         state.investigator.location_id = willow
+        state.card_instances["rotting"] = CardInstance(id="rotting", card_code="01163", zone="encounter_discard")
         events: list[dict] = []
-        d.after_skill_test(state, events, {"source": "Rotting Remains"}, {"success": True}, None)
+        d.after_skill_test(state, events, {"source": "Rotting Remains", "revelation_source": "rotting"}, {"success": True}, None)
         self.assertTrue(any(event["type"] == "surge" for event in events))
 
     def test_act_chain(self) -> None:
@@ -296,6 +297,7 @@ class PhaseC3DevourerTests(unittest.TestCase):
     def test_dark_cult_original_spawns_at_any_empty_location(self) -> None:
         for code in ["01169", "01170"]:
             state = build()
+            state.decision_queue = []
             cid = f"spawn_{code}"
             state.card_instances[cid] = CardInstance(id=cid, card_code=code, zone="encounter_drawn")
             state.encounter_deck = [card_id for card_id in state.encounter_deck if card_id != cid]

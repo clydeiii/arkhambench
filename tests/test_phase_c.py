@@ -268,6 +268,8 @@ class PhaseCPlayerCardTests(unittest.TestCase):
         events = []
         skill_test.start(s, events, skill="intellect", difficulty=0, source="Investigate Study", on_success={"kind": "investigate"})
         resolve_current_test(s, events)
+        self.assertEqual(s.decision_queue[0].id, "milan-reaction")
+        skill_test.resolve_milan_reaction(s, s.decision_queue.pop(0).options[0].payload, events)
         self.assertEqual(s.investigator.resources, 1)
         self.assertEqual(actions.player_cards.effective_base_skill(s, "intellect", "Other"), 4)
 

@@ -385,6 +385,15 @@ def resolve_scenario_choice(
     elif choice == "mysterious_chanting_target":
         place_doom_on_enemy(state, str(payload.get("enemy", "")), 2, events, source="Mysterious Chanting", rng=rng)
         discard_encounter_card(state, str(payload.get("card", "")))
+    elif choice == "chaos_cultist_target":
+        place_doom_on_enemy(
+            state,
+            str(payload.get("enemy", "")),
+            int(payload.get("amount", 1)),
+            events,
+            source="Chaos token",
+            rng=rng,
+        )
     elif choice == "mask_target":
         attach_mask_to_enemy(state, str(payload.get("card", "")), str(payload.get("enemy", "")), events, rng)
     elif choice == "disciple_doom":
@@ -422,6 +431,7 @@ def resolve_scenario_choice(
         resolve_warehouse_enemy_choice(state, payload, events)
     elif choice == "on_wings_continue":
         on_wings_disengage_and_move(state, events)
+    resolve_pending_mask_after_spawn(state, events, rng)
 
 
 def add_action_options(state: GameState, options: list[DecisionOption]) -> None:
@@ -615,7 +625,7 @@ def present_deck_search_choice(
 
         log_event(events, "deck_searched", f"{source} found no matching card.")
         return
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="midnight-deck-search",
             kind="scenario",
@@ -628,7 +638,7 @@ def present_deck_search_choice(
                 for card_id in candidates
             ],
         )
-    ]
+    )
 
 
 def present_top_search_choice(
@@ -648,7 +658,7 @@ def present_top_search_choice(
 
         log_event(events, "deck_searched", f"{source} found no matching card.")
         return
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="midnight-top-search",
             kind="scenario",
@@ -661,7 +671,7 @@ def present_top_search_choice(
                 for card_id in candidates
             ],
         )
-    ]
+    )
 
 
 def matching_deck_cards(state: GameState, card_ids: list[str], *, traits: set[str], asset_only: bool) -> list[str]:
@@ -880,14 +890,28 @@ def parley_cultist(state: GameState, enemy_id: str, events: list[dict[str, Any]]
             on_failure={"kind": "jeremiah_doom"},
         )
     elif code == "50046":
-        from .. import encounter
+        state.limits["pending_alma_parley"] = {"enemy": enemy_id, "remaining": 3}
+        resume_alma_parley(state, events, rng)
 
-        for _ in range(3):
-            if state.status != "in_progress":
-                break
-            encounter.draw_encounter(state, rng, events)
+
+def resume_alma_parley(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng) -> None:
+    pending = dict(state.limits.get("pending_alma_parley", {}))
+    if not pending or state.decision_queue or state.active_skill_test or state.pending_damage:
+        return
+    enemy_id = str(pending.get("enemy", ""))
+    remaining = int(pending.get("remaining", 0))
+    if remaining <= 0:
+        state.limits.pop("pending_alma_parley", None)
         if enemy_id in state.enemies:
             add_enemy_to_victory(state, events, enemy_id, reason="Alma Hill was parleyed.")
+        return
+    from .. import encounter
+
+    pending["remaining"] = remaining - 1
+    state.limits["pending_alma_parley"] = pending
+    encounter.draw_encounter(state, rng, events)
+    if not state.decision_queue and not state.active_skill_test and not state.pending_damage:
+        resume_alma_parley(state, events, rng)
 
 
 def present_herman_discard_choice(state: GameState, enemy_id: str) -> None:
@@ -987,6 +1011,7 @@ def encounter_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str
             difficulty=4,
             source="On Wings of Darkness",
             on_failure={"kind": "on_wings"},
+            revelation_source=instance_id,
         )
         return True
     if code == "50031":
@@ -1006,9 +1031,9 @@ def hunting_shadow(state: GameState, events: list[dict[str, Any]], instance_id: 
     if state.investigator.clues >= 1 and not masked_hunter_blocks_clues(state):
         options.append(DecisionOption("Spend 1 clue", {"kind": "scenario", "choice": "hunting_shadow_clue", "card": instance_id}))
     options.append(DecisionOption("Take 2 damage", {"kind": "scenario", "choice": "hunting_shadow_damage", "card": instance_id}))
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(id="hunting-shadow", kind="scenario", prompt="Choose for Hunting Shadow.", options=options)
-    ]
+    )
 
 
 def false_lead(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, instance_id: str) -> None:
@@ -1030,6 +1055,7 @@ def false_lead(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, i
         difficulty=4,
         source="False Lead",
         on_failure={"kind": "false_lead"},
+        revelation_source=instance_id,
     )
 
 
@@ -1076,7 +1102,7 @@ def present_or_spawn_at_locations(
     if len(targets) == 1:
         spawn_enemy_resolving_forced(state, events, instance_id, targets[0])
         return
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="enemy-spawn-location",
             kind="scenario",
@@ -1089,7 +1115,7 @@ def present_or_spawn_at_locations(
                 for location_id in targets
             ],
         )
-    ]
+    )
 
 
 def resolve_spawn_at_location(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> None:
@@ -1097,9 +1123,17 @@ def resolve_spawn_at_location(state: GameState, payload: dict[str, Any], events:
     location_id = str(payload.get("location", ""))
     if card_id in state.card_instances and location_id in state.locations:
         spawn_enemy_resolving_forced(state, events, card_id, location_id, rng)
-        pending_mask = dict(state.limits.pop("pending_mask_after_spawn", {}))
-        if pending_mask.get("enemy") == card_id and pending_mask.get("mask") in state.card_instances and card_id in state.enemies:
-            attach_mask_to_enemy(state, str(pending_mask["mask"]), card_id, events, rng)
+        resolve_pending_mask_after_spawn(state, events, rng)
+
+
+def resolve_pending_mask_after_spawn(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None) -> None:
+    if state.decision_queue or state.active_skill_test or state.pending_damage:
+        return
+    pending_mask = dict(state.limits.pop("pending_mask_after_spawn", {}))
+    enemy_id = str(pending_mask.get("enemy", ""))
+    mask_id = str(pending_mask.get("mask", ""))
+    if enemy_id in state.enemies and mask_id in state.card_instances:
+        attach_mask_to_enemy(state, mask_id, enemy_id, events, rng, place_doom=False)
 
 
 def spawn_enemy_resolving_forced(
@@ -1134,7 +1168,7 @@ def disciple_after_spawn(state: GameState, events: list[dict[str, Any]], enemy_i
     options = [DecisionOption("Place 1 doom on Disciple", {"kind": "scenario", "choice": "disciple_doom", "enemy": enemy_id})]
     if state.investigator.clues > 0:
         options.append(DecisionOption("Place 1 clue on its location", {"kind": "scenario", "choice": "disciple_clue", "enemy": enemy_id}))
-    state.decision_queue = [PendingDecision(id="disciple-forced", kind="scenario", prompt="Resolve Disciple of the Devourer.", options=options)]
+    state.decision_queue.append(PendingDecision(id="disciple-forced", kind="scenario", prompt="Resolve Disciple of the Devourer.", options=options))
 
 
 def mysterious_chanting(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, instance_id: str) -> None:
@@ -1148,7 +1182,7 @@ def mysterious_chanting(state: GameState, events: list[dict[str, Any]], rng: Ark
         place_doom_on_enemy(state, nearest[0], 2, events, source="Mysterious Chanting", rng=rng)
         discard_encounter_card(state, instance_id)
         return
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="mysterious-chanting-target",
             kind="scenario",
@@ -1161,11 +1195,12 @@ def mysterious_chanting(state: GameState, events: list[dict[str, Any]], rng: Ark
                 for enemy_id in nearest
             ],
         )
-    ]
+    )
 
 
 def mask_of_umordhoth(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng, instance_id: str) -> None:
     cultists = cultist_enemy_ids(state)
+    fallback = not cultists
     if not cultists:
         enemy_id = search_and_draw_cultist_enemy(state, events, rng, source="Mask of Umordhoth", mask_id=instance_id)
         if state.decision_queue:
@@ -1175,9 +1210,9 @@ def mask_of_umordhoth(state: GameState, events: list[dict[str, Any]], rng: Arkha
     if not farthest:
         discard_encounter_card(state, instance_id)
     elif len(farthest) == 1:
-        attach_mask_to_enemy(state, instance_id, farthest[0], events, rng)
+        attach_mask_to_enemy(state, instance_id, farthest[0], events, rng, place_doom=not fallback)
     else:
-        state.decision_queue = [
+        state.decision_queue.append(
             PendingDecision(
                 id="mask-target",
                 kind="scenario",
@@ -1190,10 +1225,18 @@ def mask_of_umordhoth(state: GameState, events: list[dict[str, Any]], rng: Arkha
                     for enemy_id in farthest
                 ],
             )
-        ]
+        )
 
 
-def attach_mask_to_enemy(state: GameState, mask_id: str, enemy_id: str, events: list[dict[str, Any]], rng: ArkhamRng | None) -> None:
+def attach_mask_to_enemy(
+    state: GameState,
+    mask_id: str,
+    enemy_id: str,
+    events: list[dict[str, Any]],
+    rng: ArkhamRng | None,
+    *,
+    place_doom: bool = True,
+) -> None:
     if mask_id not in state.card_instances or enemy_id not in state.enemies:
         return
     state.card_instances[mask_id].zone = "attachment"
@@ -1201,7 +1244,8 @@ def attach_mask_to_enemy(state: GameState, mask_id: str, enemy_id: str, events: 
     from ..effects import log_event
 
     log_event(events, "treachery_attached", "Mask of Umordhoth attached to a Cultist enemy.", card=mask_id, enemy=enemy_id)
-    place_doom_on_enemy(state, enemy_id, 1, events, source="Mask of Umordhoth", rng=rng)
+    if place_doom:
+        place_doom_on_enemy(state, enemy_id, 1, events, source="Mask of Umordhoth", rng=rng)
 
 
 def search_and_draw_cultist_enemy(
@@ -1240,7 +1284,7 @@ def present_cultist_search_choice(state: GameState, candidates: list[str], *, so
     for card_id in candidates:
         name = str(card_data.get_card(state.card_instances[card_id].card_code).get("name", card_id))
         by_name.setdefault(name, card_id)
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="cultist-search",
             kind="scenario",
@@ -1253,7 +1297,7 @@ def present_cultist_search_choice(state: GameState, candidates: list[str], *, so
                 for name, card_id in sorted(by_name.items())
             ],
         )
-    ]
+    )
 
 
 def resolve_cultist_search_choice(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]], rng: ArkhamRng) -> None:
@@ -1262,7 +1306,7 @@ def resolve_cultist_search_choice(state: GameState, payload: dict[str, Any], eve
     if card_id in state.encounter_deck or card_id in state.encounter_discard:
         enemy_id = draw_searched_cultist_enemy(state, events, rng, card_id, mask_id=mask_id)
         if mask_id and enemy_id and not state.decision_queue:
-            attach_mask_to_enemy(state, mask_id, enemy_id, events, rng)
+            attach_mask_to_enemy(state, mask_id, enemy_id, events, rng, place_doom=False)
 
 
 def draw_searched_cultist_enemy(
@@ -1312,6 +1356,10 @@ def place_doom_on_enemy(
 
 
 def end_mythos_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None) -> None:
+    key = f"mythos_end_forced:{state.round}"
+    if state.limits.get(key):
+        return
+    state.limits[key] = True
     for enemy_id in sorted(state.enemies):
         code = state.enemies[enemy_id].card_code
         if code == "01170":
@@ -1332,7 +1380,7 @@ def end_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
             doom = enemy.doom
             if doom:
                 enemy.doom = 0
-                place_doom(state, doom, events, source="Corpse-Taker", rng=rng, can_advance=True)
+                place_doom(state, doom, events, source="Corpse-Taker", rng=rng)
             continue
         step = next_step_toward(state, enemy.location_id, "rivertown", enemy_id)
         if step:
@@ -1516,7 +1564,10 @@ def apply_token_aftermath(state: GameState, events: list[dict[str, Any]], result
         if state.difficulty in {"easy", "standard"}:
             nearest = nearest_enemies(state, cultists)
             if nearest:
-                place_doom_on_enemy(state, nearest[0], 1, events, source="Chaos token", rng=rng)
+                if len(nearest) == 1:
+                    place_doom_on_enemy(state, nearest[0], 1, events, source="Chaos token", rng=rng)
+                else:
+                    present_chaos_cultist_target(state, nearest, 1)
         else:
             for enemy_id in cultists:
                 place_doom_on_enemy(state, enemy_id, 1, events, source="Chaos token", rng=rng)
@@ -1538,10 +1589,41 @@ def apply_token_reveal_effects(state: GameState, events: list[dict[str, Any]], t
     if state.difficulty in {"easy", "standard"}:
         nearest = nearest_enemies(state, cultists)
         if nearest:
-            place_doom_on_enemy(state, nearest[0], 1, events, source="Chaos token", rng=rng)
+            if len(nearest) == 1:
+                place_doom_on_enemy(state, nearest[0], 1, events, source="Chaos token", rng=rng)
+            else:
+                present_chaos_cultist_target(state, nearest, 1, mid_test=True)
     else:
         for enemy_id in cultists:
             place_doom_on_enemy(state, enemy_id, 1, events, source="Chaos token", rng=rng)
+
+
+def present_chaos_cultist_target(
+    state: GameState,
+    enemies: list[str],
+    amount: int,
+    *,
+    mid_test: bool = False,
+) -> None:
+    state.decision_queue.append(
+        PendingDecision(
+            id="chaos-cultist-target",
+            kind="token_reveal_reaction" if mid_test else "scenario",
+            prompt="Choose a nearest enemy for the Cultist chaos token.",
+            options=[
+                DecisionOption(
+                    f"Place doom on {card_data.get_card(state.enemies[enemy_id].card_code)['name']}",
+                    {
+                        "kind": "scenario",
+                        "choice": "chaos_cultist_target",
+                        "enemy": enemy_id,
+                        "amount": amount,
+                    },
+                )
+                for enemy_id in enemies
+            ],
+        )
+    )
 
 
 def on_wings_aftermath(state: GameState, events: list[dict[str, Any]], *, failed: bool) -> None:
@@ -1716,6 +1798,13 @@ def farthest_locations(state: GameState, location_ids: list[str]) -> list[str]:
 
 def discard_encounter_card(state: GameState, instance_id: str) -> None:
     if not instance_id or instance_id not in state.card_instances:
+        return
+    if player_cards.is_weakness(state, instance_id):
+        if instance_id in state.encounter_deck:
+            state.encounter_deck.remove(instance_id)
+        if instance_id in state.encounter_discard:
+            state.encounter_discard.remove(instance_id)
+        player_cards.discard_to_owner_pile(state, instance_id)
         return
     state.card_instances[instance_id].zone = "encounter_discard"
     if instance_id not in state.encounter_discard:

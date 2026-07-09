@@ -707,11 +707,13 @@ def apply_cover_up_trauma(state: GameState, events: list[dict[str, Any]]) -> Non
 
 def heal_roland(state: GameState, events: list[dict[str, Any]], *, damage: int = 0, horror: int = 0) -> None:
     if damage > 0 and state.investigator.damage > 0:
+        healed = min(damage, state.investigator.damage)
         state.investigator.damage = max(0, state.investigator.damage - damage)
-        log_event(events, "damage_healed", f"{state.investigator.name} healed {damage} damage.", amount=damage)
+        log_event(events, "damage_healed", f"{state.investigator.name} healed {healed} damage.", amount=healed)
     if horror > 0 and state.investigator.horror > 0:
+        healed = min(horror, state.investigator.horror)
         state.investigator.horror = max(0, state.investigator.horror - horror)
-        log_event(events, "horror_healed", f"{state.investigator.name} healed {horror} horror.", amount=horror)
+        log_event(events, "horror_healed", f"{state.investigator.name} healed {healed} horror.", amount=healed)
 
 
 def present_after_horror_reaction(state: GameState, events: list[dict[str, Any]]) -> None:

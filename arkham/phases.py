@@ -37,6 +37,17 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
         if state.limits.get("deferred_agenda_advance"):
             process_deferred_agenda_advance(state, events, rng=rng)
             continue
+        if state.limits.get("pending_devourer_agenda3"):
+            from .scenarios import the_devourer_below
+
+            state.limits.pop("pending_devourer_agenda3", None)
+            the_devourer_below.advance_to_agenda3(state, events)
+            continue
+        if state.limits.get("pending_alma_parley"):
+            from .scenarios import the_midnight_masks
+
+            the_midnight_masks.resume_alma_parley(state, events, rng)
+            continue
         if state.limits.get("after_encounter_draw"):
             encounter.resolve_after_encounter_draw(state, events)
             continue
@@ -138,6 +149,16 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             run_mythos_phase(state, rng, events)
             if not state.decision_queue and state.status == "in_progress":
                 if present_fast_window(state, "mythos_end", during_turn=False):
+                    return
+                if state.scenario in MIDNIGHT_MASKS_FAMILY:
+                    from .scenarios import the_midnight_masks
+
+                    the_midnight_masks.end_mythos_phase(state, events, rng)
+                elif state.scenario in DEVOURER_FAMILY:
+                    from .scenarios import the_devourer_below
+
+                    the_devourer_below.end_mythos_phase(state, events, rng)
+                if state.decision_queue or state.status != "in_progress":
                     return
                 state.phase = "Investigation"
                 state.investigator.actions_remaining = starting_actions(state)
@@ -308,14 +329,6 @@ def run_mythos_phase(state: GameState, rng: ArkhamRng, events: list[dict[str, An
     if state.status != "in_progress" or state.decision_queue:
         return
     engage_ready_enemies_at_roland(state, events)
-    if state.status == "in_progress" and not state.decision_queue and state.scenario in MIDNIGHT_MASKS_FAMILY:
-        from .scenarios import the_midnight_masks
-
-        the_midnight_masks.end_mythos_phase(state, events, rng)
-    if state.status == "in_progress" and not state.decision_queue and state.scenario in DEVOURER_FAMILY:
-        from .scenarios import the_devourer_below
-
-        the_devourer_below.end_mythos_phase(state, events, rng)
 
 
 def starting_actions(state: GameState) -> int:

@@ -38,6 +38,7 @@ def start(
     on_success: dict[str, Any] | None = None,
     on_failure: dict[str, Any] | None = None,
     base_boost: int = 0,
+    revelation_source: str | None = None,
 ) -> None:
     # base_boost carries ability modifiers (Machete's +1, Baseball Bat's +2...)
     # so the started-test log shows the true value, not the pre-boost base.
@@ -56,6 +57,8 @@ def start(
         "on_failure": on_failure or {},
         "base_boost": base_boost,
     }
+    if revelation_source is not None:
+        state.active_skill_test["revelation_source"] = revelation_source
     log_event(events, "skill_test_started", f"Started {skill} test {base} vs {difficulty}.", source=source)
     present_commit_decision(state)
 
@@ -167,7 +170,7 @@ def reveal_token_for_test(state: GameState, rng: ArkhamRng, events: list[dict[st
         state.scenario in DEVOURER_FAMILY
         and current == "elderthing"
         and devourer_ancient_one_in_play(state)
-    ) or devourer_location_extra_token(state, test, extra_tokens):
+    ):
         extra = draw_token(state, rng)
         extra_modifier, extra_autofail = adjusted_token_modifier(state, extra)
         modifier += extra_modifier
@@ -332,6 +335,9 @@ def resolve_wendy_token_reaction(
             test["wendy_used"] = True
             log_event(events, "wendy_reaction", "Wendy canceled the chaos token and redrew.", card=discard_id)
             reveal_token_for_test(state, rng, events)
+            present_token_reveal_reaction(state, rng, events)
+            if state.decision_queue:
+                return
     else:
         test["wendy_passed"] = True
     resolve(state, events, rng)
@@ -357,6 +363,40 @@ def resolve_sure_gamble_reaction(
     resolve(state, events, rng)
 
 
+def apply_location_extra_token(
+    state: GameState,
+    events: list[dict[str, Any]],
+    rng: ArkhamRng | None,
+) -> bool:
+    """Resolve location Forced extra tokens only after the revealed token's
+    reaction window.  The marker lives on the test, so Wendy redraws cannot
+    trigger the same once-per-test location ability again."""
+    test = state.active_skill_test
+    if (
+        not test
+        or rng is None
+        or test.get("location_extra_token_used")
+        or not devourer_location_extra_token(state, test, [])
+    ):
+        return False
+    test["location_extra_token_used"] = True
+    extra = draw_token(state, rng)
+    extra_modifier, extra_autofail = adjusted_token_modifier(state, extra)
+    test.setdefault("extra_tokens", []).append(extra)
+    test["modifier"] = int(test.get("modifier", 0)) + extra_modifier
+    test["autofail"] = bool(test.get("autofail")) or extra_autofail
+    log_event(
+        events,
+        "chaos_token",
+        f"Revealed additional token {extra}.",
+        token=extra,
+        modifier=extra_modifier,
+        extra=True,
+    )
+    present_token_reveal_reaction(state, rng, events)
+    return bool(state.decision_queue)
+
+
 def present_post_reveal_decision(state: GameState) -> None:
     test = state.active_skill_test
     if not test:
@@ -376,6 +416,8 @@ def present_post_reveal_decision(state: GameState) -> None:
 def resolve(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
     test = state.active_skill_test
     if not test:
+        return
+    if apply_location_extra_token(state, events, rng):
         return
     apply_scenario_token_reveal_effects(state, events, rng)
     apply_player_token_reveal_effects(state, events)
@@ -616,9 +658,7 @@ def apply_callback(
             if clue_count > 1 and discovered > 1:
                 log_event(events, "deduction", f"Deduction discovered {discovered - 1} additional clue.")
             discard_obscuring_fog_at_roland(state, events)
-            if player_cards.controls_code(state, "01033"):
-                state.investigator.resources += 1
-                log_event(events, "milan_reaction", f"Dr. Milan Christopher gained {state.investigator.name} 1 resource.")
+            present_milan_reaction(state)
     elif kind == "fight":
         enemy_id = str(callback["enemy"])
         if success and enemy_id in state.enemies:
@@ -800,7 +840,10 @@ def apply_callback(
             the_devourer_below.gain_madness_weakness(state, events, rng, to_hand=True)
         from .scenarios import the_devourer_below
 
-        the_devourer_below.advance_to_agenda3(state, events)
+        if state.decision_queue or state.pending_damage:
+            state.limits["pending_devourer_agenda3"] = True
+        else:
+            the_devourer_below.advance_to_agenda3(state, events)
     elif kind == "umordhoths_wrath":
         if not success and margin > 0:
             from .scenarios import the_devourer_below
@@ -844,6 +887,32 @@ def apply_committed_skill_effects(
             draw_player_card(state, events, rng)
         if code == "01067":
             heal_roland(state, events, horror=1)
+
+
+def present_milan_reaction(state: GameState) -> None:
+    if not player_cards.controls_code(state, "01033") or player_cards.investigator_text_blank(state):
+        return
+    state.decision_queue.append(
+        PendingDecision(
+            id="milan-reaction",
+            kind="milan_reaction",
+            prompt=f"[Round {state.round} · {state.phase} · {state.investigator.name}] Use Dr. Milan Christopher after successfully investigating?",
+            options=[
+                DecisionOption("Gain 1 resource", {"kind": "milan_reaction", "choice": "gain"}),
+                DecisionOption("Pass", {"kind": "milan_reaction", "choice": "pass"}),
+            ],
+        )
+    )
+
+
+def resolve_milan_reaction(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    if (
+        payload.get("choice") == "gain"
+        and player_cards.controls_code(state, "01033")
+        and not player_cards.investigator_text_blank(state)
+    ):
+        state.investigator.resources += 1
+        log_event(events, "milan_reaction", f"Dr. Milan Christopher gained {state.investigator.name} 1 resource.", amount=1)
 
 
 def present_skill_test_aftermath_reactions(state: GameState, result: dict[str, Any], committed: list[str]) -> None:

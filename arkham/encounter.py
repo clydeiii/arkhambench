@@ -50,7 +50,7 @@ def present_revelation_cancel(state: GameState, instance_id: str) -> bool:
     wards = player_cards.hand_ids(state, "01065")
     if not wards or state.investigator.resources < 1:
         return False
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="revelation-cancel",
             kind="revelation_cancel",
@@ -66,7 +66,7 @@ def present_revelation_cancel(state: GameState, instance_id: str) -> bool:
                 ),
             ],
         )
-    ]
+    )
     return True
 
 
@@ -150,6 +150,7 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
             difficulty=3,
             source=card.get("name", "Rotting Remains"),
             on_failure={"kind": "horror_per_fail", "source": card.get("name", "Rotting Remains")},
+            revelation_source=instance_id,
         )
     elif code == "01162":
         discard_encounter(state, instance_id)
@@ -160,6 +161,7 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
             difficulty=3,
             source=card.get("name", "Grasping Hands"),
             on_failure={"kind": "damage_per_fail", "source": card.get("name", "Grasping Hands")},
+            revelation_source=instance_id,
         )
     elif code == "phaseb_direct_damage":
         discard_encounter(state, instance_id)
@@ -181,6 +183,7 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
             difficulty=4,
             source=card.get("name", "Crypt Chill"),
             on_failure={"kind": "crypt_chill"},
+            revelation_source=instance_id,
         )
     elif code == "50024":
         discard_encounter(state, instance_id)
@@ -194,6 +197,7 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
                 difficulty=2,
                 source="The Zealot's Seal",
                 on_failure={"kind": "zealots_seal_discard"},
+                revelation_source=instance_id,
             )
     elif code == "50040":
         discard_encounter(state, instance_id)
@@ -204,6 +208,7 @@ def resolve_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, 
             difficulty=3,
             source="Chill from Below",
             on_failure={"kind": "chill_from_below"},
+            revelation_source=instance_id,
         )
     elif code == "01168":
         attach_to_location_or_discard(state, events, instance_id, state.investigator.location_id, limit_code="01168")
@@ -276,7 +281,7 @@ def locked_door_target(state: GameState) -> str | None:
 
 
 def present_locked_door_target_choice(state: GameState, instance_id: str, targets: list[str]) -> None:
-    state.decision_queue = [
+    state.decision_queue.append(
         PendingDecision(
             id="locked-door-target",
             kind="locked_door_target",
@@ -289,7 +294,7 @@ def present_locked_door_target_choice(state: GameState, instance_id: str, target
                 for location_id in targets
             ],
         )
-    ]
+    )
 
 
 def resolve_locked_door_target(state: GameState, payload: dict[str, Any], events: list[dict[str, Any]]) -> None:

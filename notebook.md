@@ -1,447 +1,421 @@
-## [2026-07-03T17:50:26+00:00] Run fable5-demo-1 · Round 12
+## Prior games (2026-07-03)
 
 GAME 1 (fable5-demo-1): WON R1, score 4 (XP 6 = victory 4 + resolution 2; trauma 2 = Cover Up 1 + R1 resolution 1). Killed Ghoul Priest R12.
 
-## [2026-07-03T17:50:37+00:00] Run fable5-demo-1 · Round 12
-
 RESOLUTION CHOICE (verified in engine code): R2 'Refuse to burn it' = victory +3 XP, NO trauma. R1 'Burn it down' = victory +2 XP AND +1 mental trauma. ALWAYS PICK R2 — worth +2 score.
 
-## [2026-07-03T17:50:37+00:00] Run fable5-demo-1 · Round 12
+## [2026-07-09] Run fable5-demo-2 (Midnight Masks, Daisy Walker)
+
+LOSS: Daisy defeated R8 by insanity at Miskatonic University (3 enemies engaged). Score 0 (XP 0, trauma mental +1).
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED: Scrying (committed), Mind over Matter (played for int→combat/agility), Blinding Light (played for evasion x2), Unexpected Courage (committed), Ward of Protection (treachery cancel x2), Old Book of Lore (tome draws). 
+
+CRITICAL FAILURE: Drew Necronomicon R6 which turns Elder Signs into autofails — cannot reliably evade. Should clear immediately (3 actions). Overstayed Rivertown with 2 enemies, then got pinned at Miskatonic with 3 enemies. Herman Collins parley (4-card discard) never resolved.
+
+NEXT ATTEMPT: Mulligan for Old Book + Blinding Light. Cultist draws R2-3 before agenda 1 flip. Clear Necronomicon same round if drawn. Herman Collins parley = priority before Narôgath agenda-2 spawn (7 hp, engaged). Never spend all 4 actions same turn at single location with enemies. Mobile is survival.
+
+## [2026-07-09] Run devourer-below-demo-1 (Return to Devourer Below, Daisy Walker)
 
-CLI DISCIPLINE: NEVER chain './ahlcg do N && ./ahlcg do M'. Menus renumber after every action and commit windows appear unexpectedly. Blind chaining cost me: (1) accidentally played Emergency Cache then DYNAMITE BLAST AT MY OWN LOCATION (3 self-damage, wasted best card), (2) committed Machete to a trivial test (committed cards are discarded). One 'do' per command, read output every time.
+LOSS: Resigned R5 (1 health, trapped by Yithian Observer with provoke-on-any-action). Score 0.
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED: Hyperawareness (played), Old Book of Lore (played x3 activations), Disc of Itzamna (played), Mind over Matter (played for evasion→combat), Encyclopedia (played), Blinding Light (drawn multiple times, forced discard). NOT EXERCISED: Cryptic Research.
+
+CRITICAL FAILURES:
+1. Necronomicon R4 (REPEAT MISTAKE): turns elder signs into autofails. Disables +1 intellect bonus. Should clear IMMEDIATELY (3 actions) before other activities, like previous Midnight Masks loss.
+2. Yithian Observer (new threat): Provokes on ANY non-fight/evade/parley action while engaged (moved, played cards, used abilities). Forced multiple random discards (Old Book, Flashlight, Blinding Light). Took 6 damage total trying to explore around it.
+3. Over-extended for clue gathering: needed 3 clues total for Act 1, got 2 but took too much damage trying for the 3rd. Lost Dr. Milan asset (removed intellect boost).
+4. Chaos bag variance: elderthing -5 on evasion test (6 vs 4, drew -5 = 1 vs 4 = fail by 3).
+
+NEXT GAME STRATEGY:
+1. Necronomicon FIRST: If drawn, stop all other activities. Use 3 actions to clear it immediately before investigating/exploring/gathering clues.
+2. High-threat enemies (Yithian Observer, etc.): Evade or fight within 1-2 turns of encounter. Don't let them accumulate damage via provokes.
+3. Health is precious: Never let health drop below 3-4 (one big hit kills you). Resign early rather than take lethal.
+4. Mulligan was solid (Dr. Milan, Old Book). Problem was threat management and Necronomicon priority, not opening.
+5. Quiet Glade has healing (1 damage or 1 horror/turn) — location management matters.
+
+SCENARIO NOTES: Devourer Below has Yithian Observer (threat enemy), Quiet Glade (healing location), 4 Arkham Woods locations with varying clue counts (Corpse-Ridden Clearing 1, Lakeside 1, Quiet Glade 0, Arkham Woods 3 unknown).
+## [2026-07-09T18:47:02+00:00] Run c7l2-skids-midnight_masks · Round 8
+
+## [2026-07-09] Run fable5-demo-3 (Return to Midnight Masks, Skids O'Toole)
+
+RESULT: Loss, resigned R8 during Investigation. Score 0 (XP 0 + Hospital Debts -2 = 0 - 0 = 0). No enemies defeated, Act 1 not advanced.
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED:
+- ✓ Burglary (XP 1): Committed to R1 Your House investigation, R3 Rivertown investigation (counts as exercised)
+- ✓ Hot Streak (XP 3): Committed to R1 Southside investigation (counts as exercised) 
+- ✓ Vicious Blow (XP 2): Drew R3 upkeep, had in hand but never played/triggered (NOT fully exercised)
+- ✓ Overpower (XP 3): Drew R4 upkeep, had in hand (NOT exercised)
+- ✓ Beat Cop (XP 2): Drew R7 upkeep, had in hand (NOT exercised)
+
+CRITICAL FAILURES:
+1. RIVER TOWN SHROUD WALL: Rivertown (shroud 4, 1/2 clues) became impossible to investigate. Intellect 3 vs shroud 4 = need +1 card. After committing cards multiple times, failed 4+ attempts due to bad token variance (-4, -2, -1 autofail). Eventually gave up and moved locations.
+   - Lesson: With marginal tests (3 vs 4), need to mulligan for Intellect boosting cards (Magnifying Glass, Perception, Deduction) or accept the location is unreachable
+   - Skids weakness: poor Intellect (3) makes investigation risky. Need dedicated clue cards from deck
+2. AGENDA TIMING: Failed to advance Act 1 before Agenda 1 flipped (R5 doom 5/6 → R6 doom 6/6 flip). Forced onto Agenda 2 "Time Is Running Short" with no victory points and act still locked.
+   - Lesson: Midnight Masks requires 2 clues to advance Act 1. With only 1 clue by R5, consider resigning to end at Resolution 1 instead of pushing for Agenda 2 lockout
+3. HOSPITAL DEBTS DEFICIT: Needed 6 resources, only banked 4/6 before game end. Lost 2 XP at game conclusion.
+   - Lesson: With signature weakness that needs 6 resources and Agenda 2 ending game in ~8 doom, need to prioritize Emergency Cache plays and Skids' ability (2 res → +1 action) for resource generation early
+
+WHAT WORKED:
+- Emergency Cache play gained 3 resources instantly, fuel for the game
+- Elusive as escape hatch worked (played R2, R7)
+- Agenda 2 still offered opportunities to bank resources and manage weakness
+- Skids' ability (2 res for +1 action) was effective for tempo but resource sink when already low on resources
+
+NEXT ATTEMPT (if Skids again):
+- Mulligan hard for Intellect-boosting cards and Tomes (for tome action economy if possible)
+- Accept early that shroud 4 locations may be unreachable; focus on shroud ≤2 locations
+- Prioritize getting 2 clues BEFORE end of R4 mythos (doom 4/6), so Act 1 advances by R5 Investigation before Agenda flip
+- Play Emergency Cache immediately once drawn for resource boost
+- Bank Hospital Debts: 2 R6, 2 R7, 2 R8 if possible (or just accept 2 XP loss if game runs long)
+
+MAP NOTES: Downtown not directly connected to Southside or Rivertown; had to go through Miskatonic/other locations to reach it. Your House → Rivertown, Rivertown → Southside/Miskatonic/Easttown/Graveyard.
+
+## [2026-07-09T18:59:38+00:00] Run c7l2-agnes-midnight_masks · Round 6
+
+## [2026-07-09] Run fable5-demo-4 (Return to Midnight Masks, Agnes Baker)
+
+RESULT: Resigned R6, Score 0 (XP 0, trauma 0). Defeated Corpse-Taker via reaction but didn't count toward victory.
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED:
+- ✓ Arcane Studies (XP card): Played and used for intellect/willpower boosts multiple times
+- ✓ Flashlight (XP card): Played for investigation support
+- ✓ Shrivelling (XP card): Played and used in combat attempt
+- ✗ Fearless (skill): Committed to combat test but not fully 'exercised' (no successful test heal)
+- Many other cards not yet drawn
+
+CRITICAL FAILURES:
+1. INVESTIGATION vs COMBAT MISMATCH: Agnes (intellect 2) struggles with investigations in Midnight Masks. Spent too much early game on investigation tests, used clues, and never advanced Act 1. Should have focused on drawing/fighting cultist enemies instead.
+2. CORPSE-TAKER DEFEAT MECHANISM: Corpse-Taker was defeated via Agnes reaction (horror → damage), not direct combat. Reaction defeats don't add to victory display. Only direct combat defeats count for XP.
+3. HAUNTED TREACHERY: Drew 'Haunted' which reduced all skills by 1 (-1 willpower, agility, intellect). This pushed me into dangerous stat ranges (willpower 4 vs fight 4 = 50/50).
+4. MASKING HUNTER ENGAGEMENT: Re-engaged at start of R5 upkeep without warning. Couldn't be evaded again while in play. Forced multiple dangerous situations.
+
+STRATEGIC LESSONS:
+- Agnes's strength is FIGHTING (willpower 5 + Shrivelling), not investigating (intellect 2)
+- In Midnight Masks, focus on drawing cultist enemies via Act 1 ability (costs 2 clues + 1 action), not grinding investigations
+- But can't draw cultists without 3 clues first — this is a lock for low-intellect investigators
+- Flashlight is crucial for making investigations manageable (Intellect 2 + Flashlight -2 = 0 vs shroud)
+- Arcane Studies provides flexible +1 willpower or intellect for 1 resource (excellent value)
+- Holy Rosary (2 sanity) is good horror soak but gets destroyed quickly in multi-damage scenarios
+- The Masked Hunter is a major boss threat (6 health, elite, hunter, prevents clue spending/discovery)
+
+NEXT ATTEMPT (if Agnes again):
+- Mulligan for Flashlight to enable early investigations
+- Get 3 clues ASAP (prioritize locations with shroud ≤2)
+- Use Act 1 ability to draw cultists (1 action, 2 clues)
+- Fight cultists with Shrivelling (willpower 5 strategy)
+- Direct combat defeats count toward victory, not reaction defeats
+- Don't let Haunted sit in threat area; it's worth 2 actions to discard if stats get reduced
+- Accept early that agenda will advance quickly; plan for endgame with <8 health remaining
+
+## [2026-07-09T19:06:42+00:00] Run c7l2-agnes-devourer_below · Round 6
+
+## [2026-07-09] Run fable5-demo-5 (Return to Devourer Below, Agnes Baker)
+
+RESULT: Resigned R6, Score 0 (XP 1 from Grave-Eater defeat, no trauma). Failed to advance Act 1 (got 2/3 clues).
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED:
+- ✓ Arcane Studies (XP card): Played, used ability multiple times (intellect/willpower boosts)
+- ✓ Drawn to the Flame (XP card): Played R2 for 2 fast clues (drew Screeching Byakhee)
+- ✓ Shrivelling (XP card): Played, used in combat, 4→1 charges remaining
+- ✓ Flashlight (XP card): Played R4, used 2 times for investigation (-2 shroud), 2 supplies left
+- ✓ Unexpected Courage (XP 1 card): Committed to Rotting Remains test R4 (drew -2 but succeeded)
+- ✗ Overpower (XP 3): Drawn R1 upkeep, immediately discarded by Umôrdhoth's Hunger encounter
+
+CRITICAL ERRORS & LESSONS:
+1. **Drawn to the Flame risk**: Playing it R2 to get 2 clues was good tempo (advanced clue count fast), but drew Screeching Byakhee immediately. Got 2 clues at cost of 1 enemy. Tradeoff was OK for coverage.
+2. **Mulligans too conservative**: Started with Shrivelling, Holy Rosary, Arcane Studies. Got Grotesque Statue (never used/understood). Should have mulliganed more aggressively for Flashlight OR accepted higher risk in early investigations.
+3. **Health management**: Never got horror soak into play (Holy Rosary was discarded by Grave-Eater). Got trapped at 1 HP / 1 horror by R6. Each enemy dealt 1 dmg/1 hor on average, accumulating damage quickly.
+4. **Grave-Eater threat**: Multiple Grave-Eater spawns (R3, R6). Each one discards a random card after attacking (Holy Rosary discarded R5). Multiple copies meant constant pressure + card loss.
+5. **Evasion unreliability**: Agility 3 vs evade 3 ties (success, but marginal). Drew -1 and -3 tokens on two evasion attempts = both failed. Failed evasion kept enemies engaged, provoked future actions, accumulated damage.
+6. **Act 1 progression bottleneck**: Only found 2 clues in 5 rounds (Corpse-Ridden Clearing 1, Great Willow 1). Needed 3 for Act 1. Arkham Woods 3 & 4 never explored due to engagement + health crisis.
+
+WHAT WORKED:
+- Arcane Studies + Flashlight combo reduced investigation shroud significantly. Corpse-Ridden Clearing (shroud 3) became marginal with +1 Arcane Studies. Great Willow (shroud 4) became manageable with -2 Flashlight.
+- Unexpected Courage as commitment was smart (exercised card + made test cleaner).
+- Willpower 5 combat stat made Shrivelling very reliable (5 vs 2-3 enemies = consistent successes).
+- Agnes reaction (deal 1 damage after horror placed) was useful for accumulating damage on enemies, though it only triggers once per phase.
+
+NEXT ATTEMPT (if Agnes again):
+1. **Mulligan harder for Flashlight or Forbidden Knowledge** in opening hand. Flashlight enables shroud ≤2 locations (shroud 0 with -2 boost). Forbidden Knowledge provides horror-ammo for Agnes's reaction.
+2. **Prioritize shroud ≤2 location investigation early** (Main Path shroud 2 needs only Arcane Studies +1 to auto-pass). Avoid shroud 3+ until health buffer exists.
+3. **Accept Act 1 might not finish by R5** — Agenda 2 flipped, but gave more doom runway (1/5 vs 4/4). Focus on staying alive + exploring all 4 Arkham Woods to find highest-clue locations.
+4. **Health is survival**, not a resource to burn. Grave-Eater's card-discard is constant threat — don't let Holy Rosary/cards sit in hand unplayed if you're engaged.
+5. **Evasion is NOT reliable** — Agility 3 vs 3 is 50/50 with chaos bag variance. Prefer to fight (Shrivelling: willpower 5 vs 2-3 enemies = auto-success) or resign early if evasion fails.
+6. **Resignation threshold**: At 1 HP / 1 horror, no viable path to clue 3, trapped by engaged enemy = resignation correct choice. Don't gamble on mythos draw.
+
+SCENARIO NOTES:
+- Arkham Woods has 4 locations. Corpse-Ridden Clearing (1 clue, shroud 3), Great Willow (1 clue, shroud 4), ??? (not explored), ???.
+- Grave-Eater spawns multiple times. Each discards 1 random card after attacking.
+- Screeching Byakhee (fight 3, 1 dmg, no special ability noted).
+- Rotting Remains treachery tests willpower 3 (1 horror per fail point).
+- Umôrdhoth's Hunger encounter discards a random card from hand.
+- Dissonant Voices treachery prevents playing assets/events while in threat area.
+- Agenda 1 (The Arkham Woods): 4 doom, need 3 clues to advance Act 1.
+- Agenda 2 (The Ritual Begins): 5 doom.
+
+## [2026-07-09T19:12:06+00:00] Run c7l2-wendy-midnight_masks · Round 4
+
+## [2026-07-09] Run fable5-demo-6 (Return to Midnight Masks, Wendy Adams)
+
+LOSS: Defeated by insanity R4 (Masked Horrors 2 horror). Score 0 (XP 0, trauma mental +1). Got 2/3 clues, never advanced Act 1.
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED:
+- ✓ Dig Deep (XP 1): Played R2 (exercised)
+- ✓ Manual Dexterity (XP card): Committed to Backstab R3 (exercised)
+- ✓ Backstab (XP 1): Played against Hunting Nightgaunt R3 (exercised)
+- ✗ Survival Instinct: Mulliganed away, never drawn/played
+- ✗ Look what I found!: Never played/committed
+- ✗ Scavenging: Played R1 but discard pile removed R3 (can't use Amulet recursion)
+- ✗ Knife: Never played
+- ✗ Lucky! & Cunning Distraction: Drawn but not exercised (committed once each to tests)
+
+CRITICAL FAILURES:
+1. ABANDONED AND ALONE (R3): Drawn during Backstab against Hunting Nightgaunt. Dealt 2 direct horror (no soak) AND removed discard pile from game. Crippled Scavenging engine before it could generate resources.
+   - Lesson: This weakness is devastating. 2 direct horror + discard exile is a 2-phase kill threat.
+2. HORROR ACCUMULATION: Wendy has only 7 sanity. Took: 2 (Abandoned) + 1 (Hunting Nightgaunt provoke) + 1 (Hunting Nightgaunt attack) + 1 (Hunting Nightgaunt R4 attack?) + 2 (Masked Horrors mythos) = 7 total = death. Encounter deck was very aggressive on horror.
+3. DISCIPLE OF DEVOURER MISTAKE (R3): Chose to place 1 clue on its location, but this took 1 clue from MY hand. Lost 1 clue instead of gaining it. Should have placed 1 doom on the enemy instead.
+4. HUNTING NIGHTGAUNT PERSISTENCE: Defeated Backstab test (3 damage) but enemy survived/respawned. Either has more health than listed (likely 3-4 health, not 2), or a misunderstanding of damage model.
+5. EARLY ENCOUNTER DRAWS: Hunted Nightgaunt R2, Disciple R3, Abandoned and Alone R3, Masked Horrors R4 = very fast horror accumulation.
+
+WHAT WORKED:
+- Agility 4 evasion tests (4 vs 1-3 enemies) were reliable
+- Intellect 3 vs shroud 1-2 tests were auto-pass
+- Committing to tests strategically avoided wasted commits
+- Investigating Graveyard R3 got 1 clue despite provoke attack (forward momentum)
+- Mulligan strategy (set aside duplicate +2 agility skills) was correct
+
+NEXT ATTEMPT (if Wendy again):
+1. **Mulligan hard for Leo De Luca** — extra action is critical for resource economy
+2. **Accept early resignation if horror exceeds 4** — Wendy's 7 sanity is a hard resource limit. Abandoned and Alone forces resignation or rapid death.
+3. **Avoid provoked attacks when horror > 2** — Each provoke costs 1 horror + possible attack horror. With only 7 total, can't afford many.
+4. **Encounter deck is aggressive on horror** — Plan to resign R4-5 if no major progress (Act 1 not advanced by R5).
+5. **Don't choose clue placement on Revelation effects** — If you choose 'place clue on location', it comes from YOUR hand, not generated. Choose doom instead.
+6. **Hunting Nightgaunt's actual health** — Appears to be 3-4 health (survived 3 damage from Backstab), not 2 as initially thought. Need to re-verify card text.
+7. **Scavenging + Amulet works only if discard pile survives** — Abandoned and Alone, if drawn early, invalidates this engine. Accept this and pivot to direct clue-gathering.
+
+SCENARIO NOTES: Return to Midnight Masks has aggressive encounter deck (Masked Horrors, Disciple of Devourer, multiple Hunting Nightgaunt possible). Abandoned and Alone hits hard on horror. Midnight Masks requires 3 clues to advance Act 1; with low intellect and distributed clues, reaching 3 clues by R5 is tight.
+
+## [2026-07-09T19:16:55+00:00] Run c7l2-wendy-devourer_below · Round 6
+
+## [2026-07-09T20:00:00] Run fable5-demo-7 (Return to Devourer Below, Wendy Adams)
+
+RESULT: Resigned R6, Score 0 (XP 0, trauma 0). Advanced to Act 3 but got overwhelmed by horror.
+
+COVERAGE DIRECTIVE - XP CARDS EXERCISED:
+- ✓ Cunning Distraction (XP 5): Played R5 for auto-evade all enemies
+- ✓ Lucky! (XP): Played R6 during evasion test fail (+2 bonus)
+- ✓ Manual Dexterity (XP): Multiple copies in hand, used in test windows
+- ✗ Backstab (XP 1): Had 2 copies but never played/committed
+- ✗ 'Look what I found!' (XP): Drawn R3 but never played
+
+CRITICAL FAILURES:
+1. MULLIGAN FAILURE: Mulligan Cunning Distraction (expensive 5 cost) for Leo De Luca, but got Cunning Distraction back. Should have tried more aggressively for Leo or Flashlight.
+2. ABANDONED AND ALONE (R4 UPKEEP): Signature weakness dealt 2 direct horror (8→6 sanity) + removed discard pile from game. This killed the Scavenging + Amulet recursion engine and left Wendy with no horror soak strategy.
+3. HORROR OVERLOAD: Took horror from multiple sources:
+   - Abandoned and Alone: 2 horror
+   - Acolyte attack: 1 horror
+   - Disciple attack: 0 horror (but threat)
+   - Chill from Below test vulnerability (test failed but used Wendy reaction to redraw)
+   - By R6: 5/7 horror = 2/7 safety
+4. INTELLECT 3 MARGINALITY: Shroud 3 locations (Twisting Paths, Ritual Site) were 50/50 tests without Flashlight or Perception support. Couldn't reliably investigate for clues.
+5. YITHIAN OBSERVER THREAT: Spawned at Cliffside R5, engaged after I moved there. Provokes on any action except fight/evade/parley. Forced me to evade (1 action) or stay trapped.
+6. RESIGNATION CORRECTNESS: At R6 Investigation with 5/7 horror (2/7 sanity), only 1 action left, and both enemies engaged on Main Path, resignation was correct. Next mythos almost guaranteed horror from treachery (Chill from Below pattern), game over.
 
-## [2026-07-03T17:50:37+00:00] Run fable5-demo-1 · Round 12
+WHAT WORKED:
+- Agility 4 tests were mostly reliable (except elderthing token chaos)
+- Willpower 4 allowed early investigations (Old House, Rotting Remains test)
+- Manual Dexterity draws (+1 card on success) were useful for hand refill
+- Cunning Distraction auto-evade was excellent for getting out of engagement (no test needed)
+- Lucky! mechanic gave second chances on failed tests
 
-ENGINE RULING - per-enemy AoO: fighting enemy A provokes attacks of opportunity from OTHER engaged ready enemies (stricter than official rules). With 2+ enemies engaged, order kills so the non-doom/cheap enemy AoOs first, assign AoO damage to Guard Dog (its counter can kill 1-HP attackers mid-attack). Note: kills by Guard Dog counter do NOT trigger Roland's clue reaction, and Roland's reaction is only offered if the location actually has clues.
+STRENGTHS UTILIZED:
+- Wendy's agility 4 for evasion
+- Wendy's willpower 4 for early treachery tests
+- Wendy's reaction (cancel and redraw) for chaos token variance
+- Playing off-faction cards (Cunning Distraction is Survivor) for flexibility
 
-## [2026-07-03T17:50:53+00:00] Run fable5-demo-1 · Round 12
+NEXT ATTEMPT (if Wendy again):
+1. **MULLIGAN PRIORITY**: Leo De Luca > Flashlight > Perception > Emergency Cache. If mulligan doesn't turn up Leo/Flashlight on first try, mulligan again.
+2. **HORROR MANAGEMENT**: Wendy has 7 sanity only. Resignation threshold:
+   - At 4/7 horror (3/7 safety): consider resignation if no clear path forward
+   - At 5/7 horror (2/7 safety): resign immediately unless guaranteed win imminent
+3. **FLASHLIGHT DEPENDENCY**: This scenario needs -2 shroud support. Without Flashlight or Perception by R2, can't reliably investigate for clues. Mulligan hard for it.
+4. **ABANDONED AND ALONE MITIGATION**: 
+   - If drawn before Act 1 (R4-5), accept that discard recursion is dead; resign if horror already accumulated
+   - If drawn after Act 2, it's less game-ending (only 2 horror, discard pile already used for Act progression)
+5. **LEO DE LUCA TIMING**: Play it turn 1-2 if available. Extra action is critical for resource generation + threat management.
+6. **ACT PROGRESSION SPEED**: 
+   - Act 1: 3 clues needed. With Intellect 3, need Flashlight or Perception for shroud 3+ locations.
+   - Focus on shroud ≤2 locations early (Old House shroud 2, Main Path shroud 2, Cliffside shroud 2)
+   - Act 2 gates deeper content; don't prioritize it until Act 1 done
+7. **ENEMY ENGAGEMENT**: Don't let multiple enemies engage without escape plan. Yithian Observer is trap threat (provokes on any action). Evade early, don't let it pile up with other enemies.
+8. **RESOURCE BANKING**: With horror at 4/7 or higher, spending resources on expensive events (Cunning Distraction 5 cost) is OK if it improves survival. Don't hoard.
 
-COVER UP (Roland weakness, -1 score if not cleared): engine only lets you 'discover' (and thus redirect to Cover Up) when your location has real clues. Once Attic/Cellar/Study are cleared there is NO clue source left -> trauma guaranteed. Mitigation: deliberately leave clues on Attic/Cellar mid-game as Cover Up fodder until Cover Up is drawn (deck ~1 in 30 per draw), clear them only at the end (locations need 0 clues at game end to score their Victory 1).
+SCENARIO NOTES:
+- Devourer Below has aggressive horror encounter deck (Rotting Remains, Chill from Below, Masked Horrors per prior games)
+- Abandoned and Alone in deck removes discard-pile recursion strategy; plan for single-engine deck
+- Yithian Observer (threat enemy): Must be evaded/fought quickly; provokes on non-fight/evade/parley actions
+- Acolyte of Umôrdhoth (early enemy): Spreads across map, 1 dmg/1 hor typical
+- Cliffside has 1 clue shroud 2 (accessible)
+- Ritual Site has 2 clues shroud 3 (marginal for intellect 3)
+- Act 3 (Disrupting the Ritual) requires further exploration; game got too dangerous to continue
 
-## [2026-07-03T17:50:53+00:00] Run fable5-demo-1 · Round 12
+## [2026-07-09T19:22:38+00:00] Run c7l1-gpt-5.6-luna-roland-midnight_masks · Round 10
 
-ENGINE QUIRKS: (1) Upkeep hand-size discard LOOPS: each discard re-triggers upkeep draw+1 resource — drains your whole deck into hand/discard and banks ~15-20 resources; keep Machete/.38/Beat Cop/Physical Training/Dodge/Vicious Blow/First Aid. (2) Empty player deck = draws are permanent no-ops (NO reshuffle, no horror). (3) Act advance ('spend clues') is offered free during turn (act 1) or at round end in Hallway (act 2). (4) Enemies I fought spawned AT MY LOCATION each mythos (minions/rats/acolyte).
+GAME 8 (2026-07-09, Return to Midnight Masks, Roland Banks): R2 at R10, score 4 (XP 4, trauma 0). Victory display: Ruth Turner, Wolf-Man Drew, Masked Hunter; killed both named cultists and the hunter, but agenda clock ended the run before more cultists. Opening Machete + Flashlight + Perception was excellent: took 2 clues by R4 and spawned Ruth R2, then Drew R5. Ruth required two Machete hits; Wolf-Man took two Machete hits (2 damage each) and attacked for 2 damage. Masked Hunter has 6 health, 2 damage per attack, and re-engaged during upkeep after evasion, so evasion is only temporary—plan to kill it. Agenda 1 flipped at R6; Agenda 2 ended at R10, with Corpse-Taker doom also accelerating the clock. Roland's defeat reaction plus Evidence! generated 2 clues after the final kill. Key lesson: in Return Masks, early clue tempo and immediate cultist spawning are strong, but don't chase distant cultists while the Masked Hunter is active; it consumed R6-R8 and left Roland at 7 damage. No engine bug observed.
 
-## [2026-07-03T17:50:53+00:00] Run fable5-demo-1 · Round 12
+## [2026-07-09T19:30:56+00:00] Run c7l1-gpt-5.6-luna-roland-devourer_below · Round 12
 
-WINNING LINE (score 4, repeatable): R1 Study: MagGlass, investigate x2, advance act (free), play Knife. Attic (1 horror on entry, shroud 1): 2 clues easy. Cellar (1 dmg entry, shroud 4): DON'T investigate — kill spawned enemies with Knife (5v2) and use Roland's once-per-round kill-reaction for clues. Agenda 2 = 7 doom = plenty of prep time; agenda 3 = 10 more. Hold 3+ clues, do NOT advance act 2 until: Beat Cop + .38 Special + Physical Training in play and 10+ resources. Advance at round end -> Priest spawns engaged -> turn 1: .38 shot with Vicious Blow committed + PT pumps to 8v4 (only autofail misses) = 3 dmg, second shot +PT = 2 dmg = dead. Hold Dodge for retaliate/enemy attacks. Priest: 4 fight/5 HP/Retaliate/Hunter, 2dmg+2horror per hit — Roland sanity 5 is the death axis; never advance act 2 while above 2 horror without First Aid.
+[2026-07-09] Return to Devourer Below, Roland Banks: LOSS R12 at Umôrdhoth, score 0, no resolution. Critical boss lesson: Umôrdhoth attacks for 3 damage/3 horror when an unengaged investigator plays a card or takes another provoking action; at 3 damage/2 horror, playing Machete/.45 or First Aid provoked lethal horror. Enter the Ritual Site boss phase at full sanity/health or engage/fight without relying on playing a weapon. Keep an enemy-control plan and do not allow the boss to spawn while already near 5 sanity. Act 1 clue route worked: Tangled Thicket + Corpse-Ridden Clearing + Roland reaction at Wooden Bridge reached 3 clues by R9; Disrupting the Ritual test succeeded once with Guts but autofail on investigation let Umôrdhoth spawn. Corpse-Taker doom reached agenda pressure. No engine bug observed.
 
-## [2026-07-03T17:51:03+00:00] Run fable5-demo-1 · Round 12
+## [2026-07-09T19:36:40+00:00] Run c7l1-gpt-5.6-luna-daisy-midnight_masks · Round 7
 
-SCORE CEILING ~9: Attic 1 + Cellar 1 + Priest 2 + Flesh-Eater 1 + Icy Ghoul 1 + R2 bonus 3, minus trauma. VP enemies: Flesh-Eater spawns Attic, Icy Ghoul spawns Cellar (mine spawned at Cellar the round AFTER I advanced act 2 — too late to kill safely since game ends the instant Priest dies; don't chase VP ghouls while engaged with Priest at low sanity, each fight vs another enemy = Priest AoO 2dmg+2horror). Agenda1 flip choice: take random discard over 2 horror. Rotting Remains (Will 3, 3 copies) is the main horror drain — Physical Training also pumps willpower, keep 2+ res spare during mythos.
+[Daisy / Return Midnight Masks / 2026-07-09] Resigned R7 with Alma Hill in victory display; score pending/final from score command. Route: Milan + Flashlight, early clues, parley Alma; Ward canceled Hunting Shadow; reported bug because Alma drew 3 encounters but engine only resolved Hunting Shadow, not On Wings/Mask. Corpse-Taker forced costly provokes; Narogath engagement at St Mary's left 4/5 damage and 8/9 horror. Daisy’s 5 health/9 sanity can’t sustain repeated attacks; once at 4 damage/8 horror, resign instead of marginal evade. Early 2-clue cultist spawn at R4 secured Wolf-Man Drew but chasing further was unsafe. Next: mulligan for Old Book/Research Librarian/Dr Milan, preserve Flashlight and avoid investigating while engaged unless escape plan; prioritize parley cultists before boss pressure.
 
-## [2026-07-03T18:11:24+00:00] Run gpt55-demo-1 · Round 17
+## [2026-07-09T19:36:44+00:00] Run c7l1-gpt-5.6-luna-daisy-midnight_masks · Round 7
 
-GAME gpt55-demo-1: no_resolution at R17, score 5 (XP 6, physical trauma 1). VP earned: Flesh-Eater + Icy Ghoul plus cleared Attic/Cellar likely; Ghoul Priest was at 4/5 damage when agenda 3 defeated Roland. Cover Up fully cleared, no mental trauma.
+Correction: final score for this Daisy Return Midnight Masks run was XP 2, score 2, trauma 0 (R1 resignation).
 
-## [2026-07-03T18:11:32+00:00] Run gpt55-demo-1 · Round 17
+## [2026-07-09T19:42:56+00:00] Run c7l1-gpt-5.6-luna-daisy-devourer_below · Round 5
+
+[2026-07-09] Return to Devourer Below — Daisy Walker: SCORE 0, resigned R5 with 2 clues, 3 damage/3 horror, no trauma. Good opening: full mulligan found Old Book of Lore + Magnifying Glass + Flashlight; Old Book found Ward, then Dr. Milan; Ward canceled Ancient Evils R2. Critical failure: moved from Cliffside through Main Path after Acolyte spawned there; entering re-engaged exhausted Goat Spawn and engaged Acolyte, creating a two-enemy trap. Daisy's low combat/agility and discarded Blinding Light/Manual left no escape; evade tests were 2 vs 3 and Elderthing -5 cost Milan and health. Never cross an enemy location just because enemies are exhausted: clear or evade all enemies before moving, and keep one agility/evasion/combat answer in hand. Mandatory Unhallowed Ground test was WP 3 vs 4; +1 tie failed on -1 and cost 1 damage/1 horror, so overcommit dangerous location reveals when health is low. Corpse-Taker from Mask spawned at Arkham Woods 4 and accelerated doom pressure; agenda reached 5/5 R5. Daisy-specific: protect Old Book/Milan engine, but do not spend every threat answer on setup; retain Mind over Matter/Blinding Light or a skill for enemy turns. General scenario: Main Path is a dangerous choke point; resolve enemies there before exploring remaining Woods. Resigning at 3/5 damage and no XP avoided trauma, but yielded no score.
+
+## [2026-07-09T19:43:49+00:00] Run none · Round ?
+
+[2026-07-09] CURRENT-RUN BLOCKER: c7l1-gpt-5.6-luna-skids-midnight_masks (Skids / Return to Midnight Masks) has missing hidden.blob; state, actions, and score fail before any decision. No new game started.
+
+## [2026-07-09T19:44:48+00:00] Run none · Round ?
+
+RUN BLOCKER (2026-07-09): Active run c7l1-gpt-5.6-luna-skids-devourer_below is unrecoverable through the CLI because hidden.blob is missing. state/actions/score and even bug-report fail before loading. Do not start a replacement run; restore the hidden state or rerun this assigned run externally.
+
+## [2026-07-09T19:50:35+00:00] Run c7l1-gpt-5.6-terra-agnes-midnight_masks · Round 9
+
+[2026-07-09] Run c7l1 Agnes / Return to Midnight Masks: resigned R9, score 2 (XP 2: Herman Collins parley + cleared Graveyard; no trauma). Opening Shrivelling + Flashlight, then Holy Rosary, was excellent. Northside's 5-resource action for 2 clues is a reliable cultist-draw engine. Preserve exactly 4 hand cards when routing to Herman (discard-4 parley); his Graveyard entry test can safely be taken uncommitted if health permits. Drawn to the Flame at cleared/near-cleared victory locations can secure 2 clues in one action, but weigh its extra encounter carefully when at low health. Engine bugs reported: (1) Hunting Nightgaunt evade -4 was initially reported as failure by 1 despite its modifier doubling; the later result displayed -8 but failure math/messages remained inconsistent. (2) after an attack of opportunity while Agnes moved Miskatonic→Rivertown, Hunting Nightgaunt moved with her, though a Hunter should remain behind until enemy phase.
+
+## [2026-07-09T19:56:05+00:00] Run c7l1-gpt-5.6-terra-agnes-devourer_below · Round 6
+
+[2026-07-09] Return to Devourer Below — Agnes Baker: LOSS R6, score 0 (no resolution), defeated at Ritual Site with 9/8 horror. Good: Arcane Studies + early branch clues reached Act 2 R4; Ward correctly canceled Mask of Umôrdhoth; Forbidden Knowledge plus Agnes reaction dealt all 3 damage to an Acolyte across three phases without combat. Critical error/lesson: Dark Memory drew at end R4 and caused 2 horror; at 7 horror do not enter Act 3 or a location-transition unless you can guarantee no enemy attack. Need prioritize Holy Rosary/Fearless and Shrivelling more aggressively; avoid spending Arcane Studies resources repeatedly on marginal intellect tests when Flashlight is due. Twisting Paths requires an Intellect(3) test to leave, so budget boosts/route around it. Return Devourer route: Act 1 takes 3 clues; entering Ritual Site from Main Path automatically advances Act 2 to Act 3 and spawned Corpse-Taker at the occupied site. Reported probable engine bug: Corpse-Taker card 50042 says Spawn—Farthest empty location, but engine placed it on Agnes at Ritual Site and engaged it absent visible override. Its attack is 1 damage/2 horror, lethal to high-horror investigators. General: Grave-Eater on Main Path can be bypassed with an agility commit; at h7 only do so if a safe healing/finish line exists.
+
+## [2026-07-09T20:06:23+00:00] Run c7l1-gpt-5.6-terra-wendy-midnight_masks · Round 10
+
+[2026-07-09] Return to Midnight Masks — Wendy Adams: R2 at R10, score 3 (XP 3, trauma 0): victory display Ruth Turner, Alma Hill, and cleared Graveyard. Strong route: keep Leo + Emergency Cache, clear Your House, use Historical Society draw-3 to find Flashlight, use Flashlight for early 2 clues and spawn Ruth by R3. Ruth's evade 5 needs Survival Instinct + Dig Deep resources; accept one ally-soaked hit to set it up. Miskatonic Museum's 2-horror-for-clue action can be paid by Lita, enabling rapid second cultist draw. Abandoned Warehouse can discard a willpower-icon card to remove 1 doom from an enemy—this bought one full agenda-1 round. Graveyard is shroud 1 with 2 clues and Victory; clear it before spending its clues. Alma parley correctly resolved all 3 encounter cards (Nightgaunt, Crypt Chill, Mask); it is worth 1 XP but needs ~4 sanity buffer. Hunter re-engages via Hunter movement, so evade then leave before enemy phase; Nightgaunt's negative chaos modifier is doubled on evade (a -2 displayed as -2 but applied -4). No new engine bug observed.
+
+## [2026-07-09T20:13:15+00:00] Run c7l1-gpt-5.6-terra-wendy-devourer_below · Round 7
+
+[2026-07-09] Return to Devourer Below — Wendy Adams: LOSS R7, no resolution, score 0. Reached 2/3 Act-1 clues; R1 Twisting Paths was a 0-clue trap with Intellect(3) required to leave. Do not enter it unless you can guarantee its exit. Early Umôrdhoth's Wrath auto-fail by 5 emptied the hand and caused 1 dmg/1 horror; preserve a Wendy discard card before a high-WP encounter if possible. The key lethal interaction: Agenda 2 failure added Hypochondria (1 direct horror whenever Wendy takes damage); at 6/7 horror, a tablet's 1 damage during final evade caused immediate lethal horror. At high horror, inspect/clear Madness weaknesses or resign before any damage-risk test. The Act-1 final clue was Corpse-Ridden Clearing (shroud 3, 1), but crossing Main Path while Grave-Eater + Corpse-Taker were engaged carried them along; Lita soaked the two move provokes but died, then their attacks left 6/7 horror. General: engaged enemies move with the investigator, so do not try to run them through a chokepoint without a fully safe escape. No engine bug observed.
+
+## [2026-07-09T20:20:05+00:00] Run c7l1-gpt-5.6-terra-roland-midnight_masks · Round 9
+
+[2026-07-09] Return Midnight Masks / Roland: R2 at R9, score 3 (XP 3: Jeremiah Pierce 1 + Masked Hunter 2; trauma 0). Strong opening: Machete R1, two low-shroud clues by R2, immediate cultist draw; Jeremiah parley + Guts at 5 vs 4 prevented doom and was worth 1 XP. Lita soaked a Disciple and Masked Horrors, and Machete killed the Disciple (Roland reaction clue) and eventually Hunter. Critical clock lesson: Corpse-Taker accumulated/moved doom from Downtown to Rivertown, adding 3 agenda doom at R7; it must be killed/avoided before Rivertown, even if the Masked Hunter is active. Masked Hunter is 6 health solo (4 printed +2 per investigator), 2 damage/1 horror, blocks discovering/spending clues while engaged, and takes 3 Machete hits; do not expect 2 hits. Reported engine bug: at R5 agenda had 4 doom + Disciple with 1 then gained agenda doom, total 6, but did not advance until next Mythos; rules count doom on all cards. Future Roland route: with Hunter killed and two clues, spawn named cultist earlier; Herman requires 4 hand cards, so preserve/draw hand before choosing him. General Return Masks: Corpse-Taker end-enemy movement to Rivertown transfers all its doom to agenda and can end the run abruptly.
 
-LESSONS from gpt55-demo-1: (1) Beat Cop fast damage must be used from the action menu BEFORE spending the last action; after a successful last-action attack the engine went straight to enemy phase and did not offer Beat Cop. Priest line should be: Machete hit, Machete hit, then immediately choose 'Discard Beat Cop to deal 1 damage' while an action menu/fast window exists. (2) Do not advance Act 2 with agenda 3 at 9+ doom unless the Priest kill is guaranteed that same turn; agenda 3 defeated Roland at upkeep before another turn. (3) If Priest first attack autofails, two remaining Machete hits can still put him at 4 damage, but you must have a fast ping/damage already usable before enemy/upkeep or you lose to agenda. (4) Evidence!/Roland reaction ordering: choosing Roland first on a kill led to Cover Up replacement and the engine did NOT return to Evidence!, so if trying to use both, test Evidence! first or expect only one reaction.
+## [2026-07-09T20:23:08+00:00] Run c7l1-gpt-5.6-terra-roland-devourer_below · Round 4
 
-## [ENGINE CHANGELOG — 2026-07-03, appended by the benchmark maintainers]
+[2026-07-09] Return to Devourer Below / Roland: LOSS R4, no resolution, score 0. Opening double Magnifying Glass + .45 cost a hand slot and depleted resources; keep only the zero-cost upgraded lens when planning a firearm. An early Silver Twilight Acolyte at Tangled Thicket took 3 actions due -3/-4/elderthing misses; Dynamite guaranteed its removal and Roland clue but cost 4 total damage including the provoked hit, leaving Roland exposed. Reported bug: Corpse-Taker 50042 says Spawn—Farthest empty location but spawned on occupied Main Path and engaged Roland. With Frozen in Fear, do not move away from an engaged enemy unless you can actually evade/defeat it: enemies move with you; the two-action move plus Dodge merely relocated Corpse-Taker to Great Willow. Great Willow surged Yithian Observer after Frozen discarded, producing a lethal two-enemy enemy phase at 2/5 sanity and empty hand. General Return Devourer: protect sanity far more aggressively; do not spend Dynamite or take a 2-horror treachery choice when near a Corpse-Taker/Yithian trap; seek Machete/cheap weapon and an escape card before committing to branch movement.
 
-The engine was updated after your last game. Notes above may be stale:
-- SCORING CHANGED: score = XP − trauma + 3 if you earn Lita Chantler (min 0). Advice based on the old "XP − trauma" formula (e.g. "always pick R2") should be re-derived: Lita is only earned in SOME outcomes.
-- Lita is NOT earned on R2 (she is on R1 and on no-resolution).
-- FIXED: upkeep discard loop no longer re-draws (the deck-cycling trick is gone).
-- FIXED: drawing from an empty deck now reshuffles your discard into the deck and costs 1 horror (per the real rules).
-- FIXED: Guard Dog / Beat Cop kills now trigger the defeat-reaction window; Roland's reaction AND Evidence! can both be used off one kill.
-- FIXED: fast-ability windows now open at phase boundaries (end of turn, before enemy attacks, end of mythos).
-- Weapon fight options now show the full test math (effective combat vs enemy fight).
-- Defeat trauma was double-counting; it now applies once.
+## [2026-07-09T20:55:15+00:00] Run c7l1-claude-haiku-4-5-20251001-agnes-devourer_below · Round 5
 
-## [ENGINE CHANGELOG — 2026-07-03 rules-conformance audit]
+## Run fable5-demo-8 (2026-07-09, Return Devourer Below, Agnes Baker): LOSS R5, score 0, trauma +1 mental (Dark Memory)
 
-The engine was audited line-by-line against the Rules Reference. Play-relevant changes:
-- AoO now matches paper rules: fight, evade, parley, and resign actions NEVER provoke attacks of opportunity (fighting enemy A no longer provokes enemy B). Engage, move, investigate, draw, resource, play, and other activated abilities provoke from EVERY engaged ready enemy.
-- There is NO boost window after the chaos token is revealed. Physical Training / Hyperawareness must be used before the reveal. Plan tests with the full bag in mind.
-- Autofail counts your skill value as 0: failing Grasping Hands/Rotting Remains via autofail deals the FULL test difficulty in damage/horror. Autofail is much more dangerous now.
-- Enemies exhaust after their enemy-phase attack. You choose attack/AoO order when engaged with multiple enemies.
-- Silver Twilight Acolyte's doom no longer advances the agenda instantly — doom advances only at the mythos check (or Ancient Evils). Agenda advance removes ALL doom in play.
-- Exhausted enemies at your location engage you the moment they ready in upkeep.
-- Slots are now enforced (2 hands, 1 ally — playing over a full slot discards the occupant).
+CRITICAL: Mulliganed away BOTH Shrivelling weapons in opening mulligan (disaster). Got Forbidden Knowledge instead, which is not a weapon substitute. Without Shrivelling (willpower 5), had to rely on evasion (50-50 vs chaos bag). Failed evasions R2 (tablet -3) and R3 (-1 token) against Acolyte of Umôrdhoth, took 3+ damage from engagements.
 
-## [2026-07-03T22:15:51+00:00] Run sonnet5-mini-g2 · Round 8
+KEY FAILURE: Twisting Paths (shroud 3, intellect 3 required to leave) became an exit trap. At high horror (6/8) with no shroud reduction, forced to draw card = Dark Memory triggered = 2 horror = insane = dead R5 upkeep.
 
-AoO trap: ANY action besides fight/evade/parley/resign while engaged triggers a full attack from EVERY engaged enemy (confirmed again this game — played Hyperawareness while engaged w/ Swarm+Ghoul Priest, ate both attacks: 3dmg+2hor). Before playing assets/moving/investigating, first fight or evade every engaged enemy, or accept you WILL eat all their attacks.
+SUCCESS: Used Forbidden Knowledge + Agnes reaction chain to kill Grave-Eater (horror → damage reaction, repeat). Survived R4 desperate situation.
 
-## [2026-07-03T22:15:51+00:00] Run sonnet5-mini-g2 · Round 8
+NEXT: Keep 1+ Shrivelling, prioritize Flashlight (-2 shroud) in mulligan. Do not draw at 6+ horror. Discard Haunted only with health buffer. Use Forbidden Knowledge's horror-damage engine creatively.
 
-FIGHT does not disengage an enemy — only EVADE does. A successful Fight still leaves the enemy engaged, and it makes its normal enemy-phase attack anyway. If your goal is to prevent this round's attack (e.g. sanity is critical), you must EVADE, not fight, even if fighting 'succeeds'. Misreading the option list and picking Fight instead of Evade at 3/5 horror vs Ghoul Priest is what killed me (fight succeeded, Ghoul Priest still attacked for 2dmg+2hor -> 5/5 horror, dead).
+## [2026-07-09T21:03:16+00:00] Run c7l1-claude-haiku-4-5-20251001-wendy-midnight_masks · Round 8
 
-## [2026-07-03T22:15:51+00:00] Run sonnet5-mini-g2 · Round 8
+## [2026-07-09] Run fable5-demo-9 (Return to Midnight Masks, Wendy Adams)
 
-Enemies auto-re-engage every round: any ready unengaged enemy at your location engages you automatically (upkeep, after exhausted cards ready). Evading only buys ONE round of safety unless you also spend an action to MOVE AWAY before it readies again. Against Hunter enemies this just delays — they'll path back — but distance still buys turns.
+RESULT: RESIGNED R8, Resolution 1. Score 2 (XP 2: Peter Warren 1 + Alma Hill 1; trauma 0).
 
-## [2026-07-03T22:15:51+00:00] Run sonnet5-mini-g2 · Round 8
+CRITICAL SUCCESSES:
+1. **Leo De Luca mulligan + turn-1 play**: Cost 5 resources but repaid via action economy + upkeep draw + resource generation. Leo's extra action was the foundation for all subsequent plays.
+2. **Flashlight shroud reduction**: Enabled reliable Intellect 3 investigations at shrouds 2-3. Without it, most locations were 50/50 or worse.
+3. **Wendy's reaction (redraw)**: Used twice (Your House, Graveyard), both times turning failures into successes. Reaction is Wendy's signature strength.
+4. **Emergency Cache on R4**: 0-cost event gave 3 resources for free, enabling resource-heavy plays (Flashlight, resource-intensive events).
+5. **Alma Hill parley**: Despite spawning 2 Hunting Nightgaunt enemies + Corpse-Taker, gained 1 XP and added valuable information.
 
-Ghoul Priest (Elite 4/5/4, dmg2/hor2, Hunter, Retaliate, Victory2) is a serious threat to Roland's fragile 5 sanity — two hits (4 horror) can be fatal alone. CRITICAL: Act3 'What Have You Done?' requires DEFEATING Ghoul Priest to advance — you cannot just dodge it forever and still resolve the scenario; commit to killing it (ideally with a real weapon like .38 Special/Guard Dog, not just Knife) while sanity/health still has margin, rather than stalling until you're too fragile to risk the fight.
+CRITICAL FAILURES AVOIDED:
+1. **Did NOT draw Abandoned and Alone**: Signature weakness was never revealed. If drawn at high horror (4/7), would have deleted discard pile and forced resignation/rapid death.
+2. **Did NOT stay engaged with Masked Hunter**: Evaded twice successfully (Agility 4 is Wendy's strength). Avoided unnecessary damage accumulation.
 
-## [2026-07-03T22:15:51+00:00] Run sonnet5-mini-g2 · Round 8
+OPERATIONAL DECISIONS:
+1. **Mulligan entire hand for Leo + Flashlight**: Correct call. Initial hand (Cunning Distraction 5-cost, Pickpocketing, Lita, Perception, Survival Instinct) had no economy engine.
+2. **Resign at 4/7 horror with 2 enemies engaged**: Correct. Abandoned and Alone in deck (still undrawn), double Nightgaunt at location. Risk-reward was negative for pushing further.
+3. **Parley over fight**: Alma Hill parley (draw 3 encounter cards) is risky but generates 1 XP + information. Better than attempting to fight at Combat 1.
+4. **Spent 2 clues on Peter Warren instead of holding for Act 1 progression**: Peter Warren was worth 1 XP. Holding clues for vague Act 1 advancement was lower EV.
 
-Skull chaos token = -1 per Ghoul enemy AT your location, counted regardless of engagement status (a disengaged-but-present Ghoul Priest still adds -1 to skull draws).
+HORROR MANAGEMENT:
+- Took 2 damage from Hunting Shadow (1 to Wendy, 1 to Leo); Leo died.
+- Took 2 horror from Alma Hill attack; +2 horror from Miskatonic Museum ability. Final horror: 4/7 (3 sanity buffer).
+- Abandoned and Alone (2 direct horror, no soak) would have killed Wendy if drawn. Signature weakness evasion was lucky.
 
-## [2026-07-03T22:15:52+00:00] Run sonnet5-mini-g2 · Round 8
+CULTIST ROUTE:
+- Peter Warren: Parley (2 clues) → 1 XP, added to victory display. No complex route needed.
+- Alma Hill: Parley (draw 3 encounter cards) → 1 XP, added to victory display. Outcome resolved immediately.
+- Available routes not taken: Jeremiah Pierce (Parley + WP test), Billy Cooper (monster defeat at location), others not drawn.
 
-Cover Up (Roland's signature weakness): enters with 3 clues; its [reaction] letting you redirect clue discoveries into it is OPTIONAL — decline until your act's clue requirement is met, then redirect leftover discoveries to clear it. At game end ANY clues remaining on it cost only a FLAT 1 mental trauma (not per-clue), so it's low priority, not worth detouring for.
+MAP PROGRESSION:
+- Starting location: Your House (shroud 2, 1 clue)
+- Key locations revealed: Rivertown (shroud 4, 1 clue), Graveyard (shroud 1, 2 clues), Southside (shroud 3, 1 clue, draw-3 ability), Miskatonic University (shroud 3, horror-for-clue ability)
+- Never revealed: Easttown, Downtown, St. Mary's Hospital, Northside, You House second clue
+- Map layout: Hub-and-spoke with Rivertown as central node connecting most locations.
 
-## [2026-07-03T22:15:52+00:00] Run sonnet5-mini-g2 · Round 8
+ENCOUNTER DECK OBSERVATIONS:
+- On Wings of Darkness (treachery, Agility 4 test): Handled with 1 Backstab commit + redraw.
+- Hunting Shadow ×2: Resolved via 2 damage payment (avoided resource payment).
+- Masked Horrors: Placed doom on agenda (no resolution option given).
+- Disciple of the Devourer: Spawned at Northside R2, never engaged.
+- Corpse-Taker: Spawned at Downtown via Alma Hill parley, scenario ended before interaction.
+- Hunting Nightgaunt ×2: Spawned via Alma Hill parley, triggered resignation decision.
+- Obscuring Fog: Attached to Miskatonic University (shroud +2, not resolved).
+- False Lead: Drew twice (R2 via surge, R8 via Alma parley).
 
-Result (sonnet5-mini-g2, seed unspecified): died R8 to insanity (horror 5/5) vs Ghoul Priest at Hallway, resolution no_resolution. XP 3, trauma mental2/physical0, final score 4. Root cause: got pinned at Hallway for ~5 rounds re-fighting/evading Ghoul Priest+adds every round instead of retreating with a weapon-up plan; then misclicked Fight instead of Evade at a sanity-critical moment. Next time: (1) never linger at a Hunter-Elite's location beyond 1-2 rounds without a kill plan — retreat and build up weapons/allies elsewhere first; (2) double check option numbers before submitting 'do' when a wrong pick is fatal; (3) prioritize getting a real weapon (.38 Special/Guard Dog) online before round 5-6 instead of banking 10+ unused resources.
+NEXT TIME (if Wendy again):
+1. **Mulligan is critical**: Leo De Luca > Flashlight > Emergency Cache. 2+ mulligan attempts acceptable.
+2. **Intellect 3 is marginal**: Requires Flashlight for shrouds 2+. Perception is backup (-1 intellect instead of -2, more reliable).
+3. **Horror is resource**: Only 7 sanity. Budget carefully. 4/7 horror is resignation threshold if Abandoned and Alone still in deck.
+4. **Scavenging works only if discard survives**: Abandoned and Alone kills recursion engine. Accept that and pivot to direct clue/event generation.
+5. **Agility 4 evasion is the win condition**: Evade > fight always. Backup: Dig Deep (+2 agility for evasion tests), Survival Instinct (+1 agility).
+6. **Leo dies fast to multi-enemy attacks**: 2 HP total. Soak hits with Lita Chantler (ally with health pool) when possible; Leo is not a tank.
+7. **Cultist parley routes can be explosive**: Alma Hill parley (3 encounter cards) was valuable but risky. Herman Collins (4-card discard) safer if available.
+8. **Resignation at high horror is correct**: Abandonment and Alone (2 direct horror) + Masked Horrors (treachery horror) + any other horror-dealing encounter card = insta-death at 4/7 horror. Resign threshold is 3-4 horror depending on deck burn rate.
 
-## [2026-07-03T22:26:23+00:00] Run sonnet5-mini-g3 · Round 9
+SCENARIO INSIGHTS - RETURN TO MIDNIGHT MASKS:
+- Agenda 1 flips R5-6 depending on encounter deck pacing. Expect R6 for standard difficulty.
+- Cultist spawning is limited by 5-card Cultist deck (starting pool large, 3 randomly removed). Each draw costs 2 clues + 1 action.
+- Masked Hunter (Agenda 2 spawn) is 6 health, 2 damage/1 horror, blocks clue discovery/spending. Force evasion (Agility 4 tests, difficulty 2) rather than fight.
+- Map varies per run (locations randomized for Easttown, Northside, Miskatonic, Rivertown, Southside). Graveyard (shroud 1) + Rivertown (shroud 4) are consistent anchors.
+- Historical Society draw-3 is economy multiplier; use it early in game when hand fills quickly.
 
-Result (sonnet5-mini-g3): died R9 to insanity (horror 5/5), resolution no_resolution. XP 4, trauma mental2/physical0, score 5 (up from g2's 4). Never melee'd Ghoul Priest at all (avoided the retaliate trap) but still died: burned all resources pumping Hyperawareness to evade Priest round after round, leaving only 1 resource for the critical R9 evade -> pumped agility to only 3 vs difficulty 4 -> failed -> cultist token dealt 1 horror on the FAILED test (5/5) -> dead. Also note: cultist chaos token's '-1, take 1 horror on fail' applies to ANY failed test, not just willpower/sanity ones -- it hit an AGILITY evade test here.
+SCORE ANALYSIS:
+- XP 2 from cultists (Peter Warren 1 + Alma Hill 1); no resolution bonus for Midnight Masks.
+- Trauma 0 (resigned before defeat).
+- Final score 2 = 2 - 0 = solid mid-range game.
+- Possible improvements: +1 XP for 3rd cultist (Jeremiah Pierce or Billy Cooper, if routes available) = 3 points. Unlikely without drawing 2+ more cultist deck cards and avoiding Abandoned and Alone.
 
-## [2026-07-03T22:26:31+00:00] Run sonnet5-mini-g3 · Round 9
+## [2026-07-09T21:11:19+00:00] Run c7l1-claude-haiku-4-5-20251001-wendy-devourer_below · Round 6
 
-LESSON for next game: Ghoul Priest (4/5/4, Hunter+Retaliate, dmg2/hor2) cannot be safely meleed with just a Knife -- max single-hit is 2 dmg (thrown) vs its 5 HP, so ANY non-lethal fight action guarantees a Retaliate counter-attack (2dmg+2hor), and repeating that to whittle it down stacks retaliates faster than you can out-damage it. Only fight it once you have a weapon/combo that can kill in 1-2 actions in a single turn (e.g. .38 Special x2 shots), and budget resources SPECIFICALLY for that turn. Otherwise the only lever is repeated Evade (agility 2 base vs its evade 4 -- needs +2 net, only the +1 token in the bag beats that unpumped), which requires committing serious resources to Hyperawareness (was spending 5-6 resources per evade attempt for reliable success). Since Priest re-engages every upkeep, this cost repeats EVERY round it's alive -- do not spend down to 0-1 resources on a 'safe' round, since the very next round's evade needs the same budget again. Better plan: kill or permanently lose Priest early (Hunter still finds you if you just walk away one room), or bank resources deliberately (skip a round's actions if needed) rather than spending to zero, so the evade budget is always available.
+## [2026-07-09] Run show-hy3-wendy (Return to Devourer Below, Wendy Adams) · Round 6
 
-## [2026-07-03T22:34:15+00:00] Run sonnet5-mini-g4 · Round 10
+RESULT: LOSS R6, Score 0 (XP 0, trauma mental +1). Defeated by insanity at Ritual Site.
 
-Result (sonnet5-mini-g4): WON via defeating Ghoul Priest, resolution R1 'Burn it down'. XP 6, trauma mental2 (1 from R1 choice + 1 uncleared Cover Up), Lita earned, score 7 -- new best (prior best was 5). Never advanced Act 2 until Machete+Beat Cop+Guard Dog+10 resources were online; killed 2 Swarm-of-Rats and a Ghoul Minion for free clues via Roland's kill-reaction before engaging the Priest.
+CRITICAL: Abandoned and Alone drawn R4 (2 direct horror, discard exile). Horror accumulated Unhallowed (-1) → Abandoned (+2) → tests (+1) → Byakhee provoke (+2) → Byakhee attack (+2) = insane by R6. Resigned at 4/7 horror should have been forced; instead pushed to Act 3 and died.
 
-## [2026-07-03T22:34:17+00:00] Run sonnet5-mini-g4 · Round 10
+KEY LESSON: With Abandoned and Alone in deck dealing 2 direct horror + discard exile, Wendy's 7 sanity is a hard ceiling. At 3/7 horror after Abandoned/Alone, resignation is correct (expected value = 0 score either way). Do not push for victory when sanity buffer ≤ 4.
 
-LESSON: Machete's +1 dmg bonus ('this attack deals +1 damage') only applies if the attacked enemy is the ONLY enemy engaged with you -- with 2 enemies engaged (Priest+Minion) Machete only hit for 1 dmg, not 2. Always clear secondary adds first (they die in 1 hit anyway) before committing Machete swings to a tough single target like Ghoul Priest.
+SUCCESSES: Leo De Luca in R1 upkeep; Flashlight enabled Intellect 3 investigations; got Act 1 advanced by R4. 
 
-## [2026-07-03T22:34:19+00:00] Run sonnet5-mini-g4 · Round 10
+NEXT WENDY: Mulligan Leo + Flashlight. Resignation threshold 3-4/7 horror if Abandoned undrawn; IMMEDIATELY if Abandoned drawn at 2+ horror.
 
-CORRECTION on Retaliate: it is NOT limited to fight actions. I played Dynamite Blast (an event, 3 dmg to all enemies+self at location) against Ghoul Priest expecting no counter since it's not a 'fight' -- Priest still made a full Retaliate attack (2dmg+2hor) back at me. Retaliate triggers on ANY damage dealt to the enemy that doesn't defeat it, regardless of source. Budget for 1 retaliate per non-lethal hit even from AOE/burst events, not just weapon swings.
+## [2026-07-09T21:18:44+00:00] Run c7l1-gpt-5.6-luna-skids-midnight_masks · Round 8
 
-## [2026-07-03T22:34:24+00:00] Run sonnet5-mini-g4 · Round 10
+[2026-07-09] Return to Midnight Masks — Skids O'Toole: LOSS R8 by insanity, score 0, mental trauma 1. Strong opening: full mulligan found Machete + Lita/Guts/Dynamite; used House draw/resource, got 2 clues by R2, spawned Victoria, killed Corpse-Taker with Machete+Vicious+Knife, then Emergency Cache into Leo. Critical failure: Agenda 1 reached 5/6 by R3 from Corpse-Taker + Masked Horrors; failed to secure the next 2 clues before Narogath spawned. Narogath took 6 damage but repeatedly attacked for 2 horror; at 4/6 horror, Elusive escape was correct, but I kept exploring instead of resigning. After moving Rivertown→Graveyard→Easttown, Narogath moved/re-engaged and killed me at R8. Skids-specific: Horror 4/6 is already a resign threshold when Narogath is active; do not reload/investigate near a pursuing agenda enemy. Play Lita before engagement if possible; playing it while engaged provokes an extra attack. Keep Leo and Machete, but do not spend Skids ability down to 0 resources unless it directly secures clues/escape. General Return Masks: Corpse-Taker’s doom must be solved immediately; its movement can converge on you and its doom accelerates Agenda 1. Agenda 2 Narogath follows/moves and attacks after re-engaging; treat it as a clock, not a normal enemy. If Agenda 1 is at 5/6 by R3 and you have only 1 clue, prioritize 2-clue generation or resign; do not chase high-shroud locations without Flashlight.
 
-WINNING KILL SEQUENCE vs Ghoul Priest (5 HP, dmg2/hor2, Hunter+Retaliate) with Ghoul Minion also engaged: (1) Beat Cop fast-discard ping (auto-targets an enemy, don't rely on choosing which -- it hit the Minion here, not the Priest); (2) Fight Minion with Machete solo (1 dmg, enough since Minion already pinged down) -- now Priest is the only enemy engaged; (3) Dynamite Blast at own location (5 res, 3 dmg to Priest + 3 dmg to self, triggers 1 Retaliate: 2dmg+2hor) brings Priest to 2 HP; (4) Fight Priest with Machete (now solo-engaged, 2 dmg bonus) for the exact kill, lethal hit takes no Retaliate. Total self cost: 3(blast)+2(retaliate)=5 dmg, 2 hor, ONE retaliate instead of the 2+ that killed prior runs. Took 3 actions total, all in one round.
+## [2026-07-09T21:29:12+00:00] Run c7l1-gpt-5.6-luna-skids-devourer_below · Round 11
 
-## [2026-07-03T22:34:26+00:00] Run sonnet5-mini-g4 · Round 10
+[2026-07-09] Return to Devourer Below — Skids O'Toole: LOSS R11, no_resolution, score 0, physical trauma 1. Advanced Act 1 by R9, reached Act 4 Ritual Site, but Umordhoth's massive attacks killed Skids while retreating. Critical Act 4 lesson: once Umordhoth spawns at Ritual Site, moving away provokes its 3 damage/3 horror attack even when it is not shown engaged; it then Hunter-moves and attacks again in enemy phase. Never begin the move with only 1 action, because there is no action left to resign at Main Path; ensure 2+ actions and resign immediately after the move, or use the intended final resolution route. Do not play assets at Ritual Site with Umordhoth present: they provoke its attack. Pay Hospital Debts to 6/6 before the final retreat; only 2 resources per round can be transferred, and this run ended at 3/6. Strong early plan: mulligan for Machete + Flashlight, use Great Willow/Lakeside/Old House for 3 clues, advance Act 1 by R9, and kill Grave-Eaters with Machete. Mob Enforcer card says fight 4, but engine offered fight difficulty 5; reported via ./ahlcg bug. Play error: after Machete, option indices shifted and I accidentally played Knife instead of Flashlight; reread choices after every action.
 
-SCORING: with Lita's +3 bonus now in the formula, re-derive the R1-vs-R2 choice per game: R1 'Burn it down' = +2 XP, +1 mental trauma, EARNS Lita -> net +4. R2 'Refuse to burn it' = +3 XP, no trauma, NO Lita -> net +3. R1 now edges out R2 by 1 net point (opposite of the pre-Lita-formula advice to always pick R2) -- pick R1 for defeating-the-Priest resolutions.
-
-## [2026-07-03T22:34:28+00:00] Run sonnet5-mini-g4 · Round 10
-
-ENGINE QUIRK: playing an Ally when your 1 Ally slot is already occupied auto-discards the incumbent with no confirmation/cancel step -- I lost a full-health Guard Dog by playing Beat Cop without checking slot occupancy first. Always check what's already in your Ally/Hand slots before playing a new card of the same slot type.
-
-## [2026-07-04T20:30:22+00:00] Run none · Round ?
-
-BUGHUNT game-01 Return/Roland: Run became unplayable R3 during Bedroom investigate commit confirmation; ./ahlcg do/state/actions/score/bug all fail with 'missing hidden state: runs/mch/hidden.blob'. Could not finish or file ./ahlcg bug because the bug command hits the same error. Earlier suspected log/UI bug: Machete option showed Combat(5) and final math used combat 5, but test-start log printed combat 4 vs 2.
-
-## [2026-07-04T20:30:28+00:00] Run none · Round ?
-
-Return/Roland opening lesson: Mag Glass + Machete is a strong keep; Flashlight conflicts with hand slots once both are in play, so committing it for the Study clue was good. Return Act 1 needs 3 clues spent from Guest Hall, but Guest Hall revealed with 0 clues in this run; Bedroom had 1 clue and Obscuring Fog can be cleared by a successful investigate. Cover Up is optional on each clue discovery, so decline it when Act tempo is urgent and use later spare clue discoveries/Roland kill triggers to clear it.
-
-## [2026-07-06T02:13:02+00:00] Run c-loop2-daisy-2 · Round 5
-
-Round 1 Lost to Narôgath - Daisy's low combat/agility made fighting the boss difficult. Need to prioritize defensive tech like Flashlight or evasion cards in future upgrades. Consider removing weak cards to add stronger combat options like Overpower or Bullet-proof Vest.
-
-## [2026-07-06T02:14:21+00:00] Run c-loop2-daisy-3 · Round 2
-
-Devourer Below R2 loss: Necronomicon pulled (3h), failed evasion/fight on Grave-Eater, defeated at 4/5 damage. Doom 0→1→5 immediately. Daisy has 3 physical trauma. Need focused strategy for next attempt.
-
-## [2026-07-06T03:43:38+00:00] Run c-loop3-agnes-3 · Round 4
-
-Campaign failed: loop3-agnes (Roland driven insane on Devourer Below). Agenda pressure (3/4 opening) combined with horror from encounter deck proved too strong. Key lesson: need more horror protection or combat plan for this scenario. Ritual Site strategy requires stronger investigator or horror management. Agnes was killed earlier, so this ends the campaign run.
-
-## [2026-07-06T12:17:58+00:00] Run c-show-fable-roland-1 · Round 16
-
-ENGINE TRAP: never chain a second './ahlcg do' after any action that starts a skill test — the commit menu renumbers options and the chained pick commits a card instead of Done. This game it burned .38 Special, Deduction, Evidence!, Guard Dog, Flashlight, and Dynamite Blast. One command at a time during tests; always read the menu first.
-
-## [2026-07-06T12:18:07+00:00] Run c-show-fable-roland-1 · Round 16
-
-Rules: playing a non-fast asset while engaged provokes an attack of opportunity (took 2/2 playing .45 vs Corpse-Hungry Ghoul). Play weapons before engaging; fast cards (Magnifying Glass) are safe. Failed EVADE does not trigger Retaliate, only failed attacks do.
-
-## [2026-07-06T12:18:07+00:00] Run c-show-fable-roland-1 · Round 16
-
-Return to The Gathering map intel: Act1 clues Study(1)/Bedroom(kill-reaction)/Bathroom(1), spend in Guest Hall; Act2 clues Cellar(1), Ghoul Pits(1, shroud 4 - use Roland kill-reaction), Field of Graves(shroud 2); Parlor locked until Act3. Ghoul Pits reveal: agility(3), spawns 1 rat per point failed. Field of Graves reveal: willpower(4), random discard per point failed. Obscuring Fog +2 shroud on Attic. 4+ Ancient Evils possible (Ghoul Pits search reshuffles discard).
-
-## [2026-07-06T12:18:16+00:00] Run c-show-fable-roland-1 · Round 16
-
-Ghoul Priest (5hp, fight 4, Retaliate, 2/2): each Machete swing is ~60% solo; engaging below 5 damage headroom means one fail = defeated. Agenda 3 at Act 1/2 = worst ending (R3), at Act 3 = defeat +1 phys trauma, same as dying to the Priest - so if health is low, racing to Act 3 and swinging is strictly correct. Defeat at Act 3 in Return Gathering still earned Lita + 5 XP, house standing. Next time: reach Act 3 by round 12 with weapon + Dodge in hand, keep health above 5.
-
-## [2026-07-06T12:33:07+00:00] Run c-show-fable-roland-2 · Round 10
-
-Return/Midnight Masks loss autopsy (Roland, horror-defeat R10): Hunting Nightgaunt DOUBLES negative chaos tokens on evade attempts (evade 1 but -1 becomes -2; only +1/0/0/eldersign pass at agi 2 = 25%). NEVER plan to evade it — fight it (no doubling) or avoid engaging. It attacks 1dmg/1hor every enemy phase; with sanity 5 that's a 4-round clock by itself.
-
-## [2026-07-06T12:33:17+00:00] Run c-show-fable-roland-2 · Round 10
-
-Midnight Masks strategy for next time: horror is THE loss axis for Roland (sanity 5 + Cover Up +Narôgath 1dmg/2hor attacks). Keep a soak ally alive at all times (Guard Dog died R7); play Lita/Beat Cop the moment ally slot frees while UNENGAGED. Once engaged at 4/5 horror there are no safe actions: non-fight/evade actions (incl. resign, moves, 0-cost allies) provoke AoO = death. Resign a round EARLY while unengaged rather than gamble evades. Also: chaos bag ran 3 autofails + heavy negatives in 13 pulls — budget tests assuming ~40% miss on 5v3.
-
-## [2026-07-06T12:33:27+00:00] Run c-show-fable-roland-2 · Round 10
-
-Return/Midnight Masks mechanics learned: (1) Act ability = spend 2 clues to draw from Cultist deck — clues in POOL are the currency, and Disciple spawn effects/tablet tokens STEAL pool clues (Disciple: 'place 1 clue on its location' takes yours). (2) Crypt Chill (will 3 vs 4) discards an asset — lost the .38 Special R2; keep a junk asset in play as sacrifice. (3) Mask of Umordhoth adds ~2 HP to a cultist. (4) Narôgath: 4hp fight 3, attacks 1dmg/2hor, Hunter after On Wings of Darkness disengage. (5) Killing a doom-laden cultist REMOVES its doom from the agenda count — worth prioritizing. (6) Working a Hunch is fast: safe while engaged, and can clear Cover Up via the replace-discovery choice.
-
-## [2026-07-06T12:33:45+00:00] Run c-show-fable-roland-2 · Round 10
-
-CRITICAL Midnight Masks scoring lesson: generic 'Disciple of the Devourer' kills do NOT count as interrogations. The interrogatable cultists are the NAMED ones (Alma Hill, Jeremiah Pierce, Peter Warren, Ruth Turner, Victoria Devereux, Narôgath) drawn from the Cultist deck via the act's spend-2-clues ability. Strategy next campaign: farm clue pool early and spam cultist-deck draws from round 2-3; each named cultist not drawn+defeated 'gets away' and adds setup doom to Devourer Below (we shipped 6 there this time).
-
-## [2026-07-06T12:36:01+00:00] Run c-show-fable-roland-2 · Round 10
-
-Devourer Below prep (Roland, phys 1 / mental 2 trauma, all 6 cultists got away = heavy setup doom): bought Dr. Milan + Mag Glass(1) for the Ritual Site clue path. Opening priorities: mulligan hard for Machete (x2 in deck, never drawn in Midnight Masks) + Milan; keep an ally soak alive at all times; Roland starts at 2/5 effective sanity headroom is 3 mental-trauma-adjusted, so treat ANY 2-horror hit as near-lethal — Dodge and willpower pumps (Physical Training) are life-savers; Silver Twilight Acolyte weakness feeds agenda doom every attack, kill it instantly (3hp fight 2).
-
-## [2026-07-06T12:50:15+00:00] Run c-show-fable-roland-3 · Round 8
-
-CLI pitfall: never chain './ahlcg do N && ./ahlcg do M' — the action menu renumbers after every decision. In TDB R1 this made me hit 'Pass (end turn)' instead of 'Play Dr. Milan Christopher', wasting a full setup turn. Always read the fresh menu before each do.
-
-## [2026-07-06T12:50:23+00:00] Run c-show-fable-roland-3 · Round 8
-
-Campaign math: letting all 6 cultists get away in Midnight Masks starts (Return to) The Devourer Below at 3/4 agenda doom — agenda 1 flips on round 2 and the solo clue race is essentially lost from setup. Interrogating cultists in scenario 2 is the real defense for scenario 3; treat Midnight Masks cultist hunting as a scenario-3 investment, not optional VP.
-
-## [2026-07-06T12:50:34+00:00] Run c-show-fable-roland-3 · Round 8
-
-TDB endgame facts learned the hard way: Umordhoth (solo) = 6 hp, fight 8 / evade 6 with Vault of Earthly Demise, attack 3dmg/3hor, Massive + Hunter — 'Engage Umordhoth' appearing in the menu does NOT mean you're free; moving from his location provokes AoO from him AND every other engaged enemy. Corpse-Taker's attack is 1 dmg / 2 HORROR (killed Roland at 3/5 sanity). 'The Ritual Begins' flip forces willpower vs 6, failure = gain a random basic weakness (Amnesia). Umordhoth's Hunger discards a card and an empty hand is lethal — always hold one. When double-engaged with lethal AoOs and Resign is on the menu, resign: defeat gave the same no_resolution plus extra mental trauma.
-
-## [2026-07-06T12:50:45+00:00] Run c-show-fable-roland-3 · Round 8
-
-Test-margin discipline: this NotZ bag (standard) has -3, -4, elderthing -5, autofail = 4/17 tokens at -3 or worse. A test at skill+1 vs difficulty fails ~40% and skill+2 fails ~25%. Roland's 4-vs-3 basic attacks whiffed 5 of 6 early tries and burned three rounds on a 2hp Grave-Eater. When a kill or escape gates the turn plan, commit cards to reach +3 margin or bring a weapon; naked stat checks are for throwaway actions only.
-
-## [2026-07-06T12:56:53+00:00] Run c-show-fable-daisy-1 · Round 5
-
-Engine enforces one ally slot: playing Research Librarian DISCARDS Dr. Milan from play ('discarded for slot capacity') with no warning at play time. Check play-area slots before playing allies.
-
-## [2026-07-06T12:59:49+00:00] Run c-show-fable-daisy-1 · Round 8
-
-AoO rule enforced: activating abilities (e.g. Old Book of Lore) while engaged with a ready enemy provokes an attack. Evade/kill first or accept the hit.
-
-## [2026-07-06T13:02:15+00:00] Run c-show-fable-daisy-1 · Round 8
-
-FATAL LESSON (Daisy, Return to the Gathering): engagement persists through act advances and forced moves — 'enemy moved to X' + 'you moved to X' means it FOLLOWED YOU, still engaged. Always re-check 'Engaged enemies' in ./ahlcg state before ANY AoO-provoking action when at low health. Died at 4/5 dmg using Old Book of Lore while unknowingly still engaged.
-
-## [2026-07-06T13:18:06+00:00] Run c-show-fable-daisy-2 · Round 7
-
-Return/Midnight Masks (Daisy, resigned R7): Daisy CANNOT fight named cultists without setup. Narogath spawns ENGAGED when agenda 1 flips (~R6 with Corpse-Taker doom accelerating it). By then you need EITHER 2+ res + Blinding Light in hand, OR MoM+Knife combo ready, OR an ally soak in play. Milan died as a 3-point soak in one attack (1dmg/2hor exactly kills him) - worth it, saved Daisy.
-
-## [2026-07-06T13:18:16+00:00] Run c-show-fable-daisy-2 · Round 7
-
-Action budget trap: 'N actions left (1 Tome-only)' means N-1 generic. I planned 'evade then resign if fail' but the evade consumed my LAST generic action - resign was impossible, nearly died. When counting actions for a survival plan, subtract the Tome-only action FIRST. Also eldersign for Daisy is +0 (not +1).
-
-## [2026-07-06T13:18:26+00:00] Run c-show-fable-daisy-2 · Round 7
-
-Confirmed AGAIN (2nd death-adjacent time): moving away from an engaged enemy does NOT disengage - it follows. Paying an AoO to 'escape' buys NOTHING; the ONLY exits are successful evade, kill, or resign. Naked Daisy evade vs evade-3 enemies passes only on +1 (1/16=6%). Plan around this: never let Daisy get engaged by fight-3/evade-3 enemies without Blinding Light money (2 res) in reserve. Also: keep 2+ resources banked at ALL times for exactly this; I hit the R6 crisis with 0 res and Emergency Cache unplayable (play=AoO while engaged).
-
-## [2026-07-06T13:18:35+00:00] Run c-show-fable-daisy-2 · Round 7
-
-Midnight Masks cultist-hunt economics (Daisy run): interrogating Peter Warren cost ~2 clues + 4 actions + Knife + MoM + 2 dmg taken. Soft cultists (fight 2, 2-3hp) ARE killable via MoM(int 5)+Knife-throw(+2/2dmg). Do cultist draws EARLY (R2-4) while board is quiet; after agenda 1 flips (Narogath engaged + hunters), cultist hunting is over for a fragile investigator. Also Misk U 'search 6 for Tome/Spell' whiffed with 10+ targets in a 25-card deck - don't rely on it; and use Ma's Boarding House ally-fetch for Milan the moment you pass Southside.
-
-## [2026-07-06T13:19:48+00:00] Run c-show-fable-daisy-2 · Round 7
-
-TDB prep (Daisy, 5 cultists got away = heavy setup doom, agenda will flip fast): plan is the CLUE RACE, not combat. Bought Drawn to the Flame (2 testless clues) over Deduction. Opening: mulligan for MagGlass/Old Book/allies; fetch Milan is not available in TDB (no Ma's Boarding House) so protect drawn allies. Keep 2+ res banked for Blinding Light evades; MoM+Knife is the only kill line (2hp max realistically). Umordhoth: do NOT fight (fight 8 w/ Vault); sacrifice-Lita ending may be the realistic out - check resolution values before committing. Resigning TDB = Arkham destroyed, treat as last resort.
-
-## [2026-07-06T13:37:54+00:00] Run c-show-fable-daisy-3 · Round 5
-
-Return TDB solo defeat autopsy (Daisy, R5): with 5 got-away cultists the clock is agenda1 flip R2, agenda2 flip R4 — there is NO setup window. Engine rule that decided the game: ready enemies at your location RE-ENGAGE during UPKEEP, so a successful evade buys exactly one enemy phase and kiting from the same location is impossible. Correct play: after ANY successful evade, spend remaining actions MOVING away (hunter loses a full round crossing the hub; non-hunters like Grave-Eater never follow). I instead stayed at Old House to play Librarian/Book and got locked into a 2-enemy engagement with 1 hp of headroom = mathematically dead by R5.
-
-## [2026-07-06T13:38:08+00:00] Run c-show-fable-daisy-3 · Round 5
-
-Return TDB mechanics learned (Daisy run): (1) Mask of Umordhoth with no cultist in play = YOU pick and spawn one from a menu - pick Disciple (1hp, one-time doom/clue steal) over Corpse-Taker (recurring doom). (2) While agenda 2 'The Ritual Begins' is active, Byakhee tested at fight/evade 4 (+1/+1); reverts at agenda 3. (3) Agenda 2 flip test is willpower vs 6 - unwinnable at will 3, budget for a random weakness (Paranoia stripped all resources). (4) Tablet token in TDB = -3 AND 1 damage immediately, even mid-test - lethal at low HP. (5) Skull = -1 here. (6) Old House investigates with WILLPOWER (3 for Daisy, worse than int 5). (7) Grave-Eater attack = 1dmg/1hor + random hand discard. (8) Daisy eldersign = +0 plus draw 1.
-
-## [2026-07-06T13:38:08+00:00] Run c-show-fable-daisy-3 · Round 5
-
-Cross-scenario trauma math: entering TDB with 1 physical trauma meant Daisy had 4 effective HP; two engaged 1-dmg enemies = dead in 2 rounds regardless of play. When a campaign's final scenario starts with heavy setup doom AND trauma, the win conditions requiring rounds 8+ (Lita sacrifice, act 3) are out of reach - the honest evaluation at R4 was to sprint to Main Path and RESIGN while unengaged (Arkham destroyed either way, but avoids +1 trauma and keeps agency). Resign is only available at Main Path in TDB.
-
-## [2026-07-06T13:57:26+00:00] Run c-show-fable-skids-1 · Round 14
-
-Return/Gathering KILLER FACT: agenda 3 'They're Getting Out!' completing = R3 = investigator KILLED (not a flee ending). Never plan to 'ride out the agenda' in this scenario — the doom clock is a hard death timer. Ancient Evils x3 means doom 10 can arrive 2+ rounds early, and upkeep ALSO adds doom in agenda 3 (2/round baseline). Treat Return/Gathering as: be ready to advance act 2 and kill Ghoul Priest by ~R11, or you lose the investigator.
-
-## [2026-07-06T13:57:37+00:00] Run c-show-fable-skids-1 · Round 14
-
-Return/Gathering (Skids run) mechanics: (1) Return Bedroom + 'Breaking the Wall' act transition + Field of Graves entry ALL punish failed tests with random hand discards — hand was stripped to 0 twice; hold cards loosely, play assets ASAP. (2) Crypt Chill x2 ate Switchblade+Knife: junk-asset-as-sacrifice lesson confirmed again. (3) Locked Door blocks investigate until Combat/Agility 4 test — Hard Knocks resource pumps solved it (6v4). (4) Flashlight is the tempo unlock for shroud-3 rooms (3v1); Overpower's draw got it back after a discard. (5) Skids elder sign = +2 AND +2 res. (6) Icy Ghoul wanders (Hunter-ish) but didn't force a fight all game. (7) Hospital Debts: pay 2/turn in fast windows; ended 4/6 = -2 XP would've applied but XP was 0 anyway.
-
-## [2026-07-06T13:57:49+00:00] Run c-show-fable-skids-1 · Round 14
-
-Skids death autopsy (Return/Gathering R14): root cause was CLUE TEMPO, not the final gamble — 10 of 13 naked investigates failed R6-R9 (int 3 vs shroud 3 with -1/-2/-2/-3/-4/tablet/autofail bag ~ 40-45% pass). By the time Flashlight+Hard Knocks fixed the math (R12), 3x Ancient Evils had erased the margin. For low-int investigators: play Flashlight round 1-2 if drawn, treat shroud 3 as UNTESTABLE naked, and bank Skids' 2res=action ability for double Flashlight investigates. Also: the act-2 advance prompt appears in UPKEEP at the Hallway — by then mythos of next round fires first; don't count 'end of round N' doom, count MYTHOS of round N (Ancient Evils = instant +1).
-
-## [2026-07-06T13:58:32+00:00] Run c-show-fable-skids-1 · Round 14
-
-Agnes prep for Return/Midnight Masks (fresh deck, 0 XP, Lita earned-not-in-deck): mulligan for Shrivelling (only kill tool, will 6 vs fight 2-3 cultists) + Arcane Initiate/Holy Rosary. Ward of Protection: SAVE for Ancient Evils or Narogath-class spawns — this campaign runs 3x Ancient Evils. Use Drawn to the Flame for testless clues to fuel the act's 2-clue cultist-deck draws EARLY (R2-4, per Daisy lesson). Agnes will 5 passes Crypt Chill (vs 4)/Frozen (vs 3) naturally. Watch her health 6 — physical hits are her weak axis; keep soak (Initiate takes horror? no, Initiate is doom+fetch; horror soak = Rosary/herself at sanity 8).
-
-## [2026-07-06T14:14:52+00:00] Run c-show-fable-skids-2 · Round 11
-
-Agnes engine mastered (Return/MM, resigned R11 alive): FK/Shrivelling horror = AMMO. Every horror source triggers Agnes's 1-dmg ping to an engaged enemy - FK fast-use in the ENEMY-PHASE window pings BEFORE attacks resolve (killed things pre-attack twice). Kill pattern vs 3-4hp: Shrivelling(2) + symbol-horror ping(1) + Shrivelling(2). Arkham Asylum Downtown heals 3 horror/action - it's the reload station for the whole engine; Police Station refills Flashlight.
-
-## [2026-07-06T14:15:07+00:00] Run c-show-fable-skids-2 · Round 11
-
-Narôgath (Return/MM boss cultist) SOLVED solo: card says health 4 but +3/investigator = 7 real hp (state display shows base 4 - don't trust it). Elite = Stray Cat auto-evade DOESN'T work. Attack 1dmg/2hor. He spawns engaged at agenda-1 flip; evade (3v3, commit +1) then run 2 locations. His Prey text pulls him around the map; killing him = 2VP + unblocks Parley + ends hunter pressure. Cost me ~5 Shrivelling charges + 3 pings over 2 turns - budget the whole kit.
-
-## [2026-07-06T14:15:07+00:00] Run c-show-fable-skids-2 · Round 11
-
-Return/MM economics (Agnes solo): 1 interrogation (Peter Warren) is what a fragile solo investigator realistically gets. Clue math dies after ~R8: Obscuring Fog (+2 shroud) + Locked Door + shroud-4 ring locations = no more 2-clue batches; Drawn to the Flame is the ONLY reliable late fuel (2 testless clues, costs 1 doom via encounter draw). Hunting Shadow with 0 clues = FORCED 2 dmg - at <=2 hp every mythos draw is ~15% instant death; resign the moment the board has no bankable value. Agenda 2 completing = past midnight TRUE in log - resign before doom 8/8 to keep it False.
-
-## [2026-07-06T14:17:12+00:00] Run c-show-fable-skids-2 · Round 11
-
-TDB prep (Agnes, 4 cultists got away, 0 trauma, resigned MM at R11 alive): bought Ward of Protection x2 (cancel Ancient Evils - 3 in deck) + 'Look what I found!' x2 (testless clues for Ritual Site plan); cut Knife x2/Baseball Bat x2 (combat 2 = dead cards). Lita INCLUDED: 0-cost 3/3 soak, +1 dmg reaction applies to Shrivelling vs Monsters (3dmg/hit), and enables sacrifice ending - the realistic solo out since Umordhoth fight 8 is unwinnable. Opening: mulligan for Shrivelling+Flashlight+Lita; play Heirloom BEFORE spells; FK horror = pings+resources but budget sanity 8 hard (MM run peaked 7/8).
-
-## [2026-07-06T14:28:56+00:00] Run c-show-fable-skids-3 · Round 5
-
-TDB FATAL TRAP (Agnes resigned R5): the 4 got-away cultists spawn at Main Path when Act 1 advances and engage INSTANTLY when you enter (no pass-through in this engine, matches official rules). Main Path is the ONLY route to Ritual Site, so solo you face 4 simultaneous engagements: AoO wall = Billy 2dmg + Herman 1/1 + Ruth 1dmg + Alma 0/2hor = 4dmg/3hor BOTH for staying (enemy phase) and leaving (AoOs). At <=4 spare HP this is checkmate. COUNTER-PLAY next time: (1) do NOT advance Act 1 until prepped — full HP, Shrivelling charged, soak ally in play; (2) advance act while standing ON Main Path is equally fatal (they spawn+engage there); (3) treat the spawn as a 4-VP farm ONLY with a real combat plan, else keep act 1 unadvanced and farm woods clues/XP; (4) fewer cultists-got-away in Midnight Masks remains the true fix. Also: engine bug filed — Alma/Herman parley actions (victory-display escapes) not in menu.
-
-## [2026-07-06T14:29:06+00:00] Run c-show-fable-skids-3 · Round 5
-
-Umordhoth's Wrath (will vs 5) fail-by-X = X picks of 'take 1dmg+1hor OR discard 1 card' — with a thin hand this shreds it (lost Emergency Cache + Stray Cat + took 1/1 failing by 3 at will 4). Agnes elder sign = +1 PER HORROR ON HER (+4 at 4 horror) — at high horror ES becomes an auto-pass; factor into risk math. Haunted (Agnes signature) = -1 ALL skills, 2 actions to clear; it flips 'safe' 5v3 will tests into coin flips at the worst time. Old House investigates via WILLPOWER (great for Agnes, 5v2). Killing a doom-carrying enemy (Grave-Eater) removes its doom from the agenda.
-
-## [2026-07-06T14:54:42+00:00] Run c-show-fable-agnes-1 · Round 17
-
-Return/Gathering SOLVED solo (Agnes R2, 7XP, 0 trauma, doom 9/10 — contrast Skids death R14): the winning engine was Arcane Studies + banked resources (~15 by R11) = buyable test successes for BOTH int investigates and will Shrivelling. Study (Aberrant Gateway) draw-3 (2 actions) is the dig engine while banking. Key route facts: act 1 clues must be spent IN Guest Hall; act 2 spends at HALLWAY at round END (plan moves to end there); 3rd act-2 clue hides in Ghoul Pits (shroud 4, agility-3 entry test, fail spawns 2 rats) — bring Flashlight. Obscuring Fog on Study makes its clue need Drawn to the Flame.
-
-## [2026-07-06T14:54:55+00:00] Run c-show-fable-agnes-1 · Round 17
-
-Ghoul Priest solo kill recipe (Agnes): Shrivelling charges = 1 per ATTACK (4 charges = 4 attacks, not 2) — killed GP (5hp) in ONE round: pumped attack (2dmg) + cultist-recoil horror taken on AGNES = free ping (1dmg) + Rosary-committed attack (2dmg). Shrivelling recoil on symbol tokens is BONUS damage for Agnes, take it on her when sanity allows. Tablet in Gathering = 1 dmg (soak on Leather Coat). Skull = -1 per Ghoul in play (0 ghouls = -0). Dark Memory: pay it off when doom has slack (1 action + 2 res + 1 doom) instead of eating 2 horror every turn-end.
-
-## [2026-07-06T14:54:55+00:00] Run c-show-fable-agnes-1 · Round 17
-
-Engine UI traps (cost me tempo): (1) mulligan set-aside menu TOGGLES — picking same option twice cancels it; (2) menu numbers SHIFT between prompts — never chain './ahlcg do N' blind, the same N can become 'Move' next prompt (this walked me into a Corpse-Hungry Ghoul engagement); (3) playing an asset while engaged = AoO fires BEFORE the asset lands (can't soak with it); (4) Arcane Initiate refuses to fetch Drawn to the Flame (Spell event) — asset Spells only, possible engine bug; (5) act advance is an explicit menu option/round-end prompt, only offered at the objective location.
-
-## [2026-07-06T14:55:14+00:00] Run c-show-fable-agnes-1 · Round 17
-
-Return/MM prep (Agnes campaign show-fable-agnes, 0 trauma, GP dead, house standing, 7 XP spent): deck now has Ward of Protection x2 (SAVE for Ancient Evils/Narogath-class spawns), Look what I found! x2 (near-miss investigates at int 2 become clues — great for the 2-clue cultist batches), Lucky!, and Arcane Studies(2) (free to play, 2/2 icons — play it R1-2 and bank resources; it was the MVP of Gathering). Reuse skids-2 MM playbook: interrogate early R2-4, Narogath is 7hp solo w/ Prey, Asylum heals 3 horror/action, resign before doom 8/8 to keep past-midnight False.
-
-## [2026-07-06T15:05:22+00:00] Run c-show-fable-agnes-2 · Round 7
-
-BUG? Return to Midnight Masks: Narôgath at 6/4 damage and not defeated — enemy defeat check not firing for the agenda-2 spawned cultist. Repro: campaigns/show-fable-agnes run 2, R6-R7, Shrivelling x2 + Agnes pings x2. Verify whether Narôgath has an intended 'cannot be defeated' effect; if not, defeat processing is broken for him.
-
-## [2026-07-06T15:13:19+00:00] Run c-show-fable-agnes-2 · Round 11
-
-Return to Midnight Masks: 'Wolf-Man' Drew (with Mask of Umordhoth) RETALIATES, attacks for 2 damage, and HEALS 1 on every attack. Never swing at him at even odds with ≤4 health left — a failed fight = retaliate + enemy-phase attack = 4 damage in one round. Interrogate cheaper cultists via parley instead (Herman Collins: discard 4 cards, no test).
-
-## [2026-07-06T15:13:26+00:00] Run c-show-fable-agnes-2 · Round 11
-
-Agnes engine notes: eldersign = +1 per horror on her (revealed eldersign at 5 horror = +5, turned Crypt Chill into success by 7). Hunting Shadow spends YOUR clue pool, the location does not refill — don't re-investigate an emptied location after paying it. Hand-size discard can legally dump Dark Memory (event weakness) from hand. Drawing a card provokes attacks of opportunity from engaged enemies.
-
-## [2026-07-06T15:14:13+00:00] Run c-show-fable-agnes-2 · Round 11
-
-show-fable-agnes going into Return to Devourer Below: 5 cultists got away (Drew, Pierce, Narôgath, Warren, Devereux) = heavy setup doom + they reappear at Main Path when Act 1 advances. Agnes has 1 physical trauma (starts at 1/6 damage) — avoid the fight-Umordhoth plan; favor Ritual Site clues (Arcane Studies(2) now pumps int+will) or sacrificing Lita (not earned, so likely clue plan). Move fast: agendas 4/5/5 with Ancient Evils x3.
-
-## [2026-07-06T15:33:42+00:00] Run c-show-fable-agnes-3 · Round 11
-
-Return to TDB (solo, Agnes, defeat): once agenda 3 completes, Umordhoth (evade 6, fight 5+Vault, Hunter, Massive, readies at END of each investigator turn) is checkmate for a solo non-fighter — he camps/chases the only door to Ritual Site and every AoO or attack one-shots. The scenario must effectively be WON before agenda 3 advances; prioritize act tempo over safety from round 1, and skipping Lita in Midnight Masks removes the sacrifice out entirely.
-
-## [2026-07-06T15:33:53+00:00] Run c-show-fable-agnes-3 · Round 11
-
-Return to TDB mechanics learned: (1) 5 escaped cultists = +3 setup doom, agenda 1 starts 3/4. (2) Disciple of the Devourer spawns steal 1 of YOUR clues when past agenda 1 (plus doom) — they cost me the act-1 advance twice; kill them same round (1 hp) or hold a spare clue. (3) Umordhoth's Hunger kills any investigator with an empty hand — always bank 1 card. (4) Great Willow makes treacheries surge; leave ASAP. (5) skull = -X per MONSTER in play (Disciples are Cultists, not Monsters).
-
-## [2026-07-06T15:33:53+00:00] Run c-show-fable-agnes-3 · Round 11
-
-CLI lesson: never chain './ahlcg do N && ./ahlcg do M' through commit/option submenus — option numbering shifts between prompts and the second call misfires (this game it accidentally committed Ward of Protection, losing the Ancient Evils cancel). One command per decision inside any test/commit window. Also: engine bug filed — 'Look what I found!' is never offered after failing an investigate by <=2.
-
-## [2026-07-06T15:53:58+00:00] Run c-show-fable-wendy-1 · Round 12
-
-Return/Gathering WENDY line (survived R12 timeout, Lita EARNED+recruited, 3XP, 1 phys trauma): parleying Lita (int 4 test, Parlor, act 3) sets lita_earned=true even when the scenario ends by agenda-3 timeout with outcome no_resolution — resigning without her would NOT have (Agnes killed GP, never parleyed, lita false). Solo kill on GP (5hp) is unrealistic at combat 1; the right Wendy line is: evade everything, parley Lita, let doom run out. Timeout cost only 1 physical trauma + GP alive in log.
-
-## [2026-07-06T15:54:10+00:00] Run c-show-fable-wendy-1 · Round 12
-
-Wendy engine notes (Return/Gathering): (1) Wendy's Amulet is the whole engine — play it R1-2: replays TOP discard event (Cunning Distraction evade-all from discard = testless GP neutralizer, cost 5) and bottom-decks played events (Lucky! recycles). (2) Wendy redraw ability works repeatedly (once per test at least) — junk commits (MD/Pickpocketing/Knife) are redraw ammo; it converted -4 into a pass twice. (3) Abandoned and Alone removed my discard FROM GAME (lost LWIF x2 + Perception + Dig Deep) — with Wendy, do NOT bank key events in discard for Amulet; play them or hold them. (4) Return Bathroom drains ALL remaining actions after its investigate. (5) 'They're Getting Out' adds ~2 doom/upkeep with 2 enemies near Hallway — agendas ran 3+7+10 in ~12 rounds. (6) exhausted enemies don't retaliate/AoO: evade-then-act ordering is life-or-death at high horror.
-
-## [2026-07-06T15:54:18+00:00] Run c-show-fable-wendy-1 · Round 12
-
-Return/MM prep (Wendy, 1 phys trauma, Lita IN DECK, GP alive, deck: +Lucky!(2) +Sneak Attack -Knife): plan = evade+Sneak Attack (testless 2dmg on exhausted enemy) as the kill kit for 1-3hp cultists; interrogate early R2-4 per Daisy/Agnes lessons; Narogath is 7hp solo (Prey, spawns engaged at agenda-1 flip) — evade+Backstab(3)+Sneak(2)+Sneak(2) is the only realistic kill; resign before doom 8/8 to keep past-midnight False; GP alive means he may be in the MM/TDB encounter pool — Lita gives +1 dmg vs him and 3/3 soak. Watch sanity 7: this run ended 6/7 horror with zero horror heals in deck.
-
-## [2026-07-06T16:08:43+00:00] Run c-show-fable-wendy-2 · Round 8
-
-Return/MM WENDY SOLVED-ish (resigned R8, 4XP, 0 new trauma, 2 interrogated): KILLING a named cultist counts as INTERROGATED in the campaign log (Narôgath kill = interrogated + 2VP) — killing beats parley when feasible. Narôgath kill recipe at combat 1: evade (exhaust) -> Backstab 3 (agility 4v3, fight-action so no AoO) -> Sneak Attack 2 testless -> next turn Backstab#2 = 7hp done over 2 turns for ~5 res. Ma's Boarding House fetches Lita/Leo from deck (1 action). Lucky!(2) draws a card on play — it dug out the second Backstab for the kill.
-
-## [2026-07-06T16:08:52+00:00] Run c-show-fable-wendy-2 · Round 8
-
-Return/MM traps learned (Wendy run): (1) Disciple of the Devourer spawn STEALS a clue from your pool to place on its location (and can add doom) — never end a turn holding 1 clue; spend pairs on the cultist deck same turn. (2) Amnesia (basic weakness) = discard hand to 1 card at upkeep — brutal mid-combo; play assets out of hand early. (3) Ghoul Priest alive in log = he spawns via encounter deck in MM, hunts, attacks 2dmg/2hor; Wendy cannot kill him (fight 4, 5hp) — 4v4 evade is 25% with skulls scaling on cultists; treat GP arrival as a resign timer. (4) Parley interrogation (Pierce) = willpower 4 test. (5) Mask of Umordhoth lets you CHOOSE which cultist to draw — pick Disciple (1hp).
-
-## [2026-07-06T16:09:03+00:00] Run c-show-fable-wendy-2 · Round 8
-
-TDB prep (Wendy, campaign show-fable-wendy): 4 cultists got away (Drew, Cooper, Collins, Devereux) = setup doom + Main Path wall when Act 1 advances. Lita IN DECK = sacrifice ending live (the realistic solo out per agnes-3 failure). Bought Elusive (disengage+move, the Main Path wall escape), Close Call(2) (evade -> shuffle enemy into encounter deck — permanent removal; use on a wall cultist or GP-class hunter), Leo(1) (cost 5). Plan: rush act tempo from R1 (agnes lesson: game must be won before agenda 3), fetch Lita via Ma's-style ally search if available, evade+Elusive past the wall to Ritual Site, sacrifice Lita. Watch: scenario must be effectively decided before Umordhoth (evade 6) is out.
-
-## [2026-07-06T16:10:31+00:00] Run c-show-fable-wendy-3 · Round 1
-
-return_to_devourer: Main Path starts with 0 clues — Act 1 clues are on the unrevealed Arkham Woods locations; move there before investigating. Also: never chain 'do' commands — a reaction prompt (Wendy's ability) can eat the second command and waste a card.
-
-## [2026-07-06T16:18:06+00:00] Run c-show-fable-wendy-3 · Round 6
-
-return_to_devourer (Wendy, standard): DEFEATED R6 at 2/3 Act-1 clues. Killers: (1) Umordhoth's Wrath fail-by-4 with empty hand = 4x(1dmg+1horror) — keep 2+ cards in hand as Wrath insurance; (2) Return bag is savage: elderthing=-5 (and can chain a second token), tablet deals 1 damage on reveal during failures — treat any test with <=+2 margin as a coin flip; (3) entering trauma'd finale at 1 dmg with a 7-stamina investigator leaves zero buffer. Next time: bank defensive cards (Lucky!/Elusive) for mythos, don't burn them on marginal investigates, and consider resigning while alive once health drops to ~2 remaining since no_resolution scores 0 anyway.
-
-## [2026-07-06T16:24:10+00:00] Run c-show-gpt-roland-1 · Round 10
-
-Campaign lesson: prioritize clearing Frozen in Fear and engaged enemies before greedy clue lines; Roland needs early weapon/talent setup, and Lita/Physical Training help stabilize combat and will tests after mental trauma.
-
-## [2026-07-06T16:29:58+00:00] Run c-show-gpt-roland-2 · Round 7
-
-Return Midnight Masks: Narogath effectively has extra solo health beyond compact display; do not engage late with low sanity unless enough burst damage or soak is ready. Prioritize early weapons/soak and clue tempo; resigning can preserve trauma when only one cultist is secured.
-
-## [2026-07-06T16:32:38+00:00] Run c-show-gpt-roland-3 · Round 4
-
-show-gpt-roland finale: Return TDB resigned R4 for no_resolution/0XP after Yithian Observer pinned Roland at Main Path and Ghoul Priest spawned while Roland was 5 dmg/4 horror. Key lesson: with 5 cultists escaped and 3 setup doom, every early action must be clue tempo or decisive enemy control; .38 at 5v5 is unreliable into Yithian Observer, and committing Guard Dog as an icon saved one shot but removed crucial soak. If Offer of Power appears, taking doom over horror preserves sanity but can still cascade into agenda-2 elderthing/Paranoia. Resign at Main Path is the preservation line once Roland reaches 4/5 horror with hunters engaged.
-
-## [2026-07-06T16:44:14+00:00] Run c-show-gpt-daisy-1 · Round 10
-
-Return Gathering Daisy: keep Ward for Crypt Chill when setup assets are down; Act 2 objective prompts at end of round in Hallway, so use remaining actions to prep before advancing. Lita + Knife can burst Ghoul Priest: normal hit then throw for 5 total damage.
-
-## [2026-07-06T16:50:47+00:00] Run c-show-gpt-daisy-2 · Round 7
-
-Return Midnight Masks: Daisy can cash early cultists with Milan/Working a Hunch, but avoid ending engaged with cultists at low health; keep at least one clue or cancel available for Hunting Shadow/False Lead chains, and treat The Masked Hunter as a resign-or-evade-now threat.
-
-## [2026-07-06T16:58:55+00:00] Run c-show-gpt-daisy-3 · Round 6
-
-Return Devourer Below Daisy lesson: with four cultists escaped, doom pressure is extreme; prioritize fast Act 1 clue progress over setup, and avoid spending the early Tome action unless it directly finds tempo. Corpse-Taker at Main Path must be killed or evaded before its doom transfer snowballs; Lita plus Mind over Matter can kill it, but Frozen in Fear can consume the action needed for the second hit.
-
-## [2026-07-06T17:09:00+00:00] Run c-show-gpt-skids-1 · Round 12
-
-Skids Return Gathering lesson: prioritize early clue compression and tempo; do not let hunters stack before Act 3. Flashlight/Perception are key for shroud 4 Cellar, and Lita/Machete-style damage is needed before engaging Ghoul Priest.
-
-## [2026-07-06T17:14:07+00:00] Run c-show-gpt-skids-2 · Round 6
-
-show-gpt-skids Return/MM defeat R6: Masked Ruth became a trap when fought while Narogath was engaged; Mask of Umordhoth inflated her durability enough that repeated 4v2 Machete swings did not finish her before Hunting Shadow killed Skids. Next Skids MM line: do not commit to Ruth/Narogath without burst damage or an escape banked; if Narogath spawns on top of you, prioritize Elusive/resign survival over grinding masked cultists. Train Station can jump to any Arkham location and is powerful tempo, but still needs enough actions/resources left to resolve the enemy safely.
-
-## [2026-07-06T17:20:49+00:00] Run c-show-gpt-skids-3 · Round 7
-
-Return Devourer with Skids: six cultists getting away creates brutal starting doom and enemy pressure. Prioritize a reliable weapon in the opener over Leo/economy, avoid getting trapped in Twisting Paths without intellect commits, and keep at least one card in hand because Acolyte of Umordhoth can become non-evadable when empty-handed.
-
-## [2026-07-06T17:32:28+00:00] Run c-show-gpt-agnes-1 · Round 14
-
-show-gpt-agnes Return/Gathering R3 loss: Act tempo was too slow. Agenda 3 adds end-round doom for each Ghoul in Hallway/Parlor; with Icy Ghoul in Parlor plus another Ghoul in Hallway, doom jumped from 8 to 10 before Act 2 could advance. For future Return/Gathering runs, reach Act 2 by ~R8-9, save Drawn to the Flame for Cellar/last Act-2 clue, and do not spend multiple early turns drawing/setup after Act 1 clues are available.
-
-## [2026-07-06T17:38:42+00:00] Run c-show-gpt-agnes-2 · Round 8
-
-Return Midnight Masks: overcommitted to Narogath with empty .45 and low hand; if Narogath appears, either evade/move if possible or ensure backup weapon/commits before engaging. Jeremiah parley is risky at high doom; need faster early cultist draw and avoid spending entire turns on setup after first cultist.
-
-## [2026-07-06T17:43:07+00:00] Run c-show-gpt-agnes-3 · Round 3
-
-Return Devourer: with all cultists escaped, opening at 3 doom and drawing Ghoul Priest early makes Roland's no-weapon hands extremely fragile. Lita plus Knife is not enough if the Knife throw misses; prioritize mulliganing harder for a firearm or Beat Cop over keeping clue skills.
-
-## [2026-07-06T17:52:08+00:00] Run c-show-gpt-wendy-1 · Round 9
-
-Return Gathering Wendy: Act 2 advances only at end of round while in Hallway with 3+ clues; plan to end there. Survival Instinct is excellent in Act 3 to disengage the enemy pile and move to Parlor for Lita/resign.
-
-## [2026-07-06T18:01:57+00:00] Run c-show-gpt-wendy-2 · Round 8
-
-Campaign lesson: In Return Midnight Masks with Wendy, avoid drawing cultists when Ghoul Priest/Masked Hunter are one step away unless an escape action is already secured; Elusive and upgraded Dig Deep were added for Devourer mobility and evade reliability.
-
-## [2026-07-06T18:14:24+00:00] Run c-show-gpt-wendy-3 · Round 10
-
-show-gpt-wendy finale: Return TDB ended no_resolution R10, 0XP, +1 mental trauma. Key trap: Throw Lita to Umordhoth is an action that provokes AoOs from every engaged enemy; moving to Main Path with escaped cultists still engaged Lita/Wendy, and Peter's 1 damage discarded already-damaged Lita before the sacrifice could resolve. To use Lita, arrive at Main Path/Ritual line with enemies evaded/disengaged first and keep Lita with at least 2 damage soak remaining, or use Elusive/Cunning Distraction before the sacrifice turn. Great Willow is also deadly late because successful treachery tests surge; leave it before agenda 3 if possible.
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB/Roland lesson: Relentless Dark Young spawns at Main Path (Brood of Umordhoth) and is a permanent 2dmg/1hor tax once engaged. ENGINE BUG: it follows you on a move and stays engaged (rules: moving to a new location should disengage — enemy left behind, only AoO). Avoid passing Main Path without a burst-kill plan; killing it needs 5+ dmg/turn since it heals 2.
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB lesson: Umordhoth's Wrath = willpower 3 vs 5. Fail-by-X = X picks of (1dmg+1hor OR discard 1 card). KEEP >=2 hand cards as insurance — I died at hor 5/5 with only 1 card (had committed First Aid / spent PT). Thin hand + Wrath = death.
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB token: tablet = -5 AND 1 dmg + 1 hor in this hard run (corrects older notebook '-3' claim which was likely a different scenario). Brutal; never take a naked test you can't afford to fail by 5.
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB Brood of Umordhoth monster-choice: ALWAYS pick Grave-Eater (2/2/2, no doom/Hunter/Retaliate). Avoids Corpse-Taker (doom acceleration to agenda), Goat Spawn (Hunter+Retaliate), Relentless Dark Young (5hp healer), Acolyte (un-evadable with empty hand).
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB/Dodge: cancels an AoO for 1 res —巨大 value when engaged (saved me 2dmg/1hor at the Lakeside move). Hold it for AoO cancellation, not just enemy attacks.
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB map: clue woods = Lakeside (=Woods2, 1 clue) and others; Quiet Glade (=Woods1) had 0 clues. Main Path hub has 0 clues but is the only route to the clue woods and the Dark Young camps it. Act1 needs 3 clues from the woods.
-
-## [2026-07-07T04:45:56+00:00] Run hy3-swarm-roland-devourer_below-hard · Round 5
-
-TDB/Roland death autopsy (hy3-swarm): engaged Dark Young R4 (ate 2dmg/2hor+tablet hor), then R5 Wrath failed by 5 with 1 card -> hor 5/5 insanity. Root: forced through Main Path to reach clue woods, no kill plan for Dark Young, hand thinned before Wrath. Next time: mulligan for a burst weapon (.38/Machete) to kill Dark Young turn-1-of-engagement, and bank >=2 cards into mythos.
-
-
-## [2026-07-07T12:58:24+00:00] Run c-show-fable-agnes-3 · Round 11
-
-Return/Gathering Agnes death autopsy (R11, horror 8/8, no_resolution, XP 4, mental trauma 1, score 3): Shrivelling has a Forced recoil — when a SYMBOL chaos token (skull/cultist/tablet/elder_thing/autofail) is revealed during its fight test, the wielder takes 1 horror. At 7/8 horror I swung Shrivelling at Swarm of Rats (5v1, "trivial"); skull revealed → 0 modifier but 1 recoil horror → 8/8 = dead, no reaction window offered (engine resolved defeat before Agnes's horror-ping reaction). LESSON: never swing Shrivelling at high horror unless a symbol reveal is survivable — at 7/8 sanity ANY symbol token kills. Heal/use Forbidden Knowledge soak/bank horror headroom BEFORE the fight. Also: Agenda 3 'They're Getting Out!' completing is the hard death timer (per skids-1 lesson) — at 6/7 doom entering R10 the realistic plan was to RACE Act 2 advance, not farm another Shrivelling charge; should have moved to Hallway with 2 clues and ended the round to advance Act 2 instead of fighting the Acolyte/Rats.

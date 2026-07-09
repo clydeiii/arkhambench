@@ -61,6 +61,13 @@ def can_be_evaded(state: GameState, enemy_id: str) -> bool:
 
 def enemy_fight_value(state: GameState, enemy_id: str) -> int:
     value = int(enemy_card(state, enemy_id).get("enemy_fight") or 1)
+    if (
+        state.enemies[enemy_id].card_code == "01175"
+        and not mind_wiped(state, enemy_id)
+        and state.enemies[enemy_id].engaged_with == state.investigator.id
+        and state.investigator.sanity - state.investigator.horror <= 4
+    ):
+        value += 1
     if state.scenario in DEVOURER_FAMILY:
         from .scenarios import the_devourer_below
 
@@ -70,6 +77,13 @@ def enemy_fight_value(state: GameState, enemy_id: str) -> int:
 
 def enemy_evade_value(state: GameState, enemy_id: str) -> int:
     value = int(enemy_card(state, enemy_id).get("enemy_evade") or 1)
+    if (
+        state.enemies[enemy_id].card_code == "01175"
+        and not mind_wiped(state, enemy_id)
+        and state.enemies[enemy_id].engaged_with == state.investigator.id
+        and state.investigator.sanity - state.investigator.horror <= 4
+    ):
+        value += 1
     if state.scenario in DEVOURER_FAMILY:
         from .scenarios import the_devourer_below
 
@@ -551,7 +565,9 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         state.locations[enemy.location_id].enemy_ids.remove(enemy_id)
     if enemy_id in state.investigator.engaged_enemies:
         state.investigator.engaged_enemies.remove(enemy_id)
-    if int(card.get("victory") or 0) > 0:
+    if player_cards.is_weakness(state, enemy_id):
+        player_cards.discard_to_owner_pile(state, enemy_id)
+    elif int(card.get("victory") or 0) > 0:
         state.victory_display.append(enemy_id)
         state.card_instances[enemy_id].zone = "victory"
     else:

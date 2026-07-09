@@ -267,6 +267,8 @@ class Game:
             skill_test.resolve_rabbits_foot_3(self.state, payload, events, self.rng)
         elif kind == "scavenging_reaction":
             skill_test.resolve_scavenging_reaction(self.state, payload, events)
+        elif kind == "milan_reaction":
+            skill_test.resolve_milan_reaction(self.state, payload, events)
         elif kind == "survival_instinct":
             skill_test.resolve_survival_instinct(self.state, payload, events)
         elif kind == "pickpocketing_reaction":
