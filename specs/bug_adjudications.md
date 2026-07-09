@@ -563,3 +563,27 @@ defects (MM skull doom scan; On Wings success no-op — a Claude self-reversal)
 + 1 display defect from the trial (entry 56), all FIXED in batch 11. hy3
 precision ~4%, but free and tireless; the GPT adjudication layer + Fable final
 gate filtered cleanly (3 GPT verdicts reversed on primary evidence).
+
+## hy3-b3 gauntlet reports (2026-07-09, Fable-adjudicated by direct state inspection; GPT tier skipped — each resolved from logs/state.json)
+
+78. **"Slot capacity wrongly forces asset discard on 2nd Tool/Weapon"** (g1 R3/R8)
+    — NOT A BUG: hand-SLOT enforcement, not a type limit. Both incidents Roland
+    already had two 1-hand assets in play (MagGlass+Machete, then
+    Flashlight+Machete); playing a third 1-hand asset correctly forces a choice.
+79. **"Mob Enforcer (pc0033) spawned hostile from my upkeep draw"** (g3 R8)
+    — NOT A BUG: 01101 Mob Enforcer is the deck's fixed BASIC WEAKNESS (type
+    enemy); weakness enemies spawn engaged when drawn. The reporter hallucinated
+    a "player Ally Mob Enforcer" that does not exist in the core set.
+80. **Duplicate of 79** (g8 R11, same claim; noted "Beat Cop drew normally" —
+    Beat Cop is an actual ally, so the contrast confirms correct behavior).
+81. **"Research Librarian offered as damage target after being discarded"**
+    (g7 R8-R10) — NOT A BUG: two copies. Copy 1 was played R2 and remained in
+    play through game end (end-state play_area contains 01032); copy 2 was drawn
+    R7 and discarded from HAND to hand size. The soak target was the in-play copy.
+82. **"XP=3 on defeat with no Victory earned"** (g10) — NOT A BUG: seed 1010's
+    Attic/Cellar variant made Attic the Victory-1 version; it is in the victory
+    display (clueless Victory locations bank at game end), + the no-resolution
+    +2 insight bonus = XP 3.
+
+hy3-b3 reporter precision: 0/5 (consistent with its b2 ~4% raw precision; its
+value in the pipeline remains volume, not precision).
