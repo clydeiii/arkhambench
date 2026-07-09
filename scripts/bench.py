@@ -140,6 +140,9 @@ state.json/log.jsonl."""
 def build_agent_argv(agent: str, label: str, prompt: str, max_turns: int) -> list[str]:
     if agent == "codex":
         return ["codex", "exec", "-s", "workspace-write", prompt]
+    if agent.startswith("codex:"):
+        # e.g. "codex:gpt-5.6-sol" — codex harness with an explicit model
+        return ["codex", "exec", "-s", "workspace-write", "-m", agent.split(":", 1)[1], prompt]
     if agent.startswith("openrouter/"):
         opencode = str(Path.home() / ".opencode" / "bin" / "opencode")
         return [opencode, "run", "-m", agent, prompt + OPENCODE_HARNESS_RULES]
@@ -404,15 +407,15 @@ def pid_active(pid: int) -> bool:
 
 
 def agent_env(agent: str, run_dir: Path) -> dict | None:
-    if not agent.startswith("openrouter/"):
-        return None
     import os
 
     env = dict(os.environ)
+    # Pin every agent to its run so concurrent lanes never race on .current_run.
     env["AHLCG_RUN"] = str(run_dir)
-    key_path = ROOT / "auth" / "openrouter.key"
-    if key_path.exists():
-        env["OPENROUTER_API_KEY"] = key_path.read_text(encoding="utf-8").strip()
+    if agent.startswith("openrouter/"):
+        key_path = ROOT / "auth" / "openrouter.key"
+        if key_path.exists():
+            env["OPENROUTER_API_KEY"] = key_path.read_text(encoding="utf-8").strip()
     return env
 
 
