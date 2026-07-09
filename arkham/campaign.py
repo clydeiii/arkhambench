@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -23,12 +24,14 @@ def current_campaign_file() -> Path:
 def resolve_campaign_dir(path: str | None) -> Path:
     if path:
         return Path(path)
+    if os.environ.get("AHLCG_CAMPAIGN"):
+        return Path(os.environ["AHLCG_CAMPAIGN"])
     pointer = current_campaign_file()
     if pointer.exists():
         text = pointer.read_text(encoding="utf-8").strip()
         if text:
             return Path(text)
-    raise EngineError("campaign directory not specified; use --dir or .current_campaign")
+    raise EngineError("campaign directory not specified; use --dir, AHLCG_CAMPAIGN, or .current_campaign")
 
 
 def campaign_path(campaign_dir: Path) -> Path:
