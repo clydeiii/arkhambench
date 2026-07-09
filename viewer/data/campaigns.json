@@ -1528,5 +1528,141 @@
       "lita_sacrificed": false
     },
     "campaign_score": 7
+  },
+  {
+    "name": "show-hy3-roland",
+    "campaign": "return_to_night_of_the_zealot",
+    "investigator": "roland",
+    "difficulty": "standard",
+    "seed": 9301,
+    "legs": [
+      {
+        "leg": 1,
+        "run": "show-hy3-roland-1-gathering",
+        "scenario": "return_to_the_gathering",
+        "resolution": "no_resolution",
+        "xp_earned": 3,
+        "score": 1,
+        "trauma_delta": {
+          "mental": 2,
+          "physical": 0
+        },
+        "investigator_code": "01001"
+      },
+      {
+        "leg": 2,
+        "run": "show-hy3-roland-2-midnight-masks",
+        "scenario": "return_to_the_midnight_masks",
+        "resolution": "R1",
+        "xp_earned": 1,
+        "score": 0,
+        "trauma_delta": {
+          "mental": 1,
+          "physical": 0
+        },
+        "investigator_code": "01001"
+      },
+      {
+        "leg": 3,
+        "run": "show-hy3-roland-3-devourer",
+        "scenario": "return_to_the_devourer_below",
+        "resolution": "no_resolution",
+        "xp_earned": 0,
+        "score": 0,
+        "trauma_delta": {
+          "mental": 1,
+          "physical": 0
+        },
+        "investigator_code": "01001"
+      }
+    ],
+    "upgrades": [
+      {
+        "purchases": [
+          {
+            "code": "01018",
+            "name": "Beat Cop",
+            "level": 0,
+            "faction": "guardian",
+            "weakness": false,
+            "kind": "new",
+            "cost": 1
+          },
+          {
+            "code": "01117",
+            "name": "Lita Chantler",
+            "level": 0,
+            "faction": "neutral",
+            "weakness": false,
+            "kind": "story",
+            "cost": 0
+          },
+          {
+            "code": "50002",
+            "name": "Dynamite Blast",
+            "level": 2,
+            "faction": "guardian",
+            "weakness": false,
+            "kind": "upgrade of 01024",
+            "cost": 2,
+            "replaced": {
+              "code": "01024",
+              "name": "Dynamite Blast",
+              "level": 0,
+              "faction": "guardian",
+              "weakness": false
+            }
+          }
+        ],
+        "removals": [
+          {
+            "code": "01089",
+            "name": "Guts",
+            "level": 0,
+            "faction": "neutral",
+            "weakness": false
+          }
+        ],
+        "xp_spent": 3,
+        "after_leg": 1,
+        "xp_before": 3,
+        "xp_after": 0
+      },
+      {
+        "purchases": [
+          {
+            "code": "01040",
+            "name": "Magnifying Glass",
+            "level": 1,
+            "faction": "seeker",
+            "weakness": false,
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
+          }
+        ],
+        "removals": [],
+        "xp_spent": 1,
+        "after_leg": 2,
+        "xp_before": 1,
+        "xp_after": 0
+      }
+    ],
+    "outcomes": {
+      "killed_investigators": [
+        "roland"
+      ],
+      "arkham_succumbed": true,
+      "ritual_broken": false,
+      "umordhoth_repelled": false,
+      "lita_sacrificed": false
+    },
+    "campaign_score": 1
   }
 ]
