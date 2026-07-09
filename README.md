@@ -172,6 +172,62 @@ Steps = decisions faced before the game ended (winning takes longer than dying):
 ![Steps vs score — main run](results/steps_vs_score_b1.svg)
 ![Steps vs score — open weights](results/steps_vs_score_b2.svg)
 
+### Case study: memory curation is the continual-learning bottleneck (hy3-b3, 2026-07-09)
+
+A viewer review caught Hunyuan 3's game-6 Roland repeating game-1's exact death:
+at "discard 1 random card OR take 2 horror" it chose the horror that had already
+killed it once. The autopsy cleared the harness — hy3 read its notebook every
+game, and its game-1 notes contained the verbatim fix ("KEY FIX for next Roland
+game: take DISCARD not 2horror"). The lesson died in game 2, when hy3's
+`note compact` rewrote the notebook and silently dropped every Roland line. An
+A/B probe on the reconstructed decision was 15/15 clean: with the notebook it
+actually saw, hy3 repeats the fatal choice 5/5; with the lost lesson restored
+(or a blunt "you died to this" hint) it flips to discard 5/5. **The model uses
+memories fine; it destroys them at curation time.**
+
+So we changed the contract, not the model: `note compact` now documents that
+compact means *compress, not discard* (help text + mission guidance to carry
+per-investigator lessons forward), prints its line delta, and archives stay
+readable via a new `note archive` command. Then we reran the identical 10-game
+gauntlet as **hy3-b3** — same seeds, same rotation, engine otherwise unchanged.
+
+![hy3 b2 vs b3](results/scores_by_game_hy3_b3.svg)
+
+| Run | Scores by game | Mean | Final-20% | Paired 2nd-visit Δ |
+|---|---|---:|---:|---:|
+| hy3-b2 (destructive compaction) | 3 2 1 0 4 0 2 2 **4** 1 | 1.90 | 2.50 | **−0.40** |
+| hy3-b3 (compress-not-discard) | 3 3 0 3 1 5 2 1 **3** 2 | 2.30 | 2.50 | **+0.60** |
+
+What actually changed:
+
+- **The smoking-gun decision flipped.** On seed 1006 (Roland's second game), b3
+  chose the discard — `--why: "Roland sanity max 5 is low; discard random card
+  over 2 horror to preserve sanity buffer"` — and went from b2's round-4 death
+  (score 0) to a 16-round Act-3 fight worth score 5, hy3's best game in either
+  run. And the application is *conditional*, not rote: high-sanity investigators
+  (Daisy 9, Agnes 8) still rationally take the horror; only low-sanity states
+  pick the discard.
+- **Compaction preserved memory this time.** b3 compacted twice (100→24 lines at
+  its most aggressive) and both times kept per-investigator sections for all
+  five investigators — the exact thing b2's compaction destroyed. The archive
+  recovery command was never needed.
+- **General-strategy mistakes moved less than scores did.** Counting four
+  "new-player error" classes across all 10 games (b2 → b3): attacks of
+  opportunity provoked 14 → 8, unarmed walk-ins to enemy locations 10 → 7,
+  hand-limit discards 11 → 10, last-action draws 3 → 8 (worse). Play got
+  meaningfully safer around enemies, but this is refinement, not transformation
+  — an AoO still contributed to a b3 death in game 7.
+- **Caveats:** one 10-game run per condition; the final-20% headline tied at
+  2.50; b3's games 3–5 straddled a 9-hour free-tier quota freeze. The mean and
+  paired-delta gains are suggestive, the seed-1006 flip is definitive evidence
+  of recipe learning, and the compaction-behavior change is directly observable
+  in the notebook history.
+
+The meta-lesson for continual-learning harnesses: **retrieval and reasoning were
+never the problem — memory management was.** A one-line semantic contract on the
+compaction tool ("compress, not discard") converted a memory-destroying agent
+into a memory-preserving one.
+
 ### The second benchmark: can models playtest?
 
 While building this we found the bounty structure turns the benchmark self-healing:

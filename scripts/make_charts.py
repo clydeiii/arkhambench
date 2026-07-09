@@ -188,6 +188,12 @@ def main() -> int:
     scores_by_game(out_dir / "scores_by_game_b2.svg", B2_AGENTS,
                    "Score per game — open-weights run (same seeds and rotation)")
     second_visit_deltas(out_dir / "second_visit_deltas.svg")
+    scores_by_game(
+        out_dir / "scores_by_game_hy3_b3.svg",
+        [("hy3-b2", "Hunyuan 3 (b2: destructive compaction)", "#718096"),
+         ("hy3-b3", "Hunyuan 3 (b3: compress-not-discard)", "#2b6cb0")],
+        "Hunyuan 3, same 10 seeds — before/after the notebook-compaction fix",
+    )
     if steps_and_score(out_dir / "steps_vs_score_b1.svg", AGENTS, "Game length vs score — main run (US frontier models)"):
         print("steps_vs_score_b1.svg written")
     if steps_and_score(out_dir / "steps_vs_score_b2.svg", B2_AGENTS, "Game length vs score — open-weights run (China open models)"):
