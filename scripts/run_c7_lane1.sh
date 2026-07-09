@@ -25,8 +25,11 @@ play() {
   local decktag="mm"; [ "$short" = "devourer_below" ] && decktag="db"
   if [ -f "$run/result.json" ]; then echo "=== $tag already complete"; return; fi
   if [ ! -d "$run" ]; then
-    ./ahlcg new --run "$run" --seed "$seed" --scenario "$scen" \
-      --investigator "$inv" --deck "data/decks/upgraded/$inv-$decktag.json" >/dev/null
+    if ! ./ahlcg new --run "$run" --seed "$seed" --scenario "$scen" \
+      --investigator "$inv" --deck "data/decks/upgraded/$inv-$decktag.json" >/dev/null; then
+      echo "=== $tag CREATE FAILED (skipping agent launch)"
+      return
+    fi
     echo "=== created $tag (seed $seed)"
   else
     echo "=== resuming $tag"
