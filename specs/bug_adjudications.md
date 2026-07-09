@@ -602,3 +602,77 @@ value in the pipeline remains volume, not precision).
     CONFIRMED: is_aloof() returned False for mind-wiped enemies before checking
     the Mask (50043) attachment. Mind Wipe blanks only the printed text box.
     FIXED: printed-Aloof check gated by mind_wiped; mask grant unaffected.
+
+## C7 audit wave (2026-07-09, Sol audits 28 games → 3 parallel Fable verification agents → Fable gate; 34 raw findings, 21 unique)
+
+86. **Alma Hill parley skips/reorders drawn revelations** — CONFIRMED. Synchronous
+    3-draw loop overwrites decision_queue per draw and resolves cards mid-skill-test;
+    Masked Horrors doom and Hunting Shadow damage silently lost (3 findings, one root
+    cause). FIX: resumable per-draw sequence; revelation presenters must never
+    overwrite a pending queue.
+87. **Enemies engage AFTER location-entry Forced tests begin** — CONFIRMED (ordering,
+    display-level so far). Herman-at-Graveyard ×2. FIX: engage before scenario
+    after_enter_location hooks.
+88. **Herman Collins 4-card cost paid sequentially** — NOT A BUG (single cost;
+    nothing observes intermediate states; weakness exclusion from the picker is
+    CORRECT per the batch-8 weakness-as-cost ruling).
+89. **Mask of Umôrdhoth fallback places doom** — CONFIRMED. The no-Cultist search
+    branch has no doom instruction; all fallback paths funnel into an unconditional
+    place_doom. FIX: place_doom=False on fallback call sites.
+90. **Mask attached to "wrong" Cultist** — NOT A BUG (auditor inverted map
+    distances; BFS target was uniquely farthest).
+91. **Cultist-token ties auto-resolved by instance-id sort** — CONFIRMED (both
+    scenarios, 3 observations, twice pro-player). FIX: present target choice on
+    ties (mysterious_chanting pattern), incl. mid-test routing.
+92. **Disciple of the Devourer spawn-Forced skipped on act-2-back spawns** —
+    CONFIRMED (×4 observations). spawn_enemy_from_top_until bypasses
+    spawn_enemy_resolving_forced. FIX: route through the Forced dispatcher.
+93. **Disciple Forced resolves after Mask attach continues** — CONFIRMED (nesting).
+    resolve_spawn_at_location ignores the queued disciple decision. FIX: defer mask
+    attach until the spawn-Forced choice drains.
+94. **Corpse-Taker doom transfer advances agenda outside mythos 1.3** — CONFIRMED
+    (×2). Printed text has NO advance-permission clause (contrast Masked Horrors /
+    Jeremiah / Offer of Power). FIX: drop can_advance=True at both call sites.
+    ALSO: ledger entry 35's parenthetical wrongly listed Corpse-Taker among
+    explicit-permission cards — CORRECTED here (7th adjudication reversal; 4th of
+    Fable's own).
+95. **Corpse-Taker end-of-mythos Forced fires once per engine re-entry (3×/phase
+    observed)** — CONFIRMED. end_mythos_phase hooks unguarded; Wizard of the Order
+    same exposure. FIX: once-per-round limits key, fire after the mythos_end fast
+    window closes.
+96. **Agenda 3 becomes current before Amnesia's nested revelation resolves** —
+    CONFIRMED (×2; entry-62 principle). FIX: deferred-advance marker until weakness
+    revelation decisions drain.
+97. **Agenda-1-back spawn doom applied silently** — CONFIRMED (log-only). Raw
+    doom += with no log_event. FIX: route through place_doom_on_enemy.
+98. **Dr. Milan Christopher optional reaction auto-fires** — CONFIRMED (×2). FIX:
+    optional-reaction decision on successful investigate.
+99. **Elusive (and Cat Burglar) bypass Twisting Paths' exit test** — CONFIRMED.
+    move_without_engaged_enemies lacks the before-move hook; agent explicitly
+    exploited it. FIX: hook + resume-mode marker; on fail cancel only the move.
+100. **Great Willow grants surge retroactively (Frozen in Fear end-of-turn test)** —
+    CONFIRMED (RAW). Surge has no timing point outside the card's own draw
+    resolution. FIX: gate on revelation-owned tests via explicit marker; drop the
+    source-string heuristic.
+101. **Heal log reports requested amount, not amount healed** — CONFIRMED
+    (log-only; damage and horror branches). FIX: log min(requested, current).
+102. **Lakeside extra token: leaks before Wendy's cancel window and fires twice per
+    test across redraws** — CONFIRMED. FIX: reveal base token → reaction window →
+    then location extras; per-test used flag persisting across redraws.
+103. **Miskatonic Museum one-action ability charges two actions** — CONFIRMED (×2;
+    cost two games tempo). resume payload lacks cost_paid. FIX: mark cost_paid in
+    execute() right after spend_action so every resume copy inherits it.
+104. **Screeching Byakhee conditional +1 fight/evade unimplemented** — CONFIRMED
+    (×2, pro-player). FIX: engine-level conditional in enemy_fight/evade_value
+    (remaining sanity ≤4, engaged), respecting mind-wipe blanking.
+105. **Defeated player-weakness enemy routed to encounter discard and RECYCLED via
+    reshuffle** — CONFIRMED (Mob Enforcer defeated R8, reshuffled R10, re-spawned
+    R11). RR: defeated weakness enemies go to their owner's discard. FIX: weakness
+    check in defeat_enemy before the encounter-discard branch; sweep other
+    leave-play paths. (Distinct from entries 79/80: hostile spawn-on-draw remains
+    correct.)
+106. **Farthest-empty spawn "not farthest"** — NOT A BUG (auditor inverted map
+    distances; engine BFS + tie-choice correct).
+
+Sol auditor precision this wave: 18 confirmed / 21 unique claims (86%) — versus
+hy3's 0/5 the same week. Auditor tiering matters.
