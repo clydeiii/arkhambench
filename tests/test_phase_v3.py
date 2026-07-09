@@ -160,7 +160,10 @@ class PhaseV3Tests(unittest.TestCase):
         card = add_card(s, "01050")
         first = add_enemy(s, "01160")
         second = add_enemy(s, "01159")
-        actions.execute(s, {"kind": "action", "action": "fast_ability", "ability": "elusive", "card": card, "location": "hallway"}, [])
+        events: list = []
+        actions.execute(s, {"kind": "action", "action": "fast_ability", "ability": "elusive", "card": card, "location": "hallway"}, events)
+        played = [e for e in events if e.get("type") == "event_played"]
+        self.assertTrue(played and s.investigator.name in played[0]["message"])
         self.assertEqual(s.investigator.location_id, "hallway")
         self.assertEqual(s.investigator.damage, 0)
         self.assertFalse(s.investigator.engaged_enemies)

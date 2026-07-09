@@ -587,3 +587,8 @@ gate filtered cleanly (3 GPT verdicts reversed on primary evidence).
 
 hy3-b3 reporter precision: 0/5 (consistent with its b2 ~4% raw precision; its
 value in the pipeline remains volume, not precision).
+83. **Elusive/On the Lam play messages hardcoded '"Skids"'** (found by the
+    campaign-audit lane in show-hy3-wendy run 3: `"Skids" played Elusive` in a
+    Wendy solo game) — CONFIRMED (cosmetic, log layer only; state unaffected).
+    FIXED: both messages now use the active investigator's name; regression
+    assert added to the elusive test.

@@ -1959,7 +1959,7 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
             return
         state.limits[f"on_the_lam:{state.round}"] = True
         player_cards.place_played_event(state, card_id, events)
-        log_event(events, "event_played", '"Skids" played On the Lam.', card=card_id)
+        log_event(events, "event_played", f"{state.investigator.name} played On the Lam.", card=card_id)
     elif ability == "elusive" and playable_event(state, card_id) and state.investigator.resources >= 2:
         destination = str(payload.get("location", ""))
         if destination and destination not in elusive_destinations(state):
@@ -1976,7 +1976,7 @@ def resolve_fast_ability(state: GameState, payload: dict[str, Any], events: list
         if destination:
             move_without_engaged_enemies(state, destination, events)
         player_cards.place_played_event(state, card_id, events)
-        log_event(events, "event_played", '"Skids" played Elusive.', card=card_id)
+        log_event(events, "event_played", f"{state.investigator.name} played Elusive.", card=card_id)
     elif ability == "hospital_debts":
         debt_id = card_id
         key = f"hospital_debts:{state.round}"
