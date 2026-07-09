@@ -68,9 +68,11 @@ but not the implementation."""
 def audit_run(run_dir: Path, model: str, adjudications: str) -> tuple[str, int]:
     prompt = build_prompt(run_dir, adjudications)
     if model == "codex":
-        # GPT-5.5 via the codex CLI; default sandbox is read-only, which is all
+        # codex CLI default model; default sandbox is read-only, which is all
         # an auditor needs (the script itself writes audit.md from stdout).
         argv = ["codex", "exec", prompt]
+    elif model.startswith("codex:"):
+        argv = ["codex", "exec", "-m", model.split(":", 1)[1], prompt]
     else:
         allowed = (
             f"Read(docs_agent/**),Read({run_dir}/log.md),Read({run_dir}/bug_reports.md),Bash(./ahlcg card:*)"
@@ -166,6 +168,8 @@ def audit_reasoning(run_dir: Path, model: str) -> tuple[str, int]:
     prompt = build_reasoning_prompt(run_dir)
     if model == "codex":
         argv = ["codex", "exec", prompt]
+    elif model.startswith("codex:"):
+        argv = ["codex", "exec", "-m", model.split(":", 1)[1], prompt]
     else:
         allowed = f"Read(docs_agent/**),Read({run_dir}/log.md),Bash(./ahlcg card:*)"
         disallowed = "Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**)"
