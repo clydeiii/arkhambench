@@ -188,6 +188,15 @@ def main() -> int:
     scores_by_game(out_dir / "scores_by_game_b2.svg", B2_AGENTS,
                    "Score per game — open-weights run (same seeds and rotation)")
     second_visit_deltas(out_dir / "second_visit_deltas.svg")
+    B4_AGENTS = [
+        ("sol56-b4", "GPT-5.6 Sol", "#c05621"),
+        ("terra56-b4", "GPT-5.6 Terra", "#2f855a"),
+        ("luna56-b4", "GPT-5.6 Luna", "#2b6cb0"),
+    ]
+    scores_by_game(out_dir / "scores_by_game_b4.svg", B4_AGENTS,
+                   "Score per game — GPT-5.6 family (same seeds and rotation)")
+    if steps_and_score(out_dir / "steps_vs_score_b4.svg", B4_AGENTS, "Game length vs score — GPT-5.6 family"):
+        print("steps_vs_score_b4.svg written")
     scores_by_game(
         out_dir / "scores_by_game_hy3_b3.svg",
         [("hy3-b2", "Hunyuan 3 (b2: destructive compaction)", "#718096"),

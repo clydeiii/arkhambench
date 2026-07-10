@@ -140,8 +140,18 @@ const MODEL_GROUPS = [
   ["glm52-", "GLM-5.2"],
   ["glm-", "GLM-5.2"],
   ["hy3-", "Hunyuan 3"],
+  ["show-hy3-", "Hunyuan 3"],
   ["kimi26-", "Kimi k2.6"],
   ["dsv4f-", "DeepSeek v4-flash"],
+  ["sol56-", "GPT-5.6 Sol"],
+  ["show-sol-", "GPT-5.6 Sol"],
+  ["terra56-", "GPT-5.6 Terra"],
+  ["show-terra-", "GPT-5.6 Terra"],
+  ["luna56-", "GPT-5.6 Luna"],
+  ["show-luna-", "GPT-5.6 Luna"],
+  ["c7l1-", "C7 playtests"],
+  ["c7l2-", "C7 playtests"],
+  ["c7mop-", "C7 playtests"],
 ];
 
 function modelForRun(runName) {

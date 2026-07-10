@@ -228,6 +228,41 @@ never the problem — memory management was.** A one-line semantic contract on t
 compaction tool ("compress, not discard") converted a memory-destroying agent
 into a memory-preserving one.
 
+## Benchmark results — GPT-5.6 family (2026-07-10, release day +1)
+
+The identical 10-game gauntlet (seeds 1001–1010, same rotation, empty starting
+notebooks, confirmations off), run for all three GPT-5.6 tiers via codex within
+24 hours of their public release. Engine caveat: these ran post-batch-12 (19
+rules fixes newer than the b2 engine, ~50 newer than b1) — cross-table
+comparisons remain indicative, not controlled.
+
+![Score per game — GPT-5.6](results/scores_by_game_b4.svg)
+
+| Agent (harness) | Scores by game | Mean | **Final-20%** | Wins |
+|---|---|---:|---:|---|
+| GPT-5.6 Sol (codex) | 2 2 4 0 4 3 2 2 **6** 3 | 2.80 | **4.50** | R1 g9 |
+| GPT-5.6 Terra (codex) | 3 2 0 0 4 3 2 3 **4** 2 | 2.30 | **3.00** | — |
+| GPT-5.6 Luna (codex) | 4 2 2 1 3 1 2 2 **3** 3 | 2.30 | **3.00** | — |
+
+Readings:
+
+- **Sol beats its predecessor** — final-20% 4.50 vs GPT-5.5's 4.00 — and its
+  game-9 R1 win (Agnes, 10 rounds) is the shape this benchmark rewards: a
+  notebook-informed conversion in the scored window. But it lands **fourth** on
+  the combined board, behind Fable 5 (6.50), Sonnet 5 (5.50), and GLM-5.2
+  (5.00).
+- **Terra and Luna are indistinguishable here** (identical means, identical
+  final-20%) despite a 2.5× price gap — on this benchmark, Luna is the value
+  play, echoing its strong showing in the realistic-deck playtest wave.
+- **No 5.6 tier showed a hot cold-start.** GPT-5.5's famous game-1 score of 9
+  has no analog: the family's best opener was Luna's 4. Steadier, less
+  explosive.
+- Combined final-20% board: Fable 5 (6.50) > Sonnet 5 (5.50) > GLM-5.2 (5.00) >
+  **Sol (4.50)** > GPT-5.5 (4.00) > Opus 4.8 (3.50) > Kimi k2.6 = **Terra** =
+  **Luna** (3.00) > DeepSeek v4-flash = Hunyuan 3 (2.50).
+
+![Steps vs score — GPT-5.6](results/steps_vs_score_b4.svg)
+
 ### The second benchmark: can models playtest?
 
 While building this we found the bounty structure turns the benchmark self-healing:
