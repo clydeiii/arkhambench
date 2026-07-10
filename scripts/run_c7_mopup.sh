@@ -7,13 +7,16 @@ MODEL="claude-haiku-4-5-20251001"
 mkdir -p logs
 MISSION="$(sed '/<!-- standalone-only:/,$d' docs_agent/mission.md)"
 
-declare -A CARDS=(
-  [roland]="Police Badge"
-  [daisy]="Hyperawareness"
-  [skids]="Cat Burglar AND Hard Knocks"
-  [agnes]="Mind Wipe (level 1) AND Book of Shadows"
-  [wendy]="Rabbit's Foot (level 3)"
-)
+# macOS ships bash 3.2 (no associative arrays) — use a case function.
+cards_for() {
+  case "$1" in
+    roland) echo "Police Badge" ;;
+    daisy)  echo "Hyperawareness" ;;
+    skids)  echo "Cat Burglar AND Hard Knocks" ;;
+    agnes)  echo "Mind Wipe (level 1) AND Book of Shadows" ;;
+    wendy)  echo "Rabbit's Foot (level 3)" ;;
+  esac
+}
 
 seed=14000
 for inv in roland daisy skids agnes wendy; do
@@ -34,7 +37,7 @@ for inv in roland daisy skids agnes wendy; do
   PROMPT="$MISSION
 
 **NARROW COVERAGE DIRECTIVE (overrides score):** this run exists to exercise
-specific XP cards that have never been played: ${CARDS[$inv]}. Your PRIMARY
+specific XP cards that have never been played: $(cards_for "$inv"). Your PRIMARY
 objective is to legally PLAY those cards and USE their abilities this game —
 mulligan for them, spend resources on them, trigger their abilities — even at
 the cost of losing. Play the CURRENT run to completion (never './ahlcg new'),
