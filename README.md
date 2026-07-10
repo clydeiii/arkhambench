@@ -241,6 +241,19 @@ turn out to be distinct: the best bug-finder (Fable 5, 6 confirmed finds) and th
 best cold-start player (GPT-5.5) are different models. Full verdicts:
 [`specs/bug_adjudications.md`](specs/bug_adjudications.md).
 
+**The GPT-5.6 audit wave (2026-07-10)** scaled this up on release day+1: 28
+playtest games (Haiku 4.5 driving deliberately-unplayable "coverage decks" packed
+with all 32 XP cards, plus GPT-5.6 Luna/Terra playing decks upgraded the way real
+campaigns upgraded them), then GPT-5.6 Sol audited every transcript. Sol raised 34
+findings; adversarial verification (three parallel checker agents + a final human-
+tier gate) confirmed **18 unique engine defects — 86% auditor precision**, against
+Hunyuan 3's 0/5 the same week. All 18 were fixed as batch 12 (ledger 86–105) with
+per-defect regression tests. The wave also completed a 32/32 XP-card coverage
+disposition: 19 cards exercised in live agent play, 13 covered by deterministic
+probe tests — and the very last never-played card (Cat Burglar) was hiding defect
+107 in its probe. Auditor tier matters more than driver tier: the drivers in this
+wave found almost nothing themselves; the auditor found everything.
+
 Card data © Fantasy Flight Games, via the community project
 [arkhamdb-json-data](https://github.com/Kamalisk/arkhamdb-json-data). This project is for
 AI-capabilities research and commentary; it does not distribute scans of the game.
