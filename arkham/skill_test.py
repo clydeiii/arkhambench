@@ -1144,7 +1144,7 @@ def apply_blinding_light_symbol_loss(
         return
     before = state.investigator.actions_remaining
     state.investigator.actions_remaining = max(0, before - 1)
-    log_event(events, "action_lost", "Blinding Light caused Daisy to lose 1 action.", before=before, after=state.investigator.actions_remaining)
+    log_event(events, "action_lost", f"Blinding Light caused {state.investigator.name} to lose 1 action.", before=before, after=state.investigator.actions_remaining)
 
 
 def revealed_symbol(result: dict[str, Any], symbols: set[str]) -> bool:

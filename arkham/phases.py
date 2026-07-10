@@ -23,6 +23,15 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
 
                 skill_test.resume_deferred_resolution(state, events, rng)
                 continue
+            if state.active_skill_test and not state.pending_damage and state.active_skill_test.get("token") is None:
+                # A reaction queued at play time (e.g. Heirloom of Hyperborea)
+                # interleaved with the commit window and finish_commit bailed
+                # believing its own pre-reveal prompt was pending. The queue is
+                # empty here, so drive the test forward: reveal and resolve.
+                from . import skill_test
+
+                skill_test.finish_commit(state, rng, events)
+                continue
             return
         if state.limits.get("pending_scenario_token_aftermath"):
             from . import skill_test

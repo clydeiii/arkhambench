@@ -686,3 +686,14 @@ hy3's 0/5 the same week. Auditor tiering matters.
     parallel sol/luna lanes rewrote the pointer between terra's game end and
     its record call). _current_run_dir() now honors AHLCG_RUN first, mirroring
     cli.resolve_run_dir precedence. FIXED live mid-program.
+109. **Skill test deadlocks when a play-time reaction interleaves with the
+    commit window** — CONFIRMED (soft-locked show-luna-agnes game 1 for 14
+    sessions): Heirloom of Hyperborea's reaction was queued behind the commit
+    decision; finish_commit saw a non-empty queue after "Done" and bailed
+    believing its own pre-reveal prompt was pending; the reaction's resolution
+    never resumed the test; advance_until_decision bare-returned on
+    active-test-no-decision. FIXED: phase loop now drives an orphaned unrevealed
+    test forward (reveal + resolve) when the queue is empty; regression test;
+    the wedged game was nudged through the fixed loop and ended legitimately.
+    Bonus: Blinding Light's action-loss log hardcoded "Daisy" (ledger-83
+    pattern) — fixed to the active investigator.

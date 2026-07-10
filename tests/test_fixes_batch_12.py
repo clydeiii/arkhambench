@@ -471,3 +471,28 @@ class FixesBatch12Tests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    def test_109_heirloom_reaction_during_test_does_not_deadlock(self) -> None:
+        from arkham import phases
+        from arkham.rng import ArkhamRng as Rng
+
+        s = state()
+        s.investigator.id = "agnes"
+        s.investigator.name = "Agnes Baker"
+        add_card(s, "01012", "play")           # Heirloom of Hyperborea
+        light = add_card(s, "01066")           # Blinding Light (Spell event)
+        s.investigator.deck = [add_card(s, "01088", "deck")]
+        enemy = add_enemy(s, "01160")
+        events: list = []
+        actions.execute(s, {"kind": "action", "action": "blinding_light", "card": light, "enemy": enemy}, events, SeqRng(["0"]))
+        # commit window first, heirloom queued behind it
+        self.assertEqual(s.decision_queue[0].kind, "commit_cards")
+        skill_test.finish_commit(s, SeqRng(["0"]), events)   # "Done" with heirloom still queued
+        self.assertEqual(s.decision_queue[0].kind, "heirloom_reaction")
+        payload = s.decision_queue[0].options[0].payload      # Draw 1 card
+        s.decision_queue = []
+        actions.resolve_heirloom_reaction(s, payload, events, SeqRng(["0"]))
+        # the fix: the phase loop must revive the orphaned test, not deadlock
+        phases.advance_until_decision(s, Rng(7), events)
+        self.assertTrue(s.decision_queue or s.active_skill_test is None,
+                        "orphaned skill test must resolve or present a decision")
