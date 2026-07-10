@@ -263,6 +263,33 @@ Readings:
 
 ![Steps vs score — GPT-5.6](results/steps_vs_score_b4.svg)
 
+### Campaign learning: five campaigns, one notebook (2026-07-10)
+
+Six models each played five full three-scenario campaigns in sequence with one
+persistent notebook shared across all five — cross-campaign learning as the
+explicit test. Campaign score = sum of leg scores, listed in the order actually
+played:
+
+| Model | Arc (campaigns 1→5) | Total | Shape |
+|---|---|---:|---|
+| Fable 5 | 4 2 4 **8** 6 | 24 | late surge |
+| GPT-5.5 | 2 **7** 4 0 7 | 20 | volatile |
+| GPT-5.6 Sol | 0 1 **4** 3 2 | 10 | rise, then fade |
+| GPT-5.6 Terra | 2 3 3 0 2 | 10 | flat |
+| GPT-5.6 Luna | 1 1 1 3 **4** | 10 | the cleanest learning curve |
+| Hunyuan 3 | 1 1 0 2 **3** | 7 | gentle rise |
+
+Two readings. First, all three GPT-5.6 tiers landed on identical totals (10) by
+different roads — and the cheapest tier produced the most learning-shaped arc.
+Second, the sobering constant: **all 30 campaigns ended with the investigator
+dead in The Devourer Below.** Zero finale survivals, zero Umôrdhoth repels, at
+every capability tier from Haiku-class to flagship. Whatever the campaign
+finale demands — multi-scenario resource husbandry, trauma management, a
+finishing plan held across three scenarios — no current model has it.
+
+**Interactive findings page:** all of the above, with every game linked to its
+full replay — https://clydeiii.github.io/arkhambench/results.html
+
 ### The second benchmark: can models playtest?
 
 While building this we found the bounty structure turns the benchmark self-healing:
