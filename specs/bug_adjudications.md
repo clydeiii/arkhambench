@@ -681,3 +681,8 @@ hy3's 0/5 the same week. Auditor tiering matters.
     exercised in play). Printed text: "This action does not provoke attacks of
     opportunity." SAFE_FROM_AOO lacked cat_burglar; using it while engaged ate
     a full AoO and deferred the move. FIXED + probe regression.
+108. **campaign record ignores AHLCG_RUN (cross-lane .current_run race)** —
+    CONFIRMED (harness layer; wedged show-terra-roland for 13 sessions when
+    parallel sol/luna lanes rewrote the pointer between terra's game end and
+    its record call). _current_run_dir() now honors AHLCG_RUN first, mirroring
+    cli.resolve_run_dir precedence. FIXED live mid-program.

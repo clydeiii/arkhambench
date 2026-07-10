@@ -248,6 +248,10 @@ def record_current_run(campaign_dir: str | Path, run_arg: str | None = None) -> 
 
 
 def _current_run_dir() -> Path:
+    # AHLCG_RUN outranks the shared .current_run pointer, mirroring
+    # cli.resolve_run_dir — concurrent campaign lanes race on the pointer.
+    if os.environ.get("AHLCG_RUN"):
+        return Path(os.environ["AHLCG_RUN"])
     path = Path.cwd() / ".current_run"
     if not path.exists():
         raise EngineError("run directory not specified and .current_run is missing")
