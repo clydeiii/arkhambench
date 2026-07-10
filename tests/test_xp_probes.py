@@ -338,3 +338,45 @@ class XpCardProbeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class XpCoverageGapProbes(unittest.TestCase):
+    """Probes for the 3 XP cards no agent game ever exercised (C7 disposition)."""
+
+    def test_hyperawareness_2_boosts_intellect_and_agility_for_a_resource(self) -> None:
+        from arkham.cards import player as player_cards
+
+        s = state()
+        add_card(s, "50003", "play")
+        skill_test.start(s, [], skill="agility", difficulty=3, source="probe")
+        options = player_cards.boost_options(s)
+        hyper = [o for o in options if o.payload.get("card_code") == "50003"]
+        self.assertTrue(hyper, "Hyperawareness boost not offered on an agility test")
+        before = s.investigator.resources
+        skill_test.apply_skill_boost(s, hyper[0].payload, [])
+        self.assertEqual(s.investigator.resources, before - 1)
+        self.assertEqual(player_cards.boost_total(s.active_skill_test), 1)
+        s.active_skill_test = None
+        # combat is not one of its skills
+        skill_test.start(s, [], skill="combat", difficulty=3, source="probe")
+        self.assertFalse([o for o in player_cards.boost_options(s) if o.payload.get("card_code") == "50003"])
+
+    def test_book_of_shadows_adds_charge_and_exhausts(self) -> None:
+        s = state()
+        book = add_card(s, "01070", "play")
+        spell = add_card(s, "01060", "play")  # Shrivelling
+        s.card_instances[spell].uses["charges"] = 0
+        actions.execute(s, {"kind": "action", "action": "book_of_shadows", "asset": book, "spell": spell}, [])
+        self.assertEqual(s.card_instances[spell].uses["charges"], 1)
+        self.assertTrue(s.card_instances[book].exhausted)
+
+    def test_cat_burglar_disengages_moves_and_provokes_no_aoo(self) -> None:
+        s = state()
+        cat = add_card(s, "01055", "play")
+        enemy = add_enemy(s, "01160")  # ready, engaged
+        events: list = []
+        actions.execute(s, {"kind": "action", "action": "cat_burglar", "asset": cat, "location": "hallway"}, events)
+        self.assertEqual(s.investigator.location_id, "hallway")
+        self.assertFalse(s.investigator.engaged_enemies)
+        self.assertTrue(s.card_instances[cat].exhausted)
+        self.assertFalse([e for e in events if e.get("type") == "enemy_attack"], "Cat Burglar must not provoke AoO")

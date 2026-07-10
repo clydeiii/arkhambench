@@ -676,3 +676,8 @@ value in the pipeline remains volume, not precision).
 
 Sol auditor precision this wave: 18 confirmed / 21 unique claims (86%) — versus
 hy3's 0/5 the same week. Auditor tiering matters.
+107. **Cat Burglar's move provokes attacks of opportunity** — CONFIRMED (found
+    by the C7 coverage-gap probe, not by any agent game — the card was never
+    exercised in play). Printed text: "This action does not provoke attacks of
+    opportunity." SAFE_FROM_AOO lacked cat_burglar; using it while engaged ate
+    a full AoO and deferred the move. FIXED + probe regression.

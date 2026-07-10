@@ -14,7 +14,8 @@ from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, Dec
 from . import skill_test
 
 
-SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "backstab", "cunning_distraction", "blinding_light", "parley_lita", "parley_mob", "midnight_parley", "resign", "pass", "advance_act"}
+# cat_burglar: printed text — "This action does not provoke attacks of opportunity."
+SAFE_FROM_AOO = {"fight", "asset_fight", "evade", "backstab", "cunning_distraction", "blinding_light", "parley_lita", "parley_mob", "midnight_parley", "resign", "pass", "advance_act", "cat_burglar"}
 FREE_ACTIONS = {"fast_ability"}
 NON_ACTIONS = {"advance_act", "pass"}
 
