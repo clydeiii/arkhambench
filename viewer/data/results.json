@@ -1293,7 +1293,7 @@
     },
     {
      "name": "show-fable-skids",
-     "investigator": "agnes",
+     "investigator": "skids\u2192agnes",
      "score": 4,
      "legs": [
       {
@@ -1455,7 +1455,7 @@
     },
     {
      "name": "show-gpt-agnes",
-     "investigator": "roland",
+     "investigator": "agnes\u2192roland",
      "score": 0,
      "legs": [
       {
@@ -1674,32 +1674,6 @@
      "order": 1
     },
     {
-     "name": "show-sol-daisy",
-     "investigator": "daisy",
-     "score": 1,
-     "legs": [
-      {
-       "slug": "show-sol-daisy-1-gathering",
-       "scenario": "gathering",
-       "resolution": "no_resolution",
-       "score": 1
-      },
-      {
-       "slug": "show-sol-daisy-2-midnight-masks",
-       "scenario": "midnight_masks",
-       "resolution": "R1",
-       "score": 0
-      },
-      {
-       "slug": "show-sol-daisy-3-devourer",
-       "scenario": "devourer_below",
-       "resolution": "no_resolution",
-       "score": 0
-      }
-     ],
-     "order": 2
-    },
-    {
      "name": "show-sol-skids",
      "investigator": "skids",
      "score": 4,
@@ -1723,7 +1697,7 @@
        "score": 0
       }
      ],
-     "order": 3
+     "order": 2
     },
     {
      "name": "show-sol-agnes",
@@ -1749,7 +1723,7 @@
        "score": 0
       }
      ],
-     "order": 4
+     "order": 3
     },
     {
      "name": "show-sol-wendy",
@@ -1775,6 +1749,32 @@
        "score": 0
       }
      ],
+     "order": 4
+    },
+    {
+     "name": "show-sol-daisy",
+     "investigator": "daisy",
+     "score": 3,
+     "legs": [
+      {
+       "slug": "show-sol-daisy-1-gathering",
+       "scenario": "gathering",
+       "resolution": "no_resolution",
+       "score": 1
+      },
+      {
+       "slug": "show-sol-daisy-2-midnight-masks",
+       "scenario": "midnight_masks",
+       "resolution": "R1",
+       "score": 2
+      },
+      {
+       "slug": "show-sol-daisy-3-devourer",
+       "scenario": "devourer_below",
+       "resolution": "no_resolution",
+       "score": 0
+      }
+     ],
      "order": 5
     }
    ]
@@ -1783,32 +1783,6 @@
    "name": "GPT-5.6 Terra",
    "region": "US",
    "campaigns": [
-    {
-     "name": "show-terra-skids",
-     "investigator": "skids",
-     "score": 2,
-     "legs": [
-      {
-       "slug": "show-terra-skids-1-gathering",
-       "scenario": "gathering",
-       "resolution": "no_resolution",
-       "score": 1
-      },
-      {
-       "slug": "show-terra-skids-2-midnight-masks",
-       "scenario": "midnight_masks",
-       "resolution": "R2",
-       "score": 1
-      },
-      {
-       "slug": "show-terra-skids-3-devourer",
-       "scenario": "devourer_below",
-       "resolution": "no_resolution",
-       "score": 0
-      }
-     ],
-     "order": 1
-    },
     {
      "name": "show-terra-agnes",
      "investigator": "agnes",
@@ -1833,7 +1807,7 @@
        "score": 0
       }
      ],
-     "order": 2
+     "order": 1
     },
     {
      "name": "show-terra-wendy",
@@ -1859,33 +1833,7 @@
        "score": 0
       }
      ],
-     "order": 3
-    },
-    {
-     "name": "show-terra-roland",
-     "investigator": "roland",
-     "score": 0,
-     "legs": [
-      {
-       "slug": "show-terra-roland-1-gathering",
-       "scenario": "gathering",
-       "resolution": "no_resolution",
-       "score": 0
-      },
-      {
-       "slug": "show-terra-roland-2-midnight-masks",
-       "scenario": "midnight_masks",
-       "resolution": "R1",
-       "score": 0
-      },
-      {
-       "slug": "show-terra-roland-3-devourer",
-       "scenario": "devourer_below",
-       "resolution": "no_resolution",
-       "score": 0
-      }
-     ],
-     "order": 4
+     "order": 2
     },
     {
      "name": "show-terra-daisy",
@@ -1911,6 +1859,58 @@
        "score": 0
       }
      ],
+     "order": 3
+    },
+    {
+     "name": "show-terra-roland",
+     "investigator": "roland",
+     "score": 3,
+     "legs": [
+      {
+       "slug": "show-terra-roland-1-gathering",
+       "scenario": "gathering",
+       "resolution": "no_resolution",
+       "score": 3
+      },
+      {
+       "slug": "show-terra-roland-2-midnight-masks",
+       "scenario": "midnight_masks",
+       "resolution": "R1",
+       "score": 0
+      },
+      {
+       "slug": "show-terra-roland-3-devourer",
+       "scenario": "devourer_below",
+       "resolution": "no_resolution",
+       "score": 0
+      }
+     ],
+     "order": 4
+    },
+    {
+     "name": "show-terra-skids",
+     "investigator": "skids\u2192roland",
+     "score": 2,
+     "legs": [
+      {
+       "slug": "show-terra-skids-1-gathering",
+       "scenario": "gathering",
+       "resolution": "R3",
+       "score": 0
+      },
+      {
+       "slug": "show-terra-skids-2-midnight-masks",
+       "scenario": "midnight_masks",
+       "resolution": "R1",
+       "score": 2
+      },
+      {
+       "slug": "show-terra-skids-3-devourer",
+       "scenario": "devourer_below",
+       "resolution": "no_resolution",
+       "score": 0
+      }
+     ],
      "order": 5
     }
    ]
@@ -1919,58 +1919,6 @@
    "name": "GPT-5.6 Luna",
    "region": "US",
    "campaigns": [
-    {
-     "name": "show-luna-roland",
-     "investigator": "roland",
-     "score": 1,
-     "legs": [
-      {
-       "slug": "show-luna-roland-1-gathering",
-       "scenario": "gathering",
-       "resolution": "no_resolution",
-       "score": 0
-      },
-      {
-       "slug": "show-luna-roland-2-midnight-masks",
-       "scenario": "midnight_masks",
-       "resolution": "R1",
-       "score": 1
-      },
-      {
-       "slug": "show-luna-roland-3-devourer",
-       "scenario": "devourer_below",
-       "resolution": "no_resolution",
-       "score": 0
-      }
-     ],
-     "order": 1
-    },
-    {
-     "name": "show-luna-daisy",
-     "investigator": "daisy",
-     "score": 1,
-     "legs": [
-      {
-       "slug": "show-luna-daisy-1-gathering",
-       "scenario": "gathering",
-       "resolution": "no_resolution",
-       "score": 1
-      },
-      {
-       "slug": "show-luna-daisy-2-midnight-masks",
-       "scenario": "midnight_masks",
-       "resolution": "R1",
-       "score": 0
-      },
-      {
-       "slug": "show-luna-daisy-3-devourer",
-       "scenario": "devourer_below",
-       "resolution": "no_resolution",
-       "score": 0
-      }
-     ],
-     "order": 2
-    },
     {
      "name": "show-luna-skids",
      "investigator": "skids",
@@ -1995,7 +1943,7 @@
        "score": 0
       }
      ],
-     "order": 3
+     "order": 1
     },
     {
      "name": "show-luna-wendy",
@@ -2021,7 +1969,7 @@
        "score": 0
       }
      ],
-     "order": 4
+     "order": 2
     },
     {
      "name": "show-luna-agnes",
@@ -2047,15 +1995,67 @@
        "score": 0
       }
      ],
+     "order": 3
+    },
+    {
+     "name": "show-luna-roland",
+     "investigator": "roland",
+     "score": 6,
+     "legs": [
+      {
+       "slug": "show-luna-roland-1-gathering",
+       "scenario": "gathering",
+       "resolution": "no_resolution",
+       "score": 2
+      },
+      {
+       "slug": "show-luna-roland-2-midnight-masks",
+       "scenario": "midnight_masks",
+       "resolution": "R2",
+       "score": 4
+      },
+      {
+       "slug": "show-luna-roland-3-devourer",
+       "scenario": "devourer_below",
+       "resolution": "no_resolution",
+       "score": 0
+      }
+     ],
+     "order": 4
+    },
+    {
+     "name": "show-luna-daisy",
+     "investigator": "daisy",
+     "score": 2,
+     "legs": [
+      {
+       "slug": "show-luna-daisy-1-gathering",
+       "scenario": "gathering",
+       "resolution": "no_resolution",
+       "score": 2
+      },
+      {
+       "slug": "show-luna-daisy-2-midnight-masks",
+       "scenario": "midnight_masks",
+       "resolution": "R1",
+       "score": 0
+      },
+      {
+       "slug": "show-luna-daisy-3-devourer",
+       "scenario": "devourer_below",
+       "resolution": "no_resolution",
+       "score": 0
+      }
+     ],
      "order": 5
     }
    ]
   }
  ],
  "findings": {
-  "ledger_entries": 108,
+  "ledger_entries": 111,
   "confirmed_fixed": 52,
-  "not_a_bug": 19,
+  "not_a_bug": 21,
   "auditors": [
    {
     "name": "GPT-5.6 Sol",

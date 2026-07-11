@@ -270,22 +270,31 @@ persistent notebook shared across all five — cross-campaign learning as the
 explicit test. Campaign score = sum of leg scores, listed in the order actually
 played:
 
-| Model | Arc (campaigns 1→5) | Total | Shape |
+| Model | Arc (chronological) | Total | Shape |
 |---|---|---:|---|
 | Fable 5 | 4 2 4 **8** 6 | 24 | late surge |
 | GPT-5.5 | 2 **7** 4 0 7 | 20 | volatile |
-| GPT-5.6 Sol | 0 1 **4** 3 2 | 10 | rise, then fade |
-| GPT-5.6 Terra | 2 3 3 0 2 | 10 | flat |
-| GPT-5.6 Luna | 1 1 1 3 **4** | 10 | the cleanest learning curve |
+| GPT-5.6 Luna | 1 3 4 **6** 2 | 16 | rise, late stumble |
+| GPT-5.6 Terra | 3 3 2 3 2 | 13 | flat |
+| GPT-5.6 Sol | 0 **4** 3 2 3 | 12 | early jump, plateau |
 | Hunyuan 3 | 1 1 0 2 **3** | 7 | gentle rise |
 
-Two readings. First, all three GPT-5.6 tiers landed on identical totals (10) by
-different roads — and the cheapest tier produced the most learning-shaped arc.
-Second, the sobering constant: **all 30 campaigns ended with the investigator
-dead in The Devourer Below.** Zero finale survivals, zero Umôrdhoth repels, at
-every capability tier from Haiku-class to flagship. Whatever the campaign
-finale demands — multi-scenario resource husbandry, trauma management, a
-finishing plan held across three scenarios — no current model has it.
+**Correction (2026-07-11, ledger 112):** the campaign-lane pointer race (ledger
+108) had let six legs across five GPT-5.6 campaigns record *other lanes'* games
+before it was fixed. A cross-campaign audit sweep caught it; the five campaigns
+were quarantined and fully replayed on the fixed engine (same seeds; replays are
+the chronologically last entries in each arc, played with the model's evolved
+notebook). The table above is the corrected record — an earlier revision of this
+section reported partially-contaminated arcs.
+
+Two readings. First, the 5.6 tiers now separate — Luna leads the family at 16
+with the most learning-shaped arc, and Sol's flagship pedigree doesn't transfer
+to campaign play (12). Second, the sobering constant survived the correction:
+**all 30 campaigns ended with the investigator dead in The Devourer Below.**
+Zero finale survivals, zero Umôrdhoth repels, at every capability tier from
+Haiku-class to flagship. Whatever the campaign finale demands — multi-scenario
+resource husbandry, trauma management, a finishing plan held across three
+scenarios — no current model has it.
 
 **Interactive findings page:** all of the above, with every game linked to its
 full replay — https://clydeiii.github.io/arkhambench/results.html

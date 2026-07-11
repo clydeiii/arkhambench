@@ -107,9 +107,10 @@ def main() -> int:
             legs = c.get("legs", [])
             summary_path = ROOT / "campaigns" / c["name"] / "campaign_summary.json"
             mtime = summary_path.stat().st_mtime if summary_path.exists() else 0
+            slot = c["name"].split("-")[-1]
             rows.append({
                 "name": c["name"],
-                "investigator": c["investigator"],
+                "investigator": slot if slot == c["investigator"] else f"{slot}\u2192{c['investigator']}",
                 "score": sum(l.get("score", 0) for l in legs),
                 "legs": [
                     {"slug": l["run"], "scenario": l["scenario"].replace("return_to_the_", ""),

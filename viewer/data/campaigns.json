@@ -2222,8 +2222,8 @@
         "run": "show-luna-daisy-1-gathering",
         "scenario": "return_to_the_gathering",
         "resolution": "no_resolution",
-        "xp_earned": 2,
-        "score": 1,
+        "xp_earned": 3,
+        "score": 2,
         "trauma_delta": {
           "mental": 0,
           "physical": 1
@@ -2261,22 +2261,36 @@
       {
         "purchases": [
           {
-            "code": "01039",
-            "name": "Deduction",
-            "level": 0,
+            "code": "01040",
+            "name": "Magnifying Glass",
+            "level": 1,
             "faction": "seeker",
             "weakness": false,
-            "kind": "new",
-            "cost": 1
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
           },
           {
-            "code": "01060",
-            "name": "Shrivelling",
-            "level": 0,
+            "code": "01069",
+            "name": "Blinding Light",
+            "level": 2,
             "faction": "mystic",
             "weakness": false,
-            "kind": "new",
-            "cost": 1
+            "kind": "upgrade of 01066",
+            "cost": 2,
+            "replaced": {
+              "code": "01066",
+              "name": "Blinding Light",
+              "level": 0,
+              "faction": "mystic",
+              "weakness": false
+            }
           },
           {
             "code": "01117",
@@ -2288,25 +2302,10 @@
             "cost": 0
           }
         ],
-        "removals": [
-          {
-            "code": "01034",
-            "name": "Hyperawareness",
-            "level": 0,
-            "faction": "seeker",
-            "weakness": false
-          },
-          {
-            "code": "01035",
-            "name": "Medical Texts",
-            "level": 0,
-            "faction": "seeker",
-            "weakness": false
-          }
-        ],
-        "xp_spent": 2,
+        "removals": [],
+        "xp_spent": 3,
         "after_leg": 1,
-        "xp_before": 2,
+        "xp_before": 3,
         "xp_after": 0
       },
       {
@@ -2317,19 +2316,18 @@
             "level": 1,
             "faction": "seeker",
             "weakness": false,
-            "kind": "new",
-            "cost": 1
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
           }
         ],
-        "removals": [
-          {
-            "code": "01087",
-            "name": "Flashlight",
-            "level": 0,
-            "faction": "neutral",
-            "weakness": false
-          }
-        ],
+        "removals": [],
         "xp_spent": 1,
         "after_leg": 2,
         "xp_before": 1,
@@ -2345,7 +2343,7 @@
       "umordhoth_repelled": false,
       "lita_sacrificed": false
     },
-    "campaign_score": 1
+    "campaign_score": 2
   },
   {
     "name": "show-luna-roland",
@@ -2359,10 +2357,10 @@
         "run": "show-luna-roland-1-gathering",
         "scenario": "return_to_the_gathering",
         "resolution": "no_resolution",
-        "xp_earned": 2,
-        "score": 0,
+        "xp_earned": 3,
+        "score": 2,
         "trauma_delta": {
-          "mental": 2,
+          "mental": 1,
           "physical": 0
         },
         "investigator_code": "01001"
@@ -2371,11 +2369,11 @@
         "leg": 2,
         "run": "show-luna-roland-2-midnight-masks",
         "scenario": "return_to_the_midnight_masks",
-        "resolution": "R1",
-        "xp_earned": 2,
-        "score": 1,
+        "resolution": "R2",
+        "xp_earned": 4,
+        "score": 4,
         "trauma_delta": {
-          "mental": 1,
+          "mental": 0,
           "physical": 0
         },
         "investigator_code": "01001"
@@ -2385,7 +2383,7 @@
         "run": "show-luna-roland-3-devourer",
         "scenario": "return_to_the_devourer_below",
         "resolution": "no_resolution",
-        "xp_earned": 0,
+        "xp_earned": 2,
         "score": 0,
         "trauma_delta": {
           "mental": 1,
@@ -2414,6 +2412,22 @@
             }
           },
           {
+            "code": "01040",
+            "name": "Magnifying Glass",
+            "level": 1,
+            "faction": "seeker",
+            "weakness": false,
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
+          },
+          {
             "code": "01117",
             "name": "Lita Chantler",
             "level": 0,
@@ -2424,13 +2438,22 @@
           }
         ],
         "removals": [],
-        "xp_spent": 2,
+        "xp_spent": 3,
         "after_leg": 1,
-        "xp_before": 2,
+        "xp_before": 3,
         "xp_after": 0
       },
       {
         "purchases": [
+          {
+            "code": "01026",
+            "name": "Extra Ammunition",
+            "level": 1,
+            "faction": "guardian",
+            "weakness": false,
+            "kind": "new",
+            "cost": 1
+          },
           {
             "code": "01028",
             "name": "Beat Cop",
@@ -2446,12 +2469,36 @@
               "faction": "guardian",
               "weakness": false
             }
+          },
+          {
+            "code": "01040",
+            "name": "Magnifying Glass",
+            "level": 1,
+            "faction": "seeker",
+            "weakness": false,
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
           }
         ],
-        "removals": [],
-        "xp_spent": 2,
+        "removals": [
+          {
+            "code": "01087",
+            "name": "Flashlight",
+            "level": 0,
+            "faction": "neutral",
+            "weakness": false
+          }
+        ],
+        "xp_spent": 4,
         "after_leg": 2,
-        "xp_before": 2,
+        "xp_before": 4,
         "xp_after": 0
       }
     ],
@@ -2464,7 +2511,7 @@
       "umordhoth_repelled": false,
       "lita_sacrificed": false
     },
-    "campaign_score": 1
+    "campaign_score": 6
   },
   {
     "name": "show-luna-skids",
@@ -2848,11 +2895,11 @@
         "run": "show-sol-daisy-2-midnight-masks",
         "scenario": "return_to_the_midnight_masks",
         "resolution": "R1",
-        "xp_earned": 1,
-        "score": 0,
+        "xp_earned": 2,
+        "score": 2,
         "trauma_delta": {
           "mental": 0,
-          "physical": 1
+          "physical": 0
         },
         "investigator_code": "01002"
       },
@@ -2865,7 +2912,7 @@
         "score": 0,
         "trauma_delta": {
           "mental": 0,
-          "physical": 1
+          "physical": 0
         },
         "investigator_code": "01002"
       }
@@ -2908,27 +2955,26 @@
       {
         "purchases": [
           {
-            "code": "01035",
-            "name": "Medical Texts",
-            "level": 0,
-            "faction": "seeker",
+            "code": "01069",
+            "name": "Blinding Light",
+            "level": 2,
+            "faction": "mystic",
             "weakness": false,
-            "kind": "new",
-            "cost": 1
+            "kind": "upgrade of 01066",
+            "cost": 2,
+            "replaced": {
+              "code": "01066",
+              "name": "Blinding Light",
+              "level": 0,
+              "faction": "mystic",
+              "weakness": false
+            }
           }
         ],
-        "removals": [
-          {
-            "code": "01030",
-            "name": "Magnifying Glass",
-            "level": 0,
-            "faction": "seeker",
-            "weakness": false
-          }
-        ],
-        "xp_spent": 1,
+        "removals": [],
+        "xp_spent": 2,
         "after_leg": 2,
-        "xp_before": 1,
+        "xp_before": 2,
         "xp_after": 0
       }
     ],
@@ -2941,7 +2987,7 @@
       "umordhoth_repelled": false,
       "lita_sacrificed": false
     },
-    "campaign_score": 1
+    "campaign_score": 3
   },
   {
     "name": "show-sol-roland",
@@ -3565,10 +3611,10 @@
         "run": "show-terra-roland-1-gathering",
         "scenario": "return_to_the_gathering",
         "resolution": "no_resolution",
-        "xp_earned": 2,
-        "score": 0,
+        "xp_earned": 4,
+        "score": 3,
         "trauma_delta": {
-          "mental": 2,
+          "mental": 1,
           "physical": 0
         },
         "investigator_code": "01001"
@@ -3578,7 +3624,7 @@
         "run": "show-terra-roland-2-midnight-masks",
         "scenario": "return_to_the_midnight_masks",
         "resolution": "R1",
-        "xp_earned": 0,
+        "xp_earned": 1,
         "score": 0,
         "trauma_delta": {
           "mental": 1,
@@ -3620,92 +3666,6 @@
             }
           },
           {
-            "code": "01117",
-            "name": "Lita Chantler",
-            "level": 0,
-            "faction": "neutral",
-            "weakness": false,
-            "kind": "story",
-            "cost": 0
-          }
-        ],
-        "removals": [],
-        "xp_spent": 2,
-        "after_leg": 1,
-        "xp_before": 2,
-        "xp_after": 0
-      },
-      {
-        "purchases": [],
-        "removals": [],
-        "xp_spent": 0,
-        "after_leg": 2,
-        "xp_before": 0,
-        "xp_after": 0
-      }
-    ],
-    "outcomes": {
-      "killed_investigators": [
-        "roland"
-      ],
-      "arkham_succumbed": true,
-      "ritual_broken": false,
-      "umordhoth_repelled": false,
-      "lita_sacrificed": false
-    },
-    "campaign_score": 0
-  },
-  {
-    "name": "show-terra-skids",
-    "campaign": "return_to_night_of_the_zealot",
-    "investigator": "skids",
-    "difficulty": "standard",
-    "seed": 9403,
-    "legs": [
-      {
-        "leg": 1,
-        "run": "show-terra-skids-1-gathering",
-        "scenario": "return_to_the_gathering",
-        "resolution": "no_resolution",
-        "xp_earned": 2,
-        "score": 1,
-        "trauma_delta": {
-          "mental": 1,
-          "physical": 0
-        },
-        "investigator_code": "01003"
-      },
-      {
-        "leg": 2,
-        "run": "show-terra-skids-2-midnight-masks",
-        "scenario": "return_to_the_midnight_masks",
-        "resolution": "R2",
-        "xp_earned": 1,
-        "score": 1,
-        "trauma_delta": {
-          "mental": 0,
-          "physical": 0
-        },
-        "investigator_code": "01003"
-      },
-      {
-        "leg": 3,
-        "run": "show-terra-skids-3-devourer",
-        "scenario": "return_to_the_devourer_below",
-        "resolution": "no_resolution",
-        "xp_earned": 0,
-        "score": 0,
-        "trauma_delta": {
-          "mental": 1,
-          "physical": 0
-        },
-        "investigator_code": "01003"
-      }
-    ],
-    "upgrades": [
-      {
-        "purchases": [
-          {
             "code": "01028",
             "name": "Beat Cop",
             "level": 2,
@@ -3732,32 +3692,31 @@
           }
         ],
         "removals": [],
-        "xp_spent": 2,
+        "xp_spent": 4,
         "after_leg": 1,
-        "xp_before": 2,
+        "xp_before": 4,
         "xp_after": 0
       },
       {
         "purchases": [
           {
-            "code": "01023",
-            "name": "Dodge",
-            "level": 0,
-            "faction": "guardian",
+            "code": "01040",
+            "name": "Magnifying Glass",
+            "level": 1,
+            "faction": "seeker",
             "weakness": false,
-            "kind": "new",
-            "cost": 1
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
           }
         ],
-        "removals": [
-          {
-            "code": "01086",
-            "name": "Knife",
-            "level": 0,
-            "faction": "neutral",
-            "weakness": false
-          }
-        ],
+        "removals": [],
         "xp_spent": 1,
         "after_leg": 2,
         "xp_before": 1,
@@ -3766,7 +3725,144 @@
     ],
     "outcomes": {
       "killed_investigators": [
-        "skids"
+        "roland"
+      ],
+      "arkham_succumbed": true,
+      "ritual_broken": false,
+      "umordhoth_repelled": false,
+      "lita_sacrificed": false
+    },
+    "campaign_score": 3
+  },
+  {
+    "name": "show-terra-skids",
+    "campaign": "return_to_night_of_the_zealot",
+    "investigator": "roland",
+    "difficulty": "standard",
+    "seed": 9403,
+    "legs": [
+      {
+        "leg": 1,
+        "run": "show-terra-skids-1-gathering",
+        "scenario": "return_to_the_gathering",
+        "resolution": "R3",
+        "xp_earned": 0,
+        "score": 0,
+        "trauma_delta": {
+          "mental": 0,
+          "physical": 0
+        },
+        "investigator_code": "01003"
+      },
+      {
+        "leg": 2,
+        "run": "show-terra-skids-2-midnight-masks",
+        "scenario": "return_to_the_midnight_masks",
+        "resolution": "R1",
+        "xp_earned": 3,
+        "score": 2,
+        "trauma_delta": {
+          "mental": 1,
+          "physical": 0
+        },
+        "investigator_code": "01001"
+      },
+      {
+        "leg": 3,
+        "run": "show-terra-skids-3-devourer",
+        "scenario": "return_to_the_devourer_below",
+        "resolution": "no_resolution",
+        "xp_earned": 0,
+        "score": 0,
+        "trauma_delta": {
+          "mental": 1,
+          "physical": 0
+        },
+        "investigator_code": "01001"
+      }
+    ],
+    "upgrades": [
+      {
+        "after_leg": 1,
+        "replacement": true,
+        "purchases": [],
+        "removals": [],
+        "xp_spent": 0,
+        "xp_before": 0,
+        "xp_after": 0
+      },
+      {
+        "purchases": [
+          {
+            "code": "01025",
+            "name": "Vicious Blow",
+            "level": 0,
+            "faction": "guardian",
+            "weakness": false,
+            "kind": "new",
+            "cost": 1
+          },
+          {
+            "code": "01025",
+            "name": "Vicious Blow",
+            "level": 0,
+            "faction": "guardian",
+            "weakness": false,
+            "kind": "new",
+            "cost": 1
+          },
+          {
+            "code": "01040",
+            "name": "Magnifying Glass",
+            "level": 1,
+            "faction": "seeker",
+            "weakness": false,
+            "kind": "upgrade of 01030",
+            "cost": 1,
+            "replaced": {
+              "code": "01030",
+              "name": "Magnifying Glass",
+              "level": 0,
+              "faction": "seeker",
+              "weakness": false
+            }
+          },
+          {
+            "code": "01117",
+            "name": "Lita Chantler",
+            "level": 0,
+            "faction": "neutral",
+            "weakness": false,
+            "kind": "story",
+            "cost": 0
+          }
+        ],
+        "removals": [
+          {
+            "code": "01017",
+            "name": "Physical Training",
+            "level": 0,
+            "faction": "guardian",
+            "weakness": false
+          },
+          {
+            "code": "01019",
+            "name": "First Aid",
+            "level": 0,
+            "faction": "guardian",
+            "weakness": false
+          }
+        ],
+        "xp_spent": 3,
+        "after_leg": 2,
+        "xp_before": 3,
+        "xp_after": 0
+      }
+    ],
+    "outcomes": {
+      "killed_investigators": [
+        "skids",
+        "roland"
       ],
       "arkham_succumbed": true,
       "ritual_broken": false,
