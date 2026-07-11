@@ -697,3 +697,22 @@ hy3's 0/5 the same week. Auditor tiering matters.
     the wedged game was nudged through the fixed loop and ended legitimately.
     Bonus: Blinding Light's action-loss log hardcoded "Daisy" (ledger-83
     pattern) — fixed to the active investigator.
+110. **"Elderthing token added despite past_midnight: false"** (campaign-audit
+    sweep, all show-sol campaigns) — NOT A BUG: campaign guide p.6 lists "Add 1
+    elder-thing token to the chaos bag for the remainder of the campaign" as an
+    UNCONDITIONAL setup bullet; only the 2-card discard is gated on "if it is
+    past midnight". The auditor conflated adjacent bullets. Engine correct.
+111. **"Final XP ledger inconsistent (earned − spent ≠ unspent) when killed in
+    the finale"** — NOT A BUG: xp_unspent is deliberately zeroed on death
+    (killed investigators forfeit unspendable XP; earned_total is the historical
+    tally). Working as designed; noted for the docs.
+112. **Ledger-108 damage assessment: 6 campaign legs recorded FOREIGN-lane runs
+    pre-fix** — CONFIRMED (audit sweep): show-luna-daisy legs 1+3 ingested
+    sol-daisy's runs; show-sol-daisy leg 2 ingested luna's; show-luna-roland,
+    show-terra-roland leg 1 both ingested c-show-sol-roland-1; show-terra-skids
+    leg 1 ingested luna's. Five campaigns contaminated (double-counted foreign
+    games; downstream decks/trauma descend from games the model never played).
+    REMEDY per entry-58 precedent: quarantined and REPLAYED with the fixed
+    engine (same seeds; per-model notebooks carry their accumulated state, so
+    replays are chronologically later plays — documented in the learning-arc
+    analysis). Published arcs corrected after replay.
