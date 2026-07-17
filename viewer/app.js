@@ -142,6 +142,7 @@ const MODEL_GROUPS = [
   ["hy3-", "Hunyuan 3"],
   ["show-hy3-", "Hunyuan 3"],
   ["kimi26-", "Kimi k2.6"],
+  ["kimi3-", "Kimi K3"],
   ["dsv4f-", "DeepSeek v4-flash"],
   ["sol56-", "GPT-5.6 Sol"],
   ["show-sol-", "GPT-5.6 Sol"],

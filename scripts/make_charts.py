@@ -198,6 +198,12 @@ def main() -> int:
     if steps_and_score(out_dir / "steps_vs_score_b4.svg", B4_AGENTS, "Game length vs score — GPT-5.6 family"):
         print("steps_vs_score_b4.svg written")
     scores_by_game(
+        out_dir / "scores_by_game_kimi_gen.svg",
+        [("kimi26-b2", "Kimi k2.6 (2026-07-08)", "#718096"),
+         ("kimi3-b5", "Kimi K3 (2026-07-16)", "#dd6b20")],
+        "Kimi k2.6 vs Kimi K3 — same 10 seeds, one generation apart",
+    )
+    scores_by_game(
         out_dir / "scores_by_game_hy3_b3.svg",
         [("hy3-b2", "Hunyuan 3 (b2: destructive compaction)", "#718096"),
          ("hy3-b3", "Hunyuan 3 (b3: compress-not-discard)", "#2b6cb0")],

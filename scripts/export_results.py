@@ -44,6 +44,13 @@ WAVES = [
         ],
     },
     {
+        "id": "b5", "title": "Kimi K3 — launch day", "date": "2026-07-16",
+        "note": "Same gauntlet on launch day (upstream 429 storms ridden out mid-run); engine ~23 fixes newer than b4.",
+        "agents": [
+            ("kimi3-b5", "Kimi K3", "opencode", "CN"),
+        ],
+    },
+    {
         "id": "b4", "title": "GPT-5.6 family — release day +1", "date": "2026-07-10",
         "note": "All three tiers within 24h of GA; engine 19 fixes newer than b2.",
         "agents": [

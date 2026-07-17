@@ -228,6 +228,34 @@ never the problem — memory management was.** A one-line semantic contract on t
 compaction tool ("compress, not discard") converted a memory-destroying agent
 into a memory-preserving one.
 
+## Benchmark results — Kimi K3 (2026-07-16, launch day)
+
+The identical gauntlet, run the day Moonshot's Kimi K3 reached OpenRouter —
+through upstream 429 storms that stalled the lane for hours mid-run (the
+watchdog-and-resume harness rode it out; three games banked before the outage,
+seven after). Engine caveat: ~23 rules fixes newer than b4's engine.
+
+![Kimi generational comparison](results/scores_by_game_kimi_gen.svg)
+
+| Agent (harness) | Scores by game | Mean | **Final-20%** | Wins |
+|---|---|---:|---:|---|
+| Kimi K3 (opencode) | 3 3 3 3 4 6 3 2 **7** 4 | 3.80 | **5.50** | R2 g6, R2 g9 |
+| *Kimi k2.6 (b2, for reference)* | 5 2 0 2 1 4 2 2 4 2 | 2.40 | 3.00 | — |
+
+**The best open-weights result on the board.** K3's final-20% of 5.50 **ties
+Sonnet 5 for second overall** (behind only Fable 5's 6.50), ahead of GLM-5.2
+(5.00) and GPT-5.6 Sol (4.50). Its 3.80 mean is second all-time behind Fable's
+4.10 — with the lowest variance of any high scorer (never below 2). The
+generational jump over k2.6 (+1.40 mean, +2.50 final-20%) is the largest
+single-generation improvement we've measured, with the standard caveat that the
+two ran on different engine versions. Its game-9 R2 win (score 7) is the
+familiar signature of a notebook-informed conversion in the scored window.
+
+Combined final-20% board: Fable 5 (6.50) > **Sonnet 5 = Kimi K3 (5.50)** >
+GLM-5.2 (5.00) > GPT-5.6 Sol (4.50) > GPT-5.5 (4.00) > Opus 4.8 (3.50) >
+Kimi k2.6 = GPT-5.6 Terra = GPT-5.6 Luna (3.00) > DeepSeek v4-flash =
+Hunyuan 3 (2.50).
+
 ## Benchmark results — GPT-5.6 family (2026-07-10, release day +1)
 
 The identical 10-game gauntlet (seeds 1001–1010, same rotation, empty starting
