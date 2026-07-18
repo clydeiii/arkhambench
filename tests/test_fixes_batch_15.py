@@ -129,7 +129,7 @@ class DoomSourceLogTests(unittest.TestCase):
         self.assertEqual(doom["data"]["source"], "Corpse-Taker")
         self.assertEqual(doom["message"], "Placed 1 doom on Corpse-Taker.")
         self.assertIn(
-            "Placed 1 doom on Corpse-Taker (Corpse-Taker's Forced).",
+            "Placed 1 doom on Corpse-Taker [corpse_taker] (Corpse-Taker's Forced).",
             rendered_rule_event(state, doom),
         )
 

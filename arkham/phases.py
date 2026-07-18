@@ -242,6 +242,8 @@ def run_enemy_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamR
             state.limits[attacked_key] = sorted(attacked)
             if state.decision_queue:
                 return
+    if present_fast_window(state, "enemy_post", during_turn=False):
+        return
 
 
 def present_enemy_attack_order(state: GameState, attackers: list[str]) -> None:
@@ -272,6 +274,10 @@ def resolve_enemy_attack_order(state: GameState, payload: dict[str, Any], events
 
 
 def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: ArkhamRng | None = None) -> None:
+    if state.status != "in_progress":
+        return
+    if present_fast_window(state, "upkeep_start", during_turn=False):
+        return
     # Idempotency guard: the phase loop re-enters this function after the
     # hand-size discard decision resolves; the ready/draw/resource steps must
     # only happen once per round (they are not re-run while discarding).
@@ -285,9 +291,19 @@ def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: Arkham
             enemy.exhausted = False
         log_event(events, "ready_step", "All exhausted cards readied.")
         engage_ready_enemies_at_roland(state, events)
+        if state.status != "in_progress":
+            return
         draw_player_card(state, events, rng)
+        if state.status != "in_progress":
+            return
         gain_resource(state, 1, events)
+        if state.status != "in_progress":
+            return
         discard_dissonant_voices(state, events)
+        if state.status != "in_progress":
+            return
+    if state.status != "in_progress":
+        return
     if len(state.investigator.hand) > 8:
         present_discard_to_size(state)
 

@@ -415,16 +415,18 @@ def resolve_scenario_choice(
     elif choice == "agenda1_horror":
         from ..effects import start_damage_assignment
 
-        set_agenda_2(state, events)
         start_damage_assignment(
             state,
             events,
             source="What's Going On?!",
             damage=0,
             horror=2,
-            resume={"kind": "scenario", "choice": "finish_mythos_after_agenda"},
+            resume={"kind": "scenario", "choice": "finish_agenda1_horror"},
             rng=rng,
         )
+    elif choice == "finish_agenda1_horror":
+        set_agenda_2(state, events)
+        finish_mythos_after_agenda_choice(state, events, rng)
     elif choice == "finish_mythos_after_agenda":
         finish_mythos_after_agenda_choice(state, events, rng)
     elif choice == "act2_advance":
@@ -837,7 +839,6 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
             # looked like the agenda advanced early.
             present_agenda_1_choice(state)
             return
-        clear_all_doom(state)
         if state.agenda.stage == 2:
             if rng is None:
                 from ..errors import EngineError
@@ -846,6 +847,7 @@ def check_agenda_advance(state: GameState, events: list[dict[str, Any]], *, rng:
             advance_agenda_2(state, events, rng)
             continue
         if state.agenda.stage == 3:
+            clear_all_doom(state)
             agenda_3_doom_out(state, events)
             return
 
@@ -931,12 +933,15 @@ def advance_agenda_2(state: GameState, events: list[dict[str, Any]], rng: Arkham
             break
         state.card_instances[card_id].zone = "encounter_discard"
         state.encounter_discard.append(card_id)
-    state.agenda = AgendaState(code="01107", name="They're Getting Out!", stage=3, threshold=10)
-    log_event(events, "agenda_advanced", "Agenda advanced to They're Getting Out!.")
     if drawn:
         state.limits["encounter_cards_drawn"] = int(state.limits.get("encounter_cards_drawn", 0)) + 1
         log_event(events, "encounter_drawn", f"{state.investigator.name} drew encounter card {card_data.get_card(state.card_instances[drawn].card_code)['name']}.", card=drawn)
         resolve_revelation(state, rng, events, drawn)
+    from ..effects import clear_all_doom
+
+    clear_all_doom(state)
+    state.agenda = AgendaState(code="01107", name="They're Getting Out!", stage=3, threshold=10)
+    log_event(events, "agenda_advanced", "Agenda advanced to They're Getting Out!.")
 
 
 def agenda_3_doom_out(state: GameState, events: list[dict[str, Any]]) -> None:

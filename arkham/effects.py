@@ -110,6 +110,8 @@ def resolve_player_weakness_draw(state: GameState, events: list[dict[str, Any]],
             state.investigator.hand.remove(instance_id)
         log_event(events, "weakness_revealed", "Abandoned and Alone was revealed.", card=instance_id)
         start_damage_assignment(state, events, source="Abandoned and Alone", damage=0, horror=2, direct=True)
+        if state.status != "in_progress":
+            return
         removed = list(state.investigator.discard)
         state.investigator.discard = []
         for discard_id in removed:
@@ -183,7 +185,14 @@ def gain_resource(state: GameState, amount: int, events: list[dict[str, Any]]) -
     log_event(events, "resource_gained", f"{state.investigator.name} gained {amount} resource.", amount=amount)
 
 
-def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -> int:
+def discover_clue(
+    state: GameState,
+    amount: int,
+    events: list[dict[str, Any]],
+    *,
+    event_type: str = "clue_discovered",
+    message: str | None = None,
+) -> int:
     if state.scenario in MIDNIGHT_MASKS_FAMILY:
         from .scenarios import the_midnight_masks
 
@@ -196,19 +205,37 @@ def discover_clue(state: GameState, amount: int, events: list[dict[str, Any]]) -
         return 0
     cover = active_cover_up(state)
     if cover is not None:
-        present_cover_up_decision(state, count, cover)
+        present_cover_up_decision(
+            state,
+            count,
+            cover,
+            event_type=event_type,
+            message=message,
+        )
         return 0
-    return actually_discover_clues(state, count, events)
+    return actually_discover_clues(state, count, events, event_type=event_type, message=message)
 
 
-def actually_discover_clues(state: GameState, count: int, events: list[dict[str, Any]]) -> int:
+def actually_discover_clues(
+    state: GameState,
+    count: int,
+    events: list[dict[str, Any]],
+    *,
+    event_type: str = "clue_discovered",
+    message: str | None = None,
+) -> int:
     location = state.locations[state.investigator.location_id]
     count = min(count, location.clues)
     if count <= 0:
         return 0
     location.clues -= count
     state.investigator.clues += count
-    log_event(events, "clue_discovered", f"{state.investigator.name} discovered {count} clue.", amount=count)
+    log_event(
+        events,
+        event_type,
+        message or f"{state.investigator.name} discovered {count} clue.",
+        amount=count,
+    )
     return count
 
 
@@ -220,8 +247,20 @@ def active_cover_up(state: GameState) -> str | None:
     return None
 
 
-def present_cover_up_decision(state: GameState, amount: int, cover: str) -> None:
+def present_cover_up_decision(
+    state: GameState,
+    amount: int,
+    cover: str,
+    *,
+    event_type: str = "clue_discovered",
+    message: str | None = None,
+) -> None:
     remove = min(amount, state.card_instances[cover].clues)
+    discovery_log = (
+        {"event_type": event_type, "message": message}
+        if event_type != "clue_discovered" or message is not None
+        else {}
+    )
     state.decision_queue = [
         PendingDecision(
             id="cover-up-reaction",
@@ -230,11 +269,23 @@ def present_cover_up_decision(state: GameState, amount: int, cover: str) -> None
             options=[
                 DecisionOption(
                     f"Discard {remove} clue from Cover Up instead",
-                    {"kind": "cover_up_choice", "choice": "redirect", "amount": amount, "cover": cover},
+                    {
+                        "kind": "cover_up_choice",
+                        "choice": "redirect",
+                        "amount": amount,
+                        "cover": cover,
+                        **discovery_log,
+                    },
                 ),
                 DecisionOption(
                     f"Discover {amount} clue",
-                    {"kind": "cover_up_choice", "choice": "discover", "amount": amount, "cover": cover},
+                    {
+                        "kind": "cover_up_choice",
+                        "choice": "discover",
+                        "amount": amount,
+                        "cover": cover,
+                        **discovery_log,
+                    },
                 ),
             ],
         )
@@ -260,7 +311,13 @@ def resolve_cover_up_choice(state: GameState, payload: dict[str, Any], events: l
             player_cards.discard_from_threat(state, cover)
             log_event(events, "card_discarded", "Cover Up was discarded.", card=cover)
     else:
-        actually_discover_clues(state, amount, events)
+        actually_discover_clues(
+            state,
+            amount,
+            events,
+            event_type=str(payload.get("event_type", "clue_discovered")),
+            message=str(payload["message"]) if payload.get("message") else None,
+        )
 
 
 def spend_clues(state: GameState, amount: int, events: list[dict[str, Any]]) -> bool:

@@ -823,3 +823,77 @@ hy3's 0/5 the same week. Auditor tiering matters.
     no Lita yet. K3 applied the Lita-doesn't-count rule correctly in the
     hy3-roland campaign audit but here concluded "no rule adds a card
     between scenarios."
+124. **"Locked Door ignored the Attic's unique-max clue at R8"** (K3,
+    show2-luna-skids leg 1) — REFUTED, temporal misread: the Attic entered
+    play via the act-1 advance AFTER the R8 mythos draw and was revealed
+    later still (the auditor's own line citations postdate the draw). At the
+    draw, the three eligible locations were tied at 0 clues; the choice and
+    the Bedroom attachment were legal. No material impact.
+125. **Locked Door candidate pool excludes unrevealed in-play locations**
+    (K3, same leg, R4) — CONFIRMED, minor conformance: encounter.py
+    locked_door_targets filters to revealed locations (a deliberate batch-3
+    spec choice, but our spec is not a rules source). Printed text: "Attach
+    to the location IN PLAY with the most clues"; RR: locations enter play
+    unrevealed; unrevealed locations are legal 0-clue candidates. R4 was
+    therefore a 4-way all-zero tie owing the Grim-Rule lead-investigator
+    choice, silently auto-resolved to the only revealed location. Outcome-
+    neutral in the flagged game (engine behavior internally consistent —
+    K3's "contrast R8" inconsistency claim was wrong, pool size 1 vs 3).
+    FIX (batch 17): pool = all in-play locations without a Locked Door;
+    unrevealed contribute 0 clues; batch-3 tests updated.
+126. **Framework player windows at upkeep 4.1 and post-final-attack (3.3→3.4)
+    never presented** (K3, show2-sonnet-agnes leg 1) — CONFIRMED, same family
+    as 115: the phase loop offers fast windows only at inv_end, mythos_end,
+    and enemy_pre; the RR timing chart's upkeep-begin and enemy-phase-end
+    windows are absent (Forbidden Knowledge was legally triggerable in 11 of
+    12 upkeeps of the flagged game). No mandatory effect skipped; anti-player
+    class. FIX (batch 18): add upkeep_start and enemy_post windows.
+127. **"Backstab play provoked no attacks of opportunity"** (K3,
+    show2-luna-wendy leg 2) — REFUTED: playing a fight event IS taking an
+    action to fight (official FAQ; RR AoO wording "an action other than to
+    fight"); SAFE_FROM_AOO deliberately lists backstab alongside the other
+    fight/evade events. K3's inference was supported by OUR
+    docs_agent/playing_guide.md ("EVERY action except fight, evade, parley,
+    resign provokes — including PLAYING A CARD"), which overgeneralizes and
+    contradicts engine + FAQ. IMPROVEMENT adopted (batch 18): correct the
+    playing guide to note fight/evade events do not provoke.
+128. **Effects continue resolving after GAME OVER** (K3, same leg) —
+    CONFIRMED, display: Abandoned and Alone's revelation applies its 2
+    direct horror (defeat → end_game) and then unconditionally removes the
+    discard pile and logs; the upkeep resource step also ran post-end. State
+    and result.json single-counted; transcript and end-state polluted.
+    FIX (batch 18): status guards after defeat-capable applications in
+    weakness revelations and between upkeep steps.
+129. **Roland's on-defeat clue discovery double-logged** (K3,
+    show2-sonnet-roland leg 1) — CONFIRMED, display: discover_clue logs
+    "discovered 1 clue." and resolve_enemy_defeated_reaction
+    (enemies.py:650) logs a second "discovered 1 clue after defeating an
+    enemy." for the same single discovery; state grants exactly 1. A
+    transcript-only judge double-counts. FIX (batch 18): single log line
+    (keep the reaction-specific wording).
+130. **Gathering agenda b-side instructions resolve after the next agenda
+    becomes current** (K3, show2-sonnet-daisy leg 1) — CONFIRMED, display:
+    set_agenda_2 advances+logs BEFORE the 1b choice effect applies
+    (transcript: "Agenda advanced" precedes "took 2 horror"), and
+    advance_agenda_2 sets agenda 3 + logs before the dug Ghoul's revelation
+    resolves. RR: b-side completes before the next card becomes current.
+    Same class as ledger 62 (acts — fixed batch 11); the Gathering agenda
+    path never received that fix. Devourer's test-continuation pattern (118)
+    already does it correctly. FIX (batch 18): complete b-side effects
+    before state.agenda flips/logs on both Gathering advances.
+131. **"Masked Disciple defeated through +2 health"** (K3,
+    show2-sonnet-roland leg 2) — REFUTED, instance conflation: TWO Disciples
+    existed; the Mask (and its doom) attached to the farthest one at
+    St. Mary's (per ruling #90) while an unmasked 1-health twin was legally
+    defeated by 1 Knife damage. enemy_health's +2/mask and the defeat check
+    verified correct.
+132. **"Phantom doom leak ended the game a round early"** (K3, same leg) —
+    REFUTED: the defeat removed exactly the 1 doom the defeated instance
+    carried; the "missing" doom sat on the OTHER live Disciple legitimately
+    (its R2 doom had already been discarded at the R5 agenda advance). Full
+    jsonl doom ledger reconciles; R10's 8/8 was all real doom. ROOT CAUSE of
+    the misread (same family as 117/120): log.md renders doom_placed and
+    treachery_attached lines with neither instance id nor target
+    disambiguation, while spawn/engage/attack lines carry [ecXXXX].
+    IMPROVEMENT adopted (batch 18): render instance ids on doom/attachment
+    lines; name the mask's target enemy instead of "a Cultist enemy".

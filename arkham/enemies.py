@@ -645,9 +645,13 @@ def resolve_enemy_defeated_reaction(state: GameState, payload: dict[str, Any], e
     reaction = str(payload.get("reaction"))
     if reaction == "roland":
         state.limits[f"roland_reaction:{state.round}"] = True
-        discovered = discover_clue(state, 1, events)
-        if discovered:
-            log_event(events, "roland_reaction", f"{state.investigator.name} discovered {discovered} clue after defeating an enemy.", amount=discovered)
+        discover_clue(
+            state,
+            1,
+            events,
+            event_type="roland_reaction",
+            message=f"{state.investigator.name} discovered 1 clue after defeating an enemy.",
+        )
     elif reaction == "evidence":
         card_id = str(payload.get("card"))
         if card_id in state.investigator.hand and state.investigator.resources >= 1:

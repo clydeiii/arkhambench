@@ -265,7 +265,7 @@ def locked_door_targets(state: GameState) -> list[str]:
     candidates = [
         location
         for location in state.locations.values()
-        if location.revealed and not encounter_cards.location_has_attachment(state, location.id, "01174")
+        if not encounter_cards.location_has_attachment(state, location.id, "01174")
     ]
     if not candidates:
         return []

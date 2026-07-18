@@ -1238,7 +1238,9 @@ def attach_mask_to_enemy(
     state.enemies[enemy_id].attachments.append(mask_id)
     from ..effects import log_event
 
-    log_event(events, "treachery_attached", "Mask of Umordhoth attached to a Cultist enemy.", card=mask_id, enemy=enemy_id)
+    mask_name = card_data.get_card(state.card_instances[mask_id].card_code)["name"]
+    target_name = card_data.get_card(state.enemies[enemy_id].card_code)["name"]
+    log_event(events, "treachery_attached", f"{mask_name} attached to {target_name}.", card=mask_id, enemy=enemy_id)
     if place_doom:
         place_doom_on_enemy(state, enemy_id, 1, events, source="Mask of Umordhoth", rng=rng)
 

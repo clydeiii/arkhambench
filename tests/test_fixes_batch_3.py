@@ -106,12 +106,14 @@ class FixesBatch3Tests(unittest.TestCase):
         s = state()
         for location in s.locations.values():
             location.clues = 0
+            location.revealed = location.id == "study"
         door = add_card(s, "01174", "encounter_deck")
         encounter.resolve_revelation(s, ArkhamRng(1), [], door)
         self.assertEqual(s.decision_queue[0].id, "locked-door-target")
         labels = [option.label for option in s.decision_queue[0].options]
-        self.assertTrue(any("Study" in label for label in labels))
-        self.assertTrue(any("Hallway" in label for label in labels))
+        self.assertEqual(len(labels), 4)
+        for location_name in ("Study", "Hallway", "Attic", "Cellar"):
+            self.assertTrue(any(location_name in label for label in labels))
 
         encounter.resolve_locked_door_target(s, s.decision_queue.pop(0).options[0].payload, [])
         self.assertTrue(any(door in location.attached_instance_ids for location in s.locations.values()))
