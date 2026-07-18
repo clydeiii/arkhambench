@@ -716,3 +716,58 @@ hy3's 0/5 the same week. Auditor tiering matters.
     engine (same seeds; per-model notebooks carry their accumulated state, so
     replays are chronologically later plays — documented in the learning-arc
     analysis). Published arcs corrected after replay.
+113. **Wave-6 launch: cross-lane run binding recurred despite ledger 108** —
+    CONFIRMED (caught 90 min into the hy3/Luna/Sonnet parallel campaign wave):
+    all three lanes' roland campaigns recorded c-show2-sonnet-roland-1 as their
+    scenario-1 leg, and show2-sonnet-roland leg 2 ingested luna's run. Root
+    cause: the ledger-108 fix made the engine honor AHLCG_RUN, but on
+    deckbuild-phase sessions the runner cannot export it (the run dir does not
+    exist yet), the agent itself runs `campaign next`, and the only pointer is
+    the GLOBAL .current_run file, which parallel lanes overwrite; the
+    scenario-name guard passes because seed-matched lanes play twin scenarios.
+    FIXED properly this time, engine-side: (a) `campaign next` stamps
+    `active_run` into campaign.json and `campaign record` resolves
+    explicit --run > active_run > deterministic c-<name>-<idx> path, only then
+    the legacy pointer; (b) record REFUSES a run outside the campaign dir
+    unless --run is explicit; (c) cli.resolve_run_dir prefers the
+    AHLCG_CAMPAIGN campaign's active_run over .current_run, closing the same
+    race for mid-game play commands. 5 regression tests
+    (tests/test_fixes_batch_13.py). REMEDY: all 7 partially-played show2
+    campaigns quarantined; wave-6 restarted from scratch on the fixed engine
+    with fresh notebooks (no replay asymmetry — nothing published). The one
+    pre-restart K3 audit (clean, on the contaminated-era sonnet leg) is
+    excluded from the K3 precision tally.
+114. **Lita Chantler exempted from ally-slot occupancy; two allies coexist**
+    (Kimi K3 audit, show2-hy3-agnes leg 3 — K3's first confirmed find) —
+    CONFIRMED, exploit: slotted_asset_ids hardcodes `card_code == "01117":
+    continue` (introduced in the 1a0ea50 rules-conformance batch, never
+    adjudicated); the printed card and data/cards/core_encounter.json both give
+    Lita slot "Ally", and the campaign guide exempts her only from DECK SIZE,
+    not slots. Agnes played Lita R5 while Arcane Initiate was in play and kept
+    both through R9: illegal horror soak deferred her defeat from R8 to R9
+    (material, per K3's impact analysis). FIX: remove the exemption; enforce
+    slot capacity on both play and gain-control entry paths.
+115. **During-turn fast window after the final action regressed by the #34
+    fix** (Kimi K3 audit, same leg) — CONFIRMED, anti-player: batch 8 removed
+    the inv_end window CALL SITE from the phase loop wholesale (the #34 defect
+    was only the post-turn variant). present_fast_window("inv_end",
+    during_turn=True) still passes PostActionWindowTests because those tests
+    invoke it directly as a unit — but the phase loop goes straight from the
+    3rd action to end-of-turn Forceds (Dark Memory fired immediately in 7/9
+    rounds; ready Arcane Initiate denied a legal window; same class as the
+    Skids buy / act objective of #6). K3 correctly cited #6/#18/#34 lineage
+    and framed it as a regression. FIX: re-insert the during-turn window
+    (turn_forcibly_ended-guarded) before end-of-turn Forced effects, with an
+    INTEGRATION regression through the phase loop this time.
+116. **"Campaign XP overcharge: upgrade window 2 deducted 4 XP for 3 XP of
+    purchases"** (Kimi K3 campaign-layer audit, show2-hy3-roland) — NOT-A-BUG:
+    the lane agent log shows a fourth real purchase, `upgrade buy 01025
+    --remove 01025` — a Vicious Blow SELF-SWAP (legal: new-card purchase at
+    max(1,level)=1 XP plus a free removal of the same title), net-zero deck
+    change, so xp_spent_total=6 is exactly right. Deck-diff reconstruction
+    cannot see churned purchases; K3's corpus triangulation was sound and its
+    report correctly hedged the two possible causes — the true cause was a
+    third it had no data to see. IMPROVEMENT adopted: `upgrade buy` now records
+    each transaction (code, replaced/removed, price) in campaign.json so
+    campaign audits have a purchase ledger instead of inferring from deck
+    diffs.

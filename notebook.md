@@ -419,3 +419,136 @@ NEXT WENDY: Mulligan Leo + Flashlight. Resignation threshold 3-4/7 horror if Aba
 
 [2026-07-09] Return to Devourer Below — Skids O'Toole: LOSS R11, no_resolution, score 0, physical trauma 1. Advanced Act 1 by R9, reached Act 4 Ritual Site, but Umordhoth's massive attacks killed Skids while retreating. Critical Act 4 lesson: once Umordhoth spawns at Ritual Site, moving away provokes its 3 damage/3 horror attack even when it is not shown engaged; it then Hunter-moves and attacks again in enemy phase. Never begin the move with only 1 action, because there is no action left to resign at Main Path; ensure 2+ actions and resign immediately after the move, or use the intended final resolution route. Do not play assets at Ritual Site with Umordhoth present: they provoke its attack. Pay Hospital Debts to 6/6 before the final retreat; only 2 resources per round can be transferred, and this run ended at 3/6. Strong early plan: mulligan for Machete + Flashlight, use Great Willow/Lakeside/Old House for 3 clues, advance Act 1 by R9, and kill Grave-Eaters with Machete. Mob Enforcer card says fight 4, but engine offered fight difficulty 5; reported via ./ahlcg bug. Play error: after Machete, option indices shifted and I accidentally played Knife instead of Flashlight; reread choices after every action.
 
+## [2026-07-10T16:06:45+00:00] Run c7mop-roland · Round 7
+
+## [2026-07-10] Roland Banks - Return to Midnight Masks (LOSS R7)
+
+COVERAGE DIRECTIVE: Police Badge ✓ COMPLETED
+- Played Police Badge (3 res) in R5 Investigation phase
+- Used fast ability: discarded for 2 extra actions at fast window
+- Successfully exercised the XP card's main ability
+
+LOSS CAUSE: Simultaneous defeat (9/9 damage + 5/5 horror) in R7 after multiple encounters
+- Bulletproof Vest protected me well (absorbed 2+ damage) until discarded R7
+- Took Hunting Shadow encounter (chose damage over clue) which saved clues but delayed progress
+- Faced escalation: Hunting Nightgaunt (R2), Disciple of the Devourer (R5), multiple enemy clusters at Easttown/Rivertown/Southside
+- Silver Twilight Acolyte weakness (drawn R5 upkeep) made positioning harder
+- Drew Billy Cooper (cultist) in R5 but couldn't manage the growing enemy count
+
+KEY LESSON: Return to Midnight Masks escalates quickly with weak early removal. Need stronger enemy management—having only Machete and basic weapons insufficient against 3-enemy clusters. Police Badge's 2-action buff valuable but couldn't compensate for threat sprawl. 
+
+ROLAND-SPECIFIC: 5 sanity is liability in treachery-heavy scenario. Guts (when drawn R5 upkeep would help but need earlier play window.
+
+## [2026-07-10T16:10:53+00:00] Run c7mop-daisy · Round 4
+
+## [2026-07-10] Midnight Masks + Hyperawareness coverage (R4 loss)
+
+OUTCOME: Score 0 (defeated R4 by 5/5 damage + 1 physical trauma). 
+
+**COVERAGE DIRECTIVE COMPLETED**: Hyperawareness (XP 50003) fully exercised:
+- R1 Investigation: Played for 2 res, gained in hand
+- R2: Used +1 intellect ability (1 res) → Your House investigation at Intellect 6 vs 2 (success by 3)
+- R4: Used +1 agility ability (1 res) → Disciple evasion attempt Agility 3 vs 1 (failed on skull -3 token, bad RNG)
+
+CRITICAL FAILURES:
+1. Engagement trap at Downtown: Moved into Disciple location R3, became engaged. Each subsequent action (draw, play, evasion attempt) provoked attacks.
+2. Chaos bag variance: Evasion test got skull -3 (needed +1), turning would-be success into failure.
+3. Damage accumulation: R2 Your House +1 from provoke, R3 Disciple +1, +1 from Old Book draw, R4 Mythos +1 from provoke play, +1 evasion attack = 5 total by R4 enemy phase.
+4. Resource pressure: Started with 5 res, spent 3 on Old Book R1, 1 on Ward R4 Mythos, 1 on Hyperawareness x2 = tight economy.
+5. Engagement while out of resources: Had 0 res after Ward play, unable to use abilities or escape until Emergency Cache R4.
+
+WHAT WORKED:
+- Daisy's Intellect 5 made early investigations (shroud 1-2) automatic
+- Old Book of Lore draw engine found Hyperawareness and Emergency Cache
+- Mulligan strategy (kept Old Books, found Hyperawareness) was solid
+- Emergency Cache timing (R4) rebuilt resources just before critical actions
+- Working a Hunch (free clue) enabled Act 1 advancement without investigating under pressure
+
+WHAT DIDN'T:
+- Moved into enemy location without escape plan or combat readiness (Downtown was unnecessary)
+- Took provoked attacks while engaged multiple turns in a row (should have disengaged R3)
+- Did not prioritize evasion card (Blinding Light) in mulligan; relying on combat 2 vs Disciple (fight 3)
+- Let damage accumulate to 4/5 before realizing engagement was untenable
+
+NEXT ATTEMPT (Daisy Midnight Masks):
+1. Mulligan for Old Book + Blinding Light + Flashlight for investigation
+2. Gather clues from shroud ≤2 locations only (Your House shroud 2, Rivertown shroud 1, Graveyard shroud 1)
+3. DO NOT move into enemy locations unless you have evasion/fight readiness
+4. Act 1 ability costs 2 res engagement risk - use it at safe locations like Rivertown
+5. Hyperawareness is efficient (cost 0 XP, +2 int/agility icons, costs 1 res per use) - can be played early for flexibility
+6. Combat 2 is not viable vs Disciple (fight 3 required); prioritize evasion or run away
+7. Resignation threshold: At 4/5 damage with 2+ enemies engaged, resign rather than push for Mythos
+
+HYPERAWARENESS NOTES:
+- XP version (50003) costs 0 (free play vs cost 2 for basic)
+- Fast abilities (spending 1 res for +1 intellect/agility) are flexible tools
+- Works well with skill tests during investigation/evasion/engagement situations
+- Did not get value from it in combat scenarios (Daisy's combat 2 is too weak)
+- Could be stronger if deck included more agility/intellect tests (evasion-heavy deck or skill-test events)
+
+
+## [2026-07-10T16:24:13+00:00] Run c7mop-agnes · Round 5
+
+## [2026-07-10] Return to Midnight Masks — Agnes Baker (coverage run)
+
+COVERAGE DIRECTIVE - PARTIALLY COMPLETED:
+✓ Mind Wipe (XP level 1): Successfully played on Corpse-Taker R5 Investigation. Used fast ability to blank text and reduce damage/horror until end of phase. Exercised fully.
+✗ Book of Shadows: Never drawn into hand despite multiple attempts. Needs better mulligan strategy or earlier resource accumulation.
+
+OUTCOME: Resigned R5, Score 0 (XP 0, trauma 0). Got 2/3 clues for Act 1 before horror threshold forced resignation.
+
+CRITICAL FAILURE - ENGAGEMENT TRAP:
+1. Agenda 1 flipped R3 (6/6 doom) due to dark memory + corpse-taker + Disciple of Devourer cascade
+2. Narôgath spawned at Your House, engaged immediately
+3. Fought Narôgath twice (2 damage dealt before moving)
+4. Moved to Rivertown and Narôgath followed with Hunter behavior
+5. EVERY action while engaged with Narôgath provokes 1 dmg/2 hor (investigate, draw, act ability)
+6. Accumulated 6/8 horror by R5 from provoked attacks + initial hit
+7. At 6/8 horror, no action possible without dying to provoke
+
+KEY LESSONS:
+1. Narôgath is NOT an Elite enemy (can be targeted by Mind Wipe in theory, but isn't practical when engaged)
+2. Engagement with Narôgath is a trap until defeated (only fight/evade/parley don't provoke)
+3. Horror accumulation happens FAST with Narôgath provokes (average 1.5 horror per action while engaged)
+4. Need to defeat or evade Narôgath within 2-3 rounds of Agenda 1 flip before horror builds
+5. Flashlight was essential for investigation (shroud 4 Rivertown → shroud 2 with Flashlight)
+6. Dark Memory signature weakness timing: played R2, but placing it + Corpse-Taker doom + Disciple doom accelerated Agenda flip to R3
+
+WHAT WORKED:
+- Arcane Studies + Leather Coat for early setup
+- Mulligan found Mind Wipe early (R1)
+- Holy Rosary soak (discarded R4-R5 but saved Agnes 2+ horror)
+- Agnes reaction (1 damage after horror) was useful for slow progression on Narôgath
+- Flashlight enabled Rivertown investigation despite shroud 4
+
+WHAT DIDN'T:
+- Never found Book of Shadows in deck draws
+- Didn't keep resources for Book of Shadows (cost 4, only had 2-3 at peak)
+- Lost Shrivelling to commitment in combat test (wasted asset value)
+- Overstayed Rivertown engaging Narôgath instead of relocating sooner
+- No clear exit strategy from engagement
+
+NEXT ATTEMPT (Agnes, Return Midnight Masks):
+1. Mulligan: Flashlight > Shrivelling > Holy Rosary. Search more aggressively for these.
+2. Dark Memory: Play only if agenda can absorb doom (e.g., at 3/6 or 4/6 doom safe zone)
+3. Narôgath PRIORITY: After Agenda 1 flips (likely R3), plan to defeat in 2-3 turns:
+   - R3 upkeep: draw, play assets
+   - R3-4 investigation: focus 2-3 actions on combat/evasion to clear threat
+   - Evading + leaving Rivertown is safer than engaging; find cultists in safer locations
+4. Horror cap: Resign at 4/8 horror if Narôgath still engaged; don't push to 6/8
+5. Act 1 priority: Get 3 clues by R4 mythos (before Agenda 1 flip cycle becomes doom cascade)
+6. Book of Shadows: Earlier mulligan attempts or resource economy (Emergency Cache priority)
+
+
+## [2026-07-10T16:24:33+00:00] Run c7mop-agnes · Round 5
+
+## COVERAGE SUMMARY
+
+Run fable5-demo-agnes-midnight-masks-coverage-xp:
+- Mind Wipe (XP1): ✓ EXERCISED (played R5 on Corpse-Taker, ability triggered)
+- Book of Shadows: ✗ NOT EXERCISED (never drawn into play)
+
+**FAILURE TO COMPLETE**: Should have prioritized finding Book of Shadows in mulligan or aggressive draws R2-R4, allocated 4 resources from Emergency Cache, and played it before horror accumulation forced resignation.
+
+**LESSON**: For multi-card coverage directives, pre-plan the deck order or mulligan strategy to ensure both cards are accessible before horror/damage caps force resignation. Book of Shadows requires 4 resources (rare in early game) — need Emergency Cache or early resource generation to fund it.
+

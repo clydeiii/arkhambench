@@ -194,6 +194,17 @@ def resolve_run_dir(run_arg: str | None, *, for_new: bool = False) -> Path:
         return Path(run_arg)
     if os.environ.get("AHLCG_RUN"):
         return Path(os.environ["AHLCG_RUN"])
+    if os.environ.get("AHLCG_CAMPAIGN"):
+        # A campaign lane's current run is defined by its own campaign state,
+        # never by the global pointer — parallel lanes race on .current_run
+        # (ledger 113) and their twin runs pass every scenario-name check.
+        import json
+
+        campaign_json = Path(os.environ["AHLCG_CAMPAIGN"]) / "campaign.json"
+        if campaign_json.exists():
+            active = json.loads(campaign_json.read_text(encoding="utf-8")).get("active_run")
+            if active:
+                return Path(active)
     current = Path.cwd() / ".current_run"
     if current.exists():
         text = current.read_text(encoding="utf-8").strip()

@@ -88,6 +88,11 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             if state.investigator.actions_remaining > 0:
                 actions.present_action_decision(state)
             else:
+                turn_ended = state.limits.get(f"turn_ended:{state.round}") or state.limits.get(
+                    f"turn_forcibly_ended:{state.round}"
+                )
+                if not turn_ended and present_fast_window(state, "inv_end", during_turn=True):
+                    return
                 if resolve_dark_memory_end_turn(state, events):
                     return
                 if start_frozen_end_turn_test(state, events):
@@ -151,6 +156,7 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
                     and not str(key).startswith("on_the_lam:")
                     and not str(key).startswith("hospital_debts:")
                     and not str(key).startswith("dark_memory_end_turn:")
+                    and not str(key).startswith("turn_ended:")
                     and not str(key).startswith("turn_forcibly_ended:")
                 }
                 log_event(events, "round_started", f"Round {state.round} began.")

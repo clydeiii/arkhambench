@@ -77,8 +77,8 @@ class FixesBatch8Tests(unittest.TestCase):
     def test_34_no_post_turn_fast_window_after_final_action(self) -> None:
         state = clean_state("skids")
         add_card(state, "01036", "hand", "mom")
-        state.investigator.actions_remaining = 0
-        state.turn.action_index = 3
+        state.investigator.actions_remaining = 2
+        actions.execute(state, {"kind": "action", "action": "pass"}, [])
         events: list[dict] = []
         phases.advance_until_decision(state, ArkhamRng(1), events)
         self.assertFalse(state.decision_queue and state.decision_queue[0].id == "fast-window-inv_end")

@@ -370,6 +370,7 @@ def execute(state: GameState, payload: dict[str, Any], events: list[dict[str, An
             advance_act(state, events, rng=rng)
     elif action == "pass":
         state.investigator.actions_remaining = 0
+        state.limits[f"turn_ended:{state.round}"] = True
         log_event(events, "turn_passed", f"{state.investigator.name} ended their turn.")
     elif action == "resign":
         if state.scenario in MIDNIGHT_MASKS_FAMILY:
@@ -985,8 +986,6 @@ def can_enter_play_unique(state: GameState, card_code: str) -> bool:
 
 def required_slot_discards(state: GameState, card_id: str) -> list[str]:
     card_code = state.card_instances[card_id].card_code
-    if card_code == "01117":
-        return []
     card = card_data.get_card(card_code)
     slot = slot_type(card)
     if slot is None:
@@ -1105,8 +1104,6 @@ def slotted_asset_ids(state: GameState, slot: str, *, include: str | None = None
             continue
         if instance_id == include or instance_id in state.investigator.play_area or instance_id in state.investigator.threat_area:
             card = card_data.get_card(state.card_instances[instance_id].card_code)
-            if state.card_instances[instance_id].card_code == "01117":
-                continue
             if card.get("type_code") == "asset" and slot_type(card) == slot:
                 result.append(instance_id)
     return result

@@ -864,6 +864,9 @@ def apply_callback(
             state.card_instances[lita].owner = state.investigator.id
             state.investigator.play_area.append(lita)
             log_event(events, "lita_recruited", f"{state.investigator.name} took control of Lita Chantler.", card=lita)
+            from . import actions
+
+            actions.enforce_slot_capacity(state, events)
     if success and any(state.card_instances[instance_id].card_code == "01081" for instance_id in committed) and kind in {"evade", "blinding_light"}:
         present_survival_instinct_decision(state)
 

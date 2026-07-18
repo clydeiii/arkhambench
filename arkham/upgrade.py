@@ -291,3 +291,12 @@ def buy_card(campaign: dict[str, Any], code: str, *, remove: str | None = None, 
     campaign["xp_unspent"] = int(campaign.get("xp_unspent", 0)) - cost
     campaign["xp_spent_total"] = int(campaign.get("xp_spent_total", 0)) + cost
     validate_deck(campaign, final=False)
+    campaign.setdefault("purchases", []).append(
+        {
+            "window": len(campaign.get("scenarios", [])) + 1,
+            "code": code,
+            "replaced": replace,
+            "removed": str(remove) if remove is not None and not replacing else None,
+            "price": cost,
+        }
+    )

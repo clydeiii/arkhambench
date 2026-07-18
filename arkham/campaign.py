@@ -94,6 +94,7 @@ def create_campaign(
         "next": sequence[0],
         "phase": "deckbuild",
         "deckbuild_swaps": [],
+        "purchases": [],
     }
     validate_deck(campaign, final=True)
     campaign_dir.mkdir(parents=True, exist_ok=True)
@@ -174,6 +175,9 @@ def start_next_scenario(campaign_dir: str | Path) -> tuple[Path, Game]:
         campaign_context=mission_context(campaign),
         **kwargs,
     )
+    campaign = load_campaign(campaign_dir)
+    campaign["active_run"] = str(run_dir)
+    save_campaign(campaign_dir, campaign)
     (Path.cwd() / ".current_run").write_text(str(run_dir), encoding="utf-8")
     return run_dir, game
 
@@ -194,7 +198,22 @@ def record_current_run(campaign_dir: str | Path, run_arg: str | None = None) -> 
     campaign = load_campaign(campaign_dir)
     if campaign.get("phase") != "scenario":
         raise EngineError(f"campaign is in {campaign.get('phase')} phase; cannot record a scenario now")
-    run_dir = Path(run_arg) if run_arg else _current_run_dir()
+    # Resolve the run from the campaign's OWN state first: the global
+    # .current_run pointer races when parallel lanes play the same scenarios
+    # and seeds, and the scenario-name guard below cannot tell twin runs
+    # apart (wave-4 ledger 108/112, recurred wave-6).
+    if run_arg:
+        run_dir = Path(run_arg)
+    elif campaign.get("active_run"):
+        run_dir = Path(campaign["active_run"])
+    else:
+        deterministic = campaign_dir / "runs" / f"c-{campaign_dir.name}-{scenario_index(campaign)}"
+        run_dir = deterministic if deterministic.exists() else _current_run_dir()
+    if not run_arg and campaign_dir.resolve() not in run_dir.resolve().parents:
+        raise EngineError(
+            f"run {run_dir} does not belong to campaign {campaign_dir}; "
+            "refusing to record a foreign run (pass --run to override)"
+        )
     result_path = run_dir / "result.json"
     if not result_path.exists():
         raise EngineError(f"run is not complete; missing {result_path}")
@@ -226,6 +245,7 @@ def record_current_run(campaign_dir: str | Path, run_arg: str | None = None) -> 
             "trauma_delta": {"physical": physical_delta, "mental": mental_delta},
         }
     )
+    campaign["active_run"] = None
     sequence = campaign_sequence(campaign)
     finished = len(campaign["scenarios"]) >= len(sequence)
     killed = investigator_killed_or_insane(campaign, result)
@@ -373,6 +393,7 @@ def write_summary(campaign_dir: Path, campaign: dict[str, Any]) -> None:
         "scenarios": rows,
         "xp_earned_total": int(campaign.get("xp_earned_total", 0)),
         "xp_spent_total": int(campaign.get("xp_spent_total", 0)),
+        "purchases": list(campaign.get("purchases", [])),
         "campaign_score": sum(int(row.get("score", 0)) for row in rows),
         "outcomes": {
             "arkham_succumbed": campaign["log"].get("arkham_succumbed"),
