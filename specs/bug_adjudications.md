@@ -805,3 +805,21 @@ hy3's 0/5 the same week. Auditor tiering matters.
     sequence shows dig (Ghoul from the Depths) BEFORE the 1.4 draw
     (Flesh-Eater); both draws being Ghouls misled the auditor into swapping
     them. R4 merely looked different because agenda 1b queues a player choice.
+122. **Ghoul Priest drawn from the Midnight Masks encounter deck spawns
+    unengaged at Your House** (K3, show2-luna-daisy leg 2) — CONFIRMED,
+    pro-player, material: encounter_revelation (the_midnight_masks.py:986)
+    special-cases 01116 to spawn at your_house unengaged whenever the house
+    is in play — with no basis in any printed text (Ghoul Priest has NO
+    spawn instruction, so RR "Spawn" engages it with the drawing
+    investigator; the campaign guide only shuffles it into the deck).
+    The Devourer path has no such override and uses the default. Impact in
+    the flagged game: Daisy at 4/5 damage was spared engagement-and-AoO
+    exposure in R3 that would plausibly have defeated her. FIX (batch 16):
+    delete the special case; default revelation engages the drawer.
+123. **"Daisy leg-2 deck is 34 cards, one over legal"** (K3, same leg) —
+    REFUTED: deck-2.json holds 30 counted + 2 signatures + 1 basic weakness
+    + LITA CHANTLER (included after leg 1; exempt from the 30-count but a
+    physical card in the deck). h5+d29=34 is exactly right; leg 1's 33 had
+    no Lita yet. K3 applied the Lita-doesn't-count rule correctly in the
+    hy3-roland campaign audit but here concluded "no rule adds a card
+    between scenarios."

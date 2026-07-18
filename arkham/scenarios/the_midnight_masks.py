@@ -983,11 +983,6 @@ def add_enemy_to_victory(state: GameState, events: list[dict[str, Any]], enemy_i
 
 def encounter_revelation(state: GameState, rng: ArkhamRng, events: list[dict[str, Any]], instance_id: str) -> bool:
     code = state.card_instances[instance_id].card_code
-    if code == "01116" and "your_house" in state.locations:
-        from ..enemies import spawn_enemy
-
-        spawn_enemy(state, events, instance_id=instance_id, location_id="your_house", engaged=False)
-        return True
     if code in {"01169", "01170"}:
         spawn_any_empty_location_enemy(state, events, instance_id)
         return True

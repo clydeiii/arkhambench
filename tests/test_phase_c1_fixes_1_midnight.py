@@ -172,15 +172,6 @@ class MidnightMasksLocationAbilityTests(unittest.TestCase):
 
 
 class MidnightMasksHookTests(unittest.TestCase):
-    def test_ghoul_priest_draw_redirects_to_your_house_when_present(self) -> None:
-        state = mm.build_state(difficulty="standard", rng=ArkhamRng(20), investigator_slug="roland", ghoul_priest_alive=True)
-        state.decision_queue = []
-        priest = next(card_id for card_id in state.encounter_deck if state.card_instances[card_id].card_code == "01116")
-        state.encounter_deck = [priest]
-        encounter.draw_encounter(state, ArkhamRng(20), [])
-        self.assertEqual(state.enemies[priest].location_id, "your_house")
-        self.assertNotIn(priest, state.investigator.engaged_enemies)
-
     def test_ghoul_priest_default_spawns_engaged_when_house_burned(self) -> None:
         state = mm.build_state(difficulty="standard", rng=ArkhamRng(21), investigator_slug="roland", house_burned=True, ghoul_priest_alive=True)
         state.decision_queue = []
