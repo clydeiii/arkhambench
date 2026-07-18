@@ -85,6 +85,13 @@ def render_event(event: dict[str, Any]) -> str:
         if event.get("status"):
             return f"{event['status']}\n{rendered}"
         return rendered
+    if event_type == "doom_placed" and data.get("source") and data.get("source") != "mythos":
+        source = {
+            "Corpse-Taker": "Corpse-Taker's Forced",
+            "Mask of Umordhoth": "Mask of Umôrdhoth",
+        }.get(str(data["source"]), str(data["source"]))
+        message = str(data.get("message", "")).removesuffix(".")
+        return f"{prefix} — {message} ({source})."
     if data.get("message"):
         return f"{prefix} — {data.get('message')}"
     return f"{prefix} — {event_type}: {data}"

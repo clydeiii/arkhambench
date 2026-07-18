@@ -771,3 +771,37 @@ hy3's 0/5 the same week. Auditor tiering matters.
     each transaction (code, replaced/removed, price) in campaign.json so
     campaign audits have a purchase ledger instead of inferring from deck
     diffs.
+117. **"Corpse-Taker end-of-mythos Forced skipped on entry round"** (K3,
+    show2-hy3-roland leg 2) — REFUTED: the Forced DID fire in R2 (log.jsonl
+    seq 47, source "Corpse-Taker"); the auditor misattributed that doom to
+    Mask of Umôrdhoth's attach and expected one more — but the Mask's
+    no-Cultist fallback branch grants no doom (exactly per ruling #89). All
+    later rounds reconcile. IMPROVEMENT adopted: log.md now renders the doom
+    SOURCE (the un-sourced "Placed 1 doom on Corpse-Taker." line invited the
+    misread).
+118. **"Agenda 3 shown current before agenda 2's back side resolves"** (K3,
+    show2-hy3-roland leg 3) — REFUTED, evidence error: the cited status line
+    reads Agd2, not Agd3; the first Agd3 snapshot follows "Agenda advanced".
+    The engine holds the old agenda current through the b-side test and the
+    nested Hypochondria revelation — i.e., the #62/#96 fixes demonstrably
+    working. K3's first misquoted evidence.
+119. **Duplicate game_end on Devourer-family defeats** (K3, same leg) —
+    CONFIRMED, display: end_game (effects.py) dispatches to the Devourer
+    finalize_result, which logs its own game_end, then end_game logs a second
+    one; resolutions/resigns call finalize_result directly and emit once,
+    which is why only defeats double-log. State/result/trauma single-counted.
+    FIX (batch 15): end_game skips its terminal log when a family
+    finalize_result already emitted game_end.
+120. **"The Barrier act 2b never put Lita Chantler into play"** (K3,
+    show2-hy3-skids leg 1) — REFUTED: advance_act_2 places her
+    (zone "story", attached to Parlor — state.json of the flagged run proves
+    it; parleys with her succeed in five other Return runs) but logs NOTHING.
+    A transcript-only judge cannot distinguish silent-success from omission;
+    the printed act text mandates a visible placement. IMPROVEMENT adopted:
+    log "Lita Chantler was put into play in the Parlor."
+121. **"Agenda 2b Ghoul dig resolved after the step-1.4 draw"** (K3, same
+    leg) — REFUTED: the dig resolves synchronously inside step 1.3
+    (place_doom → advance_agenda_2 shuffles, digs, logs) and the jsonl
+    sequence shows dig (Ghoul from the Depths) BEFORE the 1.4 draw
+    (Flesh-Eater); both draws being Ghouls misled the auditor into swapping
+    them. R4 merely looked different because agenda 1b queues a player choice.

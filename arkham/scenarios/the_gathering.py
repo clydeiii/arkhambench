@@ -719,6 +719,12 @@ def advance_act_2(state: GameState, events: list[dict[str, Any]]) -> None:
     if lita:
         state.card_instances[lita].zone = "story"
         state.locations["parlor"].attached_instance_ids.append(lita)
+        log_event(
+            events,
+            "lita_enters_play",
+            "Lita Chantler was put into play in the Parlor.",
+            card=lita,
+        )
     priest = next((card_id for card_id, instance in state.card_instances.items() if instance.card_code == "01116"), None)
     if priest:
         spawn_enemy(state, events, instance_id=priest, location_id="hallway", engaged=False)

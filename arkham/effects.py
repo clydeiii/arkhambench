@@ -675,6 +675,7 @@ def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> No
     state.status = "ended"
     state.decision_queue = []
     state.result = {"outcome": summary, "round": state.round, "trauma": dict(state.trauma)}
+    dispatched_event_count = len(events)
     if state.scenario in GATHERING_FAMILY:
         from .scenarios import the_gathering
 
@@ -687,7 +688,8 @@ def end_game(state: GameState, events: list[dict[str, Any]], summary: str) -> No
         from .scenarios import the_devourer_below
 
         the_devourer_below.finalize_result(state, events, outcome="no_resolution", resolution="no_resolution", summary=summary)
-    log_event(events, "game_end", summary)
+    if not any(event.get("type") == "game_end" for event in events[dispatched_event_count:]):
+        log_event(events, "game_end", summary)
 
 
 def apply_cover_up_trauma(state: GameState, events: list[dict[str, Any]]) -> None:
