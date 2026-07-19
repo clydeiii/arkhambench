@@ -1043,3 +1043,23 @@ hy3's 0/5 the same week. Auditor tiering matters.
     occurred). Latent-risk note recorded: the decision-queue early-return
     skips forced-weakness resolution for ANY queued decision — defensive
     deferral if it ever manifests outside defeat.
+153. **"Corpse-Taker entry-round end-of-mythos Forced skipped" (repeat)**
+    (K3, show2-sonnet-daisy leg 3) — REFUTED, duplicate of the 117 misread:
+    jsonl seq 336 shows doom_placed source "Corpse-Taker" immediately
+    after the Mask fallback attach (which grants no doom, per #89); the
+    Forced fired. K3 re-made the error with ledger 117 in its context —
+    mitigation: this leg's log.md predates the batch-15 doom-source
+    rendering, so the transcript presents the identical un-sourced trap.
+    Counted as a duplicate miss, not a new class.
+154. **Residual play-side pointer race (agent-reported, wave-6 leg 1)** —
+    CONFIRMED via the players' own notebooks: post-113-fix, an agent that
+    skips `campaign next` (no active_run yet stamped) falls back to the
+    GLOBAL .current_run for do/state/actions and can play a FOREIGN lane's
+    run mid-scenario. Sonnet's agent did exactly this and played several
+    rounds of show2-luna-roland leg 1 (both lanes' notebooks record the
+    incident; the record-layer guard correctly kept every campaign.json
+    clean). ATTRIBUTION NOTE for published results: show2-luna-roland leg 1
+    (score 1, death by insanity) had foreign actions injected — flagged in
+    the writeup, not replayed (standing policy). FIX (batch 24):
+    resolve_run_dir under AHLCG_CAMPAIGN refuses a global pointer outside
+    the campaign dir (mirror of the record guard).

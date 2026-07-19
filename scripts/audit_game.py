@@ -230,6 +230,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--reasoning", action="store_true",
                         help="also audit each run's agent rationales for rules misconceptions (-> reasoning_audit.md)")
     parser.add_argument("--model", default="claude-fable-5")
+    parser.add_argument("--out-name", default="audit.md", help="report filename written into each run dir")
     args = parser.parse_args(argv)
     if not args.runs and not args.campaign:
         parser.error("give run directories and/or --campaign")
@@ -248,7 +249,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         print(f"=== auditing {run_dir} with {args.model}")
         report, rc = audit_run(run_dir, args.model, adjudications)
-        out = run_dir / "audit.md"
+        out = run_dir / args.out_name
         out.write_text(report + "\n", encoding="utf-8")
         print(report)
         print(f"--- written to {out}")
