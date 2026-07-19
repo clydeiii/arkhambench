@@ -5,7 +5,7 @@ from typing import Any
 
 from . import actions, encounter
 from .cards import player as player_cards
-from .effects import draw_player_card, gain_resource, log_event, process_deferred_agenda_advance, resolve_damage_resume
+from .effects import draw_player_card, gain_resource, log_event, process_deferred_agenda_advance, resolve_damage_resume, resume_damage_continuation
 from .enemies import attack, can_attack_investigator, engage_ready_enemies_at_roland, enemy_name, move_hunters
 from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, DecisionOption, GameState, PendingDecision
 from .rng import ArkhamRng
@@ -37,6 +37,9 @@ def advance_until_decision(state: GameState, rng: ArkhamRng, events: list[dict[s
             from . import skill_test
 
             skill_test.process_deferred_scenario_token_aftermath(state, events, rng)
+            continue
+        if state.limits.get("deferred_damage_continuation"):
+            resume_damage_continuation(state, events, rng)
             continue
         if state.limits.get("deferred_skill_callback"):
             from . import skill_test

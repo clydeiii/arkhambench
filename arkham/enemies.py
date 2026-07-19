@@ -200,6 +200,8 @@ def disengage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: st
     if exhaust:
         enemy.exhausted = True
     log_event(events, "enemy_disengaged", f"{enemy_log_name(state, enemy_id)} disengaged.", enemy=enemy_id)
+    if exhaust:
+        log_event(events, "enemy_exhausted", f"{enemy_log_name(state, enemy_id)} exhausted after being evaded.", enemy=enemy_id)
 
 
 def evade_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:

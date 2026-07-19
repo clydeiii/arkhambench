@@ -153,7 +153,7 @@ class PhaseC6ConfirmationTests(unittest.TestCase):
             self.assertEqual((game.state.investigator.damage, game.state.investigator.horror), (2, 2))
             self.assertIn("machete", game.state.investigator.play_area)
 
-    def test_aoo_exempt_exhausted_and_aloof_actions_do_not_confirm(self) -> None:
+    def test_aoo_exempt_exhausted_actions_do_not_confirm_but_engaged_aloof_does(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             game = make_game(tmp)
             add_enemy(game.state, "01160", "ghoul")
@@ -162,7 +162,7 @@ class PhaseC6ConfirmationTests(unittest.TestCase):
             self.assertEqual(game.current_decision().id, "commit-cards")
             self.assertIsNotNone(game.state.active_skill_test)
 
-        for exhausted, aloof in ((True, False), (False, True)):
+        for exhausted, aloof in ((True, False),):
             with tempfile.TemporaryDirectory() as tmp:
                 game = make_game(tmp)
                 add_card(game.state, "01020", "hand", "machete")
@@ -171,6 +171,14 @@ class PhaseC6ConfirmationTests(unittest.TestCase):
                 choose_action(game, "play", card="machete")
                 self.assertNotEqual(game.current_decision().kind, "confirmation")
                 self.assertEqual((game.state.investigator.damage, game.state.investigator.horror), (0, 0))
+
+        with tempfile.TemporaryDirectory() as tmp:
+            game = make_game(tmp)
+            add_card(game.state, "01020", "hand", "machete")
+            add_enemy(game.state, "01160", "ghoul", aloof=True)
+            actions.present_action_decision(game.state)
+            choose_action(game, "play", card="machete")
+            self.assertEqual(game.current_decision().kind, "confirmation")
 
     def test_confirmations_can_be_disabled_and_fuzz_builds_that_way(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

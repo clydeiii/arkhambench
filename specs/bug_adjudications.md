@@ -994,3 +994,52 @@ hy3's 0/5 the same week. Auditor tiering matters.
     a free swap-in by the existing level filter. Process note: data-
     fidelity adjudications MUST check the ArkhamDB dump, not ledger
     self-citations.
+145. **On Wings of Darkness "Then" move never resolved** (K3 twins:
+    show2-hy3-skids leg 2 + show2-sonnet-skids leg 2) — CONFIRMED, shared
+    root cause with 143: with only Rivertown data-tagged Central and the
+    investigator standing there, central_destinations was empty and the
+    mandatory relocation silently skipped; with corrected trait data
+    (batch 22) four destinations exist and the choice/move resolves. K3
+    correctly distinguished this from #29 and #143. Fix already landed.
+146. **Obscuring Fog discard double-logged** (K3, show2-sonnet-skids leg 2)
+    — CONFIRMED, display: 129/140/141 dedup class, Forced-discard call
+    site. FIX (batch 23).
+147. **Engaged aloof enemies make no attacks of opportunity** (K3,
+    show2-luna-skids leg 3) — CONFIRMED, exploit: actions.py aoo_attackers
+    filters `not is_aloof` while iterating engaged enemies only — an
+    over-application of Aloof (which restricts engaging/being attacked
+    while UNENGAGED, per RR; likely collateral of #66). Mask-aloof
+    Corpse-Taker skipped a 1dmg/2hor AoO. FIX (batch 23): drop the filter.
+148. **Elder-sign success rider skipped for location-added extra tokens**
+    (K3, same leg) — CONFIRMED, anti-player: apply_elder_sign_success
+    gates on the BASE token only; extra-token elder signs apply +2 but
+    never pay the rider (Skids denied 2 resources). Latent sibling found
+    in verification: Wendy's Amulet elder-sign auto-success has the same
+    base-only gate. FIX (batch 23): check base + extra_tokens in both.
+149. **Successful evade never logs the enemy's exhaustion** (K3, same leg)
+    — CONFIRMED, display: state exhausts correctly (verified via
+    subsequent no-AoO/no-reengage behavior); transcript omits the line a
+    log-only judge needs. FIX (batch 23): log exhaustion on evade.
+150. **"Failed test math floored at 0 understates margin"** (K3, same leg)
+    — REFUTED: RR Modifiers (rules_reference.md:1561) — a resultant value
+    below zero is treated as zero after all modifiers; "0 vs 3, failure by
+    3" is exactly right. K3 itself verified floor-at-zero as correct in
+    its show2-luna-roland leg-1 clean audit — internal inconsistency.
+151. **Scenario tablet damage clobbered when a soak asset routes two token
+    riders through pending assignment** (K3, show2-sonnet-agnes leg 3) —
+    CONFIRMED, pro-player, material (defeat-boundary shift verified):
+    start_damage_assignment unconditionally overwrites pending_damage, so
+    the Devourer tablet's queued 1 damage was replaced by Shrivelling's
+    queued 1 horror in the same resolve pass. Reveal-time twin of #31
+    ("aftermath must queue, not vanish"). K3's causal theory refined: the
+    trigger is the soak-forced pending path, not card-vs-scenario
+    precedence. FIX (batch 23): queue collided assignments and drain in
+    completion branches.
+152. **"Psychosis Forced skipped on the killing blow"** (K3,
+    show2-luna-wendy leg 3) — REFUTED / NOT A BUG: defeat-first is the
+    adjudicated policy (#128 confirmed the OPPOSITE as a bug); a defeated
+    investigator's threat-area weakness does not fire post-defeat, and the
+    trauma-type hypothesis is wrong RAW (trauma follows the defeat that
+    occurred). Latent-risk note recorded: the decision-queue early-return
+    skips forced-weakness resolution for ANY queued decision — defensive
+    deferral if it ever manifests outside defeat.

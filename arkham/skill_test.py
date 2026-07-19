@@ -458,7 +458,7 @@ def compute_result(state: GameState, test: dict[str, Any]) -> dict[str, Any]:
     if bool(test["autofail"]):
         value = 0
     auto_success = (
-        test.get("token") == "eldersign"
+        revealed_symbol(test, {"eldersign"})
         and state.investigator.card_code == "01005"
         and not player_cards.investigator_text_blank(state)
         and player_cards.controls_code(state, "01014")
@@ -1208,7 +1208,7 @@ def apply_elder_sign_success(
     result: dict[str, Any],
     rng: ArkhamRng | None,
 ) -> None:
-    if result.get("token") != "eldersign" or not result.get("success"):
+    if not revealed_symbol(result, {"eldersign"}) or not result.get("success"):
         return
     if player_cards.investigator_text_blank(state):
         return
@@ -1308,7 +1308,6 @@ def discard_obscuring_fog_at_roland(state: GameState, events: list[dict[str, Any
     for attachment in list(location.attached_instance_ids):
         if state.card_instances[attachment].card_code == "01168":
             discard_location_attachment(state, events, attachment)
-            log_event(events, "obscuring_fog_discarded", "Obscuring Fog was discarded after a successful investigation.", card=attachment)
             return
 
 

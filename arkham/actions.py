@@ -768,7 +768,6 @@ def aoo_attackers(state: GameState, action: str, payload: dict[str, Any] | None 
         enemy_id
         for enemy_id in list(state.investigator.engaged_enemies)
         if (enemy := state.enemies.get(enemy_id)) is not None and not enemy.exhausted
-        and not is_aloof(state, enemy_id)
         and can_attack_investigator(state, enemy_id)
     ]
     if state.scenario in DEVOURER_FAMILY:
