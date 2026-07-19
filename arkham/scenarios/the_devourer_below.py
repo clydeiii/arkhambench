@@ -322,7 +322,7 @@ def reveal_location_fields(location: Location) -> None:
         if sub:
             location.name = sub
     location.shroud = int(card.get("shroud") or 0)
-    location.clues = int(card.get("clues") or 0)
+    location.clues += int(card.get("clues") or 0)
 
 
 def reveal_location(state: GameState, events: list[dict[str, Any]], location_id: str) -> None:

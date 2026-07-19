@@ -562,6 +562,7 @@ def defeat_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str) 
         return
     card = enemy_card(state, enemy_id)
     enemy = state.enemies.pop(enemy_id)
+    state.limits["enemies_defeated"] = int(state.limits.get("enemies_defeated", 0)) + 1
     state.card_instances[enemy_id].doom = 0
     state.card_instances[enemy_id].clues = 0
     state.limits["last_defeated_enemy_location"] = enemy.location_id

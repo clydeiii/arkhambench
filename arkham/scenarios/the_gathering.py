@@ -304,7 +304,15 @@ def build_player_deck(
     if not deck.get("campaign_deck"):
         from ..upgrade import XP_CARD_CODES
 
-        xp_codes = sorted(str(code) for code in deck["slots"] if str(code) in XP_CARD_CODES)
+        # Leo De Luca 01048 is printed in suggested starter decks, so it is
+        # legal there even though its corrected XP metadata now puts it in the
+        # implemented purchase pool.
+        starter_exceptions = {"01048"}
+        xp_codes = sorted(
+            str(code)
+            for code in deck["slots"]
+            if str(code) in XP_CARD_CODES and str(code) not in starter_exceptions
+        )
         if xp_codes:
             raise EngineError(f"deck contains unimplemented card codes: {', '.join(xp_codes)}")
     deck_ids: list[str] = []
@@ -538,7 +546,7 @@ def reveal_location(state: GameState, events: list[dict[str, Any]], location_id:
     location.revealed = True
     _, _, shroud, clues, _ = LOCATION_INFO[location_id]
     location.shroud = shroud
-    location.clues = clues
+    location.clues += clues
     log_event(events, "location_revealed", f"{location.name} was revealed.", location=location_id)
 
 
@@ -551,7 +559,7 @@ def reveal_return_location(state: GameState, events: list[dict[str, Any]], locat
     location.revealed = True
     location.name = revealed_name
     location.shroud = shroud
-    location.clues = clues
+    location.clues += clues
     log_event(events, "location_revealed", f"{location.name} was revealed.", location=location_id)
     variant = state.limits.get(f"return_variant:{location_id}")
     if location_id == "hallway":
@@ -750,7 +758,6 @@ def present_final_resolution(state: GameState) -> None:
 
 
 def after_enemy_defeated(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> bool:
-    state.limits["enemies_defeated"] = int(state.limits.get("enemies_defeated", 0)) + 1
     if state.card_instances[enemy_id].card_code == "01116" and state.act and state.act.stage == 3:
         advance_act(state, events)
         return True

@@ -1213,9 +1213,11 @@ def apply_elder_sign_success(
     if player_cards.investigator_text_blank(state):
         return
     if state.investigator.card_code == "01002":
-        count = player_cards.controlled_tome_count(state)
-        for _ in range(count):
-            draw_player_card(state, events, rng)
+        requested = player_cards.controlled_tome_count(state)
+        count = sum(
+            draw_player_card(state, events, rng, log_draw=False) is not None
+            for _ in range(requested)
+        )
         if count:
             log_event(events, "elder_sign", f"Daisy drew {count} card from her elder sign.", amount=count)
     elif state.investigator.card_code == "01003":

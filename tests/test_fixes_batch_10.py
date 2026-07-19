@@ -57,6 +57,11 @@ class FixesBatch10Tests(unittest.TestCase):
 
         event_types = [event["type"] for event in events]
         self.assertLess(event_types.index("damage_assigned"), event_types.index("enemy_disengaged"))
+        self.assertNotIn("investigator_moved", event_types)
+        self.assertEqual(state.decision_queue[0].id, "on-wings-destination")
+        choice = state.decision_queue.pop(0).options[0].payload
+        mm.resolve_scenario_choice(state, choice, events, ArkhamRng(1))
+        event_types = [event["type"] for event in events]
         self.assertLess(event_types.index("damage_assigned"), event_types.index("investigator_moved"))
         self.assertEqual((state.investigator.damage, state.investigator.horror), (1, 1))
 

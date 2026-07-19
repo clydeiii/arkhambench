@@ -110,6 +110,9 @@ information gathered so far. Doom on enemies counts toward agenda thresholds; ag
 advancement clears doom from every card in play. If agenda 2 advances, it is past
 midnight and the scenario ends at Resolution 2.
 
+If no resolution was reached because each investigator resigned or was defeated, read
+Resolution 1; an investigator defeated during the scenario still suffers the usual trauma.
+
 The original encounter deck has 21 cards: Hunting Shadow ×3, False Lead ×2, Acolyte ×3,
 Wizard of the Order ×1, Mysterious Chanting ×2, Hunting Nightgaunt ×2, On Wings of
 Darkness ×2, Crypt Chill ×2, Obscuring Fog ×2, and Locked Door ×2. Ghoul Priest may also

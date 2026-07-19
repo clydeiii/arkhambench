@@ -24,7 +24,13 @@ def log_event(events: list[dict[str, Any]], event_type: str, message: str, **dat
     events.append(event)
 
 
-def draw_player_card(state: GameState, events: list[dict[str, Any]], rng: Any = None) -> str | None:
+def draw_player_card(
+    state: GameState,
+    events: list[dict[str, Any]],
+    rng: Any = None,
+    *,
+    log_draw: bool = True,
+) -> str | None:
     investigator = state.investigator
     reshuffled = False
     if not investigator.deck:
@@ -46,7 +52,8 @@ def draw_player_card(state: GameState, events: list[dict[str, Any]], rng: Any = 
     investigator.hand.append(instance_id)
     state.card_instances[instance_id].zone = "hand"
     card = card_data.get_card(state.card_instances[instance_id].card_code)
-    log_event(events, "card_drawn", f"{investigator.name} drew {card['name']}.", card=instance_id)
+    if log_draw:
+        log_event(events, "card_drawn", f"{investigator.name} drew {card['name']}.", card=instance_id)
     resolve_player_weakness_draw(state, events, instance_id)
     if reshuffled and state.status == "in_progress":
         start_damage_assignment(state, events, source="empty-deck reshuffle", damage=0, horror=1)

@@ -37,9 +37,14 @@ def resolve_after_encounter_draw(state: GameState, events: list[dict[str, Any]])
     if pending.get("kind") == "drawn_to_the_flame":
         from .effects import discover_clue
 
-        discovered = discover_clue(state, 2, events)
-        if discovered > 0:
-            log_event(events, "drawn_to_the_flame", f"Drawn to the Flame discovered {discovered} clue.", amount=discovered)
+        amount = min(2, state.locations[state.investigator.location_id].clues)
+        discover_clue(
+            state,
+            2,
+            events,
+            event_type="drawn_to_the_flame",
+            message=f"Drawn to the Flame discovered {amount} clue.",
+        )
 
 
 def present_revelation_cancel(state: GameState, instance_id: str) -> bool:

@@ -930,3 +930,67 @@ hy3's 0/5 the same week. Auditor tiering matters.
     and ends at R1). Shipped to every campaign of every wave to date;
     advisory-channel only, no rules enforcement touched. FIX (batch 20):
     scenario-conditional briefing blocks.
+137. **result.json enemies_defeated undercounts non-fight defeats** (K3
+    campaign audit, show2-sonnet-agnes) — CONFIRMED, display/stats: the
+    counter increments at a single site inside the_gathering.py (basic fight
+    path), so MM and DB report 0 regardless of kills and Gathering misses
+    asset-fight/reaction kills. No XP impact (victory display is the XP
+    source). FIX (batch 21): increment centrally in enemies.defeat_enemy.
+138. **Leo De Luca (01048) admitted as a free level-0 deckbuild swap** (K3
+    campaign audit, show2-sonnet-skids; same swap in show2-luna-skids) —
+    CONFIRMED, conformance via DATA: deckbuild.swap correctly enforces
+    level 0 both directions, but data/cards records 01048 xp:0 where the
+    printed card is level 1 (ledger #44 already called it "the level-1
+    copy"). Net: a 1-XP card entered two campaigns for 0 XP. K3's hedged
+    diagnosis (pool/validation vs docs) was the right shape; actual cause a
+    third variant. FIX (batch 21): correct xp:1 in data; keep printed
+    suggested starters legal (Skids's includes Leo by design); swap-in now
+    refused; affected campaigns documented, not replayed (standing policy).
+139. **Clue placed on an unrevealed location destroyed at reveal** (K3,
+    show2-hy3-skids leg 3) — CONFIRMED, anti-player, material: Disciple of
+    the Devourer's Forced moved a clue to its (unrevealed) location via
+    `clues += 1`, but reveal_location_fields ASSIGNS
+    `clues = printed value`, clobbering placed tokens; Quiet Glade (printed
+    0) came up empty and the clue ceased to exist. RR: reveal PLACES clues
+    equal to clue value — tokens already there remain. The flagged game was
+    unwinnable thereafter (act 1 needs 3 spendable clues; hy3's Skids spent
+    R3-R5 hunting the destroyed clue — K3 traced the whole arc). FIX
+    (batch 22): reveal adds printed clues to existing tokens; audit the
+    Gathering/MM reveal implementations for the same assignment pattern.
+140. **Daisy's elder-sign draw double-logged** (K3, show2-luna-daisy leg 1)
+    — CONFIRMED, display: the draw path logs "drew <card>" and
+    skill_test.py:1220 adds "Daisy drew 1 card from her elder sign." for
+    the same single draw. #129 class, different call site. FIX (batch 22).
+141. **Drawn to the Flame logs generic + sourced discovery lines for one
+    clue** (K3, show2-luna-agnes leg 2) — CONFIRMED, display: batch 8's
+    45(d) fix corrected the AMOUNT on the sourced line but the generic
+    discover_clue line still doubles it. Same dedup pattern as 129/140.
+    FIX (batch 22).
+142. **"MM defeat recorded as Resolution 1"** (K3, same leg) — REFUTED by
+    PRIMARY SOURCE: printed campaign guide p.5 — "If no resolution was
+    reached (each investigator resigned or was defeated): Read Resolution
+    1." Engine exactly per print. K3 reasoned from the generic RR
+    no-resolution text plus our scenario_reference.md, which omits the
+    defeat case — one-sentence doc addition adopted (batch 22).
+143. **Central trait missing from four MM ring locations; On Wings of
+    Darkness auto-moved with no destination choice** (K3, show2-hy3-wendy
+    leg 2) — CONFIRMED, conformance via data (Leo-xp class): printed
+    Southside/Downtown/Easttown/Northside are "Arkham. Central." but
+    data/cards carries "Arkham." only, so the engine believed Rivertown the
+    sole Central location and auto-resolved the move; a 4-way lead-
+    investigator choice was owed. Outcome-neutral in the flagged game. FIX
+    (batch 22): add Central. to 01126/01127/01130/01131/01132/01134 and
+    Return variants; On Wings presents the destination choice.
+144. **REVERSAL of 138** (Fable's own, caught via Sol's spec-conflict flag):
+    ArkhamDB core.json is definitive — 01048 Leo De Luca is PRINTED LEVEL 0
+    (cost 6) and 01054 Leo De Luca (1) is the level-1 copy (cost 5); the
+    core set contains both. The deckbuild swap of 01048 was legal all
+    along; data/cards xp:0 was correct. K3's finding is REFUTED, not
+    confirmed — it misquoted ledger #44 ("the level-1 copy" there refers to
+    01054) and Fable ratified the error without consulting the ArkhamDB
+    dump (docs/arkhamdb-json-data), despite it being the established
+    primary source for card data. Leo changes reverted same-day, before
+    any commit; 01054 correctly remains purchasable at 1 XP and refused as
+    a free swap-in by the existing level filter. Process note: data-
+    fidelity adjudications MUST check the ArkhamDB dump, not ledger
+    self-citations.
