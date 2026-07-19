@@ -1063,3 +1063,11 @@ hy3's 0/5 the same week. Auditor tiering matters.
     the writeup, not replayed (standing policy). FIX (batch 24):
     resolve_run_dir under AHLCG_CAMPAIGN refuses a global pointer outside
     the campaign dir (mirror of the record guard).
+155. **Slot-overflow discard resolved after the upkeep resource gain**
+    (Sol recall probe on K3-cleared show2-hy3-daisy leg 1 — the single
+    K3 miss in the 6-leg recall sample) — CONFIRMED, display: The
+    Necronomicon (a Hand-slot asset even while in the threat area) entered
+    play during the 4.4 draw, but the mandatory simultaneous slot-overflow
+    discard was presented only after the resource gain. RR Slots: excess
+    assets are discarded simultaneously with entry. FIX (batch 25): queue
+    the overflow decision immediately at entry, before upkeep continues.

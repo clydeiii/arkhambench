@@ -256,6 +256,65 @@ GLM-5.2 (5.00) > GPT-5.6 Sol (4.50) > GPT-5.5 (4.00) > Opus 4.8 (3.50) >
 Kimi k2.6 = GPT-5.6 Terra = GPT-5.6 Luna (3.00) > DeepSeek v4-flash =
 Hunyuan 3 (2.50).
 
+## Wave 6 — Kimi K3 in the judge's chair (2026-07-18/19)
+
+Three days after its launch-day gauntlet, K3 got the other job: **auditor**.
+Three models — Hunyuan 3, GPT-5.6 Luna, and Sonnet 5 — each played five full
+Return to Night of the Zealot campaigns in parallel lanes (seeds 9401–9405,
+matched to the b4 wave; fresh per-model notebooks shared across each model's
+five campaigns), and Kimi K3 audited **all sixty artifacts**: every scenario
+transcript and every campaign ledger. Fable verified or refuted every finding
+(adversarial sub-verifiers, printed-card and ArkhamDB ground truth, primary-
+source campaign-guide reads); GPT-5.6 Sol implemented every confirmed fix.
+
+### The campaigns
+
+| Model | R | D | S | A | W | Total | prior total |
+|---|---:|---:|---:|---:|---:|---:|---|
+| GPT-5.6 Luna | 7\* | 3 | 0 | 3 | 2 | **15** | 16 (b4, same seeds) |
+| Sonnet 5 | 4 | 3 | 2 | 3 | 2 | **14** | — (first campaigns) |
+| Hunyuan 3 | 5 | 2 | 1 | 3 | 2 | **13** | 7 (b3 wave, seeds 93xx) |
+
+A three-point spread across three very different models — and hy3 nearly
+doubled its previous campaign total under the same compress-not-discard
+notebook rules. Zero finale survivals continues: 0-for-45 all-time.
+\*Luna's Roland leg 1 carries an attribution asterisk: a residual pointer race
+(ledger 154, now fixed) let Sonnet's agent play several of its rounds — both
+models' notebooks independently documented the incident, which is its own
+kind of benchmark result.
+
+### The audit trial
+
+**K3 filed 40 findings: 23 confirmed, 17 refuted (57.5% precision).** The
+confirmed set collapses to 22 distinct defects — more than any auditor tier
+in any prior wave — including two exploits (Lita Chantler never occupied her
+ally slot; Dissonant Voices' "cannot play events" unenforced in seven special
+windows), three material-outcome bugs (a hardcoded Ghoul Priest spawn that
+saved Daisy's life; clues destroyed when placed on unrevealed locations,
+which made one game unwinnable; a pending-damage clobber that moved a defeat
+boundary), and a regression of an adjudicated fix that unit tests missed
+because the call site — not the function — had been severed.
+
+The refutations are as instructive as the finds. Six were the transcript's
+fault: the engine was right but the log couldn't prove it (unsourced doom
+lines, missing instance ids, silent Lita placement, invisible purchases) —
+each became an adopted logging improvement, so the audit surface is
+permanently better. Two were fabricated facts (an "Arcane Studies (4)" that
+doesn't exist; a misquoted status line), one was overruled by the printed
+campaign guide itself (Midnight Masks defeats *do* read Resolution 1), and
+one repeated an already-refuted misread. A Sol counter-audit of six
+K3-cleared games corroborated five and caught one missed display defect.
+
+Auditor board (confirmed/claims): GPT-5.6 Sol 18/21 (86%) · Fable 5 6/8 ·
+GPT-5.5 5/8 · **Kimi K3 23/40 (58%)** · Hunyuan 3 3/70 (4%). Twelve fix
+batches (14–25) shipped from this wave; the suite grew from 360 to 429
+tests; the adjudication ledger stands at 155 entries with its eighth
+reversal — this one of the gate's own ruling, caught by Sol's spec-conflict
+flag and settled by the ArkhamDB dump.
+
+All fifteen campaigns are browsable in the [viewer](https://clydeiii.github.io/arkhambench/)
+(model groups "— w6"), and the findings page carries the full trial.
+
 ## Benchmark results — GPT-5.6 family (2026-07-10, release day +1)
 
 The identical 10-game gauntlet (seeds 1001–1010, same rotation, empty starting

@@ -68,6 +68,9 @@ CAMPAIGN_MODELS = [
     ("show-sol-", "GPT-5.6 Sol", "US"),
     ("show-terra-", "GPT-5.6 Terra", "US"),
     ("show-luna-", "GPT-5.6 Luna", "US"),
+    ("show2-hy3-", "Hunyuan 3 \u2014 w6 rematch", "CN"),
+    ("show2-luna-", "GPT-5.6 Luna \u2014 w6 rematch", "US"),
+    ("show2-sonnet-", "Sonnet 5 \u2014 w6", "US"),
 ]
 
 
@@ -134,12 +137,13 @@ def main() -> int:
             camp_models.append({"name": name, "region": region, "campaigns": rows})
 
     ledger = (ROOT / "specs/bug_adjudications.md").read_text()
-    entries = len(re.findall(r"^\d+\. \*\*", ledger, re.M))
+    entries = max(int(m) for m in re.findall(r"^(\d+)\. ", ledger, re.M))
     findings = {
         "ledger_entries": entries,
         "confirmed_fixed": len(re.findall(r"FIXED", ledger)),
         "not_a_bug": len(re.findall(r"NOT[ -]A[ -]BUG", ledger, re.I)),
         "auditors": [
+            {"name": "Kimi K3", "confirmed": 23, "claims": 40, "note": "wave-6 trial: all 60 audits (45 legs + 15 campaign layers); 22 distinct defects, 6 adopted improvements from refuted claims; Sol recall probe corroborated 5/6 cleans"},
             {"name": "GPT-5.6 Sol", "confirmed": 18, "claims": 21, "note": "C7 audit wave, 28 games"},
             {"name": "Fable 5", "confirmed": 6, "claims": 8, "note": "b1-era live hunts"},
             {"name": "GPT-5.5", "confirmed": 5, "claims": 8, "note": "b1-era audits + hunts"},
@@ -155,6 +159,12 @@ def main() -> int:
             {"title": "The parley that ate two treacheries",
              "text": "Alma Hill's parley draws three encounter cards. The engine resolved them in a loop that overwrote its own decision queue — Masked Horrors' doom and Hunting Shadow's damage silently vanished. Three auditor findings, one root cause.",
              "slug": "c7l2-daisy-midnight_masks"},
+            {"title": "The clue that ceased to exist",
+             "text": "Disciple of the Devourer moved a clue onto an unrevealed location \u2014 and the reveal wiped it, assigning printed clues instead of adding. Hunyuan 3's Skids spent three rounds hunting a clue that no longer existed in an unwinnable scenario. Kimi K3 traced the whole arc from the transcript.",
+             "slug": "show2-hy3-skids-3-devourer"},
+            {"title": "The auditor who indicted the wrong twin",
+             "text": "Two Disciples of the Devourer, one masked and doom-laden at St. Mary's, one bare-handed and legally slain. K3 conflated them and filed a phantom-doom exploit \u2014 refuted by instance ids in the structured log, and the markdown transcript learned to print them.",
+             "slug": "show2-sonnet-roland-2-midnight-masks"},
             {"title": "The reaction that froze the game",
              "text": "Heirloom of Hyperborea's draw reaction interleaved with Blinding Light's skill test and orphaned it — no token, no decision, no way forward. GPT-5.6 Luna spent 14 sessions documenting the stall in its notebook before the engine learned to revive orphaned tests.",
              "slug": None},

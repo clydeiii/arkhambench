@@ -281,12 +281,13 @@ def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: Arkham
         return
     if present_fast_window(state, "upkeep_start", during_turn=False):
         return
-    # Idempotency guard: the phase loop re-enters this function after the
-    # hand-size discard decision resolves; the ready/draw/resource steps must
-    # only happen once per round (they are not re-run while discarding).
+    # The phase loop re-enters this function after decisions resolve. Track the
+    # completed upkeep step so an entry-time decision (such as slot overflow
+    # from drawing The Necronomicon) pauses the phase without either skipping
+    # or repeating the remaining steps.
     key = f"upkeep_done:{state.round}"
-    if not state.limits.get(key):
-        state.limits[key] = True
+    progress = state.limits.get(key)
+    if not progress:
         state.investigator.exhausted = False
         for instance in state.card_instances.values():
             instance.exhausted = False
@@ -294,15 +295,31 @@ def run_upkeep_phase(state: GameState, events: list[dict[str, Any]], rng: Arkham
             enemy.exhausted = False
         log_event(events, "ready_step", "All exhausted cards readied.")
         engage_ready_enemies_at_roland(state, events)
+        state.limits[key] = "ready"
         if state.status != "in_progress":
             return
+        if state.decision_queue or state.pending_damage:
+            return
+        progress = "ready"
+    if progress == "ready":
         draw_player_card(state, events, rng)
+        state.limits[key] = "draw"
         if state.status != "in_progress":
             return
+        if state.decision_queue or state.pending_damage:
+            return
+        progress = "draw"
+    if progress == "draw":
         gain_resource(state, 1, events)
+        state.limits[key] = "resource"
         if state.status != "in_progress":
             return
+        if state.decision_queue or state.pending_damage:
+            return
+        progress = "resource"
+    if progress == "resource":
         discard_dissonant_voices(state, events)
+        state.limits[key] = True
         if state.status != "in_progress":
             return
     if state.status != "in_progress":
