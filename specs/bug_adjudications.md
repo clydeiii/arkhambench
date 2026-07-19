@@ -914,3 +914,19 @@ hy3's 0/5 the same week. Auditor tiering matters.
     dissonant_blocks in legal_lucky_cards; audit the OTHER skill-test and
     revelation special windows (Ward of Protection cancel, "Look what I
     found!", second-copy variants) for the same missing check.
+135. **"Arcane Studies 50007 undercharged: printed level 4 sold for 2 XP"**
+    (K3 campaign audit, show2-hy3-agnes) — REFUTED, fabricated ground truth:
+    the printed Return-to-NotZ card (and data/cards, xp field) is Arcane
+    Studies (2); no level-4 version exists in the set. The 2-XP charge was
+    correct and the ledger closes. K3's supporting argument (set-order
+    fidelity, notebook cross-quote) was elaborate but built on an invented
+    card level — its first fabricated-fact refutation, distinct from the
+    observability-gap class.
+136. **Every campaign leg's mission.md carries the Devourer Below briefing**
+    (K3, same audit) — CONFIRMED, harness/display: game.py
+    _write_campaign_mission hardcodes the DB briefing block unconditionally,
+    so Gathering and MM legs receive off-topic guidance including the
+    affirmatively false "resigning is no escape" claim (MM's resign is safe
+    and ends at R1). Shipped to every campaign of every wave to date;
+    advisory-channel only, no rules enforcement touched. FIX (batch 20):
+    scenario-conditional briefing blocks.

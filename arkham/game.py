@@ -11,7 +11,7 @@ from . import __version__
 from . import data as card_data
 from .errors import EngineError
 from .log import EventLog, status_line
-from .model import GameState, PendingDecision
+from .model import DEVOURER_FAMILY, GATHERING_FAMILY, MIDNIGHT_MASKS_FAMILY, GameState, PendingDecision
 from .rng import ArkhamRng
 from .serialize import atomic_write_json, atomic_write_text, decode_hidden, encode_hidden, sha256_text
 from . import actions, enemies, phases, skill_test
@@ -449,6 +449,38 @@ class Game:
 
     def _write_campaign_mission(self, campaign_context: dict[str, Any]) -> None:
         log = dict(campaign_context.get("log", {}))
+        if self.state.scenario in GATHERING_FAMILY:
+            if self.state.scenario == "return_to_the_gathering":
+                opening_advice = (
+                    "- The Study's aberrant gateway leads only to the Guest Hall: spend 3 clues in the Guest Hall to advance Act 1; "
+                    "the Study's two-action draw ability can help build your hand first."
+                )
+            else:
+                opening_advice = "- Escape the Study by discovering and spending its 2 clues to advance Act 1 and open the rest of the house."
+            briefing = [
+                "The Gathering briefing:",
+                "- Keep pace with the agenda clock: Ancient Evils can add doom and advance the agenda immediately.",
+                opening_advice,
+                "- Act 3 reveals the Parlor and places Lita Chantler there; her Intellect (4) Parley lets you take control of her.",
+                "- Early resignation is unavailable: only the revealed Parlor offers Resign, after Act 3 begins.",
+            ]
+        elif self.state.scenario in MIDNIGHT_MASKS_FAMILY:
+            briefing = [
+                "The Midnight Masks briefing:",
+                "- Budget clues for the Cultist deck: its act ability costs 1 action and 2 clues to draw and spawn a named cultist; fight, evade, or use printed Parley routes to interrogate them.",
+                "- Track the doom clock across agendas 1 and 2: doom on enemies counts toward advancement, and advancing an agenda clears doom from every card in play.",
+                "- RESIGN IS OFFERED from round 1; taking it ends the scenario safely at Resolution 1 with the information gathered so far.",
+            ]
+        elif self.state.scenario in DEVOURER_FAMILY:
+            briefing = [
+                "The Devourer Below briefing:",
+                "- Doom pressure is severe: agendas are 4/5/5, with Ancient Evils x3 and doom-on-enemy effects counting toward advancement.",
+                "- Decide early between the Ritual Site clue plan, defeating Umordhoth, or sacrificing Lita; resigning is no escape and records Arkham's destruction.",
+                "- Cultists who got away add setup doom and reappear at Main Path when Act 1 advances.",
+                "- In Return, Vault of Earthly Demise makes Umordhoth tougher if it appears while more acts remain.",
+            ]
+        else:
+            raise EngineError(f"no campaign briefing for scenario: {self.state.scenario}")
         lines = [
             "# Campaign mission",
             "",
@@ -465,11 +497,7 @@ class Game:
             f"- Cultists interrogated: {', '.join(log.get('cultists_interrogated', [])) or '-'}",
             f"- Cultists got away: {', '.join(log.get('cultists_got_away', [])) or '-'}",
             "",
-            "The Devourer Below briefing:",
-            "- Doom pressure is severe: agendas are 4/5/5, with Ancient Evils x3 and doom-on-enemy effects counting toward advancement.",
-            "- Decide early between the Ritual Site clue plan, defeating Umordhoth, or sacrificing Lita; resigning is no escape and records Arkham's destruction.",
-            "- Cultists who got away add setup doom and reappear at Main Path when Act 1 advances.",
-            "- In Return, Vault of Earthly Demise makes Umordhoth tougher if it appears while more acts remain.",
+            *briefing,
             "",
             "Play this run through `./ahlcg` as usual, then run `./ahlcg campaign record` from the repository root.",
         ]
