@@ -43,12 +43,14 @@ def resolve_after_encounter_draw(state: GameState, events: list[dict[str, Any]])
 
 
 def present_revelation_cancel(state: GameState, instance_id: str) -> bool:
+    from . import actions
+
     instance = state.card_instances[instance_id]
     card = card_data.get_card(instance.card_code)
     if card.get("type_code") != "treachery" or card.get("subtype_code") in {"weakness", "basicweakness"}:
         return False
     wards = player_cards.hand_ids(state, "01065")
-    if not wards or state.investigator.resources < 1:
+    if not wards or state.investigator.resources < 1 or actions.dissonant_blocks(state, "01065"):
         return False
     state.decision_queue.append(
         PendingDecision(

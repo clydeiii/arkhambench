@@ -897,3 +897,20 @@ hy3's 0/5 the same week. Auditor tiering matters.
     disambiguation, while spawn/engage/attack lines carry [ecXXXX].
     IMPROVEMENT adopted (batch 18): render instance ids on doom/attachment
     lines; name the mask's target enemy instead of "a Cultist enemy".
+133. **"Cunning Distraction play provoked no AoO"** (K3, show2-sonnet-wendy
+    leg 1) — REFUTED, duplicate of the 127 class: bold "Evade." designator
+    means playing it IS taking an evade action (official FAQ); no AoO owed.
+    The audit predates ledger 127's entry (parallel audit lanes); not
+    counted as a fresh miss class — the corrected playing guide (batch 18)
+    now documents this for players and auditors alike.
+134. **Lucky! playable through Dissonant Voices' "cannot play events"**
+    (K3, same leg) — CONFIRMED, exploit: legal_lucky_cards
+    (skill_test.py) checks resources and Wendy's Amulet but not
+    dissonant_blocks, while every normal and special-window play path in
+    actions.py enforces it (grep: lines 137/565/914/1219/1391-1402). The
+    would-fail window thus offers a forbidden event play; RR "Cannot" is
+    absolute. Material per K3: the illegal Lucky! flipped a failed Ghoul
+    Priest evade and averted a same-round defeat. FIX (batch 19):
+    dissonant_blocks in legal_lucky_cards; audit the OTHER skill-test and
+    revelation special windows (Ward of Protection cancel, "Look what I
+    found!", second-copy variants) for the same missing check.

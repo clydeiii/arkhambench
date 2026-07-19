@@ -365,6 +365,10 @@ def attack(
 def legal_dodge_card(state: GameState) -> str | None:
     if state.investigator.resources < 1:
         return None
+    from . import actions
+
+    if actions.dissonant_blocks(state, "01023"):
+        return None
     ids = player_cards.hand_ids(state, "01023")
     return ids[0] if ids else None
 
@@ -607,6 +611,8 @@ def damage_enemy(state: GameState, events: list[dict[str, Any]], enemy_id: str, 
 def present_enemy_defeat_reactions(state: GameState, events: list[dict[str, Any]], enemy_id: str) -> None:
     if state.status != "in_progress":
         return
+    from . import actions
+
     options: list[DecisionOption] = []
     location = state.locations[state.investigator.location_id]
     roland_key = f"roland_reaction:{state.round}"
@@ -618,7 +624,12 @@ def present_enemy_defeat_reactions(state: GameState, events: list[dict[str, Any]
             )
         )
     evidence = player_cards.hand_ids(state, "01022")
-    if evidence and state.investigator.resources >= 1 and location.clues > 0:
+    if (
+        evidence
+        and state.investigator.resources >= 1
+        and location.clues > 0
+        and not actions.dissonant_blocks(state, "01022")
+    ):
         options.append(
             DecisionOption(
                 "Play Evidence! to discover 1 clue",

@@ -2127,6 +2127,8 @@ def queue_close_call_reaction(state: GameState, enemy_id: str) -> None:
     subtype = str(card_data.get_card(state.enemies[enemy_id].card_code).get("subtype_code", ""))
     if subtype in {"weakness", "basicweakness"}:
         return
+    if dissonant_blocks(state, "01083"):
+        return
     ids = [card_id for card_id in player_cards.hand_ids(state, "01083") if state.investigator.resources >= 2]
     if not ids:
         return
