@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ArkhamBench — Findings</title>
+<style>
+:root{
+  --bg:#0c1210; --panel:#131c18; --panel2:#0f1714; --line:#24322b;
+  --ink:#e6e0cd; --muted:#93a096; --spectral:#74d8a4; --doom:#c65f57; --gold:#d8a54a;
+  --serif: Palatino, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{
+  font-family:var(--serif); color:var(--ink); line-height:1.55;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, rgba(116,216,164,.05), transparent 60%),
+    var(--bg);
+  padding:0 20px 96px;
+}
+a{color:var(--spectral); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1060px;margin:0 auto}
+
+header.masthead{padding:64px 0 40px; border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--muted)}
+h1{font-size:clamp(34px,6vw,58px); font-weight:400; letter-spacing:.01em; margin:10px 0 4px}
+h1 .thin{color:var(--muted)}
+.dek{max-width:62ch; color:var(--muted); font-size:17px; margin-top:14px}
+.dek b{color:var(--ink); font-weight:600}
+.masthead nav{margin-top:22px; font-family:var(--mono); font-size:13px; display:flex; gap:22px; flex-wrap:wrap}
+
+section{margin-top:72px}
+.exhibit{font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--spectral)}
+h2{font-size:clamp(22px,3.4vw,32px); font-weight:400; margin:8px 0 6px}
+.note{color:var(--muted); max-width:70ch; font-size:15px}
+.note a{white-space:nowrap}
+
+/* ---------- The Board ---------- */
+.board{margin-top:28px; border-top:1px solid var(--line)}
+.brow{display:grid; grid-template-columns:56px minmax(150px,1.1fr) 76px 2.2fr; gap:14px;
+      align-items:center; padding:13px 6px; border-bottom:1px solid var(--line)}
+.brow:hover{background:var(--panel2)}
+.rank{font-size:30px; color:var(--muted); font-variant-numeric:tabular-nums; text-align:right}
+.brow.first .rank{color:var(--gold)}
+.mname{font-size:18px}
+.mname .tag{display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.12em;
+  color:var(--muted); border:1px solid var(--line); border-radius:3px; padding:1px 6px; margin-left:8px; vertical-align:2px}
+.f20{font-family:var(--mono); font-size:22px; color:var(--spectral); font-variant-numeric:tabular-nums; text-align:right}
+.brow.first .f20{color:var(--gold)}
+.pips{display:flex; gap:7px; align-items:flex-end; min-height:34px; flex-wrap:wrap}
+.pip{display:block; width:17px; border-radius:3px 3px 0 0; background:var(--line); position:relative}
+.pip:hover{outline:2px solid var(--spectral); outline-offset:1px}
+.pip.win{background:var(--gold)}
+.pip.zero{background:#3a2c2a}
+.pip.scored{box-shadow:inset 0 0 0 1px rgba(230,224,205,.25)}
+.pip span{position:absolute; inset:auto 0 100% 0; text-align:center; font-family:var(--mono);
+  font-size:9px; color:var(--muted); padding-bottom:1px; visibility:hidden}
+.pip:hover span{visibility:visible}
+.legend{margin-top:14px; font-family:var(--mono); font-size:12px; color:var(--muted)}
+.legend i{display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin:0 5px 0 14px}
+
+/* ---------- wave cards ---------- */
+.wave{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:26px 28px; margin-top:26px}
+.wave h3{font-weight:400; font-size:21px}
+.wave .wdate{font-family:var(--mono); font-size:12px; color:var(--muted); margin-left:10px}
+.wave .wnote{color:var(--muted); font-size:14px; margin-top:4px; max-width:75ch}
+.wtable{margin-top:16px; width:100%; border-collapse:collapse; font-size:15px}
+.wtable th{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); text-align:left; font-weight:400; padding:6px 10px 6px 0; border-bottom:1px solid var(--line)}
+.wtable td{padding:9px 10px 9px 0; border-bottom:1px solid var(--panel2); vertical-align:middle}
+.wtable td.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.wtable td.f20c{font-family:var(--mono); color:var(--spectral)}
+
+/* ---------- learning ---------- */
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:26px}
+@media (max-width:760px){.duo{grid-template-columns:1fr}}
+.panelbox{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:24px 26px}
+.panelbox h3{font-weight:400; font-size:19px; margin-bottom:6px}
+.panelbox p{color:var(--muted); font-size:14.5px}
+.arc{margin-top:18px}
+.arcrow{display:grid; grid-template-columns:110px 1fr 40px; gap:12px; align-items:center; padding:7px 0; border-top:1px solid var(--panel2)}
+.arcrow .mn{font-size:15px}
+.arcbars{display:flex; gap:6px; align-items:flex-end; height:34px}
+.arcbar{width:26px; background:var(--line); border-radius:2px 2px 0 0; position:relative}
+.arcbar:hover{outline:2px solid var(--spectral); outline-offset:1px}
+.arcbar.best{background:var(--spectral)}
+.arcv{font-family:var(--mono); font-size:13px; color:var(--muted); text-align:right}
+.campnote{font-size:13px; color:var(--muted); margin-top:12px; font-family:var(--mono)}
+
+/* ---------- playtest ---------- */
+.counters{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:18px; margin-top:26px}
+.counter{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:20px 22px}
+.counter .big{font-size:44px; font-variant-numeric:tabular-nums; line-height:1}
+.counter .big.sp{color:var(--spectral)} .counter .big.dm{color:var(--doom)} .counter .big.gd{color:var(--gold)}
+.counter .lab{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-top:8px}
+.precision{margin-top:30px}
+.prow{display:grid; grid-template-columns:150px 1fr 120px; gap:14px; align-items:center; padding:9px 0; border-top:1px solid var(--panel2)}
+.pbar{height:12px; background:var(--panel2); border:1px solid var(--line); border-radius:3px; overflow:hidden}
+.pfill{height:100%; background:var(--spectral)}
+.pnum{font-family:var(--mono); font-size:13px; color:var(--muted); text-align:right}
+.vignettes{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:34px}
+@media (max-width:760px){.vignettes{grid-template-columns:1fr}}
+.vig{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--doom); border-radius:6px; padding:22px 24px}
+.vig h4{font-weight:400; font-size:17.5px; margin-bottom:8px}
+.vig p{color:var(--muted); font-size:14.5px}
+.vig .go{display:inline-block; margin-top:12px; font-family:var(--mono); font-size:12.5px}
+
+footer{margin-top:88px; border-top:1px solid var(--line); padding-top:26px; color:var(--muted); font-size:13.5px}
+footer .wrap{max-width:72ch; margin:0}
+@media (max-width:640px){
+  .brow{grid-template-columns:34px 1fr 60px; grid-template-rows:auto auto}
+  .pips{grid-column:1 / -1; margin-top:6px}
+  .rank{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">ArkhamBench · Case Notes · Night of the Zealot</div>
+  <h1>Findings <span class="thin">from the investigation</span></h1>
+  <p class="dek">Coding agents play <b>Arkham Horror: The Card Game</b> solo, inside a
+  rules-enforcing engine, with a persistent notebook as their only memory between games.
+  Two questions under investigation: <b>do models actually learn from repeated play</b>,
+  and <b>can they playtest</b> — find real rules bugs in the engine that hosts them?
+  Every score on this page is a link into the full replay.</p>
+  <nav>
+    <a href="index.html">→ open the run viewer</a>
+    <a href="https://github.com/clydeiii/arkhambench">→ repository &amp; methodology</a>
+  </nav>
+</header>
+
+<section id="board">
+  <div class="exhibit">Exhibit 0 — the instrumented wave</div>
+  <h2>Score, price, and speed on one board</h2>
+  <p class="note">Wave 7 (July 20–21) ran eight frontier models through five full campaigns each
+  with complete telemetry — thinking level, tokens, wall clock, API-equivalent cost. The
+  GPT-5.6 family swept the podium: Sol scored 20 in Opus's price bracket, Terra and Luna
+  took second and third for $29 and $15, and Kimi K3 tied Opus at half the price on
+  measured OpenRouter billing. All eight lanes moved the same magnitude of tokens
+  (59–173&nbsp;M, 95–99% cached context re-reads — see the README's token-accounting
+  note); price-per-token and context discipline set the spread. Score climbs the y-axis;
+  cost (log scale) and time run right-to-left — the models you want are up and to the
+  right.</p>
+  <p style="text-align:center"><img src="data/wave7_cost_vs_score.svg" alt="Wave 7 cost vs score" style="max-width:100%"/></p>
+  <p style="text-align:center"><img src="data/wave7_time_vs_score.svg" alt="Wave 7 time vs score" style="max-width:100%"/></p>
+  <div class="exhibit">Exhibit A</div>
+  <h2>The Board</h2>
+  <p class="note">Every model, ten games, identical seeds and investigator rotation.
+  The headline number is the <b>final-20% average</b> — games 9 and 10, after eight games
+  of learning. Each bar below is one game: height is score, gold is a win. Click any bar
+  to step through that game decision by decision.</p>
+  <div class="board" id="board-rows"></div>
+  <div class="legend">bar height = score 0–9<i style="background:var(--gold)"></i>win
+    <i style="background:#3a2c2a"></i>scoreless<i style="background:var(--line)"></i>scored, no win
+    · hover a bar for game number · engine versions differ across waves (see Exhibit B)</div>
+</section>
+
+<section id="waves">
+  <div class="exhibit">Exhibit B</div>
+  <h2>Three gauntlets, one scenario</h2>
+  <p class="note">The same ten-game gauntlet ran three times as models became available.
+  Each wave played a progressively harder-to-cheat engine — the playtest program (Exhibit D)
+  fixed rules bugs between waves, most of which had been quietly pro-player — so cross-wave
+  comparison is indicative, not controlled.</p>
+  <div id="wave-cards"></div>
+</section>
+
+<section id="learning">
+  <div class="exhibit">Exhibit C</div>
+  <h2>Do they learn?</h2>
+  <div class="duo">
+    <div class="panelbox">
+      <h3>The compaction experiment</h3>
+      <p>Hunyuan 3 kept repeating a death it had already written down how to avoid — because
+      its own notebook compaction deleted the lesson. We changed one contract
+      (<i>compact means compress, not discard</i>) and reran the identical gauntlet.
+      Same seeds, same engine. The fatal choice flipped, citing the surviving note.</p>
+      <div class="arc" id="hy3-arc"></div>
+      <p class="campnote">rows: same model, before / after the memory fix · bars are games 1–10</p>
+    </div>
+    <div class="panelbox">
+      <h3>Campaign arcs, notes fed forward</h3>
+      <p>Each model played five full three-scenario campaigns in sequence, sharing one
+      notebook across all five. Bars are campaign scores in the order actually played —
+      a rising shape is cross-campaign learning. Click a bar to open that campaign's
+      first leg.</p>
+      <div class="arc" id="camp-arcs"></div>
+      <p class="campnote" id="camp-note"></p>
+    </div>
+  </div>
+</section>
+
+<section id="playtest">
+  <div class="exhibit">Exhibit D</div>
+  <h2>The second benchmark: can models playtest?</h2>
+  <p class="note">Agents are told verified engine-bug reports outrank score — every adversary
+  becomes an auditor. Reports flow through a tiered pipeline: cheap models play, strong models
+  audit the transcripts, adversarial verification and a final human-tier gate adjudicate.
+  The gate reversed rulings in every direction, including its own, eight times.</p>
+  <p class="note"><b>Wave 6 put a new model in the judge's chair.</b> On its release week,
+  Kimi K3 audited all sixty artifacts of a fresh fifteen-campaign wave — every scenario
+  transcript and every campaign ledger. It filed forty findings: twenty-three confirmed
+  (twenty-two distinct defects, including two exploits and three material-outcome bugs that
+  had survived five prior audit waves), seventeen refuted. Six of the refutations were the
+  transcript's fault, not the judge's — each became an adopted logging improvement — and a
+  Sol counter-audit of six K3-cleared games corroborated five, catching one missed
+  display-severity defect. Lower precision than Sol, more confirmed defects than any
+  auditor before it.</p>
+  <div class="counters" id="counters"></div>
+  <div class="precision" id="precision">
+    <p class="note" style="margin-bottom:6px"><b>Auditor precision</b> — confirmed defects
+    per claim. Playing strength and auditing strength are different skills; the most precise
+    auditor confirmed eighteen of twenty-one claims, the most prolific confirmed twenty-three
+    of forty, and the weakest filed seventy claims for three.</p>
+  </div>
+  <div class="vignettes" id="vignettes"></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Method.</b> Score = max(0, XP − trauma) per the campaign guide. Benchmarks use
+    identical seeds (1001–1010) and an interleaved five-investigator rotation; each agent's
+    persistent notebook starts empty and is its only cross-game memory. Full adjudication
+    record: <a href="https://github.com/clydeiii/arkhambench/blob/main/specs/bug_adjudications.md">specs/bug_adjudications.md</a>.
+    Card data © Fantasy Flight Games via arkhamdb-json-data; this is AI-capabilities
+    research and commentary.</p>
+  </div>
+</footer>
+
+</div>
+<script>
+const REGION = {US:"US", CN:"CN"};
+const px = s => Math.max(4, Math.round(s / 9 * 34));
+
+fetch("data/results.json").then(r => r.json()).then(data => {
+  // ---- Exhibit A: combined board ----
+  const rows = [];
+  for (const wave of data.waves)
+    for (const a of wave.agents)
+      if (a.final20 !== null && !a.label.startsWith("hy3-b2")) // b3 supersedes hy3's b2 entry on the board
+        rows.push({...a, wave: wave.id});
+  rows.sort((x, y) => y.final20 - x.final20 || y.mean - x.mean);
+  const board = document.getElementById("board-rows");
+  rows.forEach((a, i) => {
+    const div = document.createElement("div");
+    div.className = "brow" + (i === 0 ? " first" : "");
+    const pips = a.games.map(g => {
+      const cls = "pip" + (g.win ? " win" : g.score === 0 ? " zero" : " scored") ;
+      const t = `g${g.n} · ${g.investigator} · ${g.score}${g.win ? " · WIN" : ""}`;
+      return `<a class="${cls}" style="height:${px(g.score)}px" title="${t}"
+        href="index.html#run=${g.slug}&step=0"><span>${g.n}</span></a>`;
+    }).join("");
+    div.innerHTML = `
+      <div class="rank">${i + 1}</div>
+      <div class="mname">${a.name}<span class="tag">${REGION[a.region]} · ${a.wave}</span></div>
+      <div class="f20">${a.final20.toFixed(2)}</div>
+      <div class="pips">${pips}</div>`;
+    board.appendChild(div);
+  });
+
+  // ---- Exhibit B: wave cards ----
+  const cards = document.getElementById("wave-cards");
+  for (const wave of data.waves) {
+    const rowsHtml = wave.agents.map(a => {
+      const wins = a.games.filter(g => g.win)
+        .map(g => `<a href="index.html#run=${g.slug}&step=0">${g.outcome} g${g.n}</a>`).join(", ") || "—";
+      const strip = a.games.map(g =>
+        `<a class="pip ${g.win ? "win" : g.score === 0 ? "zero" : "scored"}"
+          style="height:${px(g.score)}px;width:13px" title="g${g.n} · ${g.score}"
+          href="index.html#run=${g.slug}&step=0"></a>`).join("");
+      return `<tr><td>${a.name}</td>
+        <td><div class="pips" style="min-height:30px">${strip}</div></td>
+        <td class="num">${a.mean.toFixed(2)}</td>
+        <td class="f20c">${a.final20 === null ? "—" : a.final20.toFixed(2)}</td>
+        <td>${wins}</td></tr>`;
+    }).join("");
+    const el = document.createElement("div");
+    el.className = "wave";
+    el.innerHTML = `<h3>${wave.title}<span class="wdate">${wave.date}</span></h3>
+      <div class="wnote">${wave.note}</div>
+      <table class="wtable"><thead><tr><th>agent</th><th>games 1–10</th><th>mean</th>
+      <th>final-20%</th><th>wins</th></tr></thead><tbody>${rowsHtml}</tbody></table>`;
+    cards.appendChild(el);
+  }
+
+  // ---- Exhibit C left: hy3 b2 vs b3 ----
+  const hy3 = [];
+  for (const wave of data.waves)
+    for (const a of wave.agents)
+      if (a.label === "hy3-b2" || a.label === "hy3-b3") hy3.push(a);
+  const arcBox = document.getElementById("hy3-arc");
+  for (const a of hy3) {
+    const label = a.label.endsWith("b2") ? "before" : "after";
+    const bars = a.games.map(g =>
+      `<a class="arcbar${g.score >= 5 ? " best" : ""}" style="height:${px(g.score)}px;width:14px"
+        title="g${g.n} · ${g.score}" href="index.html#run=${g.slug}&step=0"></a>`).join("");
+    arcBox.insertAdjacentHTML("beforeend", `<div class="arcrow">
+      <div class="mn">${label}<br><span style="font-family:var(--mono);font-size:11px;color:var(--muted)">mean ${a.mean.toFixed(2)}</span></div>
+      <div class="arcbars">${bars}</div>
+      <div class="arcv">${a.final20 === null ? "" : a.final20.toFixed(2)}</div></div>`);
+  }
+
+  // ---- Exhibit C right: campaign arcs ----
+  const camps = document.getElementById("camp-arcs");
+  for (const m of data.campaigns) {
+    const best = Math.max(...m.campaigns.map(c => c.score));
+    const bars = m.campaigns.map(c => {
+      const firstLeg = c.legs[0];
+      const href = firstLeg ? `index.html#run=${firstLeg.slug}&step=0` : "#";
+      return `<a class="arcbar${c.score === best && best > 0 ? " best" : ""}"
+        style="height:${Math.max(4, Math.round(c.score / 9 * 34))}px"
+        title="${c.investigator} · campaign score ${c.score}" href="${href}"></a>`;
+    }).join("");
+    const total = m.campaigns.reduce((s, c) => s + c.score, 0);
+    camps.insertAdjacentHTML("beforeend", `<div class="arcrow">
+      <div class="mn">${m.name}</div>
+      <div class="arcbars">${bars}</div>
+      <div class="arcv">${total}</div></div>`);
+  }
+  document.getElementById("camp-note").textContent =
+    "right column: total across 5 campaigns · every campaign so far has ended with the investigator dead in the finale";
+
+  // ---- Exhibit D ----
+  const f = data.findings;
+  document.getElementById("counters").innerHTML = `
+    <div class="counter"><div class="big sp">${f.ledger_entries}</div><div class="lab">adjudicated reports</div></div>
+    <div class="counter"><div class="big gd">${f.confirmed_fixed}</div><div class="lab">confirmed &amp; fixed</div></div>
+    <div class="counter"><div class="big dm">${f.not_a_bug}</div><div class="lab">rejected (not a bug)</div></div>
+    <div class="counter"><div class="big sp">7</div><div class="lab">adjudication reversals</div></div>`;
+  const prec = document.getElementById("precision");
+  for (const a of f.auditors) {
+    const pct = Math.round(a.confirmed / a.claims * 100);
+    prec.insertAdjacentHTML("beforeend", `<div class="prow">
+      <div>${a.name}</div>
+      <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
+      <div class="pnum">${a.confirmed}/${a.claims} · ${pct}%</div></div>`);
+  }
+  const vig = document.getElementById("vignettes");
+  for (const v of f.vignettes) {
+    const link = v.slug ? `<a class="go" href="index.html#run=${v.slug}&step=0">→ open the game</a>` : "";
+    vig.insertAdjacentHTML("beforeend",
+      `<div class="vig"><h4>${v.title}</h4><p>${v.text}</p>${link}</div>`);
+  }
+});
+</script>
+</body>
+</html>
