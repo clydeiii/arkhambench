@@ -82,38 +82,64 @@ list prices — both harnesses actually ran on subscriptions.
 
 | Model (harness) | Thinking | R/D/S/A/W | **Total** | Wall clock | Tokens | API-equiv cost |
 |---|---|---|---:|---:|---:|---:|
-| **GPT-5.6 Sol** (codex) | high | 5/3/5/3/4 | **20** | 2.2 h | 2.9 M | **$2.22** |
-| GPT-5.6 Terra (codex) | high | 5/3/1/4/3 | **16** | 1.1 h | 2.8 M | $1.10 |
-| GPT-5.6 Luna (codex) | high | 8/2/0/2/3 | **15** | 1.1 h | 3.1 M | $0.46 |
+| **GPT-5.6 Sol** (codex) | high | 5/3/5/3/4 | **20** | 2.2 h | 110.3 M | $95.37 |
+| GPT-5.6 Terra (codex) | high | 5/3/1/4/3 | **16** | 1.1 h | 68.2 M | $29.01 |
+| GPT-5.6 Luna (codex) | high | 8/2/0/2/3 | **15** | 1.1 h | 81.6 M | **$15.05** |
 | Fable 5 (claude) | adaptive | 5/1/1/2/3 | **12** | 4.9 h | 80.2 M | $134.15 |
 | Opus 4.8 (claude) | adaptive | 4/1/0/1/5 | **11** | 6.9 h | 99.9 M | $96.55 |
-| Sonnet 5 (claude) | adaptive | 1/2/1/3/2 | **9** | 2.5 h | 173.4 M | $70.32 |
 | Kimi K3 (opencode) | provider default | 1/1/2/4/3 | **11** | 8.6 h | 90.5 M | $42.61* |
+| Sonnet 5 (claude) | adaptive | 1/2/1/3/2 | **9** | 2.5 h | 173.4 M | $70.32 |
 | Hunyuan 3 (opencode) | provider default | 4/1/0/1/2 | **8** | 3.4 h | 59.2 M | $3.91* |
 
 ![Cost vs score](results/wave7_cost_vs_score.svg)
 ![Time vs score](results/wave7_time_vs_score.svg)
 
-**The GPT-5.6 family swept the podium — at 1–2% of the cost.** Sol's 20 is
-the best campaign wave any model has posted on the modern engine, and it
-spent $2.22 of API-equivalent tokens doing it; Fable 5, the long-standing
-gauntlet champion, scored 12 for $134. The token gap is structural, not just
-behavioral: the claude harness re-reads its full context every tool call
-(80–173 M mostly-cached tokens), while codex's compaction keeps whole
-campaigns under ~3 M. But the scoreboard gap is real — same engine, same
-seeds, same prompts. Luna's Roland 8 is the single best campaign of the wave.
+**The GPT-5.6 family swept the podium.** Sol's 20 is the best campaign wave
+any model has posted on the modern engine, at a cost in Opus 4.8's bracket;
+Terra and Luna delivered second and third place for $29 and $15 — the best
+points-per-dollar on the board by a wide margin. Fable 5, the long-standing
+gauntlet champion, scored 12 for $134. The scoreboard gap is real — same
+engine, same seeds, same prompts — and the codex lanes were also 2–6×
+faster in wall-clock. Luna's Roland 8 is the single best campaign of the wave.
 
-**The China lanes joined a day later** (OpenRouter budget cap raised) with
-*measured* costs — actual OpenRouter billing summed per message, not list-price
-estimates (marked \*). Kimi K3 tied Opus 4.8's score at less than half the
-API-equivalent price but was the slowest lane on the board (8.6 h — heavy
-per-move deliberation); Hunyuan 3, no longer free but nearly so, delivered 8
-points for $3.91. Neither touches the GPT-5.6 frontier: Luna gets K3's score
-plus four for one percent of K3's spend.
+### A note on token accounting (please read before comparing meters)
+
+An earlier version of this table showed the GPT-5.6 lanes at ~3 M tokens —
+an apparent order of magnitude below everyone else. **That was our
+measurement error, not a real gap**, and the mechanism is worth spelling out
+because it will bite anyone comparing agent-harness token counts:
+
+- Every agent harness here works the same way: one API call per tool use,
+  re-sending the conversation each time. A campaign is 1,000–3,000 calls, so
+  **total token *flows* are dominated by re-read context** — 95–99% of every
+  lane's total was cached input, for all three vendors.
+- The meters just *report* differently. codex's session log emits per-turn
+  token counts and its console prints "tokens used" as roughly fresh input +
+  output only (~0.2 M per lane!); we initially summed the wrong field. The
+  claude CLI reports session-aggregated flows including cache reads;
+  opencode's DB stores per-message flows and billed cost. Once all three are
+  summed the same way — every token that crossed the wire, per call — all
+  eight lanes land in the same 59–173 M band.
+- The *real* structural difference is **context discipline**: codex holds
+  its rolling context to ~31–37 K tokens per call (aggressive pruning,
+  ~2,200–3,000 small calls), while the claude lanes averaged 74–99 K per
+  call (fuller transcripts, ~1,100–1,800 bigger calls). Same order of
+  magnitude in flows; different shape.
+- **Cost divides token flows by cache pricing, and there the spread is
+  real**: cached input bills at ~0.1× on every provider, so what separates a
+  $15 wave (Luna) from a $134 wave (Fable) is mostly price-per-token — and
+  Luna at $1/$6 versus Fable at $10/$50 is the whole story.
+
+**The China lanes** carry *measured* costs — actual OpenRouter billing summed
+per message, not list-price estimates (marked \*). Kimi K3 tied Opus 4.8's
+score at less than half Opus's price but was the slowest lane on the board
+(8.6 h of heavy per-move deliberation); Hunyuan 3, no longer free but nearly
+so, delivered 8 points for $3.91 — the cheapest wave ever run here. Neither
+matches GPT-5.6: Luna beats K3 by four points for a third of its cost.
 
 Telemetry notes: costs for claude lanes are the CLI's own `total_cost_usd`
-(list-price recompute agrees within ~8%); codex costs are computed from the
-per-session input/cached/output/reasoning split in codex's session logs at
+(list-price recompute agrees within ~8%); codex costs are computed from
+per-turn input/cached/output/reasoning sums in codex's session logs at
 $5/$30 (Sol), $2.50/$15 (Terra), $1/$6 (Luna) per Mtok with cached input at
 0.1×. Sonnet 5 priced at intro $2/$10. Raw per-session rows:
 `logs/show3-telemetry.jsonl`; aggregator: `scripts/wave7_report.py`.

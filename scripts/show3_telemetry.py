@@ -86,14 +86,15 @@ def cmd_codex(argv: list[str]) -> int:
             tokens_total = int(nums[-1].replace(",", ""))
     except Exception:
         pass
+    # token_count events are PER-TURN: sum every event for true billed flows
     split = {"input_tokens": 0, "cached_input_tokens": 0, "output_tokens": 0,
              "reasoning_output_tokens": 0}
+    turns = 0
     marker_mtime = marker.stat().st_mtime if marker.exists() else 0
     sessions = Path.home() / ".codex" / "sessions"
     for rollout in sessions.rglob("rollout-*.jsonl"):
         if rollout.stat().st_mtime <= marker_mtime:
             continue
-        last = {}
         try:
             for line in rollout.read_text(encoding="utf-8", errors="replace").splitlines():
                 if '"input_tokens"' not in line:
@@ -103,18 +104,21 @@ def cmd_codex(argv: list[str]) -> int:
                 except Exception:
                     continue
                 text = json.dumps(event)
+                vals = {}
                 for key in split:
                     found = re.findall(rf'"{key}":\s*(\d+)', text)
                     if found:
-                        last[key] = int(found[-1])
+                        vals[key] = int(found[-1])
+                if vals:
+                    turns += 1
+                    for key, value in vals.items():
+                        split[key] += value
         except Exception:
             continue
-        for key, value in last.items():
-            split[key] += value
-    row = {**meta, **split, "tokens_used_reported": tokens_total, "ts": int(time.time())}
-    row["total_tokens"] = tokens_total if tokens_total is not None else (
-        split["input_tokens"] + split["output_tokens"]
-    )
+    row = {**meta, **split, "tokens_used_reported": tokens_total,
+           "turns": turns, "ts": int(time.time())}
+    row["total_tokens"] = (split["input_tokens"] + split["output_tokens"]
+                           + split["reasoning_output_tokens"])
     emit(row)
     return 0
 
