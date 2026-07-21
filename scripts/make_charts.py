@@ -230,10 +230,12 @@ def main() -> int:
 WAVE7_COLORS = {
     "fable": "#6b46c1", "sonnet": "#d69e2e", "opus": "#2b6cb0",
     "sol": "#c05621", "terra": "#2f855a", "luna": "#38a169",
+    "hy3": "#718096", "k3": "#dd6b20",
 }
 WAVE7_NAMES = {
     "fable": "Fable 5", "sonnet": "Sonnet 5", "opus": "Opus 4.8",
     "sol": "GPT-5.6 Sol", "terra": "GPT-5.6 Terra", "luna": "GPT-5.6 Luna",
+    "hy3": "Hunyuan 3", "k3": "Kimi K3",
 }
 
 

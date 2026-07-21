@@ -51,7 +51,7 @@ def list_price_cost(row: dict) -> float | None:
 def main() -> int:
     rows = [json.loads(line) for line in
             (ROOT / "logs/show3-telemetry.jsonl").read_text().splitlines() if line.strip()]
-    rows = [r for r in rows if not r.get("error") and r.get("lane") not in ("hy3", "k3")]
+    rows = [r for r in rows if not r.get("error") and int(r.get("seconds", 0)) > 5]
     lanes: dict[str, dict] = {}
     campaigns: dict[str, dict] = {}
     for r in rows:
@@ -74,6 +74,8 @@ def main() -> int:
             b["output_tokens"] += int(r.get("output_tokens") or 0) + int(r.get("reasoning_output_tokens") or 0)
             if r.get("cli_cost_usd") is not None:
                 b["cli_cost_usd"] += float(r["cli_cost_usd"])
+            if r.get("opencode_cost_usd") is not None:
+                b["cli_cost_usd"] += float(r["opencode_cost_usd"])
             lp = list_price_cost(r)
             if lp is None:
                 b["list_cost_known"] = False

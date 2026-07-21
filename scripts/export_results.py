@@ -77,6 +77,8 @@ CAMPAIGN_MODELS = [
     ("show3-fable-", "Fable 5 \u2014 w7 telemetry", "US"),
     ("show3-opus-", "Opus 4.8 \u2014 w7 telemetry", "US"),
     ("show3-sonnet-", "Sonnet 5 \u2014 w7 telemetry", "US"),
+    ("show3-hy3-", "Hunyuan 3 \u2014 w7 telemetry", "CN"),
+    ("show3-k3-", "Kimi K3 \u2014 w7 telemetry", "CN"),
 ]
 
 

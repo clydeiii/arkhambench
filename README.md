@@ -88,6 +88,8 @@ list prices — both harnesses actually ran on subscriptions.
 | Fable 5 (claude) | adaptive | 5/1/1/2/3 | **12** | 4.9 h | 80.2 M | $134.15 |
 | Opus 4.8 (claude) | adaptive | 4/1/0/1/5 | **11** | 6.9 h | 99.9 M | $96.55 |
 | Sonnet 5 (claude) | adaptive | 1/2/1/3/2 | **9** | 2.5 h | 173.4 M | $70.32 |
+| Kimi K3 (opencode) | provider default | 1/1/2/4/3 | **11** | 8.6 h | 90.5 M | $42.61* |
+| Hunyuan 3 (opencode) | provider default | 4/1/0/1/2 | **8** | 3.4 h | 59.2 M | $3.91* |
 
 ![Cost vs score](results/wave7_cost_vs_score.svg)
 ![Time vs score](results/wave7_time_vs_score.svg)
@@ -101,6 +103,14 @@ behavioral: the claude harness re-reads its full context every tool call
 campaigns under ~3 M. But the scoreboard gap is real — same engine, same
 seeds, same prompts. Luna's Roland 8 is the single best campaign of the wave.
 
+**The China lanes joined a day later** (OpenRouter budget cap raised) with
+*measured* costs — actual OpenRouter billing summed per message, not list-price
+estimates (marked \*). Kimi K3 tied Opus 4.8's score at less than half the
+API-equivalent price but was the slowest lane on the board (8.6 h — heavy
+per-move deliberation); Hunyuan 3, no longer free but nearly so, delivered 8
+points for $3.91. Neither touches the GPT-5.6 frontier: Luna gets K3's score
+plus four for one percent of K3's spend.
+
 Telemetry notes: costs for claude lanes are the CLI's own `total_cost_usd`
 (list-price recompute agrees within ~8%); codex costs are computed from the
 per-session input/cached/output/reasoning split in codex's session logs at
@@ -108,8 +118,7 @@ $5/$30 (Sol), $2.50/$15 (Terra), $1/$6 (Luna) per Mtok with cached input at
 0.1×. Sonnet 5 priced at intro $2/$10. Raw per-session rows:
 `logs/show3-telemetry.jsonl`; aggregator: `scripts/wave7_report.py`.
 Cross-wave caveat: prior waves (b4/w6) ran older engines; within-wave
-comparisons are the controlled ones. An hy3 + Kimi K3 lane is prepared but
-awaits OpenRouter budget headroom.
+comparisons are the controlled ones. The hy3 + K3 lanes' combined real-dollar cost, including probes: $43.84.
 
 ## Benchmark results — main run (2026-07-05)
 
