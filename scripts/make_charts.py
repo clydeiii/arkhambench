@@ -213,8 +213,94 @@ def main() -> int:
         print("steps_vs_score_b1.svg written")
     if steps_and_score(out_dir / "steps_vs_score_b2.svg", B2_AGENTS, "Game length vs score — open-weights run (China open models)"):
         print("steps_vs_score_b2.svg written")
+    if wave7_scatter(out_dir / "wave7_cost_vs_score.svg", "cost",
+                     "API-equivalent cost (USD, log scale)",
+                     "Wave 7: what a campaign wave costs vs how it scores", log_y=True):
+        print("wave7_cost_vs_score.svg written")
+    if wave7_scatter(out_dir / "wave7_time_vs_score.svg", "hours",
+                     "wall-clock hours for all 5 campaigns",
+                     "Wave 7: how long a campaign wave takes vs how it scores"):
+        print("wave7_time_vs_score.svg written")
     print(f"charts written to {out_dir}/")
     return 0
+
+
+
+
+WAVE7_COLORS = {
+    "fable": "#6b46c1", "sonnet": "#d69e2e", "opus": "#2b6cb0",
+    "sol": "#c05621", "terra": "#2f855a", "luna": "#38a169",
+}
+WAVE7_NAMES = {
+    "fable": "Fable 5", "sonnet": "Sonnet 5", "opus": "Opus 4.8",
+    "sol": "GPT-5.6 Sol", "terra": "GPT-5.6 Terra", "luna": "GPT-5.6 Luna",
+}
+
+
+def wave7_scatter(out: Path, y_key: str, y_label: str, title: str, log_y: bool = False) -> bool:
+    """Artificial-Analysis-style scatter: campaign score on x, cost/time on y."""
+    import math
+
+    summary_path = ROOT / "results" / "wave7_summary.json"
+    if not summary_path.exists():
+        return False
+    lanes = json.loads(summary_path.read_text())["lanes"]
+    pts = []
+    for lane, b in lanes.items():
+        if lane not in WAVE7_NAMES or not b.get("score_total"):
+            continue
+        y = b["seconds"] / 3600 if y_key == "hours" else (b["cli_cost_usd"] or b["list_cost_usd"])
+        pts.append((lane, b["score_total"], y))
+    if not pts:
+        return False
+    width, height = 760, 460
+    left, right, top, bottom = 70, 30, 46, 60
+    plot_w, plot_h = width - left - right, height - top - bottom
+    xs = [p[1] for p in pts]
+    ys = [p[2] for p in pts]
+    x_min, x_max = 0, max(xs) * 1.15
+    if log_y:
+        y_min = min(ys) * 0.6
+        y_max = max(ys) * 1.8
+        def ty(v):
+            return top + plot_h - (math.log10(v) - math.log10(y_min)) / (math.log10(y_max) - math.log10(y_min)) * plot_h
+    else:
+        y_min, y_max = 0, max(ys) * 1.15
+        def ty(v):
+            return top + plot_h - (v - y_min) / (y_max - y_min) * plot_h
+
+    def tx(v):
+        return left + (v - x_min) / (x_max - x_min) * plot_w
+
+    parts = svg_header(width, height)
+    parts.append(f'<text x="{left}" y="24" font-size="17" font-weight="bold">{title}</text>')
+    for gx in range(0, int(x_max) + 1, 5):
+        parts.append(f'<line x1="{tx(gx)}" y1="{top}" x2="{tx(gx)}" y2="{top+plot_h}" stroke="#eee"/>')
+        parts.append(f'<text x="{tx(gx)}" y="{top+plot_h+18}" font-size="11" text-anchor="middle" fill="#555">{gx}</text>')
+    ticks = [0.5, 1, 2, 5, 10, 20, 50, 100, 200] if log_y else None
+    if log_y:
+        for t in ticks:
+            if y_min <= t <= y_max:
+                parts.append(f'<line x1="{left}" y1="{ty(t)}" x2="{left+plot_w}" y2="{ty(t)}" stroke="#eee"/>')
+                parts.append(f'<text x="{left-8}" y="{ty(t)+4}" font-size="11" text-anchor="end" fill="#555">${t:g}</text>')
+    else:
+        step = max(1, round(y_max / 6))
+        v = 0
+        while v <= y_max:
+            parts.append(f'<line x1="{left}" y1="{ty(v)}" x2="{left+plot_w}" y2="{ty(v)}" stroke="#eee"/>')
+            parts.append(f'<text x="{left-8}" y="{ty(v)+4}" font-size="11" text-anchor="end" fill="#555">{v:g}</text>')
+            v += step
+    parts.append(f'<text x="{left+plot_w/2}" y="{height-14}" font-size="12" text-anchor="middle" fill="#555">campaign score total (5 campaigns, seeds 9401–9405) — right is better</text>')
+    parts.append(f'<text x="18" y="{top+plot_h/2}" font-size="12" fill="#555" transform="rotate(-90 18 {top+plot_h/2})" text-anchor="middle">{y_label} — lower is better</text>')
+    for lane, x, y in pts:
+        color = WAVE7_COLORS[lane]
+        parts.append(f'<circle cx="{tx(x)}" cy="{ty(y)}" r="7" fill="{color}" opacity="0.85"/>')
+        anchor = "end" if x > x_max * 0.82 else "start"
+        dx = -11 if anchor == "end" else 11
+        parts.append(f'<text x="{tx(x)+dx}" y="{ty(y)+4}" font-size="12" font-weight="bold" fill="{color}" text-anchor="{anchor}">{WAVE7_NAMES[lane]}</text>')
+    parts.append("</svg>")
+    out.write_text("\n".join(parts), encoding="utf-8")
+    return True
 
 
 if __name__ == "__main__":

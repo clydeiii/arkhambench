@@ -71,6 +71,12 @@ CAMPAIGN_MODELS = [
     ("show2-hy3-", "Hunyuan 3 \u2014 w6 rematch", "CN"),
     ("show2-luna-", "GPT-5.6 Luna \u2014 w6 rematch", "US"),
     ("show2-sonnet-", "Sonnet 5 \u2014 w6", "US"),
+    ("show3-sol-", "GPT-5.6 Sol \u2014 w7 telemetry", "US"),
+    ("show3-terra-", "GPT-5.6 Terra \u2014 w7 telemetry", "US"),
+    ("show3-luna-", "GPT-5.6 Luna \u2014 w7 telemetry", "US"),
+    ("show3-fable-", "Fable 5 \u2014 w7 telemetry", "US"),
+    ("show3-opus-", "Opus 4.8 \u2014 w7 telemetry", "US"),
+    ("show3-sonnet-", "Sonnet 5 \u2014 w7 telemetry", "US"),
 ]
 
 

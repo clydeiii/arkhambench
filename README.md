@@ -69,6 +69,48 @@ composite score is for the benchmark's single number, the dimensions are for ana
 (An earlier formula added +3 for Lita; dropped once the campaign guide confirmed she is
 earned in all outcomes but R2 regardless of play.)
 
+## Wave 7 — the fully-instrumented campaign wave (2026-07-20/21)
+
+Six subscription-tier frontier models, five full Return to Night of the Zealot
+campaigns each (seeds 9401–9405, engine at 429 tests), with — for the first
+time — **complete per-session telemetry**: thinking level, tokens, wall-clock
+time, and API-equivalent cost. Claude lanes ran via the claude CLI
+(harness-default adaptive thinking); GPT-5.6 lanes ran via codex at
+**reasoning effort high** (which, we can now confirm, is what every prior
+codex wave used too). Costs are what the tokens *would* bill at July-2026 API
+list prices — both harnesses actually ran on subscriptions.
+
+| Model (harness) | Thinking | R/D/S/A/W | **Total** | Wall clock | Tokens | API-equiv cost |
+|---|---|---|---:|---:|---:|---:|
+| **GPT-5.6 Sol** (codex) | high | 5/3/5/3/4 | **20** | 2.2 h | 2.9 M | **$2.22** |
+| GPT-5.6 Terra (codex) | high | 5/3/1/4/3 | **16** | 1.1 h | 2.8 M | $1.10 |
+| GPT-5.6 Luna (codex) | high | 8/2/0/2/3 | **15** | 1.1 h | 3.1 M | $0.46 |
+| Fable 5 (claude) | adaptive | 5/1/1/2/3 | **12** | 4.9 h | 80.2 M | $134.15 |
+| Opus 4.8 (claude) | adaptive | 4/1/0/1/5 | **11** | 6.9 h | 99.9 M | $96.55 |
+| Sonnet 5 (claude) | adaptive | 1/2/1/3/2 | **9** | 2.5 h | 173.4 M | $70.32 |
+
+![Cost vs score](results/wave7_cost_vs_score.svg)
+![Time vs score](results/wave7_time_vs_score.svg)
+
+**The GPT-5.6 family swept the podium — at 1–2% of the cost.** Sol's 20 is
+the best campaign wave any model has posted on the modern engine, and it
+spent $2.22 of API-equivalent tokens doing it; Fable 5, the long-standing
+gauntlet champion, scored 12 for $134. The token gap is structural, not just
+behavioral: the claude harness re-reads its full context every tool call
+(80–173 M mostly-cached tokens), while codex's compaction keeps whole
+campaigns under ~3 M. But the scoreboard gap is real — same engine, same
+seeds, same prompts. Luna's Roland 8 is the single best campaign of the wave.
+
+Telemetry notes: costs for claude lanes are the CLI's own `total_cost_usd`
+(list-price recompute agrees within ~8%); codex costs are computed from the
+per-session input/cached/output/reasoning split in codex's session logs at
+$5/$30 (Sol), $2.50/$15 (Terra), $1/$6 (Luna) per Mtok with cached input at
+0.1×. Sonnet 5 priced at intro $2/$10. Raw per-session rows:
+`logs/show3-telemetry.jsonl`; aggregator: `scripts/wave7_report.py`.
+Cross-wave caveat: prior waves (b4/w6) ran older engines; within-wave
+comparisons are the controlled ones. An hy3 + Kimi K3 lane is prepared but
+awaits OpenRouter budget headroom.
+
 ## Benchmark results — main run (2026-07-05)
 
 **Setup:** four agents, ten games each, *Return to The Gathering* on Standard,
