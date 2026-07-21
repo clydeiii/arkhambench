@@ -214,12 +214,12 @@ def main() -> int:
     if steps_and_score(out_dir / "steps_vs_score_b2.svg", B2_AGENTS, "Game length vs score — open-weights run (China open models)"):
         print("steps_vs_score_b2.svg written")
     if wave7_scatter(out_dir / "wave7_cost_vs_score.svg", "cost",
-                     "API-equivalent cost (USD, log scale)",
-                     "Wave 7: what a campaign wave costs vs how it scores", log_y=True):
+                     "API-equivalent cost for all 5 campaigns (USD, log scale) \u2014 cheaper \u2192",
+                     "Wave 7: campaign score vs cost", log_x=True):
         print("wave7_cost_vs_score.svg written")
     if wave7_scatter(out_dir / "wave7_time_vs_score.svg", "hours",
-                     "wall-clock hours for all 5 campaigns",
-                     "Wave 7: how long a campaign wave takes vs how it scores"):
+                     "wall-clock time for all 5 campaigns \u2014 faster \u2192",
+                     "Wave 7: campaign score vs time"):
         print("wave7_time_vs_score.svg written")
     print(f"charts written to {out_dir}/")
     return 0
@@ -237,8 +237,9 @@ WAVE7_NAMES = {
 }
 
 
-def wave7_scatter(out: Path, y_key: str, y_label: str, title: str, log_y: bool = False) -> bool:
-    """Artificial-Analysis-style scatter: campaign score on x, cost/time on y."""
+def wave7_scatter(out: Path, x_key: str, x_label: str, title: str, log_x: bool = False) -> bool:
+    """Up-and-to-the-right scatter: score on y; cost/time on a REVERSED x
+    (most expensive/slowest on the left, cheapest/fastest on the right)."""
     import math
 
     summary_path = ROOT / "results" / "wave7_summary.json"
@@ -249,58 +250,64 @@ def wave7_scatter(out: Path, y_key: str, y_label: str, title: str, log_y: bool =
     for lane, b in lanes.items():
         if lane not in WAVE7_NAMES or not b.get("score_total"):
             continue
-        y = b["seconds"] / 3600 if y_key == "hours" else (b["cli_cost_usd"] or b["list_cost_usd"])
-        pts.append((lane, b["score_total"], y))
+        x = b["seconds"] / 3600 if x_key == "hours" else (b["cli_cost_usd"] or b["list_cost_usd"])
+        pts.append((lane, x, b["score_total"]))
     if not pts:
         return False
     width, height = 760, 460
-    left, right, top, bottom = 70, 30, 46, 60
+    left, right, top, bottom = 64, 30, 46, 64
     plot_w, plot_h = width - left - right, height - top - bottom
     xs = [p[1] for p in pts]
     ys = [p[2] for p in pts]
-    x_min, x_max = 0, max(xs) * 1.15
-    if log_y:
-        y_min = min(ys) * 0.6
-        y_max = max(ys) * 1.8
-        def ty(v):
-            return top + plot_h - (math.log10(v) - math.log10(y_min)) / (math.log10(y_max) - math.log10(y_min)) * plot_h
+    if log_x:
+        x_lo, x_hi = min(xs) * 0.6, max(xs) * 1.8
+        def fx(v):  # reversed: high cost -> left
+            frac = (math.log10(v) - math.log10(x_lo)) / (math.log10(x_hi) - math.log10(x_lo))
+            return left + (1 - frac) * plot_w
     else:
-        y_min, y_max = 0, max(ys) * 1.15
-        def ty(v):
-            return top + plot_h - (v - y_min) / (y_max - y_min) * plot_h
-
-    def tx(v):
-        return left + (v - x_min) / (x_max - x_min) * plot_w
+        x_lo, x_hi = 0, max(xs) * 1.15
+        def fx(v):
+            return left + (1 - (v - x_lo) / (x_hi - x_lo)) * plot_w
+    y_hi = max(ys) * 1.2
+    def fy(v):
+        return top + plot_h - v / y_hi * plot_h
 
     parts = svg_header(width, height)
     parts.append(f'<text x="{left}" y="24" font-size="17" font-weight="bold">{title}</text>')
-    for gx in range(0, int(x_max) + 1, 5):
-        parts.append(f'<line x1="{tx(gx)}" y1="{top}" x2="{tx(gx)}" y2="{top+plot_h}" stroke="#eee"/>')
-        parts.append(f'<text x="{tx(gx)}" y="{top+plot_h+18}" font-size="11" text-anchor="middle" fill="#555">{gx}</text>')
-    ticks = [0.5, 1, 2, 5, 10, 20, 50, 100, 200] if log_y else None
-    if log_y:
-        for t in ticks:
-            if y_min <= t <= y_max:
-                parts.append(f'<line x1="{left}" y1="{ty(t)}" x2="{left+plot_w}" y2="{ty(t)}" stroke="#eee"/>')
-                parts.append(f'<text x="{left-8}" y="{ty(t)+4}" font-size="11" text-anchor="end" fill="#555">${t:g}</text>')
+    for gy in range(0, int(y_hi) + 1, 5):
+        parts.append(f'<line x1="{left}" y1="{fy(gy)}" x2="{left+plot_w}" y2="{fy(gy)}" stroke="#eee"/>')
+        parts.append(f'<text x="{left-8}" y="{fy(gy)+4}" font-size="11" text-anchor="end" fill="#555">{gy}</text>')
+    if log_x:
+        ticks = [t for t in (0.25, 0.5, 1, 2, 5, 10, 20, 50, 100, 200) if x_lo <= t <= x_hi]
+        fmt = lambda t: f"${t:g}"
     else:
-        step = max(1, round(y_max / 6))
-        v = 0
-        while v <= y_max:
-            parts.append(f'<line x1="{left}" y1="{ty(v)}" x2="{left+plot_w}" y2="{ty(v)}" stroke="#eee"/>')
-            parts.append(f'<text x="{left-8}" y="{ty(v)+4}" font-size="11" text-anchor="end" fill="#555">{v:g}</text>')
-            v += step
-    parts.append(f'<text x="{left+plot_w/2}" y="{height-14}" font-size="12" text-anchor="middle" fill="#555">campaign score total (5 campaigns, seeds 9401–9405) — right is better</text>')
-    parts.append(f'<text x="18" y="{top+plot_h/2}" font-size="12" fill="#555" transform="rotate(-90 18 {top+plot_h/2})" text-anchor="middle">{y_label} — lower is better</text>')
-    for lane, x, y in pts:
+        step = max(1, round(x_hi / 6))
+        ticks = [v for v in range(0, int(x_hi) + 1, step)]
+        fmt = lambda t: f"{t:g}h"
+    for t in ticks:
+        if not log_x and t == 0:
+            continue
+        parts.append(f'<line x1="{fx(t)}" y1="{top}" x2="{fx(t)}" y2="{top+plot_h}" stroke="#eee"/>')
+        parts.append(f'<text x="{fx(t)}" y="{top+plot_h+18}" font-size="11" text-anchor="middle" fill="#555">{fmt(t)}</text>')
+    parts.append(f'<text x="{left+plot_w/2}" y="{height-14}" font-size="12" text-anchor="middle" fill="#555">{x_label}</text>')
+    parts.append(f'<text x="16" y="{top+plot_h/2}" font-size="12" fill="#555" transform="rotate(-90 16 {top+plot_h/2})" text-anchor="middle">campaign score (5 campaigns, seeds 9401\u20139405) \u2014 higher is better</text>')
+    parts.append(f'<text x="{left+plot_w-6}" y="{top+16}" font-size="11" text-anchor="end" fill="#8a6bb8">\u2197 up and to the right is better</text>')
+    placed = []  # (x, y) of already-placed labels; nudge collisions apart
+    for lane, x, y in sorted(pts, key=lambda p: (fx(p[1]), fy(p[2]))):
         color = WAVE7_COLORS[lane]
-        parts.append(f'<circle cx="{tx(x)}" cy="{ty(y)}" r="7" fill="{color}" opacity="0.85"/>')
-        anchor = "end" if x > x_max * 0.82 else "start"
-        dx = -11 if anchor == "end" else 11
-        parts.append(f'<text x="{tx(x)+dx}" y="{ty(y)+4}" font-size="12" font-weight="bold" fill="{color}" text-anchor="{anchor}">{WAVE7_NAMES[lane]}</text>')
+        parts.append(f'<circle cx="{fx(x)}" cy="{fy(y)}" r="7" fill="{color}" opacity="0.85"/>')
+        anchor = "start" if fx(x) < left + plot_w * 0.75 else "end"
+        dx = 11 if anchor == "start" else -11
+        lx, ly = fx(x) + dx, fy(y) + 4
+        for px, py in placed:
+            if abs(lx - px) < 110 and abs(ly - py) < 15:
+                ly = py + 16  # push below the earlier label
+        placed.append((lx, ly))
+        parts.append(f'<text x="{lx}" y="{ly}" font-size="12" font-weight="bold" fill="{color}" text-anchor="{anchor}">{WAVE7_NAMES[lane]}</text>')
     parts.append("</svg>")
     out.write_text("\n".join(parts), encoding="utf-8")
     return True
+
 
 
 if __name__ == "__main__":
