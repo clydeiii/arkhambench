@@ -161,6 +161,7 @@ const MODEL_GROUPS = [
   ["show3-luna-", "GPT-5.6 Luna"],
   ["show3-hy3-", "Hunyuan 3"],
   ["show3-k3-", "Kimi K3"],
+  ["show3-opus5-", "Opus 5"],
   ["c7l1-", "C7 playtests"],
   ["c7l2-", "C7 playtests"],
   ["c7mop-", "C7 playtests"],

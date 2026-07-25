@@ -14,6 +14,7 @@ case "$LANE" in
   fable)  HARNESS=claude; MODEL=claude-fable-5;  REASONING="adaptive (harness default)";;
   sonnet) HARNESS=claude; MODEL=claude-sonnet-5; REASONING="adaptive (harness default)";;
   opus)   HARNESS=claude; MODEL=claude-opus-4-8; REASONING="adaptive (harness default)";;
+  opus5)  HARNESS=claude; MODEL=claude-opus-5;   REASONING="adaptive (harness default)";;
   sol)    HARNESS=codex;  MODEL=gpt-5.6-sol;     REASONING="high (config.toml)";;
   terra)  HARNESS=codex;  MODEL=gpt-5.6-terra;   REASONING="high (config.toml)";;
   luna)   HARNESS=codex;  MODEL=gpt-5.6-luna;    REASONING="high (config.toml)";;

@@ -82,7 +82,8 @@ list prices — both harnesses actually ran on subscriptions.
 
 | Model (harness) | Thinking | R/D/S/A/W | **Total** | Wall clock | Tokens | API-equiv cost |
 |---|---|---|---:|---:|---:|---:|
-| **GPT-5.6 Sol** (codex) | high | 5/3/5/3/4 | **20** | 2.2 h | 110.3 M | $95.37 |
+| **Opus 5** (claude) | adaptive | 12/3/7/7/6 | **35** | 6.9 h | 246.2 M | $194.63 |
+| GPT-5.6 Sol (codex) | high | 5/3/5/3/4 | **20** | 2.2 h | 110.3 M | $95.37 |
 | GPT-5.6 Terra (codex) | high | 5/3/1/4/3 | **16** | 1.1 h | 68.2 M | $29.01 |
 | GPT-5.6 Luna (codex) | high | 8/2/0/2/3 | **15** | 1.1 h | 81.6 M | **$15.05** |
 | Fable 5 (claude) | adaptive | 5/1/1/2/3 | **12** | 4.9 h | 80.2 M | $134.15 |
@@ -94,8 +95,19 @@ list prices — both harnesses actually ran on subscriptions.
 ![Cost vs score](results/wave7_cost_vs_score.svg)
 ![Time vs score](results/wave7_time_vs_score.svg)
 
-**The GPT-5.6 family swept the podium.** Sol's 20 is the best campaign wave
-any model has posted on the modern engine, at a cost in Opus 4.8's bracket;
+**Launch-day addendum (July 24): Opus 5 rewrote the board.** Added under the
+identical protocol the day Anthropic shipped it, Opus 5 scored **35** — 75%
+above Sol's 20, with seven R1 wins across the wave and a 12-point Roland
+campaign (back-to-back R1s) that is the best single campaign ever recorded
+here. At $5/$25 it cost $195 — double Sol, half of what Fable's rate would
+have charged for this volume — and even Opus 5 could not crack the Devourer
+finale: all five investigators died, extending the streak to 0-for-50.
+Anthropic's "near-Fable at half price" pitch undersells it on this task:
+it nearly tripled Fable's score.
+
+**Before that, the GPT-5.6 family had swept the podium.** Sol's 20 was the
+best campaign wave any model had posted on the modern engine, at a cost in
+Opus 4.8's bracket;
 Terra and Luna delivered second and third place for $29 and $15 — the best
 points-per-dollar on the board by a wide margin. Fable 5, the long-standing
 gauntlet champion, scored 12 for $134. The scoreboard gap is real — same
