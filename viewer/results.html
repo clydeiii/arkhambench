@@ -101,6 +101,10 @@ h2{font-size:clamp(22px,3.4vw,32px); font-weight:400; margin:8px 0 6px}
 .pbar{height:12px; background:var(--panel2); border:1px solid var(--line); border-radius:3px; overflow:hidden}
 .pfill{height:100%; background:var(--spectral)}
 .pnum{font-family:var(--mono); font-size:13px; color:var(--muted); text-align:right}
+.scatter{margin-top:26px; background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:18px 12px 8px}
+.scatter svg text{font-family:var(--mono)}
+.scatter .dot{cursor:default}
+.scatter .dot:hover circle{stroke:var(--ink); stroke-width:2}
 .vignettes{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:34px}
 @media (max-width:760px){.vignettes{grid-template-columns:1fr}}
 .vig{background:var(--panel); border:1px solid var(--line); border-left:3px solid var(--doom); border-radius:6px; padding:22px 24px}
@@ -158,8 +162,8 @@ footer .wrap{max-width:72ch; margin:0}
   note); price-per-token and context discipline set the spread. Score climbs the y-axis;
   cost (log scale) and time run right-to-left — the models you want are up and to the
   right.</p>
-  <p style="text-align:center"><img src="data/wave7_cost_vs_score.svg" alt="Wave 7 cost vs score" style="max-width:100%"/></p>
-  <p style="text-align:center"><img src="data/wave7_time_vs_score.svg" alt="Wave 7 time vs score" style="max-width:100%"/></p>
+  <div class="scatter" id="scatter-cost"></div>
+  <div class="scatter" id="scatter-time"></div>
 </section>
 
 <section id="archive">
@@ -295,6 +299,60 @@ fetch("data/results.json").then(r => r.json()).then(data => {
       <div class="pips">${pips}</div>`;
     w7board.appendChild(div);
   });
+
+  // ---- Exhibit 0: native scatters (score on y; cost/time reversed on x) ----
+  const W7C = {opus5:"#d8a54a", sol:"#c65f57", terra:"#74d8a4", luna:"#4aa877",
+               fable:"#9a7fd1", opus:"#5b8fd6", sonnet:"#c9a24a", k3:"#d07a3a", hy3:"#8a958c"};
+  function renderScatter(elId, rows, opts) {
+    const el = document.getElementById(elId);
+    if (!el || !rows.length) return;
+    const W = Math.min(el.clientWidth || 900, 980), H = 440;
+    const L = 54, R = 26, T = 40, B = 58;
+    const pw = W - L - R, ph = H - T - B;
+    const xs = rows.map(opts.x), ys = rows.map(r => r.score);
+    const yHi = Math.max(...ys) * 1.18;
+    let xLo, xHi, fx;
+    if (opts.log) {
+      xLo = Math.min(...xs) * 0.6; xHi = Math.max(...xs) * 1.8;
+      fx = v => L + (1 - (Math.log10(v) - Math.log10(xLo)) / (Math.log10(xHi) - Math.log10(xLo))) * pw;
+    } else {
+      xLo = 0; xHi = Math.max(...xs) * 1.15;
+      fx = v => L + (1 - (v - xLo) / (xHi - xLo)) * pw;
+    }
+    const fy = v => T + ph - v / yHi * ph;
+    let g = "";
+    for (let gy = 0; gy <= yHi; gy += 5) {
+      g += `<line x1="${L}" y1="${fy(gy)}" x2="${L+pw}" y2="${fy(gy)}" stroke="var(--line)"/>`
+         + `<text x="${L-8}" y="${fy(gy)+4}" font-size="11" text-anchor="end" fill="var(--muted)">${gy}</text>`;
+    }
+    const ticks = opts.log ? [0.5,1,2,5,10,20,50,100,200].filter(t => t >= xLo && t <= xHi)
+                           : Array.from({length: 8}, (_, i) => Math.round(xHi / 7 * i)).filter(t => t > 0);
+    for (const t of ticks) {
+      g += `<line x1="${fx(t)}" y1="${T}" x2="${fx(t)}" y2="${T+ph}" stroke="var(--line)" opacity="0.6"/>`
+         + `<text x="${fx(t)}" y="${T+ph+18}" font-size="11" text-anchor="middle" fill="var(--muted)">${opts.fmt(t)}</text>`;
+    }
+    g += `<text x="${L+pw/2}" y="${H-12}" font-size="12" text-anchor="middle" fill="var(--muted)">${opts.label}</text>`;
+    g += `<text x="${L+pw-4}" y="${T+14}" font-size="11" text-anchor="end" fill="var(--spectral)">\u2197 up and to the right is better</text>`;
+    const placed = [];
+    for (const r of rows.slice().sort((a, b) => fx(opts.x(a)) - fx(opts.x(b)))) {
+      const cx = fx(opts.x(r)), cy = fy(r.score), col = W7C[r.lane] || "var(--muted)";
+      const anchor = cx < L + pw * 0.75 ? "start" : "end";
+      let lx = cx + (anchor === "start" ? 11 : -11), ly = cy + 4;
+      for (const [px, py] of placed)
+        if (Math.abs(lx - px) < 120 && Math.abs(ly - py) < 15) ly = py + 16;
+      placed.push([lx, ly]);
+      g += `<g class="dot"><title>${r.name} \u00b7 ${r.score} pts \u00b7 $${r.cost}${r.measured ? "*" : ""} \u00b7 ${r.hours}h</title>`
+         + `<circle cx="${cx}" cy="${cy}" r="7" fill="${col}" opacity="0.9"/>`
+         + `<text x="${lx}" y="${ly}" font-size="12.5" font-weight="bold" fill="${col}" text-anchor="${anchor}">${r.name}</text></g>`;
+    }
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto" role="img">${g}</svg>`;
+  }
+  renderScatter("scatter-cost", data.wave7 || [], {
+    x: r => r.cost, log: true, fmt: t => "$" + t,
+    label: "API-equivalent cost for all 5 campaigns (USD, log scale) \u2014 cheaper \u2192"});
+  renderScatter("scatter-time", data.wave7 || [], {
+    x: r => r.hours, log: false, fmt: t => t + "h",
+    label: "wall-clock time for all 5 campaigns \u2014 faster \u2192"});
 
   // ---- Exhibit A: combined board ----
   const rows = [];

@@ -482,6 +482,7 @@ def run_bench(args: argparse.Namespace) -> int:
                 continue
 
             start = time.monotonic()
+            start_epoch = int(time.time())
             if (run_dir / "state.json").exists() and run_status(run_dir) == "in_progress":
                 # Crash/outage resume: the game exists mid-play — never re-new
                 # (that would wipe the run); hand it straight back to the agent.
@@ -516,6 +517,17 @@ def run_bench(args: argparse.Namespace) -> int:
                 row = incomplete_row(game, seed, elapsed, investigator=investigator)
             rows = upsert_row(rows, row)
             write_artifacts(label_dir, args.label, rows, games)
+            try:
+                subprocess.run(
+                    [sys.executable, "scripts/show3_telemetry.py", "harvest",
+                     str(start_epoch), str(int(time.time())), args.agent, "--meta",
+                     f"lane={args.label}", f"campaign={args.label}/game-{game:02d}",
+                     f"session={game}", f"model={args.agent}", "harness=bench",
+                     f"seconds={int(elapsed)}", f"start={start_epoch}",
+                     "outfile=logs/bench-telemetry.jsonl"],
+                    cwd=ROOT, check=False)
+            except Exception as exc:
+                print(f"telemetry harvest failed for game {game}: {exc}", file=sys.stderr)
     return 0
 
 

@@ -134,6 +134,8 @@ def main() -> int:
         return cmd_codex(rest)
     if cmd == "opencode":
         return cmd_opencode(rest)
+    if cmd == "harvest":
+        return cmd_harvest(rest)
     print(f"unknown subcommand {cmd}", file=sys.stderr)
     return 2
 
@@ -180,6 +182,90 @@ def cmd_opencode(argv: list[str]) -> int:
                            + row["cache_write_tokens"])
     emit(row)
     return 0
+
+
+
+
+def cmd_harvest(argv: list[str]) -> int:
+    """harvest <start_epoch> <end_epoch> <agent> --meta k=v ...
+    Generic per-game harvester: dispatches on agent string. Honors meta key
+    'outfile' to redirect the telemetry jsonl."""
+    start, end, agent = int(argv[0]), int(argv[1]), argv[2]
+    meta = parse_meta(argv)
+    if agent.startswith("codex"):
+        model = agent.split(":", 1)[1] if ":" in agent else "gpt-5.5"
+        split = {"input_tokens": 0, "cached_input_tokens": 0, "output_tokens": 0,
+                 "reasoning_output_tokens": 0}
+        turns = 0
+        for rollout in (Path.home() / ".codex" / "sessions").rglob("rollout-*.jsonl"):
+            m = rollout.stat().st_mtime
+            if not (start - 5 <= m <= end + 300):
+                continue
+            text = rollout.read_text(encoding="utf-8", errors="replace")
+            if f'"{model}"' not in text:
+                continue
+            for line in text.splitlines():
+                if '"input_tokens"' not in line:
+                    continue
+                vals = {}
+                for key in split:
+                    found = re.findall(rf'"{key}":\s*(\d+)', line)
+                    if found:
+                        vals[key] = int(found[-1])
+                if vals:
+                    turns += 1
+                    for key, value in vals.items():
+                        split[key] += value
+        row = {**meta, **split, "turns": turns, "ts": int(time.time())}
+        row["total_tokens"] = (split["input_tokens"] + split["output_tokens"]
+                               + split["reasoning_output_tokens"])
+        emit_to(row, meta)
+        return 0
+    if agent.startswith("openrouter/"):
+        sub = agent.rsplit("/", 1)[-1].split(":")[0]
+        return cmd_opencode([str(start), str(end), sub, "--meta"]
+                            + [f"{k}={v}" for k, v in meta.items()])
+    # claude model id: harvest Claude Code project session files in the window,
+    # filtered by exact model id (keeps other concurrent sessions out).
+    totals = {"input_tokens": 0, "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0, "output_tokens": 0}
+    turns = 0
+    proj = Path.home() / ".claude" / "projects" / "-Users-clyde-ahlcg"
+    for f in proj.glob("*.jsonl"):
+        if not (start - 5 <= f.stat().st_mtime <= end + 300):
+            continue
+        for line in f.read_text(encoding="utf-8", errors="replace").splitlines():
+            if f'"{agent}"' not in line or '"usage"' not in line:
+                continue
+            try:
+                event = json.loads(line)
+            except Exception:
+                continue
+            text = json.dumps(event)
+            vals = {}
+            for key in totals:
+                found = re.findall(rf'"{key}":\s*(\d+)', text)
+                if found:
+                    vals[key] = int(found[-1])
+            if vals.get("output_tokens") or vals.get("input_tokens"):
+                turns += 1
+                for key, value in vals.items():
+                    totals[key] += value
+    row = {**meta, **totals, "turns": turns, "ts": int(time.time())}
+    row["total_tokens"] = sum(totals.values())
+    emit_to(row, meta)
+    return 0
+
+
+def emit_to(row: dict, meta: dict) -> None:
+    outfile = meta.get("outfile")
+    if outfile:
+        path = Path(outfile)
+        path.parent.mkdir(exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(row) + "\n")
+    else:
+        emit(row)
 
 
 if __name__ == "__main__":
