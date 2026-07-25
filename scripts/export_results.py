@@ -180,9 +180,39 @@ def main() -> int:
         ],
     }
 
+    wave7 = []
+    w7_path = ROOT / "results/wave7_summary.json"
+    if w7_path.exists():
+        lanes = json.loads(w7_path.read_text())["lanes"]
+        W7_META = {
+            "opus5":  ("Opus 5", "claude", "adaptive", "show3-opus5-"),
+            "sol":    ("GPT-5.6 Sol", "codex", "high", "show3-sol-"),
+            "terra":  ("GPT-5.6 Terra", "codex", "high", "show3-terra-"),
+            "luna":   ("GPT-5.6 Luna", "codex", "high", "show3-luna-"),
+            "fable":  ("Fable 5", "claude", "adaptive", "show3-fable-"),
+            "opus":   ("Opus 4.8", "claude", "adaptive", "show3-opus-"),
+            "k3":     ("Kimi K3", "opencode", "default", "show3-k3-"),
+            "sonnet": ("Sonnet 5", "claude", "adaptive", "show3-sonnet-"),
+            "hy3":    ("Hunyuan 3", "opencode", "default", "show3-hy3-"),
+        }
+        for lane, meta in W7_META.items():
+            b = lanes.get(lane)
+            if not b:
+                continue
+            wave7.append({
+                "lane": lane, "name": meta[0], "harness": meta[1],
+                "thinking": meta[2], "prefix": meta[3],
+                "score": b["score_total"],
+                "hours": round(b["seconds"] / 3600, 1),
+                "cost": round(b["cli_cost_usd"] or b["list_cost_usd"], 2),
+                "measured": lane in ("k3", "hy3"),
+            })
+        wave7.sort(key=lambda r: -r["score"])
+
     out = {
         "generated": "see git history",
         "waves": waves,
+        "wave7": wave7,
         "campaigns": camp_models,
         "findings": findings,
     }

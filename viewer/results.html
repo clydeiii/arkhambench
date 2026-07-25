@@ -135,8 +135,18 @@ footer .wrap{max-width:72ch; margin:0}
 </header>
 
 <section id="board">
-  <div class="exhibit">Exhibit 0 — the instrumented wave</div>
-  <h2>Score, price, and speed on one board</h2>
+  <div class="exhibit">Exhibit 0 — Leaderboard</div>
+  <h2>The Leaderboard</h2>
+  <p class="note">The current standings: nine frontier models, five full Return to Night of
+  the Zealot campaigns each, identical seeds (9401–9405) on the <b>modern engine</b> (155
+  adjudications deep, 429 tests). Bars are the five campaigns in play order — click one to
+  step through that campaign. Cost is API-equivalent at July-2026 list prices
+  (<span title="measured OpenRouter billing">*</span>&nbsp;= measured billing).</p>
+  <div class="board" id="w7-board"></div>
+  <div class="legend">bar height = campaign score<i style="background:var(--gold)"></i>includes an R-win
+    <i style="background:#3a2c2a"></i>scoreless<i style="background:var(--line)"></i>scored
+    · hover a bar for the exact score</div>
+  <h2 style="margin-top:44px">Score, price, and speed</h2>
   <p class="note">Wave 7 (July 20–24) ran nine frontier models through five full campaigns each
   with complete telemetry — thinking level, tokens, wall clock, API-equivalent cost. Launch-day
   Opus 5 rewrote the board: 35 points, seven R1 wins, the first 12-point campaign — for
@@ -150,7 +160,19 @@ footer .wrap{max-width:72ch; margin:0}
   right.</p>
   <p style="text-align:center"><img src="data/wave7_cost_vs_score.svg" alt="Wave 7 cost vs score" style="max-width:100%"/></p>
   <p style="text-align:center"><img src="data/wave7_time_vs_score.svg" alt="Wave 7 time vs score" style="max-width:100%"/></p>
-  <div class="exhibit">Exhibit A</div>
+</section>
+
+<section id="archive">
+  <div class="exhibit">Archive — earlier engine eras</div>
+  <h2>The historical record</h2>
+  <p class="note">Everything below ran on <b>older versions of the engine</b>. The playtest
+  program (Exhibit 1) confirmed and fixed 60+ rules defects across those eras — most of them
+  quietly pro-player — so scores from different eras are not fairly comparable to the
+  leaderboard above, or to each other across waves. The exhibits are preserved as the
+  record of how the benchmark, and the engine, got here.</p>
+  <details>
+  <summary style="cursor:pointer;font-family:var(--mono);font-size:13px;color:var(--spectral);margin-top:18px">open the archive: the 10-game gauntlets, wave cards, and learning experiments</summary>
+  <div class="exhibit" style="margin-top:26px">Archived · Exhibit A</div>
   <h2>The Board</h2>
   <p class="note">Every model, ten games, identical seeds and investigator rotation.
   The headline number is the <b>final-20% average</b> — games 9 and 10, after eight games
@@ -159,21 +181,20 @@ footer .wrap{max-width:72ch; margin:0}
   <div class="board" id="board-rows"></div>
   <div class="legend">bar height = score 0–9<i style="background:var(--gold)"></i>win
     <i style="background:#3a2c2a"></i>scoreless<i style="background:var(--line)"></i>scored, no win
-    · hover a bar for game number · engine versions differ across waves (see Exhibit B)</div>
-</section>
+    · hover a bar for game number · engine versions differ across waves (see archived Exhibit B)</div>
 
-<section id="waves">
-  <div class="exhibit">Exhibit B</div>
+<div id="waves">
+  <div class="exhibit" style="margin-top:44px">Archived · Exhibit B</div>
   <h2>Three gauntlets, one scenario</h2>
   <p class="note">The same ten-game gauntlet ran three times as models became available.
-  Each wave played a progressively harder-to-cheat engine — the playtest program (Exhibit D)
+  Each wave played a progressively harder-to-cheat engine — the playtest program (Exhibit 1)
   fixed rules bugs between waves, most of which had been quietly pro-player — so cross-wave
   comparison is indicative, not controlled.</p>
   <div id="wave-cards"></div>
-</section>
+</div>
 
-<section id="learning">
-  <div class="exhibit">Exhibit C</div>
+<div id="learning">
+  <div class="exhibit" style="margin-top:44px">Archived · Exhibit C</div>
   <h2>Do they learn?</h2>
   <div class="duo">
     <div class="panelbox">
@@ -195,10 +216,14 @@ footer .wrap{max-width:72ch; margin:0}
       <p class="campnote" id="camp-note"></p>
     </div>
   </div>
+</div>
+
+</div>
+  </details>
 </section>
 
 <section id="playtest">
-  <div class="exhibit">Exhibit D</div>
+  <div class="exhibit">Exhibit 1</div>
   <h2>The second benchmark: can models playtest?</h2>
   <p class="note">Agents are told verified engine-bug reports outrank score — every adversary
   becomes an auditor. Reports flow through a tiered pipeline: cheap models play, strong models
@@ -240,6 +265,37 @@ const REGION = {US:"US", CN:"CN"};
 const px = s => Math.max(4, Math.round(s / 9 * 34));
 
 fetch("data/results.json").then(r => r.json()).then(data => {
+  // ---- Exhibit 0: wave-7 leaderboard ----
+  const w7board = document.getElementById("w7-board");
+  const w7camps = new Map();  // prefix -> campaign rows (ordered as played)
+  for (const grp of data.campaigns || [])
+    for (const c of grp.campaigns || [])
+      for (const row of (data.wave7 || []))
+        if (c.name.startsWith(row.prefix)) {
+          if (!w7camps.has(row.prefix)) w7camps.set(row.prefix, []);
+          w7camps.get(row.prefix).push(c);
+        }
+  const w7max = Math.max(...(data.wave7 || []).flatMap(r => (w7camps.get(r.prefix) || []).map(c => c.score)), 1);
+  (data.wave7 || []).forEach((r, i) => {
+    const camps = (w7camps.get(r.prefix) || []).slice().sort((a, b) => a.order - b.order);
+    const pips = camps.map(c => {
+      const win = c.legs.some(l => String(l.resolution || "").startsWith("R") && l.resolution !== "R3");
+      const cls = "pip" + (win ? " win" : c.score === 0 ? " zero" : " scored");
+      const h = 6 + Math.round(28 * c.score / w7max);
+      const slug = c.legs.length ? c.legs[0].slug : "";
+      return `<a class="${cls}" style="height:${h}px" title="${c.investigator} · ${c.score}"
+        href="index.html#run=${slug}&step=0"><span>${c.score}</span></a>`;
+    }).join("");
+    const div = document.createElement("div");
+    div.className = "brow" + (i === 0 ? " first" : "");
+    div.innerHTML = `
+      <div class="rank">${i + 1}</div>
+      <div class="mname">${r.name}<span class="tag">${r.harness} · ${r.thinking} · $${r.cost.toFixed(0)}${r.measured ? "*" : ""} · ${r.hours}h</span></div>
+      <div class="f20">${r.score}</div>
+      <div class="pips">${pips}</div>`;
+    w7board.appendChild(div);
+  });
+
   // ---- Exhibit A: combined board ----
   const rows = [];
   for (const wave of data.waves)
