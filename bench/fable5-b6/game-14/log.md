@@ -1068,3 +1068,4 @@
 **R16 · Investigation** — notebook-confirmed: R2 = +3 XP and zero trauma, strictly better than R1's +2
 [R16·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu1 res0 | dmg1/6 hor6/8 | h4 d12 x12 | Act3 Agd3 doom9/10]
 **R16 · Investigation** — GAME OVER: R2: the house still stands
+**R16 · Investigation** — Note added.

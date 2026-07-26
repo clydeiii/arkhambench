@@ -15,7 +15,7 @@ Final window: last 6 game(s), starting at game 25.
 | 6 | 1006 | roland | complete | no_resolution | no_resolution | 2 | 4 | 2 | 10 |
 | 7 | 1007 | daisy | complete | no_resolution | no_resolution | 2 | 3 | 1 | 9 |
 | 8 | 1008 | skids | complete | no_resolution | no_resolution | 3 | 3 | 0 | 14 |
-| 9 | 1009 | agnes | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
+| 9 | 1009 | agnes | complete | R2 | R2 | 8 | 8 | 0 | 17 |
 | 10 | 1010 | wendy | complete | no_resolution | no_resolution | 4 | 4 | 0 | 9 |
 | 11 | 1011 | roland | complete | R1 | R1 | 4 | 6 | 2 | 12 |
 | 12 | 1012 | daisy | complete | no_resolution | no_resolution | 2 | 3 | 1 | 12 |
@@ -41,14 +41,14 @@ Final window: last 6 game(s), starting at game 25.
 ## Aggregate stats
 
 - Games recorded: 30
-- Mean score: 3.13
-- First-half mean score: 3.07
+- Mean score: 3.40
+- First-half mean score: 3.60
 - Second-half mean score: 3.20
 - Final-20% average: 3.67
 
 ## Per-investigator
 
-- agnes: mean 3.50 over 6 game(s)
+- agnes: mean 4.83 over 6 game(s)
 - daisy: mean 2.50 over 6 game(s)
 - roland: mean 3.50 over 6 game(s)
 - skids: mean 2.67 over 6 game(s)

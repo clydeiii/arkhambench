@@ -552,3 +552,124 @@
 **R10 · Investigation** — Started agility test 3 vs 2.
 [R10·Investigation a0/3 | Agnes Baker 01004 | Attic | clu1 res1 | dmg4/6 hor5/8 | h5 d18 x7 | Act2 Agd3 doom0/10]
 **R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Evade Acolyte of Umôrdhoth (agility vs 2).
+**R10 · Investigation** — Decision made: Commit Stray Cat (+1)
+**R10 · Investigation** — Boost odds since a failed evade here means taking a direct attack this round; Stray Cat has no better use pending
+**R10 · Investigation** — Committed Stray Cat.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Attic | clu1 res1 | dmg4/6 hor5/8 | h4 d18 x7 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Evade Acolyte of Umôrdhoth (agility vs 2).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Done committing
+**R10 · Investigation** — Revealed -1.
+**R10 · Investigation** — Evade Acolyte of Umôrdhoth: success by 1 - agility 3 + committed 1 + boosts 0 + token -1 = 3 vs 2.
+**R10 · Investigation** — Acolyte of Umôrdhoth [ec0009] disengaged.
+**R10 · Investigation** — Acolyte of Umôrdhoth [ec0009] exhausted after being evaded.
+**R10 · Enemy** — Enemy phase began.
+**R10 · Enemy** — Flesh-Eater [ec0001] moved to Hallway.
+**R10 · Enemy** — Acolyte of Umôrdhoth [ec0009] moved to Hallway.
+**R10 · Upkeep** — Upkeep phase began.
+**R10 · Upkeep** — All exhausted cards readied.
+**R10 · Upkeep** — Agnes Baker drew Heirloom of Hyperborea.
+**R10 · Upkeep** — Agnes Baker gained 1 resource.
+**R10 · Upkeep** — Placed 2 doom on the agenda (They're Getting Out!).
+**R11 · Mythos** — Round 11 began.
+**R11 · Mythos** — Placed 1 doom on the agenda.
+**R11 · Mythos** — Agnes Baker drew encounter card Frozen in Fear.
+**R11 · Mythos** — Frozen in Fear entered Agnes Baker's threat area.
+**R11 · Investigation** — Investigation phase began.
+[R11·Investigation a3/3 | Agnes Baker 01004 | Attic | clu1 res2 | dmg4/6 hor5/8 | h5 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R11 · Investigation** — Decision made: Move to Far Above Your House
+**R11 · Investigation** — Attic is depleted of clues; push to Far Above Your House for more clues toward Act2's 3-clue requirement, accepting Frozen in Fear's first-move tax
+**R11 · Investigation** — Spent 2 actions: Move to Far Above Your House.
+**R11 · Investigation** — Agnes Baker moved to Far Above Your House.
+**R11 · Investigation** — Field of Graves was revealed.
+**R11 · Investigation** — Started willpower test 5 vs 4.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg4/6 hor5/8 | h5 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Field of Graves (willpower vs 4).
+**R11 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 willpower)
+**R11 · Investigation** — Spend resources instead of discarding valuable hand cards to boost this forced test
+**R11 · Investigation** — Spent 1 resource for +1 willpower.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res1 | dmg4/6 hor5/8 | h5 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Field of Graves (willpower vs 4).
+**R11 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 willpower)
+**R11 · Investigation** — Spend last resource too for near-certain odds
+**R11 · Investigation** — Spent 1 resource for +1 willpower.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res0 | dmg4/6 hor5/8 | h5 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Field of Graves (willpower vs 4).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Willpower 7 vs 4 is near-certain, no need to burn cards
+**R11 · Investigation** — Revealed -3.
+**R11 · Investigation** — Field of Graves: success by 0 - willpower 5 + committed 0 + boosts 2 + token -3 = 4 vs 4.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res0 | dmg4/6 hor5/8 | h5 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R11 · Investigation** — Decision made: Investigate Field of Graves (shroud 2, 1 clue here) — test Intellect(2) vs 2
+**R11 · Investigation** — Grab this clue toward Act2's requirement, decent odds at Intellect2 vs shroud2
+**R11 · Investigation** — Spent 1 action: Investigate Field of Graves.
+**R11 · Investigation** — Started intellect test 2 vs 2.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res0 | dmg4/6 hor5/8 | h5 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2).
+**R11 · Investigation** — Decision made: Commit Arcane Studies (+1)
+**R11 · Investigation** — No resources left; commit cards to boost this clue-critical test since Act2 needs every clue before doom hits 10
+**R11 · Investigation** — Committed Arcane Studies.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res0 | dmg4/6 hor5/8 | h4 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2).
+**R11 · Investigation** — Decision made: Commit Heirloom of Hyperborea (+1)
+**R11 · Investigation** — Commit Heirloom too for ~75% odds; can't afford to play it as an asset anyway with 0 resources
+**R11 · Investigation** — Committed Heirloom of Hyperborea.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res0 | dmg4/6 hor5/8 | h3 d17 x8 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Done, odds are strong
+**R11 · Investigation** — Revealed 0.
+**R11 · Investigation** — Investigate Field of Graves: success by 2 - intellect 2 + committed 2 + boosts 0 + token 0 = 4 vs 2.
+**R11 · Investigation** — Agnes Baker discovered 1 clue.
+**R11 · Investigation** — Started willpower test 5 vs 3.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu2 res0 | dmg4/6 hor5/8 | h3 d17 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Willpower 5 vs 3 already ~75%, keep Arcane Initiate to play as an asset
+**R11 · Investigation** — Revealed skull.
+**R11 · Investigation** — Frozen in Fear: success by 2 - willpower 5 + committed 0 + boosts 0 + token 0 = 5 vs 3.
+**R11 · Investigation** — Frozen in Fear was discarded.
+**R11 · Enemy** — Enemy phase began.
+**R11 · Enemy** — Flesh-Eater [ec0001] moved to Parlor.
+**R11 · Enemy** — Acolyte of Umôrdhoth [ec0009] moved to Parlor.
+**R11 · Upkeep** — Upkeep phase began.
+**R11 · Upkeep** — All exhausted cards readied.
+**R11 · Upkeep** — Agnes Baker drew Holy Rosary.
+**R11 · Upkeep** — Agnes Baker gained 1 resource.
+**R11 · Upkeep** — Placed 2 doom on the agenda (They're Getting Out!).
+**R12 · Mythos** — Round 12 began.
+**R12 · Mythos** — Placed 1 doom on the agenda.
+**R12 · Mythos** — Agnes Baker drew encounter card Ancient Evils.
+**R12 · Mythos** — Placed 1 doom on the agenda (Ancient Evils).
+**R12 · Investigation** — Investigation phase began.
+[R12·Investigation a3/3 | Agnes Baker 01004 | Field of Graves | clu2 res1 | dmg4/6 hor5/8 | h4 d16 x10 | Act2 Agd3 doom7/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R12 · Investigation** — Decision made: Move to Attic
+**R12 · Investigation** — Doom math is very tight (7/10, Upkeep+2 then Mythos+1 hits 10 before my next turn); push toward Hallway as the only chance to reach Act3 before the trap resolution triggers
+**R12 · Investigation** — Spent 1 action: Move to Attic.
+**R12 · Investigation** — Agnes Baker moved to Attic.
+[R12·Investigation a2/3 | Agnes Baker 01004 | Attic | clu2 res1 | dmg4/6 hor5/8 | h4 d16 x10 | Act2 Agd3 doom7/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R12 · Investigation** — Decision made: Move to Hallway
+**R12 · Investigation** — Continue to Hallway - position at the act location in case any opportunity for the 3rd clue arises
+**R12 · Investigation** — Spent 1 action: Move to Hallway.
+**R12 · Investigation** — Agnes Baker moved to Hallway.
+[R12·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu2 res1 | dmg4/6 hor5/8 | h4 d16 x10 | Act2 Agd3 doom7/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R12 · Investigation** — Decision made: Take resource (gain 1)
+**R12 · Investigation** — No path to a 3rd clue this round; take the resource as the safest use of a moot final action
+**R12 · Investigation** — Spent 1 action: Take resource.
+**R12 · Investigation** — Agnes Baker gained 1 resource.
+**R12 · Enemy** — Enemy phase began.
+**R12 · Upkeep** — Upkeep phase began.
+**R12 · Upkeep** — All exhausted cards readied.
+**R12 · Upkeep** — Agnes Baker drew Leather Coat.
+**R12 · Upkeep** — Agnes Baker gained 1 resource.
+**R12 · Upkeep** — Placed 2 doom on the agenda (They're Getting Out!).
+**R13 · Mythos** — Round 13 began.
+**R13 · Mythos** — Placed 1 doom on the agenda.
+[R13·Mythos | Agnes Baker 01004 | Hallway | clu2 res3 | dmg4/6 hor5/8 | h5 d15 x10 | Act2 Agd3 doom0/10]
+**R13 · Mythos** — GAME OVER: R3: Agnes Baker was killed
+**R13 · Mythos** — Note added.

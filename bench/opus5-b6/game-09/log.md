@@ -1168,3 +1168,129 @@
 **R16 · Enemy** — Arcane Initiate searched: Overpower, Dark Memory, Leather Coat.
 [R16·Enemy | Agnes Baker 01004 | Parlor | clu0 res5 | dmg4/6 hor7/8 | h5 d10 x11 | Act3 Agd3 doom7/10]
 **R16 · Enemy** — Decision presented: Arcane Initiate saw: Overpower, Dark Memory, Leather Coat. Choose a Spell to draw.
+**R16 · Enemy** — Decision made: Draw Dark Memory
+**R16 · Enemy** — Forced: search found an eligible Spell and offers no decline. Accepting Dark Memory. Its 2-horror end-of-turn trigger is only lethal if I have already failed to kill the Priest next round, in which case my score is 3 either way - and the 2 horror would trigger Agnes's reaction for 1 damage, which is
+**R16 · Enemy** — Arcane Initiate drew Dark Memory.
+**R16 · Enemy** — Ghoul Priest [setaside_ghoul_priest] attacked Agnes Baker.
+[R16·Enemy | Agnes Baker 01004 | Parlor | clu0 res5 | dmg4/6 hor7/8 | h6 d9 x11 | Act3 Agd3 doom7/10]
+**R16 · Enemy** — Decision presented: [Round 16 · Enemy · Agnes Baker] Assign damage/horror from Ghoul Priest.
+**R16 · Enemy** — Decision made: Assign 1 horror to Holy Rosary
+**R16 · Enemy** — Horror must not touch Agnes at 7/8. Holy Rosary's last sanity slot absorbs horror #1; its +1 willpower is irrelevant now that my only remaining weapon is the combat-based Baseball Bat.
+**R16 · Enemy** — Assigned 1 horror to Holy Rosary.
+[R16·Enemy | Agnes Baker 01004 | Parlor | clu0 res5 | dmg4/6 hor7/8 | h6 d9 x11 | Act3 Agd3 doom7/10]
+**R16 · Enemy** — Decision presented: [Round 16 · Enemy · Agnes Baker] Assign damage/horror from Ghoul Priest.
+**R16 · Enemy** — Decision made: Assign 1 horror to Arcane Initiate
+**R16 · Enemy** — Horror #2 onto Arcane Initiate (1 of its 2 sanity). Must place horror before damage: the Initiate has only 1 health, so any damage kills it and would waste its remaining soak.
+**R16 · Enemy** — Assigned 1 horror to Arcane Initiate.
+[R16·Enemy | Agnes Baker 01004 | Parlor | clu0 res5 | dmg4/6 hor7/8 | h6 d9 x11 | Act3 Agd3 doom7/10]
+**R16 · Enemy** — Decision presented: [Round 16 · Enemy · Agnes Baker] Assign damage/horror from Ghoul Priest.
+**R16 · Enemy** — Decision made: Assign 1 damage to Arcane Initiate
+**R16 · Enemy** — Damage #1 onto Arcane Initiate: it dies, but that soaks a point Agnes cannot afford (she can only take 1 of the 2 damage before hitting 6/6), and killing it also removes its 1 doom from the agenda.
+**R16 · Enemy** — Assigned 1 damage to Arcane Initiate.
+[R16·Enemy | Agnes Baker 01004 | Parlor | clu0 res5 | dmg4/6 hor7/8 | h6 d9 x11 | Act3 Agd3 doom7/10]
+**R16 · Enemy** — Decision presented: [Round 16 · Enemy · Agnes Baker] Assign damage/horror from Ghoul Priest.
+**R16 · Enemy** — Decision made: Assign 1 damage to Agnes Baker
+**R16 · Enemy** — Forced: no soak left. Agnes to 5/6 damage, horror stays at 7/8 - she survives the round, which was the whole objective of this assignment order.
+**R16 · Enemy** — Assigned 1 damage to Agnes Baker.
+**R16 · Enemy** — Arcane Initiate was discarded.
+**R16 · Enemy** — Holy Rosary was discarded.
+**R16 · Enemy** — Ghoul Priest [setaside_ghoul_priest] exhausted after attacking.
+**R16 · Upkeep** — Upkeep phase began.
+**R16 · Upkeep** — All exhausted cards readied.
+**R16 · Upkeep** — Agnes Baker drew Unexpected Courage.
+**R16 · Upkeep** — Agnes Baker gained 1 resource.
+**R16 · Upkeep** — Placed 1 doom on the agenda (They're Getting Out!).
+**R17 · Mythos** — Round 17 began.
+**R17 · Mythos** — Placed 1 doom on the agenda.
+**R17 · Mythos** — Agnes Baker drew encounter card Ghoul from the Depths.
+**R17 · Mythos** — Ghoul from the Depths [ec0030] spawned at Bathroom.
+[R17·Mythos | Agnes Baker 01004 | Parlor | clu0 res6 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Mythos** — Decision presented: [Round 17 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R17 · Mythos** — Decision made: Pass (continue)
+**R17 · Mythos** — Forbidden Knowledge costs 1 horror to Agnes, and at 7/8 that is instant defeat with no soak left. Its reaction-damage line is a lottery on whether the engine fires her reaction before the defeat check; a Baseball Bat swing boosted to skill 8 is 15/16 and strictly better.
+**R17 · Investigation** — Investigation phase began.
+[R17·Investigation a3/3 | Agnes Baker 01004 | Parlor | clu0 res6 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R17 · Investigation** — Decision made: Parley with Lita Chantler (Intellect 4)
+**R17 · Investigation** — Lita first, not the swing. At 5/6 dmg with zero soak, both the tablet token (1 unboostable damage) and an autofail Retaliate are instant death, so a lone swing is a one-shot 14/16. Lita's 3/3 soak absorbs both, turning my remaining two actions into retries, and parley provokes no AoO. Pre-Lita expos
+**R17 · Investigation** — Spent 1 action: Parley with Lita Chantler.
+**R17 · Investigation** — Started intellect test 2 vs 4.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res6 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R17 · Investigation** — Pay this test entirely in resources: Arcane Studies cannot boost combat, so resources are worthless for the Priest swing while Heirloom/Knife/Unexpected Courage are my only combat fuel. Target intellect 8 vs 4, the ceiling where even -4 ties and passes.
+**R17 · Investigation** — Spent 1 resource for +1 intellect.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res5 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R17 · Investigation** — Boost 2 of 6 toward intellect 8.
+**R17 · Investigation** — Spent 1 resource for +1 intellect.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res4 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R17 · Investigation** — Boost 3 of 6 toward intellect 8.
+**R17 · Investigation** — Spent 1 resource for +1 intellect.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res3 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R17 · Investigation** — Boost 4 of 6 toward intellect 8.
+**R17 · Investigation** — Spent 1 resource for +1 intellect.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res2 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R17 · Investigation** — Boost 5 of 6 toward intellect 8.
+**R17 · Investigation** — Spent 1 resource for +1 intellect.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res1 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R17 · Investigation** — Boost 6 of 6: intellect 2 + 6 = 8 vs 4, the ceiling. Every numeric token including -4 now ties or passes; only autofail fails, and the tablet token is the one unboostable risk.
+**R17 · Investigation** — Spent 1 resource for +1 intellect.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h7 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Commit Flashlight (+1)
+**R17 · Investigation** — Flashlight is a completely dead card now - no clues remain and it gives +0 on the combat swings that decide the game - so committing it is free insurance against any miscalculation in my skull/token math.
+**R17 · Investigation** — Committed Flashlight.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h6 d8 x13 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Parley with Lita Chantler (intellect vs 4).
+**R17 · Investigation** — Decision made: Done
+**R17 · Investigation** — Stopping at intellect 9 vs 4. Heirloom (+2 on a combat test) and Unexpected Courage (+2) are worth far more on the Priest swings than a redundant +1 here, where only autofail can still beat me.
+**R17 · Investigation** — Revealed -1.
+**R17 · Investigation** — Parley with Lita Chantler: success by 4 - intellect 2 + committed 1 + boosts 6 + token -1 = 8 vs 4.
+**R17 · Investigation** — Agnes Baker took control of Lita Chantler.
+[R17·Investigation a2/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h6 d8 x14 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R17 · Investigation** — Decision made: Fight Ghoul Priest with Baseball Bat — test Combat(5) vs 4, 2 dmg
+**R17 · Investigation** — The kill swing. Baseball Bat at combat 5 vs fight 4, 2 damage (+1 from Lita) against a Priest on 4/5 - any hit ends the scenario immediately mid-phase, before the end-of-round doom tick. Lita's 3/3 soak now covers both the tablet token and a Retaliate, so a miss leaves me alive for a second attempt.
+**R17 · Investigation** — Spent 1 action: Fight with Baseball Bat (target: Ghoul Priest).
+**R17 · Investigation** — Started combat test 5 vs 4.
+[R17·Investigation a1/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h6 d8 x14 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Fight with Baseball Bat (combat vs 4).
+**R17 · Investigation** — Decision made: Commit Heirloom of Hyperborea (+2)
+**R17 · Investigation** — Heirloom of Hyperborea gives +2 on a combat test (combat 1 + wild 1); it is an unplayable 3-cost asset at 0 resources, so its only value is as icons.
+**R17 · Investigation** — Committed Heirloom of Hyperborea.
+[R17·Investigation a1/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h5 d8 x14 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Fight with Baseball Bat (combat vs 4).
+**R17 · Investigation** — Decision made: Commit Knife (+1)
+**R17 · Investigation** — Knife (+1) brings me to combat 8 vs 4 - exactly the ceiling, where every numeric token including -4 ties or passes and only autofail fails. Knife is unplayable anyway: Baseball Bat occupies both hand slots.
+**R17 · Investigation** — Committed Knife.
+[R17·Investigation a1/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h4 d8 x14 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: [Round 17 · Investigation · Agnes Baker] Commit cards to Fight with Baseball Bat (combat vs 4).
+**R17 · Investigation** — Decision made: Done
+**R17 · Investigation** — Stop at the ceiling. Combat 8 vs 4 loses only to autofail, which no boost can prevent. Holding Unexpected Courage (+2) and the spare Baseball Bat (+1) as fuel for the retry swing my last action allows if this one autofails.
+**R17 · Investigation** — Revealed -2.
+**R17 · Investigation** — Fight with Baseball Bat: success by 2 - combat 5 + committed 3 + boosts 0 + token -2 = 6 vs 4.
+**R17 · Investigation** — Lita Chantler added 1 damage against a Monster.
+**R17 · Investigation** — Ghoul Priest took 3 damage.
+**R17 · Investigation** — Ghoul Priest was defeated.
+[R17·Investigation a1/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h4 d8 x16 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — Decision presented: The Ghoul Priest is defeated. Choose a resolution.
+**R17 · Investigation** — Decision made: Refuse to burn it (R2)
+**R17 · Investigation** — R2 'Refuse to burn it' = victory points +3 XP and NO trauma; R1 = +2 XP and 1 mental trauma, a strict 2-point loss. Lita's recruitment earns no score credit and this is a standalone bench scenario with no campaign chain, so her forfeit costs nothing.
+[R17·Investigation a1/3 | Agnes Baker 01004 | Parlor | clu0 res0 | dmg5/6 hor7/8 | h4 d8 x16 | Act3 Agd3 doom8/10]
+**R17 · Investigation** — GAME OVER: R2: the house still stands
+**R17 · Investigation** — Note added.
+**R17 · Investigation** — Note added.
+**R17 · Investigation** — Note added.
+**R17 · Investigation** — Note added.
+**R17 · Investigation** — Note added.
+**R17 · Investigation** — Note added.

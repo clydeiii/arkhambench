@@ -8,7 +8,7 @@
   "active_skill_test": null,
   "agenda": {
     "code": "01107",
-    "doom": 6,
+    "doom": 8,
     "name": "They're Getting Out!",
     "stage": 3,
     "threshold": 10
@@ -207,6 +207,19 @@
       "id": "pc0001",
       "owner": "agnes",
       "uses": {},
+      "zone": "discard"
+    },
+    "pc0002": {
+      "attachments": [],
+      "card_code": "01013",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0002",
+      "owner": "agnes",
+      "uses": {},
       "zone": "hand"
     },
     "pc0003": {
@@ -215,7 +228,7 @@
       "clues": 0,
       "damage": 0,
       "doom": 0,
-      "exhausted": true,
+      "exhausted": false,
       "horror": 0,
       "id": "pc0003",
       "owner": "agnes",
@@ -230,7 +243,7 @@
       "clues": 0,
       "damage": 0,
       "doom": 0,
-      "exhausted": true,
+      "exhausted": false,
       "horror": 0,
       "id": "pc0004",
       "owner": "agnes",
@@ -259,11 +272,11 @@
       "damage": 0,
       "doom": 0,
       "exhausted": false,
-      "horror": 1,
+      "horror": 2,
       "id": "pc0006",
       "owner": "agnes",
       "uses": {},
-      "zone": "play"
+      "zone": "discard"
     },
     "pc0007": {
       "attachments": [],
@@ -325,14 +338,14 @@
       "attachments": [],
       "card_code": "01063",
       "clues": 0,
-      "damage": 0,
-      "doom": 1,
-      "exhausted": true,
-      "horror": 0,
+      "damage": 1,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 1,
       "id": "pc0011",
       "owner": "agnes",
       "uses": {},
-      "zone": "play"
+      "zone": "discard"
     },
     "pc0012": {
       "attachments": [],
@@ -449,7 +462,7 @@
       "id": "pc0024",
       "owner": "agnes",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0025": {
       "attachments": [],
@@ -477,7 +490,7 @@
       "id": "pc0026",
       "owner": "agnes",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0028": {
       "attachments": [],
@@ -492,6 +505,19 @@
       "uses": {},
       "zone": "discard"
     },
+    "pc0032": {
+      "attachments": [],
+      "card_code": "01093",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0032",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
     "pc0033": {
       "attachments": [],
       "card_code": "01098",
@@ -505,6 +531,19 @@
       "uses": {},
       "zone": "discard"
     },
+    "setaside_ghoul_priest": {
+      "attachments": [],
+      "card_code": "01116",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "setaside_ghoul_priest",
+      "owner": "roland",
+      "uses": {},
+      "zone": "victory"
+    },
     "setaside_lita": {
       "attachments": [],
       "card_code": "01117",
@@ -514,9 +553,9 @@
       "exhausted": false,
       "horror": 0,
       "id": "setaside_lita",
-      "owner": "roland",
+      "owner": "agnes",
       "uses": {},
-      "zone": "story"
+      "zone": "play"
     }
   },
   "chaos_bag": {
@@ -540,30 +579,10 @@
     ]
   },
   "confirmations_enabled": false,
-  "decision_queue": [
-    {
-      "id": "arcane-initiate-search",
-      "kind": "arcane_initiate",
-      "options": [
-        {
-          "label": "Draw Dark Memory",
-          "payload": {
-            "candidates": [
-              "pc0029",
-              "pc0002",
-              "pc0017"
-            ],
-            "card": "pc0002",
-            "kind": "arcane_initiate_choice"
-          }
-        }
-      ],
-      "prompt": "Arcane Initiate saw: Overpower, Dark Memory, Leather Coat. Choose a Spell to draw."
-    }
-  ],
+  "decision_queue": [],
   "difficulty": "standard",
   "encounter_deck": [],
-  "encounter_deck_count": 18,
+  "encounter_deck_count": 17,
   "encounter_discard": [
     "ec0010",
     "ec0008",
@@ -577,27 +596,27 @@
     "ec0016"
   ],
   "enemies": {
-    "setaside_ghoul_priest": {
+    "ec0030": {
       "attachments": [],
-      "card_code": "01116",
+      "card_code": "50023",
       "clues": 0,
-      "damage": 4,
+      "damage": 0,
       "doom": 0,
-      "engaged_with": "agnes",
+      "engaged_with": null,
       "exhausted": false,
       "horror": 0,
-      "id": "setaside_ghoul_priest",
-      "location_id": "parlor"
+      "id": "ec0030",
+      "location_id": "bathroom"
     }
   },
   "investigator": {
-    "actions_remaining": 0,
+    "actions_remaining": 1,
     "agility": 3,
     "card_code": "01004",
     "clues": 0,
     "combat": 2,
-    "damage": 4,
-    "deck_count": 10,
+    "damage": 5,
+    "deck_count": 8,
     "discard": [
       "pc0033",
       "pc0014",
@@ -609,18 +628,20 @@
       "pc0025",
       "pc0005",
       "pc0004",
-      "pc0016"
+      "pc0016",
+      "pc0011",
+      "pc0006",
+      "pc0026",
+      "pc0001",
+      "pc0024"
     ],
-    "engaged_enemies": [
-      "setaside_ghoul_priest"
-    ],
+    "engaged_enemies": [],
     "exhausted": false,
     "hand": [
-      "pc0024",
-      "pc0001",
-      "pc0026",
       "pc0020",
-      "pc0021"
+      "pc0021",
+      "pc0002",
+      "pc0032"
     ],
     "health": 6,
     "horror": 7,
@@ -633,57 +654,63 @@
       "pc0008",
       "pc0003",
       "pc0007",
-      "pc0011",
       "pc0019",
-      "pc0006"
+      "setaside_lita"
     ],
-    "resources": 5,
+    "resources": 0,
     "sanity": 8,
     "threat_area": [],
     "willpower": 5
   },
   "limits": {
-    "actions_taken": 48,
-    "agnes_horror:Investigation:16": true,
-    "agnes_horror:Mythos:16": true,
-    "encounter_cards_drawn": 20,
-    "enemies_defeated": 8,
-    "fastwin:enemy_post:15": true,
-    "fastwin:enemy_pre:15": true,
-    "fastwin:inv_end:15": true,
-    "fastwin:inv_end:16": true,
-    "fastwin:mythos_end:15": true,
-    "fastwin:mythos_end:16": true,
-    "fastwin:upkeep_start:15": true,
-    "frozen:16:move_fight_evade": true,
-    "frozen_end_turn:16": true,
-    "hunters_moved:15": true,
-    "hunters_moved:16": true,
-    "last_defeated_enemy_location": "ghoul_pits",
+    "actions_taken": 50,
+    "encounter_cards_drawn": 21,
+    "enemies_defeated": 9,
+    "fastwin:mythos_end:17": true,
+    "last_defeated_enemy_location": "parlor",
     "last_skill_test": {
       "auto_success": false,
-      "base": 6,
-      "boosts": 1,
-      "callback_kind": "discard_threat_on_success",
-      "committed_icons": 0,
-      "difficulty": 3,
+      "base": 5,
+      "boosts": 0,
+      "callback_kind": "fight",
+      "committed_icons": 3,
+      "difficulty": 4,
       "extra_tokens": [],
-      "margin": 0,
-      "modifier": -4,
+      "margin": 2,
+      "modifier": -2,
       "reveal_effects_applied": true,
-      "skill": "willpower",
-      "source": "Frozen in Fear",
+      "skill": "combat",
+      "source": "Fight with Baseball Bat",
       "success": true,
-      "token": "-4",
-      "value": 3
+      "token": "-2",
+      "value": 6
     },
-    "mythos_doom_placed:16": true,
-    "mythos_encounter_drawn:16": true,
+    "mythos_doom_placed:17": true,
+    "mythos_encounter_drawn:17": true,
+    "pending_scenario_token_aftermath": [
+      {
+        "auto_success": false,
+        "base": 5,
+        "boosts": 0,
+        "callback_kind": "fight",
+        "committed_icons": 3,
+        "difficulty": 4,
+        "extra_tokens": [],
+        "margin": 2,
+        "modifier": -2,
+        "reveal_effects_applied": true,
+        "skill": "combat",
+        "source": "Fight with Baseball Bat",
+        "success": true,
+        "token": "-2",
+        "value": 6
+      }
+    ],
     "return_variant:attic": "original",
     "return_variant:cellar": "return",
     "temp_skill_boost:pc0007": 0,
     "temp_skill_boost:pc0008": 0,
-    "upkeep_done:15": true
+    "temp_skill_boost:pc0019": 2
   },
   "locations": {
     "attic": {
@@ -707,7 +734,9 @@
       "connections": [
         "guest_hall"
       ],
-      "enemy_ids": [],
+      "enemy_ids": [
+        "ec0030"
+      ],
       "id": "bathroom",
       "investigator_ids": [],
       "name": "Bathroom",
@@ -796,17 +825,13 @@
       "shroud": 1
     },
     "parlor": {
-      "attached_instance_ids": [
-        "setaside_lita"
-      ],
+      "attached_instance_ids": [],
       "clues": 0,
       "code": "01115",
       "connections": [
         "hallway"
       ],
-      "enemy_ids": [
-        "setaside_ghoul_priest"
-      ],
+      "enemy_ids": [],
       "id": "parlor",
       "investigator_ids": [
         "agnes"
@@ -831,20 +856,48 @@
     }
   },
   "pending_damage": null,
-  "phase": "Enemy",
+  "phase": "Investigation",
   "removed_from_game": [],
-  "result": null,
-  "round": 16,
+  "result": {
+    "actions_taken": 50,
+    "campaign_log": {
+      "ghoul_priest_still_alive": false,
+      "house": "standing",
+      "lita": "not_earned"
+    },
+    "damage_taken": 5,
+    "encounter_cards_drawn": 21,
+    "enemies_defeated": 9,
+    "ghoul_priest_defeated": true,
+    "horror_taken": 7,
+    "hospital_debts_xp_penalty": 0,
+    "investigator_insane": false,
+    "investigator_killed": false,
+    "lita_earned": false,
+    "lita_recruited": true,
+    "outcome": "R2",
+    "resolution": "R2",
+    "rounds_played": 17,
+    "scenario": "return_to_the_gathering",
+    "score": 8,
+    "summary": "R2: the house still stands",
+    "trauma": {},
+    "victory_points": 5,
+    "xp": 8
+  },
+  "round": 17,
   "scenario": "return_to_the_gathering",
   "schema_version": 2,
-  "status": "in_progress",
+  "status": "ended",
   "trauma": {},
   "turn": {
-    "action_index": 3,
+    "action_index": 2,
     "investigator_id": "agnes"
   },
   "victory_display": [
     "ec0029",
-    "ec0002"
+    "ec0002",
+    "setaside_ghoul_priest",
+    "attic"
   ]
 }

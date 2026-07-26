@@ -152,11 +152,11 @@ def main() -> int:
         "confirmed_fixed": len(re.findall(r"FIXED", ledger)),
         "not_a_bug": len(re.findall(r"NOT[ -]A[ -]BUG", ledger, re.I)),
         "auditors": [
-            {"name": "Kimi K3", "confirmed": 23, "claims": 40, "note": "wave-6 trial: all 60 audits (45 legs + 15 campaign layers); 22 distinct defects, 6 adopted improvements from refuted claims; Sol recall probe corroborated 5/6 cleans"},
-            {"name": "GPT-5.6 Sol", "confirmed": 18, "claims": 21, "note": "C7 audit wave, 28 games"},
-            {"name": "Fable 5", "confirmed": 6, "claims": 8, "note": "b1-era live hunts"},
-            {"name": "GPT-5.5", "confirmed": 5, "claims": 8, "note": "b1-era audits + hunts"},
-            {"name": "Hunyuan 3", "confirmed": 3, "claims": 70, "note": "swarm + b2/b3 reports"},
+            {"name": "Kimi K3", "confirmed": 23, "claims": 40, "note": "audited every record of one full benchmarking run (60 audits); 22 real bugs found, and 6 of its wrong claims still led to engine improvements"},
+            {"name": "GPT-5.6 Sol", "confirmed": 18, "claims": 21, "note": "audited 28 finished games; the most precise judge so far"},
+            {"name": "Fable 5", "confirmed": 6, "claims": 8, "note": "early live bug hunts while playing"},
+            {"name": "GPT-5.5", "confirmed": 5, "claims": 8, "note": "early audits and live hunts"},
+            {"name": "Hunyuan 3", "confirmed": 3, "claims": 70, "note": "filed seventy reports across its early runs; three held up"},
         ],
         "vignettes": [
             {"title": "The memory that deleted itself",

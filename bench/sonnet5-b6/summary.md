@@ -30,7 +30,7 @@ Final window: last 6 game(s), starting at game 25.
 | 21 | 1021 | roland | complete | R1 | R1 | 4 | 5 | 1 | 11 |
 | 22 | 1022 | daisy | complete | no_resolution | no_resolution | 1 | 2 | 1 | 9 |
 | 23 | 1023 | skids | complete | no_resolution | no_resolution | 1 | 2 | 1 | 11 |
-| 24 | 1024 | agnes | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
+| 24 | 1024 | agnes | complete | R3 | R3 | 0 | 0 | 0 | 13 |
 | 25 | 1025 | wendy | complete | no_resolution | no_resolution | 3 | 4 | 1 | 13 |
 | 26 | 1026 | roland | complete | no_resolution | no_resolution | 0 | 2 | 2 | 8 |
 | 27 | 1027 | daisy | complete | no_resolution | no_resolution | 2 | 3 | 1 | 11 |

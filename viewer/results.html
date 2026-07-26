@@ -142,27 +142,28 @@ footer .wrap{max-width:72ch; margin:0}
 <section id="board">
   <div class="exhibit">Question 1 · Can they play? — Exhibit 0</div>
   <h2>Yes — this well</h2>
-  <p class="note">The current standings: nine frontier models, five full Return to Night of
-  the Zealot campaigns each, identical seeds (9401–9405) on the <b>modern engine</b> (155
-  adjudications deep, 429 tests). Bars are the five campaigns in play order — click one to
-  step through that campaign. Cost is API-equivalent at July-2026 list prices
-  (<span title="measured OpenRouter billing">*</span>&nbsp;= measured billing).</p>
+  <p class="note">The current standings. Nine leading AI models each played five complete
+  <b>campaigns</b> — a campaign is a linked three-game story where the same character's
+  deck, injuries, and experience carry forward, and dying early in game one haunts you in
+  game three. Every model faced identical card shuffles, so differences are down to play,
+  not luck. Each bar is one campaign, in the order played — click a bar to replay that
+  campaign decision by decision. Cost is what the model's API usage would bill at
+  July-2026 prices (<span title="actual billed cost">*</span>&nbsp;= actual billing).</p>
   <div class="board" id="w7-board"></div>
-  <div class="legend">bar height = campaign score<i style="background:var(--gold)"></i>includes an R-win
+  <div class="legend">bar height = campaign score<i style="background:var(--gold)"></i>includes a won scenario
     <i style="background:#3a2c2a"></i>scoreless<i style="background:var(--line)"></i>scored
     · hover a bar for the exact score</div>
   <h2 style="margin-top:44px">Score, price, and speed</h2>
-  <p class="note">Wave 7 (July 20–24) ran nine frontier models through five full campaigns each
-  with complete telemetry — thinking level, tokens, wall clock, API-equivalent cost. Launch-day
-  Opus 5 rewrote the board: 35 points, seven R1 wins, the first 12-point campaign — for
-  $195. Before it landed, the GPT-5.6 family had swept the podium: Sol scored 20 in
-  Opus 4.8's price bracket, Terra and Luna
-  took second and third for $29 and $15, and Kimi K3 tied Opus at half the price on
-  measured OpenRouter billing. All eight lanes moved the same magnitude of tokens
-  (59–173&nbsp;M, 95–99% cached context re-reads — see the README's token-accounting
-  note); price-per-token and context discipline set the spread. Score climbs the y-axis;
-  cost (log scale) and time run right-to-left — the models you want are up and to the
-  right.</p>
+  <p class="note">The same full benchmarking run, with everything measured: how well each
+  model played, what its API usage would cost, and how long it took. Claude Opus 5,
+  benchmarked the day it launched, rewrote the board — 35 points and seven outright
+  scenario wins, nearly double the previous best. Before it landed, OpenAI's GPT-5.6
+  family held the top three spots, with the budget tiers delivering by far the most
+  points per dollar. One honest note on the meters: every model here moved a similar
+  mountain of tokens (tens of millions, 95–99% of them cheap cached re-reads) — what
+  separates a $15 run from a $195 run is mostly the price of the model itself. Score
+  climbs the y-axis; cost and time run right-to-left — the models you want are up and
+  to the right.</p>
   <div class="scatter" id="scatter-cost"></div>
   <div class="scatter" id="scatter-time"></div>
 </section>
@@ -170,11 +171,12 @@ footer .wrap{max-width:72ch; margin:0}
 <section id="learn-teaser">
   <div class="exhibit">Question 2 · Can they learn?</div>
   <h2>The learning bench is on the table now</h2>
-  <p class="note">The definitive version of the learning experiment — thirty games per
-  model on the frozen modern engine, fresh notebooks, per-game token telemetry so the
-  cost of learning is measured alongside the curve — is running as you read this.
-  Results land here. The earlier 10-game learning experiments (older engine eras) are
-  preserved in the archive below.</p>
+  <p class="note">Each model plays the same scenario thirty times over, starting with a
+  blank notebook — the only memory it keeps between games. If models can genuinely learn,
+  the late games should beat the early ones, and we measure the cost of every game to see
+  whether experience also makes them cheaper. That experiment is running as you read
+  this; results land here. Earlier, smaller versions of it are preserved in the archive
+  below.</p>
 </section>
 
 <section id="archive">
@@ -232,18 +234,18 @@ footer .wrap{max-width:72ch; margin:0}
     </div>
   </div>
 </div>
-
-</div>
   </details>
 </section>
 
 <section id="playtest">
   <div class="exhibit">Question 3 · Can they playtest? — Exhibit 1</div>
   <h2>Yes — and the engine is better for it</h2>
-  <p class="note">Agents are told verified engine-bug reports outrank score — every adversary
-  becomes an auditor. Reports flow through a tiered pipeline: cheap models play, strong models
-  audit the transcripts, adversarial verification and a final human-tier gate adjudicate.
-  The gate reversed rulings in every direction, including its own, eight times.</p>
+  <p class="note">Every model is told that finding a genuine rules bug in the game engine
+  is worth more than any score — so every player is also a playtester. Their reports are
+  checked the way a court checks testimony: other models audit the game records, dedicated
+  verifiers try to knock each claim down against the printed cards, and a final judge
+  rules on what's real. That judge has reversed rulings in every direction — including
+  its own — eight times.</p>
   <p class="note"><b>Wave 6 put a new model in the judge's chair.</b> On its release week,
   Kimi K3 audited all sixty artifacts of a fresh fifteen-campaign wave — every scenario
   transcript and every campaign ledger. It filed forty findings: twenty-three confirmed

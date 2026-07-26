@@ -571,3 +571,27 @@ NEXT-RUN LESSONS:
 2. Do not allow multiple hunters to stack in a connecting location. Machete loses its extra damage when more than one enemy is engaged, so intercept or defeat hunters one at a time.
 3. Use Roland's enemy-defeat reaction as clue compression early, especially at clue-bearing locations, but account for Cover Up consuming those discoveries and budget extra clue tempo accordingly.
 4. Low-shroud tests at +2 are reasonable without commits, but saved cards only matter if there will be another round; in a lethal board state, prioritize immediate survival over long-term efficiency.
+
+## [2026-07-26] Current run — Skids O'Toole, GAME OVER R8 (no_resolution)
+
+RESULT: Defeated by insanity R8 enemy phase at Ghoul Pits. Corpse-Hungry Ghoul hunted from Cellar, engaged, attacked for 2 damage/2 horror → 6/6 horror = dead. Final: 3 clues, Act 2 / Agenda 2 doom 4/7.
+
+WHAT WORKED:
+- Got 3 clues by R7 (Your House route → Cellar) and reached Ghoul Pits (Act 2 deep location).
+- Skids ability (2 res → +1 action) used twice for tempo; kept action count high.
+- Committed Hard Knocks to the Ghoul Pits reveal agility test and passed (4 vs 3).
+
+CRITICAL FAILURES:
+1. FROZEN IN FEAR (R8 mythos) was the kill shot. The willpower 2 vs 3 test failed on skull, which froze my remaining actions for the turn — I could not move, evade, or fight. The enemy phase then arrived with the Corpse-Hungry Ghoul hunting in from Cellar.
+2. ENTERED GHoul PITS WITHOUT A FIGHT/EVADE PLAN. I had only 1 resource, Opportunist already burned, no weapon in play (Derringer still in hand unplayable at 1 res). When the hunter followed me in, I had no answer.
+3. INTELLECT 3 vs SHROUD 4 was a losing gamble. Two consecutive Ghoul Pits investigations both failed (-4 cultist, then -4 again), wasting 2 actions and the Opportunist commit, taking 1 horror for nothing.
+4. SKIDS ABILITY OVER-USED at low resources: spending to 1 res left me unable to play the .41 Derringer when I drew it. Skids ability should not be tapped when it disables a defensive play.
+5. PUSHED DEEP at horror 3/6 + damage 2/8 with a known hunter one location away. That was already resign-tier; investigating shroud 4 instead was an unnecessary risk.
+
+NEXT-RUN LESSONS (Skids / Devourer Below):
+1. Frozen in Fear (WP 2 vs 3) is a near-auto-fail for Skids; when it appears, do NOT plan to take actions that round — use the actions that precede the test to move to a safe location and end turn. Do not draw cards / play cards that can trigger it before repositioning.
+2. Never enter a deep location (Ghoul Pits) without: (a) a weapon in play or 3 res for Derringer, (b) an evade commit in hand, (c) a horror soak or retreat action banked.
+3. Intellect 3 should not investigate shroud 4 locations at all without Flashlight/Magnifying Glass/Perception. Treat shroud 4 as unreachable for Skids.
+4. Keep ≥3 resources in reserve so Derringer (3 res) or Skids ability + a commit are both available.
+5. At 3/6 horror with a hunter adjacent, treat the position as resign-eligible; do not spend actions on marginal shroud-4 tests.
+6. The Ghoul Pits reveal agility test passed, but the *follow-up* clue test is Intellect vs 4 — that mismatch is the trap. Plan the Intellect answer before stepping in.
