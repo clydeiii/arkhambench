@@ -3,6 +3,10 @@
 **📊 Live results: [clydeiii.github.io/arkhambench/results.html](https://clydeiii.github.io/arkhambench/results.html)
 — leaderboard, cost/speed charts, and the playtest findings · [run viewer](https://clydeiii.github.io/arkhambench/)**
 
+Three questions, one benchmark: **can models play** a complex board game — and how well?
+**Can they learn** from repeated play — and how well? **Can they playtest** — find real
+rules bugs in the engine that hosts them — and how well?
+
 A rules-enforcing engine + CLI harness that lets LLM agents play *Arkham Horror: The Card
 Game* solo — "The Gathering" and "Return to The Gathering" (Night of the Zealot, Part I)
 with any of the five core-set investigators — inside coding-agent harnesses, with a

@@ -83,3 +83,53 @@
 {"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Machete (target: Ghoul from the Depths)."}, "phase": "Investigation", "round": 3, "seq": 83, "type": "action_spent"}
 {"data": {"message": "Started combat test 5 vs 3.", "source": "Fight with Machete"}, "phase": "Investigation", "round": 3, "seq": 84, "type": "skill_test_started"}
 {"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with Machete (combat vs 3)."}, "phase": "Investigation", "round": 3, "seq": 85, "status": "[R3\u00b7Investigation a1/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h4 d26 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Physical Training (+1)", "option": 1}, "phase": "Investigation", "round": 3, "seq": 86, "type": "decision_made"}
+{"data": {"message": "Use Physical Training's combat icon to improve the Retaliate attack while keeping both Guts for willpower treacheries."}, "phase": "Investigation", "round": 3, "seq": 87, "type": "agent_reason"}
+{"data": {"card": "pc0004", "message": "Committed Physical Training."}, "phase": "Investigation", "round": 3, "seq": 88, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with Machete (combat vs 3)."}, "phase": "Investigation", "round": 3, "seq": 89, "status": "[R3\u00b7Investigation a1/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h3 d26 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 3, "seq": 90, "type": "decision_made"}
+{"data": {"message": "Reveal the strengthened Machete test."}, "phase": "Investigation", "round": 3, "seq": 91, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 3, "seq": 92, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Fight with Machete: success by 1 - combat 5 + committed 1 + boosts 0 + token -2 = 4 vs 3.", "modifier": -2, "reveal_effects_applied": true, "skill": "combat", "source": "Fight with Machete", "success": true, "token": "-2", "value": 4}, "phase": "Investigation", "round": 3, "seq": 93, "type": "skill_test_result"}
+{"data": {"enemy": "ec0030", "message": "Ghoul from the Depths took 2 damage."}, "phase": "Investigation", "round": 3, "seq": 94, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 95, "status": "[R3\u00b7Investigation a1/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h3 d26 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Ghoul from the Depths with Machete \u2014 test Combat(5) vs 3, 2 dmg", "option": 7}, "phase": "Investigation", "round": 3, "seq": 96, "type": "decision_made"}
+{"data": {"message": "Take the second Machete swing now; the attack has a strong margin and defeating this Victory enemy supplies Roland's extra clue."}, "phase": "Investigation", "round": 3, "seq": 97, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Machete (target: Ghoul from the Depths)."}, "phase": "Investigation", "round": 3, "seq": 98, "type": "action_spent"}
+{"data": {"message": "Started combat test 5 vs 3.", "source": "Fight with Machete"}, "phase": "Investigation", "round": 3, "seq": 99, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Roland Banks] Commit cards to Fight with Machete (combat vs 3)."}, "phase": "Investigation", "round": 3, "seq": 100, "status": "[R3\u00b7Investigation a0/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h3 d26 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 3, "seq": 101, "type": "decision_made"}
+{"data": {"message": "Resolve the final Machete attack."}, "phase": "Investigation", "round": 3, "seq": 102, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 3, "seq": 103, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Fight with Machete: failure by 1 - combat 5 + committed 0 + boosts 0 + token -3 = 2 vs 3.", "modifier": -3, "reveal_effects_applied": true, "skill": "combat", "source": "Fight with Machete", "success": false, "token": "-3", "value": 2}, "phase": "Investigation", "round": 3, "seq": 104, "type": "skill_test_result"}
+{"data": {"enemy": "ec0030", "message": "Ghoul from the Depths [ec0030] attacked Roland Banks.", "source": "retaliate"}, "phase": "Investigation", "round": 3, "seq": 105, "type": "enemy_attack"}
+{"data": {"message": "Roland Banks took 1 damage and 1 horror.", "source": "Ghoul from the Depths"}, "phase": "Investigation", "round": 3, "seq": 106, "type": "damage_assigned"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 107, "type": "phase_started"}
+{"data": {"enemy": "ec0030", "message": "Ghoul from the Depths [ec0030] attacked Roland Banks.", "source": "enemy phase"}, "phase": "Enemy", "round": 3, "seq": 108, "type": "enemy_attack"}
+{"data": {"message": "Roland Banks took 1 damage and 1 horror.", "source": "Ghoul from the Depths"}, "phase": "Enemy", "round": 3, "seq": 109, "type": "damage_assigned"}
+{"data": {"enemy": "ec0030", "message": "Ghoul from the Depths [ec0030] exhausted after attacking."}, "phase": "Enemy", "round": 3, "seq": 110, "type": "enemy_exhausted"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 111, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 112, "type": "ready_step"}
+{"data": {"card": "pc0031", "message": "Roland Banks drew Perception."}, "phase": "Upkeep", "round": 3, "seq": 113, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Roland Banks gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 114, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 115, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 116, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 4, "seq": 117, "status": "[R4\u00b7Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor2/5 | h4 d25 x2 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Take 2 horror", "option": 2}, "phase": "Mythos", "round": 4, "seq": 118, "type": "decision_made"}
+{"data": {"message": "Accept two horror to preserve both Guts, Flashlight, and Perception for the urgent finish."}, "phase": "Mythos", "round": 4, "seq": 119, "type": "agent_reason"}
+{"data": {"message": "Roland Banks took 0 damage and 2 horror.", "source": "What's Going On?!"}, "phase": "Mythos", "round": 4, "seq": 120, "type": "damage_assigned"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 4, "seq": 121, "type": "agenda_advanced"}
+{"data": {"card": "ec0013", "message": "Roland Banks drew encounter card Rotting Remains."}, "phase": "Mythos", "round": 4, "seq": 122, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 3 vs 3.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 4, "seq": 123, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Roland Banks] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 4, "seq": 124, "status": "[R4\u00b7Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor4/5 | h4 d25 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Guts (+2)", "option": 1}, "phase": "Mythos", "round": 4, "seq": 125, "type": "decision_made"}
+{"data": {"message": "Commit one Guts to raise the dangerous horror test."}, "phase": "Mythos", "round": 4, "seq": 126, "type": "agent_reason"}
+{"data": {"card": "pc0029", "message": "Committed Guts."}, "phase": "Mythos", "round": 4, "seq": 127, "type": "card_committed"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Roland Banks] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 4, "seq": 128, "status": "[R4\u00b7Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor4/5 | h3 d25 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 4, "seq": 129, "type": "decision_made"}
+{"data": {"message": "Commit the second Guts because a failed Rotting Remains test could defeat Roland at four horror."}, "phase": "Mythos", "round": 4, "seq": 130, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -4.", "modifier": -4, "token": "-4"}, "phase": "Mythos", "round": 4, "seq": 131, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 2, "difficulty": 3, "extra_tokens": [], "margin": 2, "message": "Rotting Remains: failure by 2 - willpower 3 + committed 2 + boosts 0 + token -4 = 1 vs 3.", "modifier": -4, "reveal_effects_applied": true, "skill": "willpower", "source": "Rotting Remains", "success": false, "token": "-4", "value": 1}, "phase": "Mythos", "round": 4, "seq": 132, "type": "skill_test_result"}
+{"data": {"message": "Roland Banks took 0 damage and 2 horror.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 4, "seq": 133, "type": "damage_assigned"}
+{"data": {"message": "Roland Banks was defeated", "summary": "Roland Banks was defeated"}, "phase": "Mythos", "round": 4, "seq": 134, "type": "game_end"}
+{"data": {}, "phase": "Mythos", "round": 4, "seq": 135, "type": "note_added"}

@@ -129,9 +129,10 @@ footer .wrap{max-width:72ch; margin:0}
   <h1>Findings <span class="thin">from the investigation</span></h1>
   <p class="dek">Coding agents play <b>Arkham Horror: The Card Game</b> solo, inside a
   rules-enforcing engine, with a persistent notebook as their only memory between games.
-  Two questions under investigation: <b>do models actually learn from repeated play</b>,
-  and <b>can they playtest</b> — find real rules bugs in the engine that hosts them?
-  Every score on this page is a link into the full replay.</p>
+  Three questions under investigation: <b>can models play</b> — and if so, how well?
+  <b>Can they learn</b> from repeated play — and if so, how well? And <b>can they
+  playtest</b> — find real rules bugs in the engine that hosts them — and if so, how
+  well? Every score on this page is a link into the full replay.</p>
   <nav>
     <a href="index.html">→ open the run viewer</a>
     <a href="https://github.com/clydeiii/arkhambench">→ repository &amp; methodology</a>
@@ -139,8 +140,8 @@ footer .wrap{max-width:72ch; margin:0}
 </header>
 
 <section id="board">
-  <div class="exhibit">Exhibit 0 — Leaderboard</div>
-  <h2>The Leaderboard</h2>
+  <div class="exhibit">Question 1 · Can they play? — Exhibit 0</div>
+  <h2>Yes — this well</h2>
   <p class="note">The current standings: nine frontier models, five full Return to Night of
   the Zealot campaigns each, identical seeds (9401–9405) on the <b>modern engine</b> (155
   adjudications deep, 429 tests). Bars are the five campaigns in play order — click one to
@@ -164,6 +165,16 @@ footer .wrap{max-width:72ch; margin:0}
   right.</p>
   <div class="scatter" id="scatter-cost"></div>
   <div class="scatter" id="scatter-time"></div>
+</section>
+
+<section id="learn-teaser">
+  <div class="exhibit">Question 2 · Can they learn?</div>
+  <h2>The learning bench is on the table now</h2>
+  <p class="note">The definitive version of the learning experiment — thirty games per
+  model on the frozen modern engine, fresh notebooks, per-game token telemetry so the
+  cost of learning is measured alongside the curve — is running as you read this.
+  Results land here. The earlier 10-game learning experiments (older engine eras) are
+  preserved in the archive below.</p>
 </section>
 
 <section id="archive">
@@ -227,8 +238,8 @@ footer .wrap{max-width:72ch; margin:0}
 </section>
 
 <section id="playtest">
-  <div class="exhibit">Exhibit 1</div>
-  <h2>The second benchmark: can models playtest?</h2>
+  <div class="exhibit">Question 3 · Can they playtest? — Exhibit 1</div>
+  <h2>Yes — and the engine is better for it</h2>
   <p class="note">Agents are told verified engine-bug reports outrank score — every adversary
   becomes an auditor. Reports flow through a tiered pipeline: cheap models play, strong models
   audit the transcripts, adversarial verification and a final human-tier gate adjudicate.

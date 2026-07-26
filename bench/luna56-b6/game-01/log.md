@@ -96,3 +96,60 @@
 **R3 · Investigation** — Started combat test 5 vs 3.
 [R3·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h4 d26 x1 | Act1 Agd1 doom2/3]
 **R3 · Investigation** — Decision presented: [Round 3 · Investigation · Roland Banks] Commit cards to Fight with Machete (combat vs 3).
+**R3 · Investigation** — Decision made: Commit Physical Training (+1)
+**R3 · Investigation** — Use Physical Training's combat icon to improve the Retaliate attack while keeping both Guts for willpower treacheries.
+**R3 · Investigation** — Committed Physical Training.
+[R3·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h3 d26 x1 | Act1 Agd1 doom2/3]
+**R3 · Investigation** — Decision presented: [Round 3 · Investigation · Roland Banks] Commit cards to Fight with Machete (combat vs 3).
+**R3 · Investigation** — Decision made: Done
+**R3 · Investigation** — Reveal the strengthened Machete test.
+**R3 · Investigation** — Revealed -2.
+**R3 · Investigation** — Fight with Machete: success by 1 - combat 5 + committed 1 + boosts 0 + token -2 = 4 vs 3.
+**R3 · Investigation** — Ghoul from the Depths took 2 damage.
+[R3·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h3 d26 x2 | Act1 Agd1 doom2/3]
+**R3 · Investigation** — Decision presented: [Round 3 · Investigation · Roland Banks · 1 action left] Choose an action:
+**R3 · Investigation** — Decision made: Fight Ghoul from the Depths with Machete — test Combat(5) vs 3, 2 dmg
+**R3 · Investigation** — Take the second Machete swing now; the attack has a strong margin and defeating this Victory enemy supplies Roland's extra clue.
+**R3 · Investigation** — Spent 1 action: Fight with Machete (target: Ghoul from the Depths).
+**R3 · Investigation** — Started combat test 5 vs 3.
+[R3·Investigation a0/3 | Roland Banks 01001 | Bathroom | clu1 res6 | dmg0/9 hor0/5 | h3 d26 x2 | Act1 Agd1 doom2/3]
+**R3 · Investigation** — Decision presented: [Round 3 · Investigation · Roland Banks] Commit cards to Fight with Machete (combat vs 3).
+**R3 · Investigation** — Decision made: Done
+**R3 · Investigation** — Resolve the final Machete attack.
+**R3 · Investigation** — Revealed -3.
+**R3 · Investigation** — Fight with Machete: failure by 1 - combat 5 + committed 0 + boosts 0 + token -3 = 2 vs 3.
+**R3 · Investigation** — Ghoul from the Depths [ec0030] attacked Roland Banks.
+**R3 · Investigation** — Roland Banks took 1 damage and 1 horror.
+**R3 · Enemy** — Enemy phase began.
+**R3 · Enemy** — Ghoul from the Depths [ec0030] attacked Roland Banks.
+**R3 · Enemy** — Roland Banks took 1 damage and 1 horror.
+**R3 · Enemy** — Ghoul from the Depths [ec0030] exhausted after attacking.
+**R3 · Upkeep** — Upkeep phase began.
+**R3 · Upkeep** — All exhausted cards readied.
+**R3 · Upkeep** — Roland Banks drew Perception.
+**R3 · Upkeep** — Roland Banks gained 1 resource.
+**R4 · Mythos** — Round 4 began.
+**R4 · Mythos** — Placed 1 doom on the agenda.
+[R4·Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor2/5 | h4 d25 x2 | Act1 Agd1 doom3/3]
+**R4 · Mythos** — Decision presented: Agenda 1 advanced. Choose the back effect.
+**R4 · Mythos** — Decision made: Take 2 horror
+**R4 · Mythos** — Accept two horror to preserve both Guts, Flashlight, and Perception for the urgent finish.
+**R4 · Mythos** — Roland Banks took 0 damage and 2 horror.
+**R4 · Mythos** — Agenda advanced to Rise of the Ghouls.
+**R4 · Mythos** — Roland Banks drew encounter card Rotting Remains.
+**R4 · Mythos** — Started willpower test 3 vs 3.
+[R4·Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor4/5 | h4 d25 x2 | Act1 Agd2 doom0/7]
+**R4 · Mythos** — Decision presented: [Round 4 · Mythos · Roland Banks] Commit cards to Rotting Remains (willpower vs 3).
+**R4 · Mythos** — Decision made: Commit Guts (+2)
+**R4 · Mythos** — Commit one Guts to raise the dangerous horror test.
+**R4 · Mythos** — Committed Guts.
+[R4·Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor4/5 | h3 d25 x2 | Act1 Agd2 doom0/7]
+**R4 · Mythos** — Decision presented: [Round 4 · Mythos · Roland Banks] Commit cards to Rotting Remains (willpower vs 3).
+**R4 · Mythos** — Decision made: Done
+**R4 · Mythos** — Commit the second Guts because a failed Rotting Remains test could defeat Roland at four horror.
+**R4 · Mythos** — Revealed -4.
+**R4 · Mythos** — Rotting Remains: failure by 2 - willpower 3 + committed 2 + boosts 0 + token -4 = 1 vs 3.
+**R4 · Mythos** — Roland Banks took 0 damage and 2 horror.
+[R4·Mythos | Roland Banks 01001 | Bathroom | clu1 res7 | dmg2/9 hor6/5 | h3 d25 x3 | Act1 Agd2 doom0/7]
+**R4 · Mythos** — GAME OVER: Roland Banks was defeated
+**R4 · Mythos** — Note added.

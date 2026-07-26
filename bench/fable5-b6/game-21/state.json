@@ -1,0 +1,282 @@
+{
+  "act": {
+    "clues_required": 3,
+    "code": "50012",
+    "name": "Mysterious Gateway",
+    "stage": 1
+  },
+  "active_skill_test": null,
+  "agenda": {
+    "code": "01105",
+    "doom": 0,
+    "name": "What's Going On?!",
+    "stage": 1,
+    "threshold": 3
+  },
+  "card_instances": {
+    "pc0003": {
+      "attachments": [],
+      "card_code": "01016",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0003",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0007": {
+      "attachments": [],
+      "card_code": "01019",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0007",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0028": {
+      "attachments": [],
+      "card_code": "01088",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0028",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0030": {
+      "attachments": [],
+      "card_code": "01089",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0030",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0031": {
+      "attachments": [],
+      "card_code": "01090",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0031",
+      "owner": "roland",
+      "uses": {},
+      "zone": "hand"
+    }
+  },
+  "chaos_bag": {
+    "tokens": [
+      "+1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "-1",
+      "-2",
+      "-2",
+      "-3",
+      "-4",
+      "skull",
+      "skull",
+      "cultist",
+      "tablet",
+      "autofail",
+      "eldersign"
+    ]
+  },
+  "confirmations_enabled": false,
+  "decision_queue": [
+    {
+      "id": "opening-mulligan",
+      "kind": "scenario",
+      "options": [
+        {
+          "label": "Keep hand and draw replacements",
+          "payload": {
+            "choice": "keep_hand",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside First Aid",
+          "payload": {
+            "card": "pc0007",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Emergency Cache",
+          "payload": {
+            "card": "pc0028",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Perception",
+          "payload": {
+            "card": "pc0031",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside .45 Automatic",
+          "payload": {
+            "card": "pc0003",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        },
+        {
+          "label": "Set aside Guts",
+          "payload": {
+            "card": "pc0030",
+            "choice": "toggle_mulligan_card",
+            "kind": "scenario"
+          }
+        }
+      ],
+      "prompt": "Opening hand: First Aid, Emergency Cache, Perception, .45 Automatic, Guts. Set aside any number of cards, then draw replacements together."
+    }
+  ],
+  "difficulty": "standard",
+  "encounter_deck": [],
+  "encounter_deck_count": 32,
+  "encounter_discard": [],
+  "enemies": {},
+  "investigator": {
+    "actions_remaining": 3,
+    "agility": 2,
+    "card_code": "01001",
+    "clues": 0,
+    "combat": 4,
+    "damage": 0,
+    "deck_count": 28,
+    "discard": [],
+    "engaged_enemies": [],
+    "exhausted": false,
+    "hand": [
+      "pc0007",
+      "pc0028",
+      "pc0031",
+      "pc0003",
+      "pc0030"
+    ],
+    "health": 9,
+    "horror": 0,
+    "id": "roland",
+    "intellect": 3,
+    "location_id": "study",
+    "name": "Roland Banks",
+    "play_area": [],
+    "resources": 5,
+    "sanity": 5,
+    "threat_area": [],
+    "willpower": 3
+  },
+  "limits": {
+    "mulligan_available": [
+      "pc0007",
+      "pc0028",
+      "pc0031",
+      "pc0003",
+      "pc0030"
+    ],
+    "return_variant:attic": "return",
+    "return_variant:cellar": "original"
+  },
+  "locations": {
+    "bathroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50016",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bathroom",
+      "investigator_ids": [],
+      "name": "Bathroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "bedroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50015",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bedroom",
+      "investigator_ids": [],
+      "name": "Bedroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "guest_hall": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50014",
+      "connections": [
+        "study",
+        "bedroom",
+        "bathroom"
+      ],
+      "enemy_ids": [],
+      "id": "guest_hall",
+      "investigator_ids": [],
+      "name": "Guest Hall",
+      "revealed": false,
+      "shroud": null
+    },
+    "study": {
+      "attached_instance_ids": [],
+      "clues": 1,
+      "code": "50013",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "study",
+      "investigator_ids": [
+        "roland"
+      ],
+      "name": "Study (Aberrant Gateway)",
+      "revealed": true,
+      "shroud": 3
+    }
+  },
+  "pending_damage": null,
+  "phase": "Investigation",
+  "removed_from_game": [],
+  "result": null,
+  "round": 1,
+  "scenario": "return_to_the_gathering",
+  "schema_version": 2,
+  "status": "in_progress",
+  "trauma": {},
+  "turn": {
+    "action_index": 0,
+    "investigator_id": "roland"
+  },
+  "victory_display": []
+}

@@ -1,0 +1,5 @@
+## 2026-07-25T19:43:54+00:00
+- Round: 14
+- Phase: Mythos
+- Description: Return to the Gathering: agenda 'They're Getting Out!' advancing while investigators are on Act 3 reports outcome/resolution = no_resolution, but the agenda back specifies distinct branches: Act 1 or 2 -> R3 (trapped, torn apart), Act 3 -> 'they barely escape with their lives... each investigator that has not resigned is defeated and suffers 1 physical trauma' (i.e. R2). The engine DID apply the Act 3 branch mechanically (final score shows trauma {'physical': 1}, not the Act 1/2 outcome), so the branch logic works, but the resolution label is still no_resolution. Repro: run bench/opus5-b6 game (Agnes, return_to_the_gathering), advance The Barrier to 'What Have You Done?' at R13 upkeep with doom already 10/10, then let R14 mythos place doom. Log line: 'GAME OVER: Agnes Baker was defeated by agenda 3' then 'GAME OVER — no_resolution'. Expected: resolution should be the Act-3 resolution (R2 / escaped), not no_resolution, since reaching Act 3 is a materially better ending and no_resolution masks it in scoring.
+

@@ -157,3 +157,99 @@
 **R4 · Investigation** — Started combat test 4 vs 3.
 [R4·Investigation a2/3 | Roland Banks 01001 | Bathroom | clu3 res7 | dmg2/9 hor2/5 | h7 d21 x4 | Act1 Agd2 doom0/7]
 **R4 · Investigation** — Decision presented: [Round 4 · Investigation · Roland Banks] Commit cards to Fight Ghoul from the Depths (combat vs 3).
+**R4 · Investigation** — Decision made: Done
+**R4 · Investigation** — Already passing 4 vs 3; no commits needed.
+**R4 · Investigation** — Revealed skull.
+**R4 · Investigation** — Fight Ghoul from the Depths: success by 0 - combat 4 + committed 0 + boosts 0 + token -1 = 3 vs 3.
+**R4 · Investigation** — Ghoul from the Depths took 1 damage.
+[R4·Investigation a2/3 | Roland Banks 01001 | Bathroom | clu3 res7 | dmg2/9 hor2/5 | h7 d21 x4 | Act1 Agd2 doom0/7]
+**R4 · Investigation** — Decision presented: [Round 4 · Investigation · Roland Banks · 2 actions left] Choose an action:
+**R4 · Investigation** — Decision made: Fight Ghoul from the Depths (fight 3, 1 dmg) — test Combat(4)
+**R4 · Investigation** — Fighting again to defeat Ghoul from the Depths. One more hit should finish it (2 health remaining).
+**R4 · Investigation** — Spent 1 action: Fight Ghoul from the Depths.
+**R4 · Investigation** — Started combat test 4 vs 3.
+[R4·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu3 res7 | dmg2/9 hor2/5 | h7 d21 x4 | Act1 Agd2 doom0/7]
+**R4 · Investigation** — Decision presented: [Round 4 · Investigation · Roland Banks] Commit cards to Fight Ghoul from the Depths (combat vs 3).
+**R4 · Investigation** — Decision made: Done
+**R4 · Investigation** — Already passing 4 vs 3; no commits needed.
+**R4 · Investigation** — Revealed skull.
+**R4 · Investigation** — Fight Ghoul from the Depths: success by 0 - combat 4 + committed 0 + boosts 0 + token -1 = 3 vs 3.
+**R4 · Investigation** — Ghoul from the Depths took 1 damage.
+[R4·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu3 res7 | dmg2/9 hor2/5 | h7 d21 x4 | Act1 Agd2 doom0/7]
+**R4 · Investigation** — Decision presented: [Round 4 · Investigation · Roland Banks · 1 action left] Choose an action:
+**R4 · Investigation** — Decision made: Fight Ghoul from the Depths (fight 3, 1 dmg) — test Combat(4)
+**R4 · Investigation** — Final attack to defeat Ghoul from the Depths. Should finish with the last damage.
+**R4 · Investigation** — Spent 1 action: Fight Ghoul from the Depths.
+**R4 · Investigation** — Started combat test 4 vs 3.
+[R4·Investigation a0/3 | Roland Banks 01001 | Bathroom | clu3 res7 | dmg2/9 hor2/5 | h7 d21 x4 | Act1 Agd2 doom0/7]
+**R4 · Investigation** — Decision presented: [Round 4 · Investigation · Roland Banks] Commit cards to Fight Ghoul from the Depths (combat vs 3).
+**R4 · Investigation** — Decision made: Done
+**R4 · Investigation** — Already passing; no commits needed.
+**R4 · Investigation** — Revealed eldersign.
+**R4 · Investigation** — Fight Ghoul from the Depths: success by 1 - combat 4 + committed 0 + boosts 0 + token 0 = 4 vs 3.
+**R4 · Investigation** — Ghoul from the Depths took 1 damage.
+**R4 · Enemy** — Enemy phase began.
+**R4 · Enemy** — Ghoul from the Depths [ec0030] attacked Roland Banks.
+**R4 · Enemy** — Roland Banks took 1 damage and 1 horror.
+**R4 · Enemy** — Ghoul from the Depths [ec0030] exhausted after attacking.
+**R4 · Upkeep** — Upkeep phase began.
+**R4 · Upkeep** — All exhausted cards readied.
+**R4 · Upkeep** — Roland Banks drew Barricade.
+**R4 · Upkeep** — Roland Banks gained 1 resource.
+**R5 · Mythos** — Round 5 began.
+**R5 · Mythos** — Placed 1 doom on the agenda.
+**R5 · Mythos** — Roland Banks drew encounter card Swarm of Rats.
+**R5 · Mythos** — Swarm of Rats [ec0005] spawned at Bathroom.
+**R5 · Mythos** — Swarm of Rats [ec0005] engaged Roland Banks.
+**R5 · Investigation** — Investigation phase began.
+[R5·Investigation a3/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg3/9 hor3/5 | h8 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks · 3 actions left] Choose an action:
+**R5 · Investigation** — Decision made: Fight Swarm of Rats (fight 1, 1 dmg) — test Combat(4)
+**R5 · Investigation** — Fighting Swarm of Rats (combat 1 vs my 4) is nearly guaranteed. Easier to dispatch than Ghoul. Will trigger Roland's reaction for a free clue.
+**R5 · Investigation** — Spent 1 action: Fight Swarm of Rats.
+**R5 · Investigation** — Started combat test 4 vs 1.
+[R5·Investigation a2/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg3/9 hor3/5 | h8 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks] Commit cards to Fight Swarm of Rats (combat vs 1).
+**R5 · Investigation** — Decision made: Done
+**R5 · Investigation** — Already passing 4 vs 1; no commits needed.
+**R5 · Investigation** — Revealed +1.
+**R5 · Investigation** — Fight Swarm of Rats: success by 4 - combat 4 + committed 0 + boosts 0 + token 1 = 5 vs 1.
+**R5 · Investigation** — Swarm of Rats took 1 damage.
+**R5 · Investigation** — Swarm of Rats was defeated.
+[R5·Investigation a2/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg3/9 hor3/5 | h8 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks · 2 actions left] Choose an action:
+**R5 · Investigation** — Decision made: Fight Ghoul from the Depths (fight 3, 1 dmg) — test Combat(4)
+**R5 · Investigation** — Fighting Ghoul from the Depths again. Need to eliminate this threat before it kills me with horror.
+**R5 · Investigation** — Spent 1 action: Fight Ghoul from the Depths.
+**R5 · Investigation** — Started combat test 4 vs 3.
+[R5·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg3/9 hor3/5 | h8 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks] Commit cards to Fight Ghoul from the Depths (combat vs 3).
+**R5 · Investigation** — Decision made: Done
+**R5 · Investigation** — Already passing 4 vs 3; no commits needed.
+**R5 · Investigation** — Revealed autofail.
+**R5 · Investigation** — Fight Ghoul from the Depths: failure (autofail) by 3 - autofail (skill value 0) vs 3.
+**R5 · Investigation** — Ghoul from the Depths [ec0030] attacked Roland Banks.
+**R5 · Investigation** — Roland Banks took 1 damage and 1 horror.
+[R5·Investigation a1/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg4/9 hor4/5 | h8 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks · 1 action left] Choose an action:
+**R5 · Investigation** — Decision made: Evade Ghoul from the Depths (evade 2) — test Agility(2)
+**R5 · Investigation** — Evading Ghoul with Agility 2 vs 2. Need to get away from this enemy—I'm at 4/5 horror and one more hit defeats me.
+**R5 · Investigation** — Spent 1 action: Evade Ghoul from the Depths.
+**R5 · Investigation** — Started agility test 2 vs 2.
+[R5·Investigation a0/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg4/9 hor4/5 | h8 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks] Commit cards to Evade Ghoul from the Depths (agility vs 2).
+**R5 · Investigation** — Decision made: Commit Barricade (+1)
+**R5 · Investigation** — Committing Barricade to guarantee evasion. Can't risk another attack that would defeat me.
+**R5 · Investigation** — Committed Barricade.
+[R5·Investigation a0/3 | Roland Banks 01001 | Bathroom | clu3 res8 | dmg4/9 hor4/5 | h7 d20 x4 | Act1 Agd2 doom1/7]
+**R5 · Investigation** — Decision presented: [Round 5 · Investigation · Roland Banks] Commit cards to Evade Ghoul from the Depths (agility vs 2).
+**R5 · Investigation** — Decision made: Done
+**R5 · Investigation** — Already passing 3 vs 2 with Barricade; done.
+**R5 · Investigation** — Revealed -3.
+**R5 · Investigation** — Evade Ghoul from the Depths: failure by 2 - agility 2 + committed 1 + boosts 0 + token -3 = 0 vs 2.
+**R5 · Enemy** — Enemy phase began.
+**R5 · Enemy** — Ghoul from the Depths [ec0030] attacked Roland Banks.
+**R5 · Enemy** — Roland Banks took 1 damage and 1 horror.
+[R5·Enemy | Roland Banks 01001 | Bathroom | clu3 res8 | dmg5/9 hor5/5 | h7 d20 x5 | Act1 Agd2 doom1/7]
+**R5 · Enemy** — GAME OVER: Roland Banks was defeated
+**R5 · Enemy** — Note added.

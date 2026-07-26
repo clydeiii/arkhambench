@@ -552,3 +552,22 @@ Run fable5-demo-agnes-midnight-masks-coverage-xp:
 
 **LESSON**: For multi-card coverage directives, pre-plan the deck order or mulligan strategy to ensure both cards are accessible before horror/damage caps force resignation. Book of Shadows requires 4 resources (rare in early game) — need Emergency Cache or early resource generation to fund it.
 
+## [2026-07-25] Current run — Roland Banks, GAME OVER R12
+
+RESULT: Defeated by insanity in the Attic during the R12 enemy phase (`no_resolution`). Corpse-Hungry Ghoul hunted from the Hallway, attacked for 2 damage/2 horror, and put Roland at 6/9 damage and 5/5 horror. The run ended on Act 2 / Agenda 3 at 7/10 doom with 2 clues.
+
+WHAT WORKED:
+- Used Machete to finish the Icy Ghoul in R11, then used Roland's reaction to redirect the clue discovery into Cover Up and discard the weakness. This avoided Cover Up's end-of-game penalty.
+- Conserved Perception on the low-shroud Attic investigation; Roland succeeded exactly at difficulty after drawing -2.
+- Killed Swarm of Rats efficiently with a basic fight, saving Machete and discovering an Attic clue with Roland's reaction.
+
+CRITICAL FAILURE:
+- Roland entered R12 at 3/5 horror while Corpse-Hungry Ghoul and Ghoul from the Depths were already staged in the adjacent Hallway. That was a forced-survival crisis, not a normal clue turn. Spending the last two actions on the final Attic clue and a blind draw left both hunters unresolved; the draw found Physical Training and supplied no soak, evade, or cancellation.
+- The position was probably already lost by R12: after killing the engaged Rats, Roland had only two actions, 2 remaining sanity, no useful agility commits, and two adjacent hunters. Moving would engage both and shut off Machete's bonus damage, while staying let the first hunter deliver lethal horror.
+- Earlier tempo and horror preservation were therefore decisive. Clearing Cover Up was correct, but reaching Agenda 3 with only 2 clues, no horror soak, no resources, and multiple hunters accumulated in the Hallway left no recovery line.
+
+NEXT-RUN LESSONS:
+1. Treat 3/5 horror as the emergency threshold for Roland when a 2-horror enemy can hunt in; stop investigating and prioritize evade, enemy removal, Dodge, or soak before the enemy phase.
+2. Do not allow multiple hunters to stack in a connecting location. Machete loses its extra damage when more than one enemy is engaged, so intercept or defeat hunters one at a time.
+3. Use Roland's enemy-defeat reaction as clue compression early, especially at clue-bearing locations, but account for Cover Up consuming those discoveries and budget extra clue tempo accordingly.
+4. Low-shroud tests at +2 are reasonable without commits, but saved cards only matter if there will be another round; in a lethal board state, prioritize immediate survival over long-term efficiency.

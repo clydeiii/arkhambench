@@ -1,0 +1,5 @@
+## 2026-07-25T04:07:20+00:00
+- Round: 6
+- Phase: Investigation
+- Description: Possible XP accounting discrepancy. Final score reported 'xp: 3, score: 2, trauma mental 1' for outcome no_resolution. But per docs_agent/scenario_reference.md, XP = Victory X in the victory display (defeated Victory enemies + revealed, CLUELESS Victory locations) + resolution bonuses. At game end my victory display contained exactly one card: Ghoul from the Depths (victory 1). There was no resolution (no_resolution, so no resolution bonus). The original Attic (victory 1) was revealed but still had its 2 clues on it, so it should NOT count as a 'clueless victory location'; the original Cellar (victory 1) was put into play but never revealed. So documented XP should be 1 (score 0 after 1 mental trauma), not 3 (score 2). Either the engine is crediting victory for revealed-but-not-cleared victory locations (Attic and/or Cellar), or acts advanced are granting undocumented XP. Flagging in case victory-location crediting ignores the clue requirement.
+

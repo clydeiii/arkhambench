@@ -1,0 +1,5 @@
+## 2026-07-25T09:41:55+00:00
+- Round: 9
+- Phase: Mythos
+- Description: Cultist chaos token's extra horror on failure may not be applied. R9 mythos, Rotting Remains, willpower 3 vs 3, revealed cultist (modifier -1), result 'failure by 1'. Per the scenario reference the cultist token is '-1. If you fail, take 1 horror', and Rotting Remains itself deals 1 horror per point failed. Failing by 1 with a cultist should therefore deal 1 (Rotting Remains) + 1 (cultist) = 2 horror. The log (seq 435-436) shows only a single damage_assigned line: 'Daisy Walker took 0 damage and 1 horror' sourced to Rotting Remains, with no separate cultist horror event. CAVEAT / why this is not certain: I was at 8/9 horror and was defeated on this token, so the visible total (9/9) is the same under either reading, and it is possible the second point was applied but not logged or was truncated by the defeat. Flagging because the log line count and wording suggest the cultist's own horror clause was skipped. Note it resolved in my favour, so I am not exploiting it.
+
