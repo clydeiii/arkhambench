@@ -652,3 +652,222 @@
 **R11 · Investigation** — Investigation phase began.
 [R11·Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h5 d7 x19 | Act2 Agd3 doom0/10]
 **R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker · 4 actions left (1 Tome-only)] Choose an action:
+**R11 · Investigation** — Decision made: Evade Grave-Eater (evade 2) — test Agility(2)
+**R11 · Investigation** — Evade GE1 (will commit MD +2 = 81%); evaded ghouls drift away tonight instead of attacking
+**R11 · Investigation** — Spent 1 action: Evade Grave-Eater.
+**R11 · Investigation** — Started agility test 2 vs 2.
+[R11·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h5 d7 x19 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R11 · Investigation** — Decision made: Commit Manual Dexterity (+2)
+**R11 · Investigation** — MD +2 → 4v2 81%; ceiling analysis says score 2 is locked — running the act3-agenda-flip payout experiment for the notebook
+**R11 · Investigation** — Committed Manual Dexterity.
+[R11·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h4 d7 x19 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Done
+**R11 · Investigation** — Revealed -1.
+**R11 · Investigation** — Evade Grave-Eater: success by 1 - agility 2 + committed 2 + boosts 0 + token -1 = 3 vs 2.
+**R11 · Investigation** — Daisy Walker drew Flashlight.
+**R11 · Investigation** — Grave-Eater [ec0007] disengaged.
+**R11 · Investigation** — Grave-Eater [ec0007] exhausted after being evaded.
+[R11·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h5 d6 x20 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker · 3 actions left (1 Tome-only)] Choose an action:
+**R11 · Investigation** — Decision made: Evade Grave-Eater (evade 2) — test Agility(2)
+**R11 · Investigation** — Evade GE2 raw 37.5%; if it lands both GEs drift off tonight
+**R11 · Investigation** — Spent 1 action: Evade Grave-Eater.
+**R11 · Investigation** — Started agility test 2 vs 2.
+[R11·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h5 d6 x20 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R11 · Investigation** — Decision made: Commit Hyperawareness (+1)
+**R11 · Investigation** — Hyper +1 → 62.5%; its int boost has no remaining use
+**R11 · Investigation** — Committed Hyperawareness.
+[R11·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h4 d6 x20 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Go
+**R11 · Investigation** — Revealed skull.
+**R11 · Investigation** — Evade Grave-Eater: failure by 1 - agility 2 + committed 1 + boosts 0 + token -2 = 1 vs 2.
+[R11·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h4 d6 x21 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker · 2 actions left (1 Tome-only)] Choose an action:
+**R11 · Investigation** — Decision made: Evade Grave-Eater (evade 2) — test Agility(2)
+**R11 · Investigation** — Last regular action on a 25% evade: success revives the act3-flip experiment; failure still leaves the guaranteed-2 defeat line
+**R11 · Investigation** — Spent 1 action: Evade Grave-Eater.
+**R11 · Investigation** — Started agility test 2 vs 2.
+[R11·Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h4 d6 x21 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — No commits left worth it
+**R11 · Investigation** — Revealed -2.
+**R11 · Investigation** — Evade Grave-Eater: failure by 2 - agility 2 + committed 0 + boosts 0 + token -2 = 0 vs 2.
+[R11·Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg3/5 hor6/9 | h4 d6 x21 | Act2 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker · 1 action left (1 Tome-only)] Choose an action:
+**R11 · Investigation** — Decision made: Pass (end turn)
+**R11 · Investigation** — Tome use while engaged = pointless AoO; pass
+**R11 · Investigation** — Daisy Walker ended their turn.
+**R11 · Enemy** — Enemy phase began.
+**R11 · Enemy** — Grave-Eater [ec0008] attacked Daisy Walker.
+**R11 · Enemy** — Daisy Walker took 1 damage and 1 horror.
+**R11 · Enemy** — Grave-Eater's attack forced a random discard of Old Book of Lore.
+**R11 · Enemy** — Grave-Eater [ec0008] exhausted after attacking.
+**R11 · Enemy** — Flesh-Eater [ec0001] moved to Hallway.
+**R11 · Enemy** — Grave-Eater [ec0007] moved to Hallway.
+**R11 · Enemy** — Acolyte of Umôrdhoth [ec0009] moved to Parlor.
+**R11 · Upkeep** — Upkeep phase began.
+**R11 · Upkeep** — All exhausted cards readied.
+**R11 · Upkeep** — Daisy Walker drew Manual Dexterity.
+**R11 · Upkeep** — Daisy Walker gained 1 resource.
+**R11 · Upkeep** — Placed 3 doom on the agenda (They're Getting Out!).
+**R12 · Mythos** — Round 12 began.
+**R12 · Mythos** — Placed 1 doom on the agenda.
+**R12 · Mythos** — Daisy Walker drew encounter card Obscuring Fog.
+**R12 · Mythos** — Obscuring Fog attached to Cellar.
+**R12 · Investigation** — Investigation phase began.
+[R12·Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg4/5 hor7/9 | h4 d5 x22 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker · 4 actions left (1 Tome-only)] Choose an action:
+**R12 · Investigation** — Decision made: Evade Grave-Eater (evade 2) — test Agility(2)
+**R12 · Investigation** — Evade GE2 w/ MD (81%): sets up Milan2+heal+Hallway line to reach act 3 before R13 flip — experiment to learn act3-flip payout; all failure branches = defeat (score 2) anyway
+**R12 · Investigation** — Spent 1 action: Evade Grave-Eater.
+**R12 · Investigation** — Started agility test 2 vs 2.
+[R12·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg4/5 hor7/9 | h4 d5 x22 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R12 · Investigation** — Decision made: Commit Manual Dexterity (+2)
+**R12 · Investigation** — MD +2 → 4v2, ~81%
+**R12 · Investigation** — Committed Manual Dexterity.
+[R12·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg4/5 hor7/9 | h3 d5 x22 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R12 · Investigation** — Decision made: Done
+**R12 · Investigation** — Go
+**R12 · Investigation** — Revealed 0.
+**R12 · Investigation** — Evade Grave-Eater: success by 2 - agility 2 + committed 2 + boosts 0 + token 0 = 4 vs 2.
+**R12 · Investigation** — Daisy Walker drew Mind over Matter.
+**R12 · Investigation** — Grave-Eater [ec0008] disengaged.
+**R12 · Investigation** — Grave-Eater [ec0008] exhausted after being evaded.
+[R12·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg4/5 hor7/9 | h4 d4 x23 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker · 3 actions left (1 Tome-only)] Choose an action:
+**R12 · Investigation** — Decision made: Play Mind over Matter
+**R12 · Investigation** — MoM: int 5 replaces combat this round — kill the exhausted GE2 to thin the R13 crowd and doom count
+**R12 · Investigation** — Daisy Walker played Mind over Matter.
+[R12·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg4/5 hor7/9 | h3 d4 x24 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker · 3 actions left (1 Tome-only)] Choose an action:
+**R12 · Investigation** — Decision made: Fight Grave-Eater (fight 2, 1 dmg) — test Combat(5)
+**R12 · Investigation** — Punch GE2: 5v2, skull=-1 (1 ghoul here) still passes; hit 1 of 2
+**R12 · Investigation** — Spent 1 action: Fight Grave-Eater.
+**R12 · Investigation** — Started combat test 5 vs 2.
+[R12·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg4/5 hor7/9 | h3 d4 x24 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker] Commit cards to Fight Grave-Eater (combat vs 2).
+**R12 · Investigation** — Decision made: Done
+**R12 · Investigation** — 87.5%
+**R12 · Investigation** — Revealed skull.
+**R12 · Investigation** — Fight Grave-Eater: success by 2 - combat 5 + committed 0 + boosts 0 + token -1 = 4 vs 2.
+**R12 · Investigation** — Grave-Eater took 1 damage.
+[R12·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg4/5 hor7/9 | h3 d4 x24 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker · 2 actions left (1 Tome-only)] Choose an action:
+**R12 · Investigation** — Decision made: Fight Grave-Eater (fight 2, 1 dmg) — test Combat(5)
+**R12 · Investigation** — Finish GE2
+**R12 · Investigation** — Spent 1 action: Fight Grave-Eater.
+**R12 · Investigation** — Started combat test 5 vs 2.
+[R12·Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg4/5 hor7/9 | h3 d4 x24 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker] Commit cards to Fight Grave-Eater (combat vs 2).
+**R12 · Investigation** — Decision made: Done
+**R12 · Investigation** — 87.5%
+**R12 · Investigation** — Revealed -2.
+**R12 · Investigation** — Fight Grave-Eater: success by 1 - combat 5 + committed 0 + boosts 0 + token -2 = 3 vs 2.
+**R12 · Investigation** — Grave-Eater took 1 damage.
+**R12 · Investigation** — Grave-Eater was defeated.
+[R12·Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res4 | dmg4/5 hor7/9 | h3 d4 x24 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker · 1 action left (1 Tome-only)] Choose an action:
+**R12 · Investigation** — Decision made: Use Medical Texts
+**R12 · Investigation** — Tome heal: 87.5% to go 4/5→3/5; Milan2 tomorrow morning
+**R12 · Investigation** — Spent 1 action: Use Medical Texts.
+**R12 · Investigation** — Started intellect test 5 vs 2.
+[R12·Investigation a0/4 | Daisy Walker 01002 | Cellar | clu3 res4 | dmg4/5 hor7/9 | h3 d4 x24 | Act2 Agd3 doom4/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Daisy Walker] Commit cards to Medical Texts (intellect vs 2).
+**R12 · Investigation** — Decision made: Done
+**R12 · Investigation** — Never commit Milan2; 87.5% raw, fail costs 1 dmg though — acceptable
+**R12 · Investigation** — Revealed tablet.
+**R12 · Investigation** — Medical Texts: success by 1 - intellect 5 + committed 0 + boosts 0 + token -2 = 3 vs 2.
+**R12 · Investigation** — Daisy Walker healed 1 damage.
+**R12 · Enemy** — Enemy phase began.
+**R12 · Enemy** — Flesh-Eater [ec0001] moved to Parlor.
+**R12 · Enemy** — Grave-Eater [ec0007] moved to Parlor.
+**R12 · Upkeep** — Upkeep phase began.
+**R12 · Upkeep** — All exhausted cards readied.
+**R12 · Upkeep** — Daisy Walker drew Research Librarian.
+**R12 · Upkeep** — Daisy Walker gained 1 resource.
+**R12 · Upkeep** — Placed 3 doom on the agenda (They're Getting Out!).
+**R13 · Mythos** — Round 13 began.
+**R13 · Mythos** — Placed 1 doom on the agenda.
+**R13 · Mythos** — Daisy Walker drew encounter card Grave-Eater.
+**R13 · Mythos** — Grave-Eater [ec0006] spawned at Cellar.
+**R13 · Mythos** — Grave-Eater [ec0006] engaged Daisy Walker.
+**R13 · Investigation** — Investigation phase began.
+[R13·Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg3/5 hor7/9 | h4 d3 x24 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker · 4 actions left (1 Tome-only)] Choose an action:
+**R13 · Investigation** — Decision made: Evade Grave-Eater (evade 2) — test Agility(2)
+**R13 · Investigation** — Evade GE3 (Librarian commit → 56%): Hallway is empty — reach it tonight, advance act at upkeep, R14 mythos flip reveals act3-timeout payout
+**R13 · Investigation** — Spent 1 action: Evade Grave-Eater.
+**R13 · Investigation** — Started agility test 2 vs 2.
+[R13·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg3/5 hor7/9 | h4 d3 x24 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R13 · Investigation** — Decision made: Commit Research Librarian (+1)
+**R13 · Investigation** — Librarian +1 agi; soaks are irrelevant now, game ends at R14 mythos
+**R13 · Investigation** — Committed Research Librarian.
+[R13·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg3/5 hor7/9 | h3 d3 x24 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2).
+**R13 · Investigation** — Decision made: Done
+**R13 · Investigation** — Go
+**R13 · Investigation** — Revealed cultist.
+**R13 · Investigation** — Evade Grave-Eater: success by 0 - agility 2 + committed 1 + boosts 0 + token -1 = 2 vs 2.
+**R13 · Investigation** — Grave-Eater [ec0006] disengaged.
+**R13 · Investigation** — Grave-Eater [ec0006] exhausted after being evaded.
+[R13·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res5 | dmg3/5 hor7/9 | h3 d3 x25 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker · 3 actions left (1 Tome-only)] Choose an action:
+**R13 · Investigation** — Decision made: Use Medical Texts
+**R13 · Investigation** — Free tome heal before leaving (insurance vs unknowns)
+**R13 · Investigation** — Spent 1 action: Use Medical Texts.
+**R13 · Investigation** — Started intellect test 5 vs 2.
+[R13·Investigation a2/4 | Daisy Walker 01002 | Cellar | clu3 res5 | dmg3/5 hor7/9 | h3 d3 x25 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker] Commit cards to Medical Texts (intellect vs 2).
+**R13 · Investigation** — Decision made: Done
+**R13 · Investigation** — Raw 87.5%
+**R13 · Investigation** — Revealed -1.
+**R13 · Investigation** — Medical Texts: success by 2 - intellect 5 + committed 0 + boosts 0 + token -1 = 4 vs 2.
+**R13 · Investigation** — Daisy Walker healed 1 damage.
+[R13·Investigation a2/4 | Daisy Walker 01002 | Cellar | clu3 res5 | dmg2/5 hor7/9 | h3 d3 x25 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker · 2 actions left] Choose an action:
+**R13 · Investigation** — Decision made: Move to Hallway
+**R13 · Investigation** — Into the empty Hallway; spend 3 clues at upkeep to reach act 3 before the R14 flip
+**R13 · Investigation** — Spent 1 action: Move to Hallway.
+**R13 · Investigation** — Daisy Walker moved to Hallway.
+[R13·Investigation a1/4 | Daisy Walker 01002 | Hallway | clu3 res5 | dmg2/5 hor7/9 | h3 d3 x25 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Daisy Walker · 1 action left] Choose an action:
+**R13 · Investigation** — Decision made: Play Dr. Milan Christopher (4 res)
+**R13 · Investigation** — Milan2 as insurance soak in case drift-arrivals can still attack tonight
+**R13 · Investigation** — Spent 1 action: Play Dr. Milan Christopher.
+**R13 · Investigation** — Daisy Walker played Dr. Milan Christopher.
+**R13 · Enemy** — Enemy phase began.
+**R13 · Enemy** — Grave-Eater [ec0006] moved to Hallway.
+**R13 · Upkeep** — Upkeep phase began.
+**R13 · Upkeep** — All exhausted cards readied.
+**R13 · Upkeep** — Grave-Eater [ec0006] engaged Daisy Walker.
+**R13 · Upkeep** — Daisy Walker drew Scrying.
+**R13 · Upkeep** — Daisy Walker gained 1 resource.
+**R13 · Upkeep** — Placed 4 doom on the agenda (They're Getting Out!).
+[R13·Upkeep | Daisy Walker 01002 | Hallway | clu3 res2 | dmg2/5 hor7/9 | h3 d2 x25 | Act2 Agd3 doom12/10]
+**R13 · Upkeep** — Decision presented: Spend 3 clues to advance The Barrier?
+**R13 · Upkeep** — Decision made: Spend 3 clues and advance
+**R13 · Upkeep** — Advance to act 3 before the R14 doom check — act3 flip beats act2 trapped(0)
+**R13 · Upkeep** — Daisy Walker spent 3 clue.
+**R13 · Upkeep** — Parlor was revealed.
+**R13 · Upkeep** — Lita Chantler was put into play in the Parlor.
+**R13 · Upkeep** — Ghoul Priest [setaside_ghoul_priest] spawned at Hallway.
+**R13 · Upkeep** — Ghoul Priest [setaside_ghoul_priest] engaged Daisy Walker.
+**R13 · Upkeep** — Act advanced to What Have You Done?.
+**R14 · Mythos** — Round 14 began.
+**R14 · Mythos** — Placed 1 doom on the agenda.
+[R14·Mythos | Daisy Walker 01002 | Hallway | clu0 res2 | dmg2/5 hor7/9 | h3 d2 x25 | Act3 Agd3 doom0/10]
+**R14 · Mythos** — GAME OVER: Daisy Walker was defeated by agenda 3
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.

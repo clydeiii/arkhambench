@@ -335,3 +335,4 @@
 **R6 · Mythos** — Daisy Walker took 2 damage and 0 horror.
 [R6·Mythos | Daisy Walker 01002 | Cellar | clu1 res5 | dmg5/5 hor7/9 | h2 d21 x10 | Act2 Agd2 doom2/7]
 **R6 · Mythos** — GAME OVER: Daisy Walker was defeated
+**R6 · Mythos** — Note added.

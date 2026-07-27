@@ -1,6 +1,6 @@
 # ArkhamBench summary: hy3-b6
 
-Headline benchmark number: final-20% average = 0.00
+Headline benchmark number: final-20% average = 5.00
 Final window: last 6 game(s), starting at game 25.
 
 ## Per-game results
@@ -23,22 +23,36 @@ Final window: last 6 game(s), starting at game 25.
 | 14 | 1014 | agnes | complete | no_resolution | no_resolution | 3 | 4 | 1 | 15 |
 | 15 | 1015 | wendy | complete | no_resolution | no_resolution | 4 | 4 | 0 | 9 |
 | 16 | 1016 | roland | complete | R1 | R1 | 5 | 6 | 1 | 13 |
+| 17 | 1017 | daisy | complete | no_resolution | no_resolution | 2 | 3 | 1 | 14 |
+| 18 | 1018 | skids | complete | R2 | R2 | 6 | 6 | 0 | 11 |
+| 19 | 1019 | agnes | complete | R3 | R3 | 0 | 0 | 0 | 17 |
+| 20 | 1020 | wendy | complete | no_resolution | no_resolution | 3 | 4 | 1 | 11 |
+| 21 | 1021 | roland | complete | R2 | R2 | 6 | 6 | 0 | 15 |
+| 22 | 1022 | daisy | complete | no_resolution | no_resolution | 2 | 3 | 1 | 10 |
+| 23 | 1023 | skids | complete | no_resolution | no_resolution | 2 | 3 | 1 | 12 |
+| 24 | 1024 | agnes | complete | R3 | R3 | 0 | 0 | 0 | 14 |
+| 25 | 1025 | wendy | complete | no_resolution | no_resolution | 4 | 4 | 0 | 9 |
+| 26 | 1026 | roland | complete | R2 | R2 | 8 | 8 | 0 | 14 |
+| 27 | 1027 | daisy | complete | no_resolution | no_resolution | 4 | 4 | 0 | 9 |
+| 28 | 1028 | skids | complete | no_resolution | no_resolution | 4 | 4 | 0 | 12 |
+| 29 | 1029 | agnes | complete | R2 | R2 | 6 | 6 | 0 | 12 |
+| 30 | 1030 | wendy | complete | no_resolution | no_resolution | 4 | 4 | 0 | 9 |
 
 ## Aggregate stats
 
-- Games recorded: 16
-- Mean score: 3.12
+- Games recorded: 30
+- Mean score: 3.37
 - First-half mean score: 3.00
-- Second-half mean score: 5.00
-- Final-20% average: 0.00
+- Second-half mean score: 3.73
+- Final-20% average: 5.00
 
 ## Per-investigator
 
-- agnes: mean 2.67 over 3 game(s)
-- daisy: mean 2.67 over 3 game(s)
-- roland: mean 3.75 over 4 game(s)
-- skids: mean 2.00 over 3 game(s)
-- wendy: mean 4.33 over 3 game(s)
+- agnes: mean 2.33 over 6 game(s)
+- daisy: mean 2.67 over 6 game(s)
+- roland: mean 4.83 over 6 game(s)
+- skids: mean 3.00 over 6 game(s)
+- wendy: mean 4.00 over 6 game(s)
 
 ## Safety note
 

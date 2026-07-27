@@ -222,9 +222,34 @@ def cmd_harvest(argv: list[str]) -> int:
         emit_to(row, meta)
         return 0
     if agent.startswith("openrouter/"):
+        import sqlite3
         sub = agent.rsplit("/", 1)[-1].split(":")[0]
-        return cmd_opencode([str(start), str(end), sub, "--meta"]
-                            + [f"{k}={v}" for k, v in meta.items()])
+        db = Path.home() / ".local/share/opencode/opencode.db"
+        totals = {"input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0,
+                  "cache_read_tokens": 0, "cache_write_tokens": 0, "opencode_cost_usd": 0.0}
+        conn = sqlite3.connect(f"file:{db}?mode=ro", uri=True)
+        rows_db = conn.execute(
+            "SELECT data FROM message WHERE time_created BETWEEN ? AND ? AND data LIKE ?",
+            ((start - 60) * 1000, (end + 60) * 1000, f"%{sub}%")).fetchall()
+        conn.close()
+        for (raw,) in rows_db:
+            try: d = json.loads(raw)
+            except Exception: continue
+            tk = d.get("tokens") or {}
+            if not tk: continue
+            totals["input_tokens"] += tk.get("input", 0)
+            totals["output_tokens"] += tk.get("output", 0)
+            totals["reasoning_tokens"] += tk.get("reasoning", 0)
+            cache = tk.get("cache") or {}
+            totals["cache_read_tokens"] += cache.get("read", 0)
+            totals["cache_write_tokens"] += cache.get("write", 0)
+            totals["opencode_cost_usd"] += float(d.get("cost") or 0)
+        row = {**meta, **totals, "ts": int(time.time())}
+        row["total_tokens"] = (totals["input_tokens"] + totals["output_tokens"]
+                               + totals["reasoning_tokens"] + totals["cache_read_tokens"]
+                               + totals["cache_write_tokens"])
+        emit_to(row, meta)
+        return 0
     # claude model id: harvest Claude Code project session files in the window,
     # filtered by exact model id (keeps other concurrent sessions out).
     totals = {"input_tokens": 0, "cache_creation_input_tokens": 0,

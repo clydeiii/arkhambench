@@ -170,8 +170,8 @@ comparisons are the controlled ones. The hy3 + K3 lanes' combined real-dollar co
 The definitive version of the learning experiment: **thirty games of the same
 scenario per model**, identical shuffles (seeds 1001–1030), blank starting
 notebooks, on the frozen modern engine — with per-game token telemetry, so the
-cost of learning is measured alongside the curve. Ten models were invited;
-seven have finished (the three Chinese open-weights models are still playing).
+cost of learning is measured alongside the curve. All ten invited models have
+finished: 300 games.
 
 | Model | Thinking | Mean | Final-6 avg | Slope/game | Wins | Time | Tokens | API-equiv cost | $/game g1–10 → g21–30 |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---|
@@ -182,6 +182,9 @@ seven have finished (the three Chinese open-weights models are still playing).
 | Sonnet 5 | adaptive | 2.03 | 2.00 | −0.032 | 2 | 11.2 h | 920 M | $264 | $9.0 → $8.1 |
 | GPT-5.6 Luna | high | 1.73 | 1.17 | −0.040 | 1 | 4.0 h | 295 M | $47 | $1.4 → $1.7 |
 | Haiku 4.5 | adaptive | 1.13 | 1.00 | −0.012 | 0 | 1.9 h | 557 M | $78 | $2.5 → $2.6 |
+| Hunyuan 3 | default | **3.37** | **5.00** | **+0.067** | 5 | 13.7 h | — | $9.24* | $0.30 → $0.28 |
+| Kimi K3 | default | 2.83 | 3.50 | +0.011 | 4 | 21.8 h | — | $103.58* | $3.3 → $3.9 |
+| GLM-5.2 | default | 2.83 | 3.00 | +0.048 | 4 | 15.9 h | — | $44.77* | $1.5 → $1.7 |
 
 Three findings, stated plainly:
 
@@ -196,15 +199,24 @@ Three findings, stated plainly:
    full campaigns (35 points); on the one-scenario gauntlet Fable 5's 4.30
    mean and 13 wins lead. Different formats reward different play — campaigns
    reward carry-forward planning, the gauntlet rewards raw scenario mastery.
-3. **Experience makes games costlier, not cheaper.** Because each game's
+3. **The one learning curve that isn't flat belongs to the cheapest model.**
+   Hunyuan 3 — the model whose notebook-compaction fix produced the original
+   learning case study — posted the steepest slope on the board (+0.067/game,
+   ≈2 points of climb across the run), the **best closing stretch of any
+   model** (final-6 average 5.00, ahead of Fable's 4.50), five wins, and did
+   it for $9.24 total — cheaper than every other lane by 5×. One lane at n=30
+   is a signal, not a theorem, but it is the closest thing to a genuine
+   learning curve this benchmark has produced.
+4. **Experience makes games costlier, not cheaper.** Because each game's
    lessons lengthen the notebook every later game must read, per-game cost
    *rose* for most models (Fable $39 → $45; Sol $7.4 → $12.2). Nobody
    amortizes their education.
 
 Caveats: Fable's games 16–30 were replayed after timeout zeros (raised
 continue budget; chronologically later plays, same seeds); one game each for
-Sonnet 5 and Opus 5 likewise. Chinese-model rows will be added when their
-lanes finish.
+Sonnet 5, Opus 5, and Kimi K3 likewise. Chinese-model costs (\*) are actual
+OpenRouter billing, not list-price estimates; their token totals use a
+different meter and are omitted from the Tokens column.
 
 ## Benchmark results — main run (2026-07-05)
 

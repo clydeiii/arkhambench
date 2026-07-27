@@ -1,0 +1,470 @@
+{"data": {"prompt": "Opening hand: Emergency Cache, Hyperawareness, Unexpected Courage, Dr. Milan Christopher, Old Book of Lore. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 1, "status": "[R1\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu0 res5 | dmg0/5 hor0/9 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Keep hand and draw replacements", "option": 1}, "phase": "Investigation", "round": 1, "seq": 2, "type": "decision_made"}
+{"data": {"message": "Hand already has Milan + Old Book of Lore + funding; near-perfect Daisy opener, no mulligan needed"}, "phase": "Investigation", "round": 1, "seq": 3, "type": "agent_reason"}
+{"data": {"message": "Opening hand finalized: Emergency Cache, Hyperawareness, Unexpected Courage, Dr. Milan Christopher, Old Book of Lore."}, "phase": "Investigation", "round": 1, "seq": 4, "type": "setup_complete"}
+{"data": {"attic": "original", "cellar": "return", "message": "Setup chose the original Attic and the return Cellar."}, "phase": "Investigation", "round": 1, "seq": 5, "type": "setup_variants"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 6, "status": "[R1\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu0 res5 | dmg0/5 hor0/9 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Dr. Milan Christopher (4 res)", "option": 8}, "phase": "Investigation", "round": 1, "seq": 7, "type": "decision_made"}
+{"data": {"message": "Milan first so his resource trigger applies to this turn's investigate"}, "phase": "Investigation", "round": 1, "seq": 8, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Dr. Milan Christopher."}, "phase": "Investigation", "round": 1, "seq": 9, "type": "action_spent"}
+{"data": {"card": "pc0007", "message": "Daisy Walker played Dr. Milan Christopher."}, "phase": "Investigation", "round": 1, "seq": 10, "type": "card_played"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 11, "status": "[R1\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu0 res1 | dmg0/5 hor0/9 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Study (Aberrant Gateway) (shroud 3, 1 clue here) \u2014 test Intellect(6) vs 3", "option": 1}, "phase": "Investigation", "round": 1, "seq": 12, "type": "decision_made"}
+{"data": {"message": "Study clue 6v3 = 94%, grab before Obscuring Fog can land; Milan pays 1 on success"}, "phase": "Investigation", "round": 1, "seq": 13, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Study (Aberrant Gateway)."}, "phase": "Investigation", "round": 1, "seq": 14, "type": "action_spent"}
+{"data": {"message": "Started intellect test 6 vs 3.", "source": "Investigate Study (Aberrant Gateway)"}, "phase": "Investigation", "round": 1, "seq": 15, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Investigate Study (Aberrant Gateway) (intellect vs 3)."}, "phase": "Investigation", "round": 1, "seq": 16, "status": "[R1\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu0 res1 | dmg0/5 hor0/9 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 1, "seq": 17, "type": "decision_made"}
+{"data": {"message": "94% already, save commits"}, "phase": "Investigation", "round": 1, "seq": 18, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed tablet.", "modifier": -2, "token": "tablet"}, "phase": "Investigation", "round": 1, "seq": 19, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Investigate Study (Aberrant Gateway): success by 1 - intellect 6 + committed 0 + boosts 0 + token -2 = 4 vs 3.", "modifier": -2, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Study (Aberrant Gateway)", "success": true, "token": "tablet", "value": 4}, "phase": "Investigation", "round": 1, "seq": 20, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 1, "seq": 21, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Daisy Walker] Use Dr. Milan Christopher after successfully investigating?"}, "phase": "Investigation", "round": 1, "seq": 22, "status": "[R1\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res1 | dmg0/5 hor0/9 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "milan-reaction", "label": "Gain 1 resource", "option": 1}, "phase": "Investigation", "round": 1, "seq": 23, "type": "decision_made"}
+{"data": {"message": "free resource"}, "phase": "Investigation", "round": 1, "seq": 24, "type": "agent_reason"}
+{"data": {"amount": 1, "message": "Dr. Milan Christopher gained Daisy Walker 1 resource."}, "phase": "Investigation", "round": 1, "seq": 25, "type": "milan_reaction"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 26, "status": "[R1\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res2 | dmg0/5 hor0/9 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Emergency Cache (0 res)", "option": 5}, "phase": "Investigation", "round": 1, "seq": 27, "type": "decision_made"}
+{"data": {"message": "Fund Old Book of Lore: EmCache to 5 res"}, "phase": "Investigation", "round": 1, "seq": 28, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Emergency Cache."}, "phase": "Investigation", "round": 1, "seq": 29, "type": "action_spent"}
+{"data": {"amount": 3, "message": "Daisy Walker gained 3 resource."}, "phase": "Investigation", "round": 1, "seq": 30, "type": "resource_gained"}
+{"data": {"card": "pc0028", "message": "Daisy Walker played Emergency Cache."}, "phase": "Investigation", "round": 1, "seq": 31, "type": "card_played"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 32, "status": "[R1\u00b7Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res5 | dmg0/5 hor0/9 | h3 d28 x1 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Pass (end turn)", "option": 1}, "phase": "Investigation", "round": 1, "seq": 33, "type": "decision_made"}
+{"data": {"message": "Remaining action is Tome-only with no Tome in play; end turn"}, "phase": "Investigation", "round": 1, "seq": 34, "type": "agent_reason"}
+{"data": {"message": "Daisy Walker ended their turn."}, "phase": "Investigation", "round": 1, "seq": 35, "type": "turn_passed"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 1, "seq": 36, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 1, "seq": 37, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 1, "seq": 38, "type": "ready_step"}
+{"data": {"card": "pc0005", "message": "Daisy Walker drew Research Librarian."}, "phase": "Upkeep", "round": 1, "seq": 39, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 1, "seq": 40, "type": "resource_gained"}
+{"data": {"message": "Round 2 began."}, "phase": "Mythos", "round": 2, "seq": 41, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 2, "seq": 42, "type": "doom_placed"}
+{"data": {"card": "ec0032", "message": "Daisy Walker drew encounter card The Zealot's Seal."}, "phase": "Mythos", "round": 2, "seq": 43, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 3 vs 2.", "source": "The Zealot's Seal"}, "phase": "Mythos", "round": 2, "seq": 44, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Mythos \u00b7 Daisy Walker] Commit cards to The Zealot's Seal (willpower vs 2)."}, "phase": "Mythos", "round": 2, "seq": 45, "status": "[R2\u00b7Mythos | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res6 | dmg0/5 hor0/9 | h4 d27 x1 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Unexpected Courage (+2)", "option": 1}, "phase": "Mythos", "round": 2, "seq": 46, "type": "decision_made"}
+{"data": {"message": "Fail discards 2 random incl. possibly OBL; UC makes it 5v2 = 94%"}, "phase": "Mythos", "round": 2, "seq": 47, "type": "agent_reason"}
+{"data": {"card": "pc0031", "message": "Committed Unexpected Courage."}, "phase": "Mythos", "round": 2, "seq": 48, "type": "card_committed"}
+{"data": {"prompt": "[Round 2 \u00b7 Mythos \u00b7 Daisy Walker] Commit cards to The Zealot's Seal (willpower vs 2)."}, "phase": "Mythos", "round": 2, "seq": 49, "status": "[R2\u00b7Mythos | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res6 | dmg0/5 hor0/9 | h3 d27 x1 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Mythos", "round": 2, "seq": 50, "type": "decision_made"}
+{"data": {"message": "done committing"}, "phase": "Mythos", "round": 2, "seq": 51, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Mythos", "round": 2, "seq": 52, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 2, "difficulty": 2, "extra_tokens": [], "margin": 3, "message": "The Zealot's Seal: success by 3 - willpower 3 + committed 2 + boosts 0 + token 0 = 5 vs 2.", "modifier": 0, "reveal_effects_applied": true, "skill": "willpower", "source": "The Zealot's Seal", "success": true, "token": "0", "value": 5}, "phase": "Mythos", "round": 2, "seq": 53, "type": "skill_test_result"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 2, "seq": 54, "type": "phase_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 55, "status": "[R2\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res6 | dmg0/5 hor0/9 | h3 d27 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Old Book of Lore (3 res)", "option": 7}, "phase": "Investigation", "round": 2, "seq": 56, "type": "decision_made"}
+{"data": {"message": "OBL enables Daisy's free Tome action every round"}, "phase": "Investigation", "round": 2, "seq": 57, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Old Book of Lore."}, "phase": "Investigation", "round": 2, "seq": 58, "type": "action_spent"}
+{"data": {"card": "pc0004", "message": "Daisy Walker played Old Book of Lore."}, "phase": "Investigation", "round": 2, "seq": 59, "type": "card_played"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 60, "status": "[R2\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res3 | dmg0/5 hor0/9 | h2 d27 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 6}, "phase": "Investigation", "round": 2, "seq": 61, "type": "decision_made"}
+{"data": {"message": "Free Tome action: dig for Mind over Matter / Working a Hunch"}, "phase": "Investigation", "round": 2, "seq": 62, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 2, "seq": 63, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 2, "seq": 64, "status": "[R2\u00b7Investigation a2/4 | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res3 | dmg0/5 hor0/9 | h2 d27 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Ward of Protection", "option": 1}, "phase": "Investigation", "round": 2, "seq": 65, "type": "decision_made"}
+{"data": {"message": "Ward of Protection is premium; never draw Paranoia weakness by choice"}, "phase": "Investigation", "round": 2, "seq": 66, "type": "agent_reason"}
+{"data": {"card": "pc0019", "message": "Daisy Walker drew Ward of Protection."}, "phase": "Investigation", "round": 2, "seq": 67, "type": "card_drawn"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 68, "status": "[R2\u00b7Investigation a2/4 | Daisy Walker 01002 | Study (Aberrant Gateway) | clu1 res3 | dmg0/5 hor0/9 | h3 d26 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 2, "seq": 69, "type": "decision_made"}
+{"data": {"message": "Head toward Bedroom for act1 clue"}, "phase": "Investigation", "round": 2, "seq": 70, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 71, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Daisy Walker moved to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 72, "type": "investigator_moved"}
+{"data": {"location": "guest_hall", "message": "Guest Hall was revealed."}, "phase": "Investigation", "round": 2, "seq": 73, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 74, "status": "[R2\u00b7Investigation a1/4 | Daisy Walker 01002 | Guest Hall | clu1 res3 | dmg0/5 hor0/9 | h3 d26 x2 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bedroom", "option": 3}, "phase": "Investigation", "round": 2, "seq": 75, "type": "decision_made"}
+{"data": {"message": "Position in Bedroom to investigate next round"}, "phase": "Investigation", "round": 2, "seq": 76, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bedroom."}, "phase": "Investigation", "round": 2, "seq": 77, "type": "action_spent"}
+{"data": {"location": "bedroom", "message": "Daisy Walker moved to Bedroom."}, "phase": "Investigation", "round": 2, "seq": 78, "type": "investigator_moved"}
+{"data": {"location": "bedroom", "message": "Bedroom was revealed."}, "phase": "Investigation", "round": 2, "seq": 79, "type": "location_revealed"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 2, "seq": 80, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 2, "seq": 81, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 2, "seq": 82, "type": "ready_step"}
+{"data": {"card": "pc0002", "message": "Daisy Walker drew The Necronomicon."}, "phase": "Upkeep", "round": 2, "seq": 83, "type": "card_drawn"}
+{"data": {"card": "pc0002", "message": "The Necronomicon entered Daisy's threat area with 3 horror."}, "phase": "Upkeep", "round": 2, "seq": 84, "type": "weakness_revealed"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 2, "seq": 85, "type": "resource_gained"}
+{"data": {"message": "Round 3 began."}, "phase": "Mythos", "round": 3, "seq": 86, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 3, "seq": 87, "type": "doom_placed"}
+{"data": {"card": "ec0007", "message": "Daisy Walker drew encounter card Grave-Eater."}, "phase": "Mythos", "round": 3, "seq": 88, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater [ec0007] spawned at Bedroom."}, "phase": "Mythos", "round": 3, "seq": 89, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater [ec0007] engaged Daisy Walker."}, "phase": "Mythos", "round": 3, "seq": 90, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 3, "seq": 91, "type": "phase_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 92, "status": "[R3\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg0/5 hor0/9 | h3 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Grave-Eater (evade 2) \u2014 test Agility(2)", "option": 4}, "phase": "Investigation", "round": 3, "seq": 93, "type": "decision_made"}
+{"data": {"message": "Evade doesn't provoke AoO; check commit options to boost 2v2"}, "phase": "Investigation", "round": 3, "seq": 94, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Grave-Eater."}, "phase": "Investigation", "round": 3, "seq": 95, "type": "action_spent"}
+{"data": {"message": "Started agility test 2 vs 2.", "source": "Evade Grave-Eater"}, "phase": "Investigation", "round": 3, "seq": 96, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2)."}, "phase": "Investigation", "round": 3, "seq": 97, "status": "[R3\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg0/5 hor0/9 | h3 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Hyperawareness (+1)", "option": 1}, "phase": "Investigation", "round": 3, "seq": 98, "type": "decision_made"}
+{"data": {"message": "+1 toward 4v2"}, "phase": "Investigation", "round": 3, "seq": 99, "type": "agent_reason"}
+{"data": {"card": "pc0009", "message": "Committed Hyperawareness."}, "phase": "Investigation", "round": 3, "seq": 100, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2)."}, "phase": "Investigation", "round": 3, "seq": 101, "status": "[R3\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg0/5 hor0/9 | h2 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Research Librarian (+1)", "option": 1}, "phase": "Investigation", "round": 3, "seq": 102, "type": "decision_made"}
+{"data": {"message": "Librarian expendable (Milan holds ally slot); 4v2 = 75% with Necro-tainted bag"}, "phase": "Investigation", "round": 3, "seq": 103, "type": "agent_reason"}
+{"data": {"card": "pc0005", "message": "Committed Research Librarian."}, "phase": "Investigation", "round": 3, "seq": 104, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Grave-Eater (agility vs 2)."}, "phase": "Investigation", "round": 3, "seq": 105, "status": "[R3\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg0/5 hor0/9 | h1 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 3, "seq": 106, "type": "decision_made"}
+{"data": {"message": "keep Ward"}, "phase": "Investigation", "round": 3, "seq": 107, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed tablet.", "modifier": -2, "token": "tablet"}, "phase": "Investigation", "round": 3, "seq": 108, "type": "chaos_token"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker] Assign damage/horror from Chaos token."}, "phase": "Investigation", "round": 3, "seq": 109, "status": "[R3\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg0/5 hor0/9 | h1 d25 x2 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 damage to Daisy Walker", "option": 1}, "phase": "Investigation", "round": 3, "seq": 110, "type": "decision_made"}
+{"data": {"message": "Milan has only 1 hp \u2014 1 dmg kills him; Daisy at 0/5 can absorb"}, "phase": "Investigation", "round": 3, "seq": 111, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 damage to Daisy Walker.", "target": "roland"}, "phase": "Investigation", "round": 3, "seq": 112, "type": "damage_assigned"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 2, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Evade Grave-Eater: success by 0 - agility 2 + committed 2 + boosts 0 + token -2 = 2 vs 2.", "modifier": -2, "reveal_effects_applied": true, "skill": "agility", "source": "Evade Grave-Eater", "success": true, "token": "tablet", "value": 2}, "phase": "Investigation", "round": 3, "seq": 113, "type": "skill_test_result"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater [ec0007] disengaged."}, "phase": "Investigation", "round": 3, "seq": 114, "type": "enemy_disengaged"}
+{"data": {"enemy": "ec0007", "message": "Grave-Eater [ec0007] exhausted after being evaded."}, "phase": "Investigation", "round": 3, "seq": 115, "type": "enemy_exhausted"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 116, "status": "[R3\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg1/5 hor0/9 | h1 d25 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bedroom (shroud 2, 1 clue here) \u2014 test Intellect(6) vs 2", "option": 1}, "phase": "Investigation", "round": 3, "seq": 117, "type": "decision_made"}
+{"data": {"message": "Bedroom clue at 6v2, only AF/ES fail"}, "phase": "Investigation", "round": 3, "seq": 118, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bedroom."}, "phase": "Investigation", "round": 3, "seq": 119, "type": "action_spent"}
+{"data": {"message": "Started intellect test 6 vs 2.", "source": "Investigate Bedroom"}, "phase": "Investigation", "round": 3, "seq": 120, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Investigate Bedroom (intellect vs 2)."}, "phase": "Investigation", "round": 3, "seq": 121, "status": "[R3\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu1 res4 | dmg1/5 hor0/9 | h1 d25 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 3, "seq": 122, "type": "decision_made"}
+{"data": {"message": "no commit needed"}, "phase": "Investigation", "round": 3, "seq": 123, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 3, "seq": 124, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 4, "message": "Investigate Bedroom: success by 4 - intellect 6 + committed 0 + boosts 0 + token 0 = 6 vs 2.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Bedroom", "success": true, "token": "0", "value": 6}, "phase": "Investigation", "round": 3, "seq": 125, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 3, "seq": 126, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker] Use Dr. Milan Christopher after successfully investigating?"}, "phase": "Investigation", "round": 3, "seq": 127, "status": "[R3\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu2 res4 | dmg1/5 hor0/9 | h1 d25 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "milan-reaction", "label": "Gain 1 resource", "option": 1}, "phase": "Investigation", "round": 3, "seq": 128, "type": "decision_made"}
+{"data": {"message": "free resource"}, "phase": "Investigation", "round": 3, "seq": 129, "type": "agent_reason"}
+{"data": {"amount": 1, "message": "Dr. Milan Christopher gained Daisy Walker 1 resource."}, "phase": "Investigation", "round": 3, "seq": 130, "type": "milan_reaction"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 131, "status": "[R3\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Bedroom | clu2 res5 | dmg1/5 hor0/9 | h1 d25 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 7}, "phase": "Investigation", "round": 3, "seq": 132, "type": "decision_made"}
+{"data": {"message": "Free Tome dig for MoM/Working a Hunch before moving; no AoO, GE exhausted+disengaged"}, "phase": "Investigation", "round": 3, "seq": 133, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 3, "seq": 134, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 3, "seq": 135, "status": "[R3\u00b7Investigation a1/4 | Daisy Walker 01002 | Bedroom | clu2 res5 | dmg1/5 hor0/9 | h1 d25 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Working a Hunch", "option": 2}, "phase": "Investigation", "round": 3, "seq": 136, "type": "decision_made"}
+{"data": {"message": "Working a Hunch = free clue, best tempo for clue-poor return setup"}, "phase": "Investigation", "round": 3, "seq": 137, "type": "agent_reason"}
+{"data": {"card": "pc0016", "message": "Daisy Walker drew Working a Hunch."}, "phase": "Investigation", "round": 3, "seq": 138, "type": "card_drawn"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 139, "status": "[R3\u00b7Investigation a1/4 | Daisy Walker 01002 | Bedroom | clu2 res5 | dmg1/5 hor0/9 | h2 d24 x4 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 3, "seq": 140, "type": "decision_made"}
+{"data": {"message": "Leave before GE readies; position for Bathroom next round"}, "phase": "Investigation", "round": 3, "seq": 141, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 142, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Daisy Walker moved to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 143, "type": "investigator_moved"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 144, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 145, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 146, "type": "ready_step"}
+{"data": {"card": "pc0013", "message": "Daisy Walker drew Mind over Matter."}, "phase": "Upkeep", "round": 3, "seq": 147, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 148, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 149, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 150, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 4, "seq": 151, "status": "[R4\u00b7Mythos | Daisy Walker 01002 | Guest Hall | clu2 res6 | dmg1/5 hor0/9 | h3 d23 x4 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Take 2 horror", "option": 2}, "phase": "Mythos", "round": 4, "seq": 152, "type": "decision_made"}
+{"data": {"message": "Hand is 3 premium cards (Ward/MoM/WaH); 9 sanity absorbs 2 horror even with Necro's 3 pending"}, "phase": "Mythos", "round": 4, "seq": 153, "type": "agent_reason"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Daisy Walker] Assign damage/horror from What's Going On?!."}, "phase": "Mythos", "round": 4, "seq": 154, "status": "[R4\u00b7Mythos | Daisy Walker 01002 | Guest Hall | clu2 res6 | dmg1/5 hor0/9 | h3 d23 x4 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Daisy Walker", "option": 1}, "phase": "Mythos", "round": 4, "seq": 155, "type": "decision_made"}
+{"data": {"message": "Keep Milan clean as endgame soak; Daisy 9 sanity"}, "phase": "Mythos", "round": 4, "seq": 156, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Daisy Walker.", "target": "roland"}, "phase": "Mythos", "round": 4, "seq": 157, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Daisy Walker] Assign damage/horror from What's Going On?!."}, "phase": "Mythos", "round": 4, "seq": 158, "status": "[R4\u00b7Mythos | Daisy Walker 01002 | Guest Hall | clu2 res6 | dmg1/5 hor0/9 | h3 d23 x4 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Daisy Walker", "option": 1}, "phase": "Mythos", "round": 4, "seq": 159, "type": "decision_made"}
+{"data": {"message": "second horror on Daisy too"}, "phase": "Mythos", "round": 4, "seq": 160, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Daisy Walker.", "target": "roland"}, "phase": "Mythos", "round": 4, "seq": 161, "type": "damage_assigned"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 4, "seq": 162, "type": "agenda_advanced"}
+{"data": {"card": "ec0017", "message": "Daisy Walker drew encounter card Frozen in Fear."}, "phase": "Mythos", "round": 4, "seq": 163, "type": "encounter_drawn"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Daisy Walker] Cancel Frozen in Fear's revelation?"}, "phase": "Mythos", "round": 4, "seq": 164, "status": "[R4\u00b7Mythos | Daisy Walker 01002 | Guest Hall | clu2 res6 | dmg1/5 hor2/9 | h3 d23 x4 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "revelation-cancel", "label": "Play Ward of Protection", "option": 1}, "phase": "Mythos", "round": 4, "seq": 165, "type": "decision_made"}
+{"data": {"message": "FiF costs ~2+ actions during act1 crunch; Ward now, 2nd copy likely in deck for Crypt Chill"}, "phase": "Mythos", "round": 4, "seq": 166, "type": "agent_reason"}
+{"data": {"card": "ec0017", "message": "Ward of Protection canceled the revelation effect.", "ward": "pc0019"}, "phase": "Mythos", "round": 4, "seq": 167, "type": "revelation_canceled"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Daisy Walker] Assign damage/horror from Ward of Protection."}, "phase": "Mythos", "round": 4, "seq": 168, "status": "[R4\u00b7Mythos | Daisy Walker 01002 | Guest Hall | clu2 res5 | dmg1/5 hor2/9 | h2 d23 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Daisy Walker", "option": 1}, "phase": "Mythos", "round": 4, "seq": 169, "type": "decision_made"}
+{"data": {"message": "Daisy takes Ward horror, 3/9 fine"}, "phase": "Mythos", "round": 4, "seq": 170, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Daisy Walker.", "target": "roland"}, "phase": "Mythos", "round": 4, "seq": 171, "type": "damage_assigned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 4, "seq": 172, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 173, "status": "[R4\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Guest Hall | clu2 res5 | dmg1/5 hor3/9 | h2 d23 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 6}, "phase": "Investigation", "round": 4, "seq": 174, "type": "decision_made"}
+{"data": {"message": "Dig before act1 advance; found card can be BtW commit fodder"}, "phase": "Investigation", "round": 4, "seq": 175, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 4, "seq": 176, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 4, "seq": 177, "status": "[R4\u00b7Investigation a3/4 | Daisy Walker 01002 | Guest Hall | clu2 res5 | dmg1/5 hor3/9 | h2 d23 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Medical Texts", "option": 1}, "phase": "Investigation", "round": 4, "seq": 178, "type": "decision_made"}
+{"data": {"message": "Medical Texts: Tome (extra-action target) + heals Daisy's fragile 5hp; also BtW fodder if needed"}, "phase": "Investigation", "round": 4, "seq": 179, "type": "agent_reason"}
+{"data": {"card": "pc0012", "message": "Daisy Walker drew Medical Texts."}, "phase": "Investigation", "round": 4, "seq": 180, "type": "card_drawn"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 181, "status": "[R4\u00b7Investigation a3/4 | Daisy Walker 01002 | Guest Hall | clu2 res5 | dmg1/5 hor3/9 | h3 d22 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bathroom", "option": 4}, "phase": "Investigation", "round": 4, "seq": 182, "type": "decision_made"}
+{"data": {"message": "Move to Bathroom, then Working a Hunch for 3rd clue without symbol-token risk"}, "phase": "Investigation", "round": 4, "seq": 183, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bathroom."}, "phase": "Investigation", "round": 4, "seq": 184, "type": "action_spent"}
+{"data": {"location": "bathroom", "message": "Daisy Walker moved to Bathroom."}, "phase": "Investigation", "round": 4, "seq": 185, "type": "investigator_moved"}
+{"data": {"location": "bathroom", "message": "Bathroom was revealed."}, "phase": "Investigation", "round": 4, "seq": 186, "type": "location_revealed"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 187, "status": "[R4\u00b7Investigation a2/4 | Daisy Walker 01002 | Bathroom | clu2 res5 | dmg1/5 hor3/9 | h3 d22 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Working a Hunch", "option": 6}, "phase": "Investigation", "round": 4, "seq": 188, "type": "decision_made"}
+{"data": {"message": "WaH grabs Bathroom clue with no test, no symbol-token turn-end; act1 completes"}, "phase": "Investigation", "round": 4, "seq": 189, "type": "agent_reason"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 4, "seq": 190, "type": "clue_discovered"}
+{"data": {"card": "pc0016", "message": "Daisy Walker played Working a Hunch."}, "phase": "Investigation", "round": 4, "seq": 191, "type": "event_played"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 192, "status": "[R4\u00b7Investigation a2/4 | Daisy Walker 01002 | Bathroom | clu3 res3 | dmg1/5 hor3/9 | h2 d22 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 4, "seq": 193, "type": "decision_made"}
+{"data": {"message": "Act1 advance requires spending 3 clues while IN Guest Hall"}, "phase": "Investigation", "round": 4, "seq": 194, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 195, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Daisy Walker moved to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 196, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 197, "status": "[R4\u00b7Investigation a1/4 | Daisy Walker 01002 | Guest Hall | clu3 res3 | dmg1/5 hor3/9 | h2 d22 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Advance act by spending 3 clues", "option": 1}, "phase": "Investigation", "round": 4, "seq": 198, "type": "decision_made"}
+{"data": {"message": "Act1 done R4 \u2014 on pace; brace for Breaking the Wall WP4 with 2-card hand (MoM, MedTexts)"}, "phase": "Investigation", "round": 4, "seq": 199, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Daisy Walker spent 3 clue."}, "phase": "Investigation", "round": 4, "seq": 200, "type": "clues_spent"}
+{"data": {"location": "hallway", "message": "Hole in the Wall was put into play."}, "phase": "Investigation", "round": 4, "seq": 201, "type": "location_added"}
+{"data": {"message": "Daisy Walker moved into the Hole in the Wall."}, "phase": "Investigation", "round": 4, "seq": 202, "type": "forced_move"}
+{"data": {"location": "hallway", "message": "Hallway was revealed."}, "phase": "Investigation", "round": 4, "seq": 203, "type": "location_revealed"}
+{"data": {"location": "attic", "message": "Attic was put into play."}, "phase": "Investigation", "round": 4, "seq": 204, "type": "location_added"}
+{"data": {"location": "cellar", "message": "Cellar was put into play."}, "phase": "Investigation", "round": 4, "seq": 205, "type": "location_added"}
+{"data": {"location": "parlor", "message": "Parlor was put into play."}, "phase": "Investigation", "round": 4, "seq": 206, "type": "location_added"}
+{"data": {"message": "Started willpower test 3 vs 4.", "source": "Breaking the Wall"}, "phase": "Investigation", "round": 4, "seq": 207, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Breaking the Wall (willpower vs 4)."}, "phase": "Investigation", "round": 4, "seq": 208, "status": "[R4\u00b7Investigation a1/4 | Daisy Walker 01002 | Hallway | clu0 res3 | dmg1/5 hor3/9 | h2 d22 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 4, "seq": 209, "type": "decision_made"}
+{"data": {"message": "no commit options; expect 1-2 random discards"}, "phase": "Investigation", "round": 4, "seq": 210, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 4, "seq": 211, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Breaking the Wall: success by 0 - willpower 3 + committed 0 + boosts 0 + token 1 = 4 vs 4.", "modifier": 1, "reveal_effects_applied": true, "skill": "willpower", "source": "Breaking the Wall", "success": true, "token": "+1", "value": 4}, "phase": "Investigation", "round": 4, "seq": 212, "type": "skill_test_result"}
+{"data": {"message": "Act advanced to The Barrier."}, "phase": "Investigation", "round": 4, "seq": 213, "type": "act_advanced"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 214, "status": "[R4\u00b7Investigation a1/4 | Daisy Walker 01002 | Hallway | clu0 res3 | dmg1/5 hor3/9 | h2 d22 x6 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Attic", "option": 2}, "phase": "Investigation", "round": 4, "seq": 215, "type": "decision_made"}
+{"data": {"message": "Attic has 2 of the 3 act2 clues; take 1 entry horror now, investigate R5"}, "phase": "Investigation", "round": 4, "seq": 216, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Attic."}, "phase": "Investigation", "round": 4, "seq": 217, "type": "action_spent"}
+{"data": {"location": "attic", "message": "Daisy Walker moved to Attic."}, "phase": "Investigation", "round": 4, "seq": 218, "type": "investigator_moved"}
+{"data": {"location": "attic", "message": "Attic was revealed."}, "phase": "Investigation", "round": 4, "seq": 219, "type": "location_revealed"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker] Assign damage/horror from Attic."}, "phase": "Investigation", "round": 4, "seq": 220, "status": "[R4\u00b7Investigation a0/4 | Daisy Walker 01002 | Attic | clu0 res3 | dmg1/5 hor3/9 | h2 d22 x6 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Daisy Walker", "option": 1}, "phase": "Investigation", "round": 4, "seq": 221, "type": "decision_made"}
+{"data": {"message": "Daisy 4/9 still fine, save Milan"}, "phase": "Investigation", "round": 4, "seq": 222, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Daisy Walker.", "target": "roland"}, "phase": "Investigation", "round": 4, "seq": 223, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Daisy Walker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 4, "seq": 224, "status": "[R4\u00b7Investigation a0/4 | Daisy Walker 01002 | Attic | clu0 res3 | dmg1/5 hor4/9 | h2 d22 x6 | Act2 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 4, "seq": 225, "type": "decision_made"}
+{"data": {"message": "no enemy; save MoM"}, "phase": "Investigation", "round": 4, "seq": 226, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 4, "seq": 227, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 4, "seq": 228, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 4, "seq": 229, "type": "ready_step"}
+{"data": {"card": "pc0027", "message": "Daisy Walker drew Emergency Cache."}, "phase": "Upkeep", "round": 4, "seq": 230, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 4, "seq": 231, "type": "resource_gained"}
+{"data": {"message": "Round 5 began."}, "phase": "Mythos", "round": 5, "seq": 232, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 5, "seq": 233, "type": "doom_placed"}
+{"data": {"card": "ec0022", "message": "Daisy Walker drew encounter card Ancient Evils."}, "phase": "Mythos", "round": 5, "seq": 234, "type": "encounter_drawn"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "Ancient Evils"}, "phase": "Mythos", "round": 5, "seq": 235, "type": "doom_placed"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 5, "seq": 236, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 237, "status": "[R5\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu0 res4 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1, 2 clues here) \u2014 test Intellect(6) vs 1", "option": 1}, "phase": "Investigation", "round": 5, "seq": 238, "type": "decision_made"}
+{"data": {"message": "Attic clue 1 of 2, 6v1"}, "phase": "Investigation", "round": 5, "seq": 239, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 5, "seq": 240, "type": "action_spent"}
+{"data": {"message": "Started intellect test 6 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 5, "seq": 241, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 5, "seq": 242, "status": "[R5\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu0 res4 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 5, "seq": 243, "type": "decision_made"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 5, "seq": 244, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 5, "message": "Investigate Attic: success by 5 - intellect 6 + committed 0 + boosts 0 + token 0 = 6 vs 1.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "0", "value": 6}, "phase": "Investigation", "round": 5, "seq": 245, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 5, "seq": 246, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker] Use Dr. Milan Christopher after successfully investigating?"}, "phase": "Investigation", "round": 5, "seq": 247, "status": "[R5\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu1 res4 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "milan-reaction", "label": "Gain 1 resource", "option": 1}, "phase": "Investigation", "round": 5, "seq": 248, "type": "decision_made"}
+{"data": {"amount": 1, "message": "Dr. Milan Christopher gained Daisy Walker 1 resource."}, "phase": "Investigation", "round": 5, "seq": 249, "type": "milan_reaction"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 250, "status": "[R5\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu1 res5 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 1, 1 clue here) \u2014 test Intellect(6) vs 1", "option": 1}, "phase": "Investigation", "round": 5, "seq": 251, "type": "decision_made"}
+{"data": {"message": "Attic clue 2"}, "phase": "Investigation", "round": 5, "seq": 252, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 5, "seq": 253, "type": "action_spent"}
+{"data": {"message": "Started intellect test 6 vs 1.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 5, "seq": 254, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Investigate Attic (intellect vs 1)."}, "phase": "Investigation", "round": 5, "seq": 255, "status": "[R5\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu1 res5 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 5, "seq": 256, "type": "decision_made"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 5, "seq": 257, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 4, "message": "Investigate Attic: success by 4 - intellect 6 + committed 0 + boosts 0 + token -1 = 5 vs 1.", "modifier": -1, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "-1", "value": 5}, "phase": "Investigation", "round": 5, "seq": 258, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 5, "seq": 259, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker] Use Dr. Milan Christopher after successfully investigating?"}, "phase": "Investigation", "round": 5, "seq": 260, "status": "[R5\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu2 res5 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "milan-reaction", "label": "Gain 1 resource", "option": 1}, "phase": "Investigation", "round": 5, "seq": 261, "type": "decision_made"}
+{"data": {"amount": 1, "message": "Dr. Milan Christopher gained Daisy Walker 1 resource."}, "phase": "Investigation", "round": 5, "seq": 262, "type": "milan_reaction"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 263, "status": "[R5\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Attic | clu2 res6 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 5}, "phase": "Investigation", "round": 5, "seq": 264, "type": "decision_made"}
+{"data": {"message": "OBL dig: hunting 2nd MoM/Ward/Deduction before basement leg"}, "phase": "Investigation", "round": 5, "seq": 265, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 5, "seq": 266, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 5, "seq": 267, "status": "[R5\u00b7Investigation a1/4 | Daisy Walker 01002 | Attic | clu2 res6 | dmg1/5 hor4/9 | h3 d21 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Manual Dexterity", "option": 3}, "phase": "Investigation", "round": 5, "seq": 268, "type": "decision_made"}
+{"data": {"message": "Manual Dexterity +2 agi commit = answer for Ghoul Pits agi3 reveal test, saves MoM"}, "phase": "Investigation", "round": 5, "seq": 269, "type": "agent_reason"}
+{"data": {"card": "pc0029", "message": "Daisy Walker drew Manual Dexterity."}, "phase": "Investigation", "round": 5, "seq": 270, "type": "card_drawn"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 271, "status": "[R5\u00b7Investigation a1/4 | Daisy Walker 01002 | Attic | clu2 res6 | dmg1/5 hor4/9 | h4 d20 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 5, "seq": 272, "type": "decision_made"}
+{"data": {"message": "Back to Hallway; R6 = Cellar leg"}, "phase": "Investigation", "round": 5, "seq": 273, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 5, "seq": 274, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Daisy Walker moved to Hallway."}, "phase": "Investigation", "round": 5, "seq": 275, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Daisy Walker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 5, "seq": 276, "status": "[R5\u00b7Investigation a0/4 | Daisy Walker 01002 | Hallway | clu2 res6 | dmg1/5 hor4/9 | h4 d20 x6 | Act2 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 5, "seq": 277, "type": "decision_made"}
+{"data": {"message": "save MoM"}, "phase": "Investigation", "round": 5, "seq": 278, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 5, "seq": 279, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 5, "seq": 280, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 5, "seq": 281, "type": "ready_step"}
+{"data": {"card": "pc0026", "message": "Daisy Walker drew Flashlight."}, "phase": "Upkeep", "round": 5, "seq": 282, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 5, "seq": 283, "type": "resource_gained"}
+{"data": {"message": "Round 6 began."}, "phase": "Mythos", "round": 6, "seq": 284, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 6, "seq": 285, "type": "doom_placed"}
+{"data": {"card": "ec0019", "message": "Daisy Walker drew encounter card Dissonant Voices."}, "phase": "Mythos", "round": 6, "seq": 286, "type": "encounter_drawn"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices entered Daisy Walker's threat area."}, "phase": "Mythos", "round": 6, "seq": 287, "type": "treachery_threat"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 6, "seq": 288, "type": "phase_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 289, "status": "[R6\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu2 res7 | dmg1/5 hor4/9 | h5 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Cellar", "option": 4}, "phase": "Investigation", "round": 6, "seq": 290, "type": "decision_made"}
+{"data": {"message": "Cellar leg: clue then push to Ghoul Pits for VP1 while clock is slack"}, "phase": "Investigation", "round": 6, "seq": 291, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Cellar."}, "phase": "Investigation", "round": 6, "seq": 292, "type": "action_spent"}
+{"data": {"location": "cellar", "message": "Daisy Walker moved to Cellar."}, "phase": "Investigation", "round": 6, "seq": 293, "type": "investigator_moved"}
+{"data": {"location": "cellar", "message": "Cellar was revealed."}, "phase": "Investigation", "round": 6, "seq": 294, "type": "location_revealed"}
+{"data": {"location": "ghoul_pits", "message": "Deep Below Your House was put into play."}, "phase": "Investigation", "round": 6, "seq": 295, "type": "location_added"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 296, "status": "[R6\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu2 res7 | dmg1/5 hor4/9 | h5 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Cellar (shroud 2, 1 clue here) \u2014 test Intellect(6) vs 2", "option": 1}, "phase": "Investigation", "round": 6, "seq": 297, "type": "decision_made"}
+{"data": {"message": "Cellar clue 6v2 = 3rd act2 clue"}, "phase": "Investigation", "round": 6, "seq": 298, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Cellar."}, "phase": "Investigation", "round": 6, "seq": 299, "type": "action_spent"}
+{"data": {"message": "Started intellect test 6 vs 2.", "source": "Investigate Cellar"}, "phase": "Investigation", "round": 6, "seq": 300, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Investigate Cellar (intellect vs 2)."}, "phase": "Investigation", "round": 6, "seq": 301, "status": "[R6\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu2 res7 | dmg1/5 hor4/9 | h5 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 302, "type": "decision_made"}
+{"data": {"message": "6v2 fine bare"}, "phase": "Investigation", "round": 6, "seq": 303, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 6, "seq": 304, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 4, "message": "Investigate Cellar: success by 4 - intellect 6 + committed 0 + boosts 0 + token 0 = 6 vs 2.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Cellar", "success": true, "token": "skull", "value": 6}, "phase": "Investigation", "round": 6, "seq": 305, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 6, "seq": 306, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker] Use Dr. Milan Christopher after successfully investigating?"}, "phase": "Investigation", "round": 6, "seq": 307, "status": "[R6\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res7 | dmg1/5 hor4/9 | h5 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "milan-reaction", "label": "Gain 1 resource", "option": 1}, "phase": "Investigation", "round": 6, "seq": 308, "type": "decision_made"}
+{"data": {"amount": 1, "message": "Dr. Milan Christopher gained Daisy Walker 1 resource."}, "phase": "Investigation", "round": 6, "seq": 309, "type": "milan_reaction"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 310, "status": "[R6\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Cellar | clu3 res8 | dmg1/5 hor4/9 | h5 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Deep Below Your House", "option": 3}, "phase": "Investigation", "round": 6, "seq": 311, "type": "decision_made"}
+{"data": {"message": "Push to Pits this round; MD commit ready for agi3 reveal"}, "phase": "Investigation", "round": 6, "seq": 312, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Deep Below Your House."}, "phase": "Investigation", "round": 6, "seq": 313, "type": "action_spent"}
+{"data": {"location": "ghoul_pits", "message": "Daisy Walker moved to Deep Below Your House."}, "phase": "Investigation", "round": 6, "seq": 314, "type": "investigator_moved"}
+{"data": {"location": "ghoul_pits", "message": "Ghoul Pits was revealed."}, "phase": "Investigation", "round": 6, "seq": 315, "type": "location_revealed"}
+{"data": {"message": "Started agility test 2 vs 3.", "source": "Ghoul Pits"}, "phase": "Investigation", "round": 6, "seq": 316, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Ghoul Pits (agility vs 3)."}, "phase": "Investigation", "round": 6, "seq": 317, "status": "[R6\u00b7Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Ghoul Pits | clu3 res8 | dmg1/5 hor4/9 | h5 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Manual Dexterity (+2)", "option": 2}, "phase": "Investigation", "round": 6, "seq": 318, "type": "decision_made"}
+{"data": {"message": "MD +2 \u2192 4v3 ~62.5%; keep MoM as enemy answer"}, "phase": "Investigation", "round": 6, "seq": 319, "type": "agent_reason"}
+{"data": {"card": "pc0029", "message": "Committed Manual Dexterity."}, "phase": "Investigation", "round": 6, "seq": 320, "type": "card_committed"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Ghoul Pits (agility vs 3)."}, "phase": "Investigation", "round": 6, "seq": 321, "status": "[R6\u00b7Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Ghoul Pits | clu3 res8 | dmg1/5 hor4/9 | h4 d19 x6 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 322, "type": "decision_made"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 6, "seq": 323, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 2, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Ghoul Pits: success by 0 - agility 2 + committed 2 + boosts 0 + token -1 = 3 vs 3.", "modifier": -1, "reveal_effects_applied": true, "skill": "agility", "source": "Ghoul Pits", "success": true, "token": "-1", "value": 3}, "phase": "Investigation", "round": 6, "seq": 324, "type": "skill_test_result"}
+{"data": {"card": "pc0015", "message": "Daisy Walker drew Working a Hunch."}, "phase": "Investigation", "round": 6, "seq": 325, "type": "card_drawn"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 326, "status": "[R6\u00b7Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Ghoul Pits | clu3 res8 | dmg1/5 hor4/9 | h5 d18 x7 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 1}, "phase": "Investigation", "round": 6, "seq": 327, "type": "decision_made"}
+{"data": {"message": "free dig; WaH#2 will grab Pits clue testlessly next round"}, "phase": "Investigation", "round": 6, "seq": 328, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 6, "seq": 329, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 6, "seq": 330, "status": "[R6\u00b7Investigation a0/4 | Daisy Walker 01002 | Ghoul Pits | clu3 res8 | dmg1/5 hor4/9 | h5 d18 x7 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Scrying", "option": 2}, "phase": "Investigation", "round": 6, "seq": 331, "type": "decision_made"}
+{"data": {"message": "avoid Paranoia; OBL#2 redundant; Scrying least bad (Tome? no \u2014 but skip weakness)"}, "phase": "Investigation", "round": 6, "seq": 332, "type": "agent_reason"}
+{"data": {"card": "pc0017", "message": "Daisy Walker drew Scrying."}, "phase": "Investigation", "round": 6, "seq": 333, "type": "card_drawn"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 6, "seq": 334, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 6, "seq": 335, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 6, "seq": 336, "type": "ready_step"}
+{"data": {"card": "pc0025", "message": "Daisy Walker drew Flashlight."}, "phase": "Upkeep", "round": 6, "seq": 337, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 6, "seq": 338, "type": "resource_gained"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices was discarded at end of round."}, "phase": "Upkeep", "round": 6, "seq": 339, "type": "treachery_discarded"}
+{"data": {"message": "Round 7 began."}, "phase": "Mythos", "round": 7, "seq": 340, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 7, "seq": 341, "type": "doom_placed"}
+{"data": {"card": "ec0001", "message": "Daisy Walker drew encounter card Flesh-Eater."}, "phase": "Mythos", "round": 7, "seq": 342, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater [ec0001] spawned at Attic."}, "phase": "Mythos", "round": 7, "seq": 343, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 7, "seq": 344, "type": "phase_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 345, "status": "[R7\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Ghoul Pits | clu3 res9 | dmg1/5 hor4/9 | h7 d16 x7 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Working a Hunch", "option": 8}, "phase": "Investigation", "round": 7, "seq": 346, "type": "decision_made"}
+{"data": {"message": "WaH#2 banks Pits clue (loc VP1) with no s4 test"}, "phase": "Investigation", "round": 7, "seq": 347, "type": "agent_reason"}
+{"data": {"amount": 1, "message": "Daisy Walker discovered 1 clue."}, "phase": "Investigation", "round": 7, "seq": 348, "type": "clue_discovered"}
+{"data": {"card": "pc0015", "message": "Daisy Walker played Working a Hunch."}, "phase": "Investigation", "round": 7, "seq": 349, "type": "event_played"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 350, "status": "[R7\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Ghoul Pits | clu4 res7 | dmg1/5 hor4/9 | h6 d16 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 5}, "phase": "Investigation", "round": 7, "seq": 351, "type": "decision_made"}
+{"data": {"message": "dig for 2nd MoM/Ward before endgame"}, "phase": "Investigation", "round": 7, "seq": 352, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 7, "seq": 353, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 7, "seq": 354, "status": "[R7\u00b7Investigation a3/4 | Daisy Walker 01002 | Ghoul Pits | clu4 res7 | dmg1/5 hor4/9 | h6 d16 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Hyperawareness", "option": 1}, "phase": "Investigation", "round": 7, "seq": 355, "type": "decision_made"}
+{"data": {"message": "Hyperawareness: resource-pump int/agi \u2014 turns Priest MoM-evade into near-certainty with my 7 res"}, "phase": "Investigation", "round": 7, "seq": 356, "type": "agent_reason"}
+{"data": {"card": "pc0010", "message": "Daisy Walker drew Hyperawareness."}, "phase": "Investigation", "round": 7, "seq": 357, "type": "card_drawn"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 358, "status": "[R7\u00b7Investigation a3/4 | Daisy Walker 01002 | Ghoul Pits | clu4 res7 | dmg1/5 hor4/9 | h7 d15 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Hyperawareness (2 res)", "option": 11}, "phase": "Investigation", "round": 7, "seq": 359, "type": "decision_made"}
+{"data": {"message": "Get Hyperawareness in play now (safe, unengaged) so it's live for the Priest evade"}, "phase": "Investigation", "round": 7, "seq": 360, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Hyperawareness."}, "phase": "Investigation", "round": 7, "seq": 361, "type": "action_spent"}
+{"data": {"card": "pc0010", "message": "Daisy Walker played Hyperawareness."}, "phase": "Investigation", "round": 7, "seq": 362, "type": "card_played"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 363, "status": "[R7\u00b7Investigation a2/4 | Daisy Walker 01002 | Ghoul Pits | clu4 res5 | dmg1/5 hor4/9 | h6 d15 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Cellar", "option": 2}, "phase": "Investigation", "round": 7, "seq": 364, "type": "decision_made"}
+{"data": {"message": "head back toward Hallway"}, "phase": "Investigation", "round": 7, "seq": 365, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Cellar."}, "phase": "Investigation", "round": 7, "seq": 366, "type": "action_spent"}
+{"data": {"location": "cellar", "message": "Daisy Walker moved to Cellar."}, "phase": "Investigation", "round": 7, "seq": 367, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 368, "status": "[R7\u00b7Investigation a1/4 | Daisy Walker 01002 | Cellar | clu4 res5 | dmg1/5 hor4/9 | h6 d15 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 7, "seq": 369, "type": "decision_made"}
+{"data": {"message": "End round in Hallway with 4 clues \u2192 act2 advances at upkeep; Priest will spawn engaged, plan is Hyper-pumped MoM evade then Parlor resign"}, "phase": "Investigation", "round": 7, "seq": 370, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 7, "seq": 371, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Daisy Walker moved to Hallway."}, "phase": "Investigation", "round": 7, "seq": 372, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Daisy Walker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 7, "seq": 373, "status": "[R7\u00b7Investigation a0/4 | Daisy Walker 01002 | Hallway | clu4 res5 | dmg1/5 hor4/9 | h6 d15 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 7, "seq": 374, "type": "decision_made"}
+{"data": {"message": "save MoM for Priest round"}, "phase": "Investigation", "round": 7, "seq": 375, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 7, "seq": 376, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 7, "seq": 377, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 7, "seq": 378, "type": "ready_step"}
+{"data": {"card": "pc0024", "message": "Daisy Walker drew Knife."}, "phase": "Upkeep", "round": 7, "seq": 379, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 7, "seq": 380, "type": "resource_gained"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 7, "seq": 381, "status": "[R7\u00b7Upkeep | Daisy Walker 01002 | Hallway | clu4 res6 | dmg1/5 hor4/9 | h7 d14 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Spend 3 clues and advance", "option": 1}, "phase": "Upkeep", "round": 7, "seq": 382, "type": "decision_made"}
+{"data": {"message": "Act3 at R7 upkeep \u2014 great pace; doom only 4/7"}, "phase": "Upkeep", "round": 7, "seq": 383, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Daisy Walker spent 3 clue."}, "phase": "Upkeep", "round": 7, "seq": 384, "type": "clues_spent"}
+{"data": {"location": "parlor", "message": "Parlor was revealed."}, "phase": "Upkeep", "round": 7, "seq": 385, "type": "location_revealed"}
+{"data": {"card": "setaside_lita", "message": "Lita Chantler was put into play in the Parlor."}, "phase": "Upkeep", "round": 7, "seq": 386, "type": "lita_enters_play"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] spawned at Hallway."}, "phase": "Upkeep", "round": 7, "seq": 387, "type": "enemy_spawned"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] engaged Daisy Walker."}, "phase": "Upkeep", "round": 7, "seq": 388, "type": "enemy_engaged"}
+{"data": {"message": "Act advanced to What Have You Done?."}, "phase": "Upkeep", "round": 7, "seq": 389, "type": "act_advanced"}
+{"data": {"message": "Round 8 began."}, "phase": "Mythos", "round": 8, "seq": 390, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 8, "seq": 391, "type": "doom_placed"}
+{"data": {"card": "ec0009", "message": "Daisy Walker drew encounter card Acolyte of Um\u00f4rdhoth."}, "phase": "Mythos", "round": 8, "seq": 392, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] spawned at Hallway."}, "phase": "Mythos", "round": 8, "seq": 393, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] engaged Daisy Walker."}, "phase": "Mythos", "round": 8, "seq": 394, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 8, "seq": 395, "type": "phase_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 396, "status": "[R8\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res6 | dmg1/5 hor4/9 | h7 d14 x8 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Mind over Matter", "option": 14}, "phase": "Investigation", "round": 8, "seq": 397, "type": "decision_made"}
+{"data": {"message": "MoM: int replaces agi/combat all round \u2014 enables 6-base evades on both enemies"}, "phase": "Investigation", "round": 8, "seq": 398, "type": "agent_reason"}
+{"data": {"card": "pc0013", "message": "Daisy Walker played Mind over Matter."}, "phase": "Investigation", "round": 8, "seq": 399, "type": "event_played"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 400, "status": "[R8\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res5 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Ghoul Priest (evade 4) \u2014 test Agility(6)", "option": 9}, "phase": "Investigation", "round": 8, "seq": 401, "type": "decision_made"}
+{"data": {"message": "Evade Priest first (harder) at MoM-int 6v4; will pump +2 via Hyperawareness \u2192 only AF/ES fail"}, "phase": "Investigation", "round": 8, "seq": 402, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Ghoul Priest."}, "phase": "Investigation", "round": 8, "seq": 403, "type": "action_spent"}
+{"data": {"message": "Started agility test 6 vs 4.", "source": "Evade Ghoul Priest"}, "phase": "Investigation", "round": 8, "seq": 404, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 8, "seq": 405, "status": "[R8\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res5 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hyperawareness (+1 agility)", "option": 1}, "phase": "Investigation", "round": 8, "seq": 406, "type": "decision_made"}
+{"data": {"message": "pump 1 of 2"}, "phase": "Investigation", "round": 8, "seq": 407, "type": "agent_reason"}
+{"data": {"card_code": "01034", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 8, "seq": 408, "type": "skill_boost"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 8, "seq": 409, "status": "[R8\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res4 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Spend 1 resource with Hyperawareness (+1 agility)", "option": 1}, "phase": "Investigation", "round": 8, "seq": 410, "type": "decision_made"}
+{"data": {"message": "pump 2 of 2 \u2192 8v4, only AF/ES fail (87.5%)"}, "phase": "Investigation", "round": 8, "seq": 411, "type": "agent_reason"}
+{"data": {"card_code": "01034", "message": "Spent 1 resource for +1 agility."}, "phase": "Investigation", "round": 8, "seq": 412, "type": "skill_boost"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Ghoul Priest (agility vs 4)."}, "phase": "Investigation", "round": 8, "seq": 413, "status": "[R8\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res3 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 8, "seq": 414, "type": "decision_made"}
+{"data": {"message": "8v4 done"}, "phase": "Investigation", "round": 8, "seq": 415, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 8, "seq": 416, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 2, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 3, "message": "Evade Ghoul Priest: success by 3 - agility 6 + committed 0 + boosts 2 + token -1 = 7 vs 4.", "modifier": -1, "reveal_effects_applied": true, "skill": "agility", "source": "Evade Ghoul Priest", "success": true, "token": "-1", "value": 7}, "phase": "Investigation", "round": 8, "seq": 417, "type": "skill_test_result"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] disengaged."}, "phase": "Investigation", "round": 8, "seq": 418, "type": "enemy_disengaged"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] exhausted after being evaded."}, "phase": "Investigation", "round": 8, "seq": 419, "type": "enemy_exhausted"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 3 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 420, "status": "[R8\u00b7Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res3 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Acolyte of Um\u00f4rdhoth (evade 2) \u2014 test Agility(6)", "option": 8}, "phase": "Investigation", "round": 8, "seq": 421, "type": "decision_made"}
+{"data": {"message": "Evade Acolyte 6v2, 87.5%; then Parlor + resign"}, "phase": "Investigation", "round": 8, "seq": 422, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 1, "message": "Spent 1 action: Evade Acolyte of Um\u00f4rdhoth."}, "phase": "Investigation", "round": 8, "seq": 423, "type": "action_spent"}
+{"data": {"message": "Started agility test 6 vs 2.", "source": "Evade Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 8, "seq": 424, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker] Commit cards to Evade Acolyte of Um\u00f4rdhoth (agility vs 2)."}, "phase": "Investigation", "round": 8, "seq": 425, "status": "[R8\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res3 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 8, "seq": 426, "type": "decision_made"}
+{"data": {"message": "margin +4 already; pumps can't beat AF/ES"}, "phase": "Investigation", "round": 8, "seq": 427, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 8, "seq": 428, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 6, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 4, "message": "Evade Acolyte of Um\u00f4rdhoth: success by 4 - agility 6 + committed 0 + boosts 0 + token 0 = 6 vs 2.", "modifier": 0, "reveal_effects_applied": true, "skill": "agility", "source": "Evade Acolyte of Um\u00f4rdhoth", "success": true, "token": "0", "value": 6}, "phase": "Investigation", "round": 8, "seq": 429, "type": "skill_test_result"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] disengaged."}, "phase": "Investigation", "round": 8, "seq": 430, "type": "enemy_disengaged"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] exhausted after being evaded."}, "phase": "Investigation", "round": 8, "seq": 431, "type": "enemy_exhausted"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 2 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 432, "status": "[R8\u00b7Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Hallway | clu1 res3 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Parlor", "option": 3}, "phase": "Investigation", "round": 8, "seq": 433, "type": "decision_made"}
+{"data": {"message": "Move to Parlor; both ghouls exhausted so no hunt this enemy phase; resign first action R9"}, "phase": "Investigation", "round": 8, "seq": 434, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Parlor."}, "phase": "Investigation", "round": 8, "seq": 435, "type": "action_spent"}
+{"data": {"location": "parlor", "message": "Daisy Walker moved to Parlor."}, "phase": "Investigation", "round": 8, "seq": 436, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 1 action left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 437, "status": "[R8\u00b7Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu1 res3 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Use Old Book of Lore", "option": 1}, "phase": "Investigation", "round": 8, "seq": 438, "type": "decision_made"}
+{"data": {"message": "free dig before resigning; costs nothing"}, "phase": "Investigation", "round": 8, "seq": 439, "type": "agent_reason"}
+{"data": {"action": "old_book", "cost": 1, "message": "Spent 1 action: Use Old Book of Lore."}, "phase": "Investigation", "round": 8, "seq": 440, "type": "action_spent"}
+{"data": {"prompt": "Choose 1 card to draw with Old Book of Lore."}, "phase": "Investigation", "round": 8, "seq": 441, "status": "[R8\u00b7Investigation a0/4 | Daisy Walker 01002 | Parlor | clu1 res3 | dmg1/5 hor4/9 | h6 d14 x9 | Act3 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "old-book-of-lore", "label": "Draw Unexpected Courage", "option": 3}, "phase": "Investigation", "round": 8, "seq": 442, "type": "decision_made"}
+{"data": {"message": "UC wild +2 protects against a nasty R9 mythos test before I resign"}, "phase": "Investigation", "round": 8, "seq": 443, "type": "agent_reason"}
+{"data": {"card": "pc0032", "message": "Daisy Walker drew Unexpected Courage."}, "phase": "Investigation", "round": 8, "seq": 444, "type": "card_drawn"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 8, "seq": 445, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 8, "seq": 446, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 8, "seq": 447, "type": "ready_step"}
+{"data": {"card": "pc0033", "message": "Daisy Walker drew Paranoia."}, "phase": "Upkeep", "round": 8, "seq": 448, "type": "card_drawn"}
+{"data": {"card": "pc0033", "message": "Paranoia discarded all resources."}, "phase": "Upkeep", "round": 8, "seq": 449, "type": "weakness_revealed"}
+{"data": {"amount": 1, "message": "Daisy Walker gained 1 resource."}, "phase": "Upkeep", "round": 8, "seq": 450, "type": "resource_gained"}
+{"data": {"message": "Round 9 began."}, "phase": "Mythos", "round": 9, "seq": 451, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 9, "seq": 452, "type": "doom_placed"}
+{"data": {"card": "ec0023", "message": "Daisy Walker drew encounter card Crypt Chill."}, "phase": "Mythos", "round": 9, "seq": 453, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 3 vs 4.", "source": "Crypt Chill"}, "phase": "Mythos", "round": 9, "seq": 454, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Mythos \u00b7 Daisy Walker] Commit cards to Crypt Chill (willpower vs 4)."}, "phase": "Mythos", "round": 9, "seq": 455, "status": "[R9\u00b7Mythos | Daisy Walker 01002 | Parlor | clu1 res1 | dmg1/5 hor4/9 | h7 d12 x10 | Act3 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Mythos", "round": 9, "seq": 456, "type": "decision_made"}
+{"data": {"message": "Resigning this turn \u2014 losing an in-play asset is scoreless; no commit"}, "phase": "Mythos", "round": 9, "seq": 457, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Mythos", "round": 9, "seq": 458, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Crypt Chill: failure by 1 - willpower 3 + committed 0 + boosts 0 + token 0 = 3 vs 4.", "modifier": 0, "reveal_effects_applied": true, "skill": "willpower", "source": "Crypt Chill", "success": false, "token": "skull", "value": 3}, "phase": "Mythos", "round": 9, "seq": 459, "type": "skill_test_result"}
+{"data": {"prompt": "Choose an asset to discard for Crypt Chill."}, "phase": "Mythos", "round": 9, "seq": 460, "status": "[R9\u00b7Mythos | Daisy Walker 01002 | Parlor | clu1 res1 | dmg1/5 hor4/9 | h7 d12 x10 | Act3 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "crypt-chill-discard", "label": "Discard Hyperawareness", "option": 3}, "phase": "Mythos", "round": 9, "seq": 461, "type": "decision_made"}
+{"data": {"message": "all irrelevant now; Hyperawareness least useful with 1 res"}, "phase": "Mythos", "round": 9, "seq": 462, "type": "agent_reason"}
+{"data": {"card": "pc0010", "message": "Hyperawareness was discarded."}, "phase": "Mythos", "round": 9, "seq": 463, "type": "asset_discarded"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 9, "seq": 464, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Daisy Walker \u00b7 4 actions left (1 Tome-only)] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 465, "status": "[R9\u00b7Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu1 res1 | dmg1/5 hor4/9 | h7 d12 x11 | Act3 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Resign", "option": 8}, "phase": "Investigation", "round": 9, "seq": 466, "type": "decision_made"}
+{"data": {"message": "Nothing left to score; bank Pits VP + resign bonus before Priest hunts in"}, "phase": "Investigation", "round": 9, "seq": 467, "type": "agent_reason"}
+{"data": {"action": "resign", "cost": 1, "message": "Spent 1 action: Resign."}, "phase": "Investigation", "round": 9, "seq": 468, "type": "action_spent"}
+{"data": {"message": "Daisy Walker resigned", "summary": "Daisy Walker resigned"}, "phase": "Investigation", "round": 9, "seq": 469, "type": "game_end"}
+{"data": {}, "phase": "Investigation", "round": 9, "seq": 470, "type": "note_added"}

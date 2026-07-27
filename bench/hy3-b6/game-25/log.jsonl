@@ -1,0 +1,445 @@
+{"data": {"prompt": "Opening hand: Flashlight, Knife, Leo De Luca, \"Look what I found!\", Perception. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 1, "status": "[R1\u00b7Investigation a3/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res5 | dmg0/7 hor0/7 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Keep hand and draw replacements", "option": 1}, "phase": "Investigation", "round": 1, "seq": 2, "type": "decision_made"}
+{"data": {"message": "Hand already has Leo (top priority) plus full clue kit and Knife; nothing worth tossing"}, "phase": "Investigation", "round": 1, "seq": 3, "type": "agent_reason"}
+{"data": {"message": "Opening hand finalized: Flashlight, Knife, Leo De Luca, \"Look what I found!\", Perception."}, "phase": "Investigation", "round": 1, "seq": 4, "type": "setup_complete"}
+{"data": {"attic": "return", "cellar": "original", "message": "Setup chose the return Attic and the original Cellar."}, "phase": "Investigation", "round": 1, "seq": 5, "type": "setup_variants"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 6, "status": "[R1\u00b7Investigation a3/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res5 | dmg0/7 hor0/7 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Take resource (gain 1)", "option": 4}, "phase": "Investigation", "round": 1, "seq": 7, "type": "decision_made"}
+{"data": {"message": "Need 6 resources for Leo turn 1"}, "phase": "Investigation", "round": 1, "seq": 8, "type": "agent_reason"}
+{"data": {"action": "resource", "cost": 1, "message": "Spent 1 action: Take resource."}, "phase": "Investigation", "round": 1, "seq": 9, "type": "action_spent"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Investigation", "round": 1, "seq": 10, "type": "resource_gained"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 11, "status": "[R1\u00b7Investigation a2/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res6 | dmg0/7 hor0/7 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Leo De Luca (6 res)", "option": 8}, "phase": "Investigation", "round": 1, "seq": 12, "type": "decision_made"}
+{"data": {"message": "Leo T1 is the top priority per playbook; extra action every round"}, "phase": "Investigation", "round": 1, "seq": 13, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Leo De Luca."}, "phase": "Investigation", "round": 1, "seq": 14, "type": "action_spent"}
+{"data": {"card": "pc0006", "message": "Wendy Adams played Leo De Luca."}, "phase": "Investigation", "round": 1, "seq": 15, "type": "card_played"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 16, "status": "[R1\u00b7Investigation a2/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res0 | dmg0/7 hor0/7 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Study (Aberrant Gateway) (shroud 3, 1 clue here) \u2014 test Intellect(3) vs 3", "option": 1}, "phase": "Investigation", "round": 1, "seq": 17, "type": "decision_made"}
+{"data": {"message": "Study clue R1 before Obscuring Fog per template; will commit Perception"}, "phase": "Investigation", "round": 1, "seq": 18, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Study (Aberrant Gateway)."}, "phase": "Investigation", "round": 1, "seq": 19, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 3.", "source": "Investigate Study (Aberrant Gateway)"}, "phase": "Investigation", "round": 1, "seq": 20, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Study (Aberrant Gateway) (intellect vs 3)."}, "phase": "Investigation", "round": 1, "seq": 21, "status": "[R1\u00b7Investigation a1/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res0 | dmg0/7 hor0/7 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Perception (+2)", "option": 3}, "phase": "Investigation", "round": 1, "seq": 22, "type": "decision_made"}
+{"data": {"message": "Perception +2 makes it 5v3 (87.5%) and draws on success"}, "phase": "Investigation", "round": 1, "seq": 23, "type": "agent_reason"}
+{"data": {"card": "pc0030", "message": "Committed Perception."}, "phase": "Investigation", "round": 1, "seq": 24, "type": "card_committed"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Study (Aberrant Gateway) (intellect vs 3)."}, "phase": "Investigation", "round": 1, "seq": 25, "status": "[R1\u00b7Investigation a1/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res0 | dmg0/7 hor0/7 | h3 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 1, "seq": 26, "type": "decision_made"}
+{"data": {"message": "Done committing; 5v3 with cancel backup"}, "phase": "Investigation", "round": 1, "seq": 27, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 1, "seq": 28, "type": "chaos_token"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -1?"}, "phase": "Investigation", "round": 1, "seq": 29, "status": "[R1\u00b7Investigation a1/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu0 res0 | dmg0/7 hor0/7 | h3 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 4}, "phase": "Investigation", "round": 1, "seq": 30, "type": "decision_made"}
+{"data": {"message": "-1 still passes 4v3"}, "phase": "Investigation", "round": 1, "seq": 31, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 2, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Investigate Study (Aberrant Gateway): success by 1 - intellect 3 + committed 2 + boosts 0 + token -1 = 4 vs 3.", "modifier": -1, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Study (Aberrant Gateway)", "success": true, "token": "-1", "value": 4}, "phase": "Investigation", "round": 1, "seq": 32, "type": "skill_test_result"}
+{"data": {"card": "pc0011", "message": "Wendy Adams drew Rabbit's Foot."}, "phase": "Investigation", "round": 1, "seq": 33, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 1, "seq": 34, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 35, "status": "[R1\u00b7Investigation a1/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu1 res0 | dmg0/7 hor0/7 | h4 d27 x1 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Take resource (gain 1)", "option": 4}, "phase": "Investigation", "round": 1, "seq": 36, "type": "decision_made"}
+{"data": {"message": "Bank a resource toward Flashlight (2) next turn"}, "phase": "Investigation", "round": 1, "seq": 37, "type": "agent_reason"}
+{"data": {"action": "resource", "cost": 1, "message": "Spent 1 action: Take resource."}, "phase": "Investigation", "round": 1, "seq": 38, "type": "action_spent"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Investigation", "round": 1, "seq": 39, "type": "resource_gained"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 1, "seq": 40, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 1, "seq": 41, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 1, "seq": 42, "type": "ready_step"}
+{"data": {"card": "pc0026", "message": "Wendy Adams drew Flashlight."}, "phase": "Upkeep", "round": 1, "seq": 43, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 1, "seq": 44, "type": "resource_gained"}
+{"data": {"message": "Round 2 began."}, "phase": "Mythos", "round": 2, "seq": 45, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 2, "seq": 46, "type": "doom_placed"}
+{"data": {"card": "ec0023", "message": "Wendy Adams drew encounter card Crypt Chill."}, "phase": "Mythos", "round": 2, "seq": 47, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 4 vs 4.", "source": "Crypt Chill"}, "phase": "Mythos", "round": 2, "seq": 48, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Mythos \u00b7 Wendy Adams] Commit cards to Crypt Chill (willpower vs 4)."}, "phase": "Mythos", "round": 2, "seq": 49, "status": "[R2\u00b7Mythos | Wendy Adams 01005 | Study (Aberrant Gateway) | clu1 res2 | dmg0/7 hor0/7 | h5 d26 x1 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Rabbit's Foot (+1)", "option": 1}, "phase": "Mythos", "round": 2, "seq": 50, "type": "decision_made"}
+{"data": {"message": "Fail would eat Leo; +1 makes 5v4=81% plus cancel backup"}, "phase": "Mythos", "round": 2, "seq": 51, "type": "agent_reason"}
+{"data": {"card": "pc0011", "message": "Committed Rabbit's Foot."}, "phase": "Mythos", "round": 2, "seq": 52, "type": "card_committed"}
+{"data": {"prompt": "[Round 2 \u00b7 Mythos \u00b7 Wendy Adams] Commit cards to Crypt Chill (willpower vs 4)."}, "phase": "Mythos", "round": 2, "seq": 53, "status": "[R2\u00b7Mythos | Wendy Adams 01005 | Study (Aberrant Gateway) | clu1 res2 | dmg0/7 hor0/7 | h4 d26 x1 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 2, "seq": 54, "type": "decision_made"}
+{"data": {"message": "Done committing"}, "phase": "Mythos", "round": 2, "seq": 55, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed tablet.", "modifier": -2, "token": "tablet"}, "phase": "Mythos", "round": 2, "seq": 56, "type": "chaos_token"}
+{"data": {"prompt": "[Round 2 \u00b7 Mythos \u00b7 Wendy Adams] Use a reaction after revealing tablet?"}, "phase": "Mythos", "round": 2, "seq": 57, "status": "[R2\u00b7Mythos | Wendy Adams 01005 | Study (Aberrant Gateway) | clu1 res2 | dmg0/7 hor0/7 | h4 d26 x1 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Discard Flashlight to cancel and redraw", "option": 1}, "phase": "Mythos", "round": 2, "seq": 58, "type": "decision_made"}
+{"data": {"message": "Tablet -2 fails and would kill Leo; have duplicate Flashlight, redraw is ~70% to pass"}, "phase": "Mythos", "round": 2, "seq": 59, "type": "agent_reason"}
+{"data": {"card": "pc0025", "message": "Wendy canceled the chaos token and redrew."}, "phase": "Mythos", "round": 2, "seq": 60, "type": "wendy_reaction"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Mythos", "round": 2, "seq": 61, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 2, "message": "Crypt Chill: success by 2 - willpower 4 + committed 1 + boosts 0 + token 1 = 6 vs 4.", "modifier": 1, "reveal_effects_applied": true, "skill": "willpower", "source": "Crypt Chill", "success": true, "token": "+1", "value": 6}, "phase": "Mythos", "round": 2, "seq": 62, "type": "skill_test_result"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 2, "seq": 63, "type": "phase_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 4 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 64, "status": "[R2\u00b7Investigation a4/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu1 res2 | dmg0/7 hor0/7 | h3 d26 x3 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Flashlight (2 res)", "option": 7}, "phase": "Investigation", "round": 2, "seq": 65, "type": "decision_made"}
+{"data": {"message": "Flashlight makes low-shroud rooms near-auto"}, "phase": "Investigation", "round": 2, "seq": 66, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Flashlight."}, "phase": "Investigation", "round": 2, "seq": 67, "type": "action_spent"}
+{"data": {"card": "pc0026", "message": "Wendy Adams played Flashlight."}, "phase": "Investigation", "round": 2, "seq": 68, "type": "card_played"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 69, "status": "[R2\u00b7Investigation a3/3 | Wendy Adams 01005 | Study (Aberrant Gateway) | clu1 res0 | dmg0/7 hor0/7 | h2 d26 x3 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 2, "seq": 70, "type": "decision_made"}
+{"data": {"message": "Head toward Bathroom for act1 clue"}, "phase": "Investigation", "round": 2, "seq": 71, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 72, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Wendy Adams moved to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 73, "type": "investigator_moved"}
+{"data": {"location": "guest_hall", "message": "Guest Hall was revealed."}, "phase": "Investigation", "round": 2, "seq": 74, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 75, "status": "[R2\u00b7Investigation a2/3 | Wendy Adams 01005 | Guest Hall | clu1 res0 | dmg0/7 hor0/7 | h2 d26 x3 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bathroom", "option": 4}, "phase": "Investigation", "round": 2, "seq": 76, "type": "decision_made"}
+{"data": {"message": "Bathroom clue; symbol-ends-turn quirk so investigate as last action"}, "phase": "Investigation", "round": 2, "seq": 77, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bathroom."}, "phase": "Investigation", "round": 2, "seq": 78, "type": "action_spent"}
+{"data": {"location": "bathroom", "message": "Wendy Adams moved to Bathroom."}, "phase": "Investigation", "round": 2, "seq": 79, "type": "investigator_moved"}
+{"data": {"location": "bathroom", "message": "Bathroom was revealed."}, "phase": "Investigation", "round": 2, "seq": 80, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 81, "status": "[R2\u00b7Investigation a1/3 | Wendy Adams 01005 | Bathroom | clu1 res0 | dmg0/7 hor0/7 | h2 d26 x3 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bathroom (shroud 1, 1 clue here) \u2014 test Intellect(3) vs 1", "option": 1}, "phase": "Investigation", "round": 2, "seq": 82, "type": "decision_made"}
+{"data": {"message": "3v1 bare fails only on -3/-4/autofail; saving Flashlight supplies for Cellar s4"}, "phase": "Investigation", "round": 2, "seq": 83, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bathroom."}, "phase": "Investigation", "round": 2, "seq": 84, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate Bathroom"}, "phase": "Investigation", "round": 2, "seq": 85, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Bathroom (intellect vs 1)."}, "phase": "Investigation", "round": 2, "seq": 86, "status": "[R2\u00b7Investigation a0/3 | Wendy Adams 01005 | Bathroom | clu1 res0 | dmg0/7 hor0/7 | h2 d26 x3 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 2, "seq": 87, "type": "decision_made"}
+{"data": {"message": "No commit; LWIF is worth more played later"}, "phase": "Investigation", "round": 2, "seq": 88, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 2, "seq": 89, "type": "chaos_token"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing skull?"}, "phase": "Investigation", "round": 2, "seq": 90, "status": "[R2\u00b7Investigation a0/3 | Wendy Adams 01005 | Bathroom | clu1 res0 | dmg0/7 hor0/7 | h2 d26 x3 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 3}, "phase": "Investigation", "round": 2, "seq": 91, "type": "decision_made"}
+{"data": {"message": "Skull is -0 with no ghouls here; passes"}, "phase": "Investigation", "round": 2, "seq": 92, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 2, "message": "Investigate Bathroom: success by 2 - intellect 3 + committed 0 + boosts 0 + token 0 = 3 vs 1.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Bathroom", "success": true, "token": "skull", "value": 3}, "phase": "Investigation", "round": 2, "seq": 93, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 2, "seq": 94, "type": "clue_discovered"}
+{"data": {"message": "The Bathroom drained all remaining actions; the turn ends."}, "phase": "Investigation", "round": 2, "seq": 95, "type": "bathroom_forced"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 2, "seq": 96, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 2, "seq": 97, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 2, "seq": 98, "type": "ready_step"}
+{"data": {"card": "pc0005", "message": "Wendy Adams drew Leo De Luca."}, "phase": "Upkeep", "round": 2, "seq": 99, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 2, "seq": 100, "type": "resource_gained"}
+{"data": {"message": "Round 3 began."}, "phase": "Mythos", "round": 3, "seq": 101, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 3, "seq": 102, "type": "doom_placed"}
+{"data": {"card": "ec0016", "message": "Wendy Adams drew encounter card Frozen in Fear."}, "phase": "Mythos", "round": 3, "seq": 103, "type": "encounter_drawn"}
+{"data": {"card": "ec0016", "message": "Frozen in Fear entered Wendy Adams's threat area."}, "phase": "Mythos", "round": 3, "seq": 104, "type": "treachery_threat"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 3, "seq": 105, "type": "phase_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 4 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 106, "status": "[R3\u00b7Investigation a4/3 | Wendy Adams 01005 | Bathroom | clu2 res1 | dmg0/7 hor0/7 | h3 d25 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 3, "seq": 107, "type": "decision_made"}
+{"data": {"message": "Move toward Bedroom; FiF makes this cost 2"}, "phase": "Investigation", "round": 3, "seq": 108, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 2, "message": "Spent 2 actions: Move to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 109, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Wendy Adams moved to Guest Hall."}, "phase": "Investigation", "round": 3, "seq": 110, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 111, "status": "[R3\u00b7Investigation a2/3 | Wendy Adams 01005 | Guest Hall | clu2 res1 | dmg0/7 hor0/7 | h3 d25 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bedroom", "option": 3}, "phase": "Investigation", "round": 3, "seq": 112, "type": "decision_made"}
+{"data": {"message": "Bedroom for third act1 clue"}, "phase": "Investigation", "round": 3, "seq": 113, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bedroom."}, "phase": "Investigation", "round": 3, "seq": 114, "type": "action_spent"}
+{"data": {"location": "bedroom", "message": "Wendy Adams moved to Bedroom."}, "phase": "Investigation", "round": 3, "seq": 115, "type": "investigator_moved"}
+{"data": {"location": "bedroom", "message": "Bedroom was revealed."}, "phase": "Investigation", "round": 3, "seq": 116, "type": "location_revealed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 117, "status": "[R3\u00b7Investigation a1/3 | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h3 d25 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Knife (1 res)", "option": 6}, "phase": "Investigation", "round": 3, "seq": 118, "type": "decision_made"}
+{"data": {"message": "Flashlight drops Bedroom s2 to 0; fail there = random discard so buy certainty"}, "phase": "Investigation", "round": 3, "seq": 119, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Knife."}, "phase": "Investigation", "round": 3, "seq": 120, "type": "action_spent"}
+{"data": {"card": "pc0024", "message": "Wendy Adams played Knife."}, "phase": "Investigation", "round": 3, "seq": 121, "type": "card_played"}
+{"data": {"message": "Started willpower test 4 vs 3.", "source": "Frozen in Fear"}, "phase": "Investigation", "round": 3, "seq": 122, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 3, "seq": 123, "status": "[R3\u00b7Investigation a0/3 | Wendy Adams 01005 | Bedroom | clu2 res0 | dmg0/7 hor0/7 | h2 d25 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 3, "seq": 124, "type": "decision_made"}
+{"data": {"message": "FiF discard test 4v3, 81%"}, "phase": "Investigation", "round": 3, "seq": 125, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 3, "seq": 126, "type": "chaos_token"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -3?"}, "phase": "Investigation", "round": 3, "seq": 127, "status": "[R3\u00b7Investigation a0/3 | Wendy Adams 01005 | Bedroom | clu2 res0 | dmg0/7 hor0/7 | h2 d25 x3 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Discard Leo De Luca to cancel and redraw", "option": 2}, "phase": "Investigation", "round": 3, "seq": 128, "type": "decision_made"}
+{"data": {"message": "Second Leo is a dead card; FiF costs 1 action/round so redraw for the shed"}, "phase": "Investigation", "round": 3, "seq": 129, "type": "agent_reason"}
+{"data": {"card": "pc0005", "message": "Wendy canceled the chaos token and redrew."}, "phase": "Investigation", "round": 3, "seq": 130, "type": "wendy_reaction"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 3, "seq": 131, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 2, "message": "Frozen in Fear: success by 2 - willpower 4 + committed 0 + boosts 0 + token 1 = 5 vs 3.", "modifier": 1, "reveal_effects_applied": true, "skill": "willpower", "source": "Frozen in Fear", "success": true, "token": "+1", "value": 5}, "phase": "Investigation", "round": 3, "seq": 132, "type": "skill_test_result"}
+{"data": {"card": "ec0016", "message": "Frozen in Fear was discarded."}, "phase": "Investigation", "round": 3, "seq": 133, "type": "treachery_discarded"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 134, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 135, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 136, "type": "ready_step"}
+{"data": {"card": "pc0028", "message": "Wendy Adams drew Emergency Cache."}, "phase": "Upkeep", "round": 3, "seq": 137, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 138, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 139, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 140, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 4, "seq": 141, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x4 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Take 2 horror", "option": 2}, "phase": "Mythos", "round": 4, "seq": 142, "type": "decision_made"}
+{"data": {"message": "Hand is 2 good cards (LWIF, EmCache), not junky; 2 horror on 7 sanity is affordable"}, "phase": "Mythos", "round": 4, "seq": 143, "type": "agent_reason"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Wendy Adams] Assign damage/horror from What's Going On?!."}, "phase": "Mythos", "round": 4, "seq": 144, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x4 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Leo De Luca", "option": 2}, "phase": "Mythos", "round": 4, "seq": 145, "type": "decision_made"}
+{"data": {"message": "Leo's sanity soak is spare; preserve Wendy's 7 and Leo's health soak for Priest"}, "phase": "Mythos", "round": 4, "seq": 146, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Leo De Luca.", "target": "pc0006"}, "phase": "Mythos", "round": 4, "seq": 147, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Wendy Adams] Assign damage/horror from What's Going On?!."}, "phase": "Mythos", "round": 4, "seq": 148, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x4 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Leo De Luca", "option": 2}, "phase": "Mythos", "round": 4, "seq": 149, "type": "decision_made"}
+{"data": {"message": "Second horror to Leo too"}, "phase": "Mythos", "round": 4, "seq": 150, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Leo De Luca.", "target": "pc0006"}, "phase": "Mythos", "round": 4, "seq": 151, "type": "damage_assigned"}
+{"data": {"card": "pc0006", "message": "Leo De Luca was discarded."}, "phase": "Mythos", "round": 4, "seq": 152, "type": "asset_discarded"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 4, "seq": 153, "type": "agenda_advanced"}
+{"data": {"card": "ec0012", "message": "Wendy Adams drew encounter card Chill from Below."}, "phase": "Mythos", "round": 4, "seq": 154, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 4 vs 3.", "source": "Chill from Below"}, "phase": "Mythos", "round": 4, "seq": 155, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Wendy Adams] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 4, "seq": 156, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 4, "seq": 157, "type": "decision_made"}
+{"data": {"message": "4v3 62.5% with cancel backup; nothing to commit anyway"}, "phase": "Mythos", "round": 4, "seq": 158, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Mythos", "round": 4, "seq": 159, "type": "chaos_token"}
+{"data": {"prompt": "[Round 4 \u00b7 Mythos \u00b7 Wendy Adams] Use a reaction after revealing -1?"}, "phase": "Mythos", "round": 4, "seq": 160, "status": "[R4\u00b7Mythos | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 3}, "phase": "Mythos", "round": 4, "seq": 161, "type": "decision_made"}
+{"data": {"message": "-1 passes 3v3"}, "phase": "Mythos", "round": 4, "seq": 162, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Chill from Below: success by 0 - willpower 4 + committed 0 + boosts 0 + token -1 = 3 vs 3.", "modifier": -1, "reveal_effects_applied": true, "skill": "willpower", "source": "Chill from Below", "success": true, "token": "-1", "value": 3}, "phase": "Mythos", "round": 4, "seq": 163, "type": "skill_test_result"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 4, "seq": 164, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 165, "status": "[R4\u00b7Investigation a3/3 | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate with Flashlight (3 supplies, shroud -2)", "option": 5}, "phase": "Investigation", "round": 4, "seq": 166, "type": "decision_made"}
+{"data": {"message": "Flashlight makes Bedroom 0 shroud; fail=random discard so buy certainty"}, "phase": "Investigation", "round": 4, "seq": 167, "type": "agent_reason"}
+{"data": {"action": "flashlight", "cost": 1, "message": "Spent 1 action: Investigate Bedroom with Flashlight."}, "phase": "Investigation", "round": 4, "seq": 168, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 0.", "source": "Investigate with Flashlight Bedroom"}, "phase": "Investigation", "round": 4, "seq": 169, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate with Flashlight Bedroom (intellect vs 0)."}, "phase": "Investigation", "round": 4, "seq": 170, "status": "[R4\u00b7Investigation a2/3 | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 4, "seq": 171, "type": "decision_made"}
+{"data": {"message": "3v0 only fails to autofail"}, "phase": "Investigation", "round": 4, "seq": 172, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed tablet.", "modifier": -2, "token": "tablet"}, "phase": "Investigation", "round": 4, "seq": 173, "type": "chaos_token"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing tablet?"}, "phase": "Investigation", "round": 4, "seq": 174, "status": "[R4\u00b7Investigation a2/3 | Wendy Adams 01005 | Bedroom | clu2 res1 | dmg0/7 hor0/7 | h2 d24 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 3}, "phase": "Investigation", "round": 4, "seq": 175, "type": "decision_made"}
+{"data": {"message": "Tablet -2 = 1v0 pass; no ghoul here so no damage rider"}, "phase": "Investigation", "round": 4, "seq": 176, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 0, "extra_tokens": [], "margin": 1, "message": "Investigate with Flashlight Bedroom: success by 1 - intellect 3 + committed 0 + boosts 0 + token -2 = 1 vs 0.", "modifier": -2, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate with Flashlight Bedroom", "success": true, "token": "tablet", "value": 1}, "phase": "Investigation", "round": 4, "seq": 177, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 4, "seq": 178, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 179, "status": "[R4\u00b7Investigation a2/3 | Wendy Adams 01005 | Bedroom | clu3 res1 | dmg0/7 hor0/7 | h2 d24 x5 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Emergency Cache (0 res)", "option": 6}, "phase": "Investigation", "round": 4, "seq": 180, "type": "decision_made"}
+{"data": {"message": "Bank 3 resources before Breaking the Wall can random-discard EmCache"}, "phase": "Investigation", "round": 4, "seq": 181, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Emergency Cache."}, "phase": "Investigation", "round": 4, "seq": 182, "type": "action_spent"}
+{"data": {"amount": 3, "message": "Wendy Adams gained 3 resource."}, "phase": "Investigation", "round": 4, "seq": 183, "type": "resource_gained"}
+{"data": {"card": "pc0028", "message": "Wendy Adams played Emergency Cache."}, "phase": "Investigation", "round": 4, "seq": 184, "type": "card_played"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 185, "status": "[R4\u00b7Investigation a1/3 | Wendy Adams 01005 | Bedroom | clu3 res4 | dmg0/7 hor0/7 | h1 d24 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 4, "seq": 186, "type": "decision_made"}
+{"data": {"message": "Reach Guest Hall to advance act1 with 3 clues"}, "phase": "Investigation", "round": 4, "seq": 187, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 188, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Wendy Adams moved to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 189, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 4, "seq": 190, "status": "[R4\u00b7Investigation a0/3 | Wendy Adams 01005 | Guest Hall | clu3 res4 | dmg0/7 hor0/7 | h1 d24 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Advance act by spending 3 clues", "option": 1}, "phase": "Investigation", "round": 4, "seq": 191, "type": "decision_made"}
+{"data": {"message": "Act1 done R4, ahead of R5-6 pace target"}, "phase": "Investigation", "round": 4, "seq": 192, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Wendy Adams spent 3 clue."}, "phase": "Investigation", "round": 4, "seq": 193, "type": "clues_spent"}
+{"data": {"location": "hallway", "message": "Hole in the Wall was put into play."}, "phase": "Investigation", "round": 4, "seq": 194, "type": "location_added"}
+{"data": {"message": "Wendy Adams moved into the Hole in the Wall."}, "phase": "Investigation", "round": 4, "seq": 195, "type": "forced_move"}
+{"data": {"location": "hallway", "message": "Hallway was revealed."}, "phase": "Investigation", "round": 4, "seq": 196, "type": "location_revealed"}
+{"data": {"location": "attic", "message": "Attic was put into play."}, "phase": "Investigation", "round": 4, "seq": 197, "type": "location_added"}
+{"data": {"location": "cellar", "message": "Cellar was put into play."}, "phase": "Investigation", "round": 4, "seq": 198, "type": "location_added"}
+{"data": {"location": "parlor", "message": "Parlor was put into play."}, "phase": "Investigation", "round": 4, "seq": 199, "type": "location_added"}
+{"data": {"message": "Started willpower test 4 vs 4.", "source": "Breaking the Wall"}, "phase": "Investigation", "round": 4, "seq": 200, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Breaking the Wall (willpower vs 4)."}, "phase": "Investigation", "round": 4, "seq": 201, "status": "[R4\u00b7Investigation a0/3 | Wendy Adams 01005 | Hallway | clu0 res4 | dmg0/7 hor0/7 | h1 d24 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 4, "seq": 202, "type": "decision_made"}
+{"data": {"message": "4v4; only 1 card in hand so failure costs at most LWIF"}, "phase": "Investigation", "round": 4, "seq": 203, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 4, "seq": 204, "type": "chaos_token"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -1?"}, "phase": "Investigation", "round": 4, "seq": 205, "status": "[R4\u00b7Investigation a0/3 | Wendy Adams 01005 | Hallway | clu0 res4 | dmg0/7 hor0/7 | h1 d24 x6 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 2}, "phase": "Investigation", "round": 4, "seq": 206, "type": "decision_made"}
+{"data": {"message": "Fail by 1 discards LWIF; canceling WITH LWIF loses it anyway \u2014 identical outcome"}, "phase": "Investigation", "round": 4, "seq": 207, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Breaking the Wall: failure by 1 - willpower 4 + committed 0 + boosts 0 + token -1 = 3 vs 4.", "modifier": -1, "reveal_effects_applied": true, "skill": "willpower", "source": "Breaking the Wall", "success": false, "token": "-1", "value": 3}, "phase": "Investigation", "round": 4, "seq": 208, "type": "skill_test_result"}
+{"data": {"card": "pc0018", "message": "Breaking the Wall forced a random discard of \"Look what I found!\"."}, "phase": "Investigation", "round": 4, "seq": 209, "type": "card_discarded"}
+{"data": {"message": "Act advanced to The Barrier."}, "phase": "Investigation", "round": 4, "seq": 210, "type": "act_advanced"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 4, "seq": 211, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 4, "seq": 212, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 4, "seq": 213, "type": "ready_step"}
+{"data": {"card": "pc0020", "message": "Wendy Adams drew Lucky!."}, "phase": "Upkeep", "round": 4, "seq": 214, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 4, "seq": 215, "type": "resource_gained"}
+{"data": {"message": "Round 5 began."}, "phase": "Mythos", "round": 5, "seq": 216, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 5, "seq": 217, "type": "doom_placed"}
+{"data": {"card": "ec0028", "message": "Wendy Adams drew encounter card Locked Door."}, "phase": "Mythos", "round": 5, "seq": 218, "type": "encounter_drawn"}
+{"data": {"prompt": "Choose where Locked Door attaches."}, "phase": "Mythos", "round": 5, "seq": 219, "status": "[R5\u00b7Mythos | Wendy Adams 01005 | Hallway | clu0 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "locked-door-target", "label": "Attach Locked Door to Study (Aberrant Gateway)", "option": 3}, "phase": "Mythos", "round": 5, "seq": 220, "type": "decision_made"}
+{"data": {"message": "Dump Locked Door on drained Study \u2014 never investigating there again"}, "phase": "Mythos", "round": 5, "seq": 221, "type": "agent_reason"}
+{"data": {"card": "ec0028", "location": "study", "message": "Locked Door attached to Study (Aberrant Gateway)."}, "phase": "Mythos", "round": 5, "seq": 222, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 5, "seq": 223, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 224, "status": "[R5\u00b7Investigation a3/3 | Wendy Adams 01005 | Hallway | clu0 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Attic", "option": 4}, "phase": "Investigation", "round": 5, "seq": 225, "type": "decision_made"}
+{"data": {"message": "Attic leg first; Field of Graves bomb comes on reveal, WP4 is my best stat"}, "phase": "Investigation", "round": 5, "seq": 226, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Attic."}, "phase": "Investigation", "round": 5, "seq": 227, "type": "action_spent"}
+{"data": {"location": "attic", "message": "Wendy Adams moved to Attic."}, "phase": "Investigation", "round": 5, "seq": 228, "type": "investigator_moved"}
+{"data": {"location": "attic", "message": "Attic was revealed."}, "phase": "Investigation", "round": 5, "seq": 229, "type": "location_revealed"}
+{"data": {"location": "field_of_graves", "message": "Far Above Your House was put into play."}, "phase": "Investigation", "round": 5, "seq": 230, "type": "location_added"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 231, "status": "[R5\u00b7Investigation a2/3 | Wendy Adams 01005 | Attic | clu0 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate with Flashlight (2 supplies, shroud -2)", "option": 6}, "phase": "Investigation", "round": 5, "seq": 232, "type": "decision_made"}
+{"data": {"message": "Flashlight: Attic 3v1, fails only -3/-4/autofail"}, "phase": "Investigation", "round": 5, "seq": 233, "type": "agent_reason"}
+{"data": {"action": "flashlight", "cost": 1, "message": "Spent 1 action: Investigate Attic with Flashlight."}, "phase": "Investigation", "round": 5, "seq": 234, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 1.", "source": "Investigate with Flashlight Attic"}, "phase": "Investigation", "round": 5, "seq": 235, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate with Flashlight Attic (intellect vs 1)."}, "phase": "Investigation", "round": 5, "seq": 236, "status": "[R5\u00b7Investigation a1/3 | Wendy Adams 01005 | Attic | clu0 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 5, "seq": 237, "type": "decision_made"}
+{"data": {"message": "roll it; Lucky! in hand as insurance"}, "phase": "Investigation", "round": 5, "seq": 238, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 5, "seq": 239, "type": "chaos_token"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -1?"}, "phase": "Investigation", "round": 5, "seq": 240, "status": "[R5\u00b7Investigation a1/3 | Wendy Adams 01005 | Attic | clu0 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 2}, "phase": "Investigation", "round": 5, "seq": 241, "type": "decision_made"}
+{"data": {"message": "2v1 passes"}, "phase": "Investigation", "round": 5, "seq": 242, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate with Flashlight Attic: success by 1 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate with Flashlight Attic", "success": true, "token": "-1", "value": 2}, "phase": "Investigation", "round": 5, "seq": 243, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 5, "seq": 244, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 245, "status": "[R5\u00b7Investigation a1/3 | Wendy Adams 01005 | Attic | clu1 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Far Above Your House", "option": 3}, "phase": "Investigation", "round": 5, "seq": 246, "type": "decision_made"}
+{"data": {"message": "Enter FAYH now: bomb costs at most Lucky! with 1-card hand; VP1+clue awaits"}, "phase": "Investigation", "round": 5, "seq": 247, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Far Above Your House."}, "phase": "Investigation", "round": 5, "seq": 248, "type": "action_spent"}
+{"data": {"location": "field_of_graves", "message": "Wendy Adams moved to Far Above Your House."}, "phase": "Investigation", "round": 5, "seq": 249, "type": "investigator_moved"}
+{"data": {"location": "field_of_graves", "message": "Field of Graves was revealed."}, "phase": "Investigation", "round": 5, "seq": 250, "type": "location_revealed"}
+{"data": {"message": "Started willpower test 4 vs 4.", "source": "Field of Graves"}, "phase": "Investigation", "round": 5, "seq": 251, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Field of Graves (willpower vs 4)."}, "phase": "Investigation", "round": 5, "seq": 252, "status": "[R5\u00b7Investigation a0/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 5, "seq": 253, "type": "decision_made"}
+{"data": {"message": "4v4, max loss is Lucky!"}, "phase": "Investigation", "round": 5, "seq": 254, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 5, "seq": 255, "type": "chaos_token"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -2?"}, "phase": "Investigation", "round": 5, "seq": 256, "status": "[R5\u00b7Investigation a0/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 2}, "phase": "Investigation", "round": 5, "seq": 257, "type": "decision_made"}
+{"data": {"message": "Don't cancel; Lucky! event may trigger on fail to add +2 and salvage"}, "phase": "Investigation", "round": 5, "seq": 258, "type": "agent_reason"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Wendy Adams] Field of Graves would fail by 2."}, "phase": "Investigation", "round": 5, "seq": 259, "status": "[R5\u00b7Investigation a0/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d23 x7 | Act2 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "would-fail", "label": "Play Lucky! (Lucky!)", "option": 1}, "phase": "Investigation", "round": 5, "seq": 260, "type": "decision_made"}
+{"data": {"message": "Lucky! +2 converts fail-by-2 into a pass"}, "phase": "Investigation", "round": 5, "seq": 261, "type": "agent_reason"}
+{"data": {"card": "pc0020", "message": "Played Lucky! for +2 skill value."}, "phase": "Investigation", "round": 5, "seq": 262, "type": "event_played"}
+{"data": {"auto_success": false, "base": 4, "boosts": 2, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Field of Graves: success by 0 - willpower 4 + committed 0 + boosts 2 + token -2 = 4 vs 4.", "modifier": -2, "reveal_effects_applied": true, "skill": "willpower", "source": "Field of Graves", "success": true, "token": "-2", "value": 4}, "phase": "Investigation", "round": 5, "seq": 263, "type": "skill_test_result"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 5, "seq": 264, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 5, "seq": 265, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 5, "seq": 266, "type": "ready_step"}
+{"data": {"card": "pc0029", "message": "Wendy Adams drew Perception."}, "phase": "Upkeep", "round": 5, "seq": 267, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 5, "seq": 268, "type": "resource_gained"}
+{"data": {"message": "Round 6 began."}, "phase": "Mythos", "round": 6, "seq": 269, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 6, "seq": 270, "type": "doom_placed"}
+{"data": {"card": "ec0020", "message": "Wendy Adams drew encounter card Ancient Evils."}, "phase": "Mythos", "round": 6, "seq": 271, "type": "encounter_drawn"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "Ancient Evils"}, "phase": "Mythos", "round": 6, "seq": 272, "type": "doom_placed"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 6, "seq": 273, "type": "phase_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 274, "status": "[R6\u00b7Investigation a3/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Field of Graves (shroud 2, 1 clue here) \u2014 test Intellect(3) vs 2", "option": 1}, "phase": "Investigation", "round": 6, "seq": 275, "type": "decision_made"}
+{"data": {"message": "FoG bare 3v2 62.5% with retry available; saving Flashlight+Perception for s4 Cellar"}, "phase": "Investigation", "round": 6, "seq": 276, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Field of Graves."}, "phase": "Investigation", "round": 6, "seq": 277, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 2.", "source": "Investigate Field of Graves"}, "phase": "Investigation", "round": 6, "seq": 278, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Field of Graves (intellect vs 2)."}, "phase": "Investigation", "round": 6, "seq": 279, "status": "[R6\u00b7Investigation a2/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 280, "type": "decision_made"}
+{"data": {"message": "hold Perception for Cellar"}, "phase": "Investigation", "round": 6, "seq": 281, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 6, "seq": 282, "type": "chaos_token"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -2?"}, "phase": "Investigation", "round": 6, "seq": 283, "status": "[R6\u00b7Investigation a2/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 2}, "phase": "Investigation", "round": 6, "seq": 284, "type": "decision_made"}
+{"data": {"message": "Accept fail; Perception too valuable for Cellar s4 \u2014 retry bare with spare action"}, "phase": "Investigation", "round": 6, "seq": 285, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 1, "message": "Investigate Field of Graves: failure by 1 - intellect 3 + committed 0 + boosts 0 + token -2 = 1 vs 2.", "modifier": -2, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Field of Graves", "success": false, "token": "-2", "value": 1}, "phase": "Investigation", "round": 6, "seq": 286, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 287, "status": "[R6\u00b7Investigation a2/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Field of Graves (shroud 2, 1 clue here) \u2014 test Intellect(3) vs 2", "option": 1}, "phase": "Investigation", "round": 6, "seq": 288, "type": "decision_made"}
+{"data": {"message": "Retry FoG bare"}, "phase": "Investigation", "round": 6, "seq": 289, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Field of Graves."}, "phase": "Investigation", "round": 6, "seq": 290, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 2.", "source": "Investigate Field of Graves"}, "phase": "Investigation", "round": 6, "seq": 291, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Field of Graves (intellect vs 2)."}, "phase": "Investigation", "round": 6, "seq": 292, "status": "[R6\u00b7Investigation a1/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 293, "type": "decision_made"}
+{"data": {"message": "bare again"}, "phase": "Investigation", "round": 6, "seq": 294, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed eldersign.", "modifier": 0, "token": "eldersign"}, "phase": "Investigation", "round": 6, "seq": 295, "type": "chaos_token"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing eldersign?"}, "phase": "Investigation", "round": 6, "seq": 296, "status": "[R6\u00b7Investigation a1/3 | Wendy Adams 01005 | Field of Graves | clu1 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 2}, "phase": "Investigation", "round": 6, "seq": 297, "type": "decision_made"}
+{"data": {"message": "Elder sign +0 = 3v2 pass"}, "phase": "Investigation", "round": 6, "seq": 298, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 1, "message": "Investigate Field of Graves: success by 1 - intellect 3 + committed 0 + boosts 0 + token 0 = 3 vs 2.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Field of Graves", "success": true, "token": "eldersign", "value": 3}, "phase": "Investigation", "round": 6, "seq": 299, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 6, "seq": 300, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 301, "status": "[R6\u00b7Investigation a1/3 | Wendy Adams 01005 | Field of Graves | clu2 res5 | dmg0/7 hor0/7 | h1 d22 x8 | Act2 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Attic", "option": 2}, "phase": "Investigation", "round": 6, "seq": 302, "type": "decision_made"}
+{"data": {"message": "Head back toward Hallway/Cellar"}, "phase": "Investigation", "round": 6, "seq": 303, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Attic."}, "phase": "Investigation", "round": 6, "seq": 304, "type": "action_spent"}
+{"data": {"location": "attic", "message": "Wendy Adams moved to Attic."}, "phase": "Investigation", "round": 6, "seq": 305, "type": "investigator_moved"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 6, "seq": 306, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 6, "seq": 307, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 6, "seq": 308, "type": "ready_step"}
+{"data": {"card": "pc0015", "message": "Wendy Adams drew Cunning Distraction."}, "phase": "Upkeep", "round": 6, "seq": 309, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 6, "seq": 310, "type": "resource_gained"}
+{"data": {"message": "Round 7 began."}, "phase": "Mythos", "round": 7, "seq": 311, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 7, "seq": 312, "type": "doom_placed"}
+{"data": {"card": "ec0031", "message": "Wendy Adams drew encounter card The Zealot's Seal."}, "phase": "Mythos", "round": 7, "seq": 313, "type": "encounter_drawn"}
+{"data": {"message": "Wendy Adams took 1 damage and 1 horror.", "source": "The Zealot's Seal"}, "phase": "Mythos", "round": 7, "seq": 314, "type": "damage_assigned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 7, "seq": 315, "type": "phase_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 316, "status": "[R7\u00b7Investigation a3/3 | Wendy Adams 01005 | Attic | clu2 res6 | dmg1/7 hor1/7 | h2 d21 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 7, "seq": 317, "type": "decision_made"}
+{"data": {"message": "To Hallway then Cellar this round"}, "phase": "Investigation", "round": 7, "seq": 318, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 7, "seq": 319, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Wendy Adams moved to Hallway."}, "phase": "Investigation", "round": 7, "seq": 320, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 321, "status": "[R7\u00b7Investigation a2/3 | Wendy Adams 01005 | Hallway | clu2 res6 | dmg1/7 hor1/7 | h2 d21 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Cellar", "option": 2}, "phase": "Investigation", "round": 7, "seq": 322, "type": "decision_made"}
+{"data": {"message": "Enter Cellar: eat 1 entry damage, expect ghoul spawn"}, "phase": "Investigation", "round": 7, "seq": 323, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Cellar."}, "phase": "Investigation", "round": 7, "seq": 324, "type": "action_spent"}
+{"data": {"location": "cellar", "message": "Wendy Adams moved to Cellar."}, "phase": "Investigation", "round": 7, "seq": 325, "type": "investigator_moved"}
+{"data": {"location": "cellar", "message": "Cellar was revealed."}, "phase": "Investigation", "round": 7, "seq": 326, "type": "location_revealed"}
+{"data": {"message": "Wendy Adams took 1 damage and 0 horror.", "source": "Cellar"}, "phase": "Investigation", "round": 7, "seq": 327, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 328, "status": "[R7\u00b7Investigation a1/3 | Wendy Adams 01005 | Cellar | clu2 res6 | dmg2/7 hor1/7 | h2 d21 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate with Flashlight (1 supplies, shroud -2)", "option": 5}, "phase": "Investigation", "round": 7, "seq": 329, "type": "decision_made"}
+{"data": {"message": "Last FL supply: 3v2 81% for first Cellar clue"}, "phase": "Investigation", "round": 7, "seq": 330, "type": "agent_reason"}
+{"data": {"action": "flashlight", "cost": 1, "message": "Spent 1 action: Investigate Cellar with Flashlight."}, "phase": "Investigation", "round": 7, "seq": 331, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 2.", "source": "Investigate with Flashlight Cellar"}, "phase": "Investigation", "round": 7, "seq": 332, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate with Flashlight Cellar (intellect vs 2)."}, "phase": "Investigation", "round": 7, "seq": 333, "status": "[R7\u00b7Investigation a0/3 | Wendy Adams 01005 | Cellar | clu2 res6 | dmg2/7 hor1/7 | h2 d21 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 7, "seq": 334, "type": "decision_made"}
+{"data": {"message": "3v2 with two cancel cards behind it; save Perception for the s4 test"}, "phase": "Investigation", "round": 7, "seq": 335, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 7, "seq": 336, "type": "chaos_token"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -2?"}, "phase": "Investigation", "round": 7, "seq": 337, "status": "[R7\u00b7Investigation a0/3 | Wendy Adams 01005 | Cellar | clu2 res6 | dmg2/7 hor1/7 | h2 d21 x8 | Act2 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Discard Cunning Distraction to cancel and redraw", "option": 2}, "phase": "Investigation", "round": 7, "seq": 338, "type": "decision_made"}
+{"data": {"message": "CD is junk (5-cost); redraw 62.5% to save the last Flashlight use"}, "phase": "Investigation", "round": 7, "seq": 339, "type": "agent_reason"}
+{"data": {"card": "pc0015", "message": "Wendy canceled the chaos token and redrew."}, "phase": "Investigation", "round": 7, "seq": 340, "type": "wendy_reaction"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 7, "seq": 341, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Investigate with Flashlight Cellar: success by 0 - intellect 3 + committed 0 + boosts 0 + token -1 = 2 vs 2.", "modifier": -1, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate with Flashlight Cellar", "success": true, "token": "-1", "value": 2}, "phase": "Investigation", "round": 7, "seq": 342, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 7, "seq": 343, "type": "clue_discovered"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 7, "seq": 344, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 7, "seq": 345, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 7, "seq": 346, "type": "ready_step"}
+{"data": {"card": "pc0032", "message": "Wendy Adams drew Manual Dexterity."}, "phase": "Upkeep", "round": 7, "seq": 347, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 7, "seq": 348, "type": "resource_gained"}
+{"data": {"message": "Round 8 began."}, "phase": "Mythos", "round": 8, "seq": 349, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 8, "seq": 350, "type": "doom_placed"}
+{"data": {"card": "ec0022", "message": "Wendy Adams drew encounter card Ancient Evils."}, "phase": "Mythos", "round": 8, "seq": 351, "type": "encounter_drawn"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "Ancient Evils"}, "phase": "Mythos", "round": 8, "seq": 352, "type": "doom_placed"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 8, "seq": 353, "type": "phase_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 354, "status": "[R8\u00b7Investigation a3/3 | Wendy Adams 01005 | Cellar | clu3 res7 | dmg2/7 hor1/7 | h2 d20 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Cellar (shroud 4, 1 clue here) \u2014 test Intellect(3) vs 4", "option": 1}, "phase": "Investigation", "round": 8, "seq": 355, "type": "decision_made"}
+{"data": {"message": "Perception shot at Cellar VP clue; 2 spare actions still reach Hallway"}, "phase": "Investigation", "round": 8, "seq": 356, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Cellar."}, "phase": "Investigation", "round": 8, "seq": 357, "type": "action_spent"}
+{"data": {"message": "Started intellect test 3 vs 4.", "source": "Investigate Cellar"}, "phase": "Investigation", "round": 8, "seq": 358, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Cellar (intellect vs 4)."}, "phase": "Investigation", "round": 8, "seq": 359, "status": "[R8\u00b7Investigation a2/3 | Wendy Adams 01005 | Cellar | clu3 res7 | dmg2/7 hor1/7 | h2 d20 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Perception (+2)", "option": 1}, "phase": "Investigation", "round": 8, "seq": 360, "type": "decision_made"}
+{"data": {"message": "5v4 62.5%, draws on success"}, "phase": "Investigation", "round": 8, "seq": 361, "type": "agent_reason"}
+{"data": {"card": "pc0029", "message": "Committed Perception."}, "phase": "Investigation", "round": 8, "seq": 362, "type": "card_committed"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Investigate Cellar (intellect vs 4)."}, "phase": "Investigation", "round": 8, "seq": 363, "status": "[R8\u00b7Investigation a2/3 | Wendy Adams 01005 | Cellar | clu3 res7 | dmg2/7 hor1/7 | h1 d20 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 8, "seq": 364, "type": "decision_made"}
+{"data": {"message": "roll"}, "phase": "Investigation", "round": 8, "seq": 365, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 8, "seq": 366, "type": "chaos_token"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -1?"}, "phase": "Investigation", "round": 8, "seq": 367, "status": "[R8\u00b7Investigation a2/3 | Wendy Adams 01005 | Cellar | clu3 res7 | dmg2/7 hor1/7 | h1 d20 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 2}, "phase": "Investigation", "round": 8, "seq": 368, "type": "decision_made"}
+{"data": {"message": "4v4 passes"}, "phase": "Investigation", "round": 8, "seq": 369, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 2, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Investigate Cellar: success by 0 - intellect 3 + committed 2 + boosts 0 + token -1 = 4 vs 4.", "modifier": -1, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Cellar", "success": true, "token": "-1", "value": 4}, "phase": "Investigation", "round": 8, "seq": 370, "type": "skill_test_result"}
+{"data": {"card": "pc0031", "message": "Wendy Adams drew Manual Dexterity."}, "phase": "Investigation", "round": 8, "seq": 371, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams discovered 1 clue."}, "phase": "Investigation", "round": 8, "seq": 372, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 373, "status": "[R8\u00b7Investigation a2/3 | Wendy Adams 01005 | Cellar | clu4 res7 | dmg2/7 hor1/7 | h2 d19 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 2}, "phase": "Investigation", "round": 8, "seq": 374, "type": "decision_made"}
+{"data": {"message": "End round in Hallway with 3+ clues to pass the Barrier"}, "phase": "Investigation", "round": 8, "seq": 375, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 8, "seq": 376, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Wendy Adams moved to Hallway."}, "phase": "Investigation", "round": 8, "seq": 377, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 378, "status": "[R8\u00b7Investigation a1/3 | Wendy Adams 01005 | Hallway | clu4 res7 | dmg2/7 hor1/7 | h2 d19 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 5}, "phase": "Investigation", "round": 8, "seq": 379, "type": "decision_made"}
+{"data": {"message": "Draw for kit before act3; already in position"}, "phase": "Investigation", "round": 8, "seq": 380, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 8, "seq": 381, "type": "action_spent"}
+{"data": {"card": "pc0013", "message": "Wendy Adams drew Dig Deep."}, "phase": "Investigation", "round": 8, "seq": 382, "type": "card_drawn"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 8, "seq": 383, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 8, "seq": 384, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 8, "seq": 385, "type": "ready_step"}
+{"data": {"card": "pc0008", "message": "Wendy Adams drew Backstab."}, "phase": "Upkeep", "round": 8, "seq": 386, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Wendy Adams gained 1 resource."}, "phase": "Upkeep", "round": 8, "seq": 387, "type": "resource_gained"}
+{"data": {"prompt": "Spend 3 clues to advance The Barrier?"}, "phase": "Upkeep", "round": 8, "seq": 388, "status": "[R8\u00b7Upkeep | Wendy Adams 01005 | Hallway | clu4 res8 | dmg2/7 hor1/7 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "act2-objective", "label": "Spend 3 clues and advance", "option": 1}, "phase": "Upkeep", "round": 8, "seq": 389, "type": "decision_made"}
+{"data": {"message": "Advance Barrier R8, one round before agenda2 flip"}, "phase": "Upkeep", "round": 8, "seq": 390, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Wendy Adams spent 3 clue."}, "phase": "Upkeep", "round": 8, "seq": 391, "type": "clues_spent"}
+{"data": {"location": "parlor", "message": "Parlor was revealed."}, "phase": "Upkeep", "round": 8, "seq": 392, "type": "location_revealed"}
+{"data": {"card": "setaside_lita", "message": "Lita Chantler was put into play in the Parlor."}, "phase": "Upkeep", "round": 8, "seq": 393, "type": "lita_enters_play"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] spawned at Hallway."}, "phase": "Upkeep", "round": 8, "seq": 394, "type": "enemy_spawned"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] engaged Wendy Adams."}, "phase": "Upkeep", "round": 8, "seq": 395, "type": "enemy_engaged"}
+{"data": {"message": "Act advanced to What Have You Done?."}, "phase": "Upkeep", "round": 8, "seq": 396, "type": "act_advanced"}
+{"data": {"message": "Round 9 began."}, "phase": "Mythos", "round": 9, "seq": 397, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 9, "seq": 398, "type": "doom_placed"}
+{"data": {"card": "ec0030", "message": "Wendy Adams drew encounter card Ghoul from the Depths."}, "phase": "Mythos", "round": 9, "seq": 399, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0030", "message": "Ghoul from the Depths [ec0030] spawned at Bathroom."}, "phase": "Mythos", "round": 9, "seq": 400, "type": "enemy_spawned"}
+{"data": {"message": "Agenda advanced to They're Getting Out!."}, "phase": "Mythos", "round": 9, "seq": 401, "type": "agenda_advanced"}
+{"data": {"card": "ec0013", "message": "Wendy Adams drew encounter card Rotting Remains."}, "phase": "Mythos", "round": 9, "seq": 402, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 4 vs 3.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 9, "seq": 403, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Mythos \u00b7 Wendy Adams] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 9, "seq": 404, "status": "[R9\u00b7Mythos | Wendy Adams 01005 | Hallway | clu1 res8 | dmg2/7 hor1/7 | h4 d17 x10 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Mythos", "round": 9, "seq": 405, "type": "decision_made"}
+{"data": {"message": "4v3 81%; keep Dig Deep for evades"}, "phase": "Mythos", "round": 9, "seq": 406, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed tablet.", "modifier": -2, "token": "tablet"}, "phase": "Mythos", "round": 9, "seq": 407, "type": "chaos_token"}
+{"data": {"prompt": "[Round 9 \u00b7 Mythos \u00b7 Wendy Adams] Use a reaction after revealing tablet?"}, "phase": "Mythos", "round": 9, "seq": 408, "status": "[R9\u00b7Mythos | Wendy Adams 01005 | Hallway | clu1 res8 | dmg2/7 hor1/7 | h4 d17 x10 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Discard Manual Dexterity to cancel and redraw", "option": 1}, "phase": "Mythos", "round": 9, "seq": 409, "type": "decision_made"}
+{"data": {"message": "Tablet = fail+1hor plus 1dmg rider (Priest is ghoul here); spare MD cancel, ~69% redraw"}, "phase": "Mythos", "round": 9, "seq": 410, "type": "agent_reason"}
+{"data": {"card": "pc0032", "message": "Wendy canceled the chaos token and redrew."}, "phase": "Mythos", "round": 9, "seq": 411, "type": "wendy_reaction"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Mythos", "round": 9, "seq": 412, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 4, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Rotting Remains: success by 0 - willpower 4 + committed 0 + boosts 0 + token -1 = 3 vs 3.", "modifier": -1, "reveal_effects_applied": true, "skill": "willpower", "source": "Rotting Remains", "success": true, "token": "-1", "value": 3}, "phase": "Mythos", "round": 9, "seq": 413, "type": "skill_test_result"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 9, "seq": 414, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 415, "status": "[R9\u00b7Investigation a3/3 | Wendy Adams 01005 | Hallway | clu1 res8 | dmg2/7 hor1/7 | h3 d17 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Parlor", "option": 3}, "phase": "Investigation", "round": 9, "seq": 416, "type": "decision_made"}
+{"data": {"message": "Move drags engaged Priest to Parlor, no AoO; Lita is there"}, "phase": "Investigation", "round": 9, "seq": 417, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Parlor."}, "phase": "Investigation", "round": 9, "seq": 418, "type": "action_spent"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] attacked Wendy Adams.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 9, "seq": 419, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 2 damage and 2 horror.", "source": "Ghoul Priest"}, "phase": "Investigation", "round": 9, "seq": 420, "type": "damage_assigned"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] moved to Parlor."}, "phase": "Investigation", "round": 9, "seq": 421, "type": "enemy_moved"}
+{"data": {"location": "parlor", "message": "Wendy Adams moved to Parlor."}, "phase": "Investigation", "round": 9, "seq": 422, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 423, "status": "[R9\u00b7Investigation a2/3 | Wendy Adams 01005 | Parlor | clu1 res8 | dmg4/7 hor3/7 | h3 d17 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Ghoul Priest with Knife \u2014 test Combat(2) vs 4, 1 dmg", "option": 7}, "phase": "Investigation", "round": 9, "seq": 424, "type": "decision_made"}
+{"data": {"message": "Evade Priest w/ MD 5v4=81%; disengage to run the GfD-then-resign line"}, "phase": "Investigation", "round": 9, "seq": 425, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Knife (target: Ghoul Priest)."}, "phase": "Investigation", "round": 9, "seq": 426, "type": "action_spent"}
+{"data": {"message": "Started combat test 2 vs 4.", "source": "Fight with Knife"}, "phase": "Investigation", "round": 9, "seq": 427, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Wendy Adams] Commit cards to Fight with Knife (combat vs 4)."}, "phase": "Investigation", "round": 9, "seq": 428, "status": "[R9\u00b7Investigation a1/3 | Wendy Adams 01005 | Parlor | clu1 res8 | dmg4/7 hor3/7 | h3 d17 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 9, "seq": 429, "type": "decision_made"}
+{"data": {"message": "Cannot win 2v4 regardless; do not throw Backstab away"}, "phase": "Investigation", "round": 9, "seq": 430, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 9, "seq": 431, "type": "chaos_token"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Wendy Adams] Use a reaction after revealing -1?"}, "phase": "Investigation", "round": 9, "seq": 432, "status": "[R9\u00b7Investigation a1/3 | Wendy Adams 01005 | Parlor | clu1 res8 | dmg4/7 hor3/7 | h3 d17 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "wendy-token-reaction", "label": "Pass", "option": 4}, "phase": "Investigation", "round": 9, "seq": 433, "type": "decision_made"}
+{"data": {"message": "No token can pass 2v4; save cards, eat the Retaliate"}, "phase": "Investigation", "round": 9, "seq": 434, "type": "agent_reason"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 3, "message": "Fight with Knife: failure by 3 - combat 2 + committed 0 + boosts 0 + token -1 = 1 vs 4.", "modifier": -1, "reveal_effects_applied": true, "skill": "combat", "source": "Fight with Knife", "success": false, "token": "-1", "value": 1}, "phase": "Investigation", "round": 9, "seq": 435, "type": "skill_test_result"}
+{"data": {"enemy": "setaside_ghoul_priest", "message": "Ghoul Priest [setaside_ghoul_priest] attacked Wendy Adams.", "source": "retaliate"}, "phase": "Investigation", "round": 9, "seq": 436, "type": "enemy_attack"}
+{"data": {"message": "Wendy Adams took 2 damage and 2 horror.", "source": "Ghoul Priest"}, "phase": "Investigation", "round": 9, "seq": 437, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Wendy Adams \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 438, "status": "[R9\u00b7Investigation a1/3 | Wendy Adams 01005 | Parlor | clu1 res8 | dmg6/7 hor5/7 | h3 d17 x11 | Act3 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Resign", "option": 11}, "phase": "Investigation", "round": 9, "seq": 439, "type": "decision_made"}
+{"data": {"message": "6/7dmg 5/7hor, any Priest hit kills; resign = 3XP+2VP=5, no trauma"}, "phase": "Investigation", "round": 9, "seq": 440, "type": "agent_reason"}
+{"data": {"action": "resign", "cost": 1, "message": "Spent 1 action: Resign."}, "phase": "Investigation", "round": 9, "seq": 441, "type": "action_spent"}
+{"data": {"message": "Wendy Adams resigned", "summary": "Wendy Adams resigned"}, "phase": "Investigation", "round": 9, "seq": 442, "type": "game_end"}
+{"data": {}, "phase": "Investigation", "round": 9, "seq": 443, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 9, "seq": 444, "type": "note_added"}
+{"data": {}, "phase": "Investigation", "round": 9, "seq": 445, "type": "note_added"}
