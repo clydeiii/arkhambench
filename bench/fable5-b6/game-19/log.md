@@ -1045,3 +1045,15 @@
 **R16 · Investigation** — Agnes Baker took 0 damage and 1 horror.
 [R16·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res0 | dmg1/6 hor6/8 | h4 d3 x23 | Act3 Agd3 doom8/10]
 **R16 · Investigation** — Decision presented: [Round 16 · Investigation · Agnes Baker] Use Agnes Baker reaction after horror was placed?
+**R16 · Investigation** — Decision made: Deal 1 damage to Ghoul Priest
+**R16 · Investigation** — The killing blow
+**R16 · Investigation** — Ghoul Priest took 1 damage.
+**R16 · Investigation** — Ghoul Priest was defeated.
+**R16 · Investigation** — Agnes dealt 1 damage after horror was placed.
+[R16·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res0 | dmg1/6 hor6/8 | h4 d3 x23 | Act3 Agd3 doom8/10]
+**R16 · Investigation** — Decision presented: The Ghoul Priest is defeated. Choose a resolution.
+**R16 · Investigation** — Decision made: Refuse to burn it (R2)
+**R16 · Investigation** — R2 = +3 XP zero trauma, confirmed across G11/G12/G25
+[R16·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res0 | dmg1/6 hor6/8 | h4 d3 x23 | Act3 Agd3 doom8/10]
+**R16 · Investigation** — GAME OVER: R2: the house still stands
+**R16 · Investigation** — Note added.

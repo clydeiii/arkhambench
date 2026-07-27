@@ -209,9 +209,45 @@ def main() -> int:
             })
         wave7.sort(key=lambda r: -r["score"])
 
+    b6 = []
+    b6_path = ROOT / "results/b6_summary.json"
+    if b6_path.exists():
+        B6_META = {
+            "fable5-b6": ("Fable 5", "claude", "adaptive"),
+            "sol56-b6": ("GPT-5.6 Sol", "codex", "high"),
+            "opus5-b6": ("Opus 5", "claude", "adaptive"),
+            "terra56-b6": ("GPT-5.6 Terra", "codex", "high"),
+            "sonnet5-b6": ("Sonnet 5", "claude", "adaptive"),
+            "luna56-b6": ("GPT-5.6 Luna", "codex", "high"),
+            "haiku45-b6": ("Haiku 4.5", "claude", "adaptive"),
+            "k3-b6": ("Kimi K3", "opencode", "default"),
+            "glm52-b6": ("GLM-5.2", "opencode", "default"),
+            "hy3-b6": ("Hunyuan 3", "opencode", "default"),
+        }
+        data_b6 = json.loads(b6_path.read_text())
+        for lab, meta in B6_META.items():
+            row = data_b6.get(lab)
+            if not row:
+                continue
+            games_b6 = []
+            bench_path = ROOT / "bench" / lab / "bench.json"
+            if bench_path.exists():
+                for g in sorted(json.loads(bench_path.read_text())["games"], key=lambda x: int(x["game"])):
+                    games_b6.append({
+                        "n": int(g["game"]), "score": g.get("score", 0),
+                        "win": str(g.get("resolution", "")).startswith("R") and g.get("resolution") != "R3",
+                        "investigator": g.get("investigator"),
+                        "slug": f"{lab}-game-{int(g['game']):02d}",
+                    })
+            b6.append({"label": lab, "name": meta[0], "harness": meta[1], "thinking": meta[2],
+                       **{k: row[k] for k in ("mean", "f20", "slope", "wins", "hours", "cost", "c_first", "c_last")},
+                       "games": games_b6})
+        b6.sort(key=lambda r: (-r["mean"], -r["f20"]))
+
     out = {
         "generated": "see git history",
         "waves": waves,
+        "b6": b6,
         "wave7": wave7,
         "campaigns": camp_models,
         "findings": findings,

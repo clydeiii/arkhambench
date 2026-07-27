@@ -231,11 +231,15 @@ def cmd_harvest(argv: list[str]) -> int:
               "cache_read_input_tokens": 0, "output_tokens": 0}
     turns = 0
     proj = Path.home() / ".claude" / "projects" / "-Users-clyde-ahlcg"
+    own_session = __import__("os").environ.get("CLAUDE_SESSION_ID", "")
     for f in proj.glob("*.jsonl"):
+        if own_session and own_session in f.name:
+            continue  # never ingest the operator session (it may share the model)
         if not (start - 5 <= f.stat().st_mtime <= end + 300):
             continue
         for line in f.read_text(encoding="utf-8", errors="replace").splitlines():
-            if f'"{agent}"' not in line or '"usage"' not in line:
+            # match dated ids too: "claude-haiku-4-5-20251001" starts with the alias
+            if f'"{agent}' not in line or '"usage"' not in line:
                 continue
             try:
                 event = json.loads(line)

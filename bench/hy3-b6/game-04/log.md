@@ -418,3 +418,494 @@
 **R7 · Investigation** — Agnes dealt 1 damage after horror was placed.
 [R7·Investigation a2/3 | Agnes Baker 01004 | Bedroom | clu3 res9 | dmg2/6 hor5/8 | h6 d18 x6 | Act1 Agd2 doom4/7]
 **R7 · Investigation** — Decision presented: Choose a card to discard for Stray Cat.
+**R7 · Investigation** — Decision made: Discard Arcane Initiate
+**R7 · Investigation** — forced: ally slot; Cat's guaranteed evade matters more right now
+**R7 · Investigation** — Arcane Initiate was discarded for slot capacity.
+**R7 · Investigation** — Agnes Baker played Stray Cat.
+[R7·Investigation a2/3 | Agnes Baker 01004 | Bedroom | clu3 res9 | dmg2/6 hor5/8 | h6 d18 x7 | Act1 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R7 · Investigation** — Decision made: Discard Stray Cat to evade Corpse-Hungry Ghoul
+**R7 · Investigation** — auto-evade, then run to Guest Hall and advance act 1
+**R7 · Investigation** — Corpse-Hungry Ghoul [ec0029] disengaged.
+**R7 · Investigation** — Corpse-Hungry Ghoul [ec0029] exhausted after being evaded.
+**R7 · Investigation** — Stray Cat automatically evaded Corpse-Hungry Ghoul.
+[R7·Investigation a2/3 | Agnes Baker 01004 | Bedroom | clu3 res9 | dmg2/6 hor5/8 | h6 d18 x8 | Act1 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R7 · Investigation** — Decision made: Move to Guest Hall
+**R7 · Investigation** — to Guest Hall to spend act clues
+**R7 · Investigation** — Spent 1 action: Move to Guest Hall.
+**R7 · Investigation** — Agnes Baker moved to Guest Hall.
+[R7·Investigation a1/3 | Agnes Baker 01004 | Guest Hall | clu3 res9 | dmg2/6 hor5/8 | h6 d18 x8 | Act1 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R7 · Investigation** — Decision made: Advance act by spending 3 clues
+**R7 · Investigation** — advance act 1; WP4 test at WP5, worst case discards
+**R7 · Investigation** — Agnes Baker spent 3 clue.
+**R7 · Investigation** — Hole in the Wall was put into play.
+**R7 · Investigation** — Agnes Baker moved into the Hole in the Wall.
+**R7 · Investigation** — Hallway was revealed.
+**R7 · Investigation** — Attic was put into play.
+**R7 · Investigation** — Parlor was put into play.
+**R7 · Investigation** — Started willpower test 5 vs 4.
+[R7·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor5/8 | h6 d18 x8 | Act1 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker] Commit cards to Breaking the Wall (willpower vs 4).
+**R7 · Investigation** — Decision made: Commit Fearless (+1)
+**R7 · Investigation** — Fearless: +1 and heals 1 horror on success; I'm at 5/8
+**R7 · Investigation** — Committed Fearless.
+[R7·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor5/8 | h5 d18 x8 | Act1 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker] Commit cards to Breaking the Wall (willpower vs 4).
+**R7 · Investigation** — Decision made: Done
+**R7 · Investigation** — 6v4 = 81%, good enough; keep assets
+**R7 · Investigation** — Revealed eldersign.
+**R7 · Investigation** — Breaking the Wall: success by 7 - willpower 5 + committed 1 + boosts 0 + token 5 = 11 vs 4.
+**R7 · Investigation** — Agnes Baker healed 1 horror.
+**R7 · Investigation** — Act advanced to The Barrier.
+[R7·Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor4/8 | h5 d18 x9 | Act2 Agd2 doom3/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R7 · Investigation** — Decision made: Play Arcane Initiate (1 res)
+**R7 · Investigation** — second Initiate: soak + spell digging; still need Shrivelling badly
+**R7 · Investigation** — Spent 1 action: Play Arcane Initiate.
+**R7 · Investigation** — Placed 1 doom on Arcane Initiate.
+**R7 · Investigation** — Agnes Baker played Arcane Initiate.
+[R7·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu0 res8 | dmg2/6 hor4/8 | h4 d18 x9 | Act2 Agd2 doom4/7]
+**R7 · Investigation** — Decision presented: [Round 7 · Investigation · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R7 · Investigation** — Decision made: Use Arcane Initiate
+**R7 · Investigation** — search for Shrivelling
+**R7 · Investigation** — Arcane Initiate searched: Forbidden Knowledge, Emergency Cache, Unexpected Courage.
+[R7·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu0 res8 | dmg2/6 hor4/8 | h4 d18 x9 | Act2 Agd2 doom4/7]
+**R7 · Investigation** — Decision presented: Arcane Initiate saw: Forbidden Knowledge, Emergency Cache, Unexpected Courage. Choose a Spell to draw.
+**R7 · Investigation** — Decision made: Draw no Spell
+**R7 · Enemy** — Enemy phase began.
+**R7 · Upkeep** — Upkeep phase began.
+**R7 · Upkeep** — All exhausted cards readied.
+**R7 · Upkeep** — Agnes Baker drew Baseball Bat.
+**R7 · Upkeep** — Agnes Baker gained 1 resource.
+**R8 · Mythos** — Round 8 began.
+**R8 · Mythos** — Placed 1 doom on the agenda.
+**R8 · Mythos** — Agnes Baker drew encounter card Rotting Remains.
+**R8 · Mythos** — Started willpower test 5 vs 3.
+[R8·Mythos | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor4/8 | h5 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Mythos** — Decision presented: [Round 8 · Mythos · Agnes Baker] Commit cards to Rotting Remains (willpower vs 3).
+**R8 · Mythos** — Decision made: Done
+**R8 · Mythos** — 5v3 = 81%; save cards
+**R8 · Mythos** — Revealed -2.
+**R8 · Mythos** — Rotting Remains: success by 0 - willpower 5 + committed 0 + boosts 0 + token -2 = 3 vs 3.
+[R8·Mythos | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor4/8 | h5 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Mythos** — Decision presented: [Round 8 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R8 · Mythos** — Decision made: Use Arcane Initiate
+**R8 · Mythos** — daily spell search
+**R8 · Mythos** — Arcane Initiate searched: Holy Rosary, Stray Cat, Overpower.
+[R8·Mythos | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor4/8 | h5 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Mythos** — Decision presented: Arcane Initiate saw: Holy Rosary, Stray Cat, Overpower. Choose a Spell to draw.
+**R8 · Mythos** — Decision made: Draw no Spell
+[R8·Mythos | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor4/8 | h5 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Mythos** — Decision presented: [Round 8 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R8 · Mythos** — Decision made: Pass (continue)
+**R8 · Investigation** — Investigation phase began.
+[R8·Investigation a3/3 | Agnes Baker 01004 | Hallway | clu0 res9 | dmg2/6 hor4/8 | h5 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R8 · Investigation** — Decision made: Play Baseball Bat (2 res)
+**R8 · Investigation** — Bat = only real weapon in hand; need it for Icy Ghoul/priest
+**R8 · Investigation** — Spent 1 action: Play Baseball Bat.
+**R8 · Investigation** — Agnes Baker played Baseball Bat.
+[R8·Investigation a2/3 | Agnes Baker 01004 | Hallway | clu0 res7 | dmg2/6 hor4/8 | h4 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R8 · Investigation** — Decision made: Move to Attic
+**R8 · Investigation** — scout Attic for its 2 clues while the hunter is still far
+**R8 · Investigation** — Spent 1 action: Move to Attic.
+**R8 · Investigation** — Agnes Baker moved to Attic.
+**R8 · Investigation** — Attic was revealed.
+**R8 · Investigation** — Far Above Your House was put into play.
+[R8·Investigation a1/3 | Agnes Baker 01004 | Attic | clu0 res7 | dmg2/6 hor4/8 | h4 d17 x9 | Act2 Agd2 doom5/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R8 · Investigation** — Decision made: Draw 1 card
+**R8 · Investigation** — 2v3 investigate is 12%; dig for Flashlight/DttF/Shrivelling instead
+**R8 · Investigation** — Spent 1 action: Draw 1 card.
+**R8 · Investigation** — Agnes Baker drew Knife.
+[R8·Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res7 | dmg2/6 hor4/8 | h5 d16 x9 | Act2 Agd2 doom5/7]
+**R8 · Investigation** — Decision presented: [Round 8 · Investigation · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R8 · Investigation** — Decision made: Pass (continue)
+**R8 · Enemy** — Enemy phase began.
+**R8 · Enemy** — Corpse-Hungry Ghoul [ec0029] moved to Guest Hall.
+[R8·Enemy | Agnes Baker 01004 | Attic | clu0 res7 | dmg2/6 hor4/8 | h5 d16 x9 | Act2 Agd2 doom5/7]
+**R8 · Enemy** — Decision presented: [Round 8 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R8 · Enemy** — Decision made: Pass (continue)
+[R8·Enemy | Agnes Baker 01004 | Attic | clu0 res7 | dmg2/6 hor4/8 | h5 d16 x9 | Act2 Agd2 doom5/7]
+**R8 · Enemy** — Decision presented: [Round 8 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R8 · Enemy** — Decision made: Pass (continue)
+**R8 · Upkeep** — Upkeep phase began.
+[R8·Upkeep | Agnes Baker 01004 | Attic | clu0 res7 | dmg2/6 hor4/8 | h5 d16 x9 | Act2 Agd2 doom5/7]
+**R8 · Upkeep** — Decision presented: [Round 8 · Upkeep · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R8 · Upkeep** — Decision made: Pass (continue)
+**R8 · Upkeep** — All exhausted cards readied.
+**R8 · Upkeep** — Agnes Baker drew Shrivelling.
+**R8 · Upkeep** — Agnes Baker gained 1 resource.
+**R9 · Mythos** — Round 9 began.
+**R9 · Mythos** — Placed 1 doom on the agenda.
+**R9 · Mythos** — Agnes Baker drew encounter card Swarm of Rats.
+**R9 · Mythos** — Swarm of Rats [ec0004] spawned at Attic.
+**R9 · Mythos** — Swarm of Rats [ec0004] engaged Agnes Baker.
+[R9·Mythos | Agnes Baker 01004 | Attic | clu0 res8 | dmg2/6 hor4/8 | h6 d15 x9 | Act2 Agd2 doom6/7]
+**R9 · Mythos** — Decision presented: [Round 9 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R9 · Mythos** — Decision made: Use Forbidden Knowledge (2 secrets)
+**R9 · Mythos** — snipe the 1hp rat now: no AoO risk, +1 res; horror is Agnes ammo
+[R9·Mythos | Agnes Baker 01004 | Attic | clu0 res8 | dmg2/6 hor4/8 | h6 d15 x9 | Act2 Agd2 doom6/7]
+**R9 · Mythos** — Decision presented: [Round 9 · Mythos · Agnes Baker] Assign damage/horror from Forbidden Knowledge.
+**R9 · Mythos** — Decision made: Assign 1 horror to Agnes Baker
+**R9 · Mythos** — Assigned 1 horror to Agnes Baker.
+[R9·Mythos | Agnes Baker 01004 | Attic | clu0 res8 | dmg2/6 hor5/8 | h6 d15 x9 | Act2 Agd2 doom6/7]
+**R9 · Mythos** — Decision presented: [Round 9 · Mythos · Agnes Baker] Use Agnes Baker reaction after horror was placed?
+**R9 · Mythos** — Decision made: Deal 1 damage to Swarm of Rats
+**R9 · Mythos** — Swarm of Rats took 1 damage.
+**R9 · Mythos** — Swarm of Rats was defeated.
+**R9 · Mythos** — Agnes dealt 1 damage after horror was placed.
+**R9 · Mythos** — Forbidden Knowledge moved 1 secret to the resource pool.
+[R9·Mythos | Agnes Baker 01004 | Attic | clu0 res9 | dmg2/6 hor5/8 | h6 d15 x9 | Act2 Agd2 doom6/7]
+**R9 · Mythos** — Decision presented: [Round 9 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R9 · Mythos** — Decision made: Use Arcane Initiate
+**R9 · Mythos** — search for second Shrivelling/other spell
+**R9 · Mythos** — Arcane Initiate searched: Flashlight, Holy Rosary, Dark Memory.
+[R9·Mythos | Agnes Baker 01004 | Attic | clu0 res9 | dmg2/6 hor5/8 | h6 d15 x9 | Act2 Agd2 doom6/7]
+**R9 · Mythos** — Decision presented: Arcane Initiate saw: Flashlight, Holy Rosary, Dark Memory. Choose a Spell to draw.
+**R9 · Mythos** — Decision made: Draw Dark Memory
+**R9 · Mythos** — must not take Dark Memory: 2 horror/turn in hand at 5/8 sanity; leave it shuffled in deck
+**R9 · Mythos** — Arcane Initiate drew Dark Memory.
+**R9 · Investigation** — Investigation phase began.
+[R9·Investigation a3/3 | Agnes Baker 01004 | Attic | clu0 res9 | dmg2/6 hor5/8 | h7 d14 x9 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R9 · Investigation** — Arcane Initiate search found Dark Memory (a Spell) and the only menu option was 'Draw Dark Memory' — no option to fail to find. FFG rulings generally allow a player to choose not to find during a search of their own deck ('search for a Spell card' is permissive); engine forced the draw of a signature weakness.
+**R9 · Investigation** — Decision made: Play Shrivelling (3 res)
+**R9 · Investigation** — main weapon online at last; plan: hold DM, feed its 2 horror to Initiate tonight (also delays agenda via her doom)
+**R9 · Investigation** — Spent 1 action: Play Shrivelling.
+**R9 · Investigation** — Agnes Baker played Shrivelling.
+[R9·Investigation a2/3 | Agnes Baker 01004 | Attic | clu0 res6 | dmg2/6 hor5/8 | h6 d14 x9 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R9 · Investigation** — Decision made: Move to Far Above Your House
+**R9 · Investigation** — scout the new location for clues/VP
+**R9 · Investigation** — Spent 1 action: Move to Far Above Your House.
+**R9 · Investigation** — Agnes Baker moved to Far Above Your House.
+**R9 · Investigation** — Field of Graves was revealed.
+**R9 · Investigation** — Started willpower test 5 vs 4.
+[R9·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu0 res6 | dmg2/6 hor5/8 | h6 d14 x9 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Agnes Baker] Commit cards to Field of Graves (willpower vs 4).
+**R9 · Investigation** — Decision made: Done
+**R9 · Investigation** — keep Arcane Studies to PLAY (repeatable WP pump); 62% raw
+**R9 · Investigation** — Revealed tablet.
+**R9 · Investigation** — Field of Graves: failure by 1 - willpower 5 + committed 0 + boosts 0 + token -2 = 3 vs 4.
+**R9 · Investigation** — Field of Graves forced a random discard of Dark Memory.
+[R9·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu0 res6 | dmg2/6 hor5/8 | h5 d14 x10 | Act2 Agd2 doom6/7]
+**R9 · Investigation** — Decision presented: [Round 9 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R9 · Investigation** — Decision made: Play Arcane Studies (2 res)
+**R9 · Investigation** — Arcane Studies = resource-fueled WP pump for Shrivelling fights ahead
+**R9 · Investigation** — Spent 1 action: Play Arcane Studies.
+**R9 · Investigation** — Agnes Baker played Arcane Studies.
+**R9 · Enemy** — Enemy phase began.
+**R9 · Enemy** — Corpse-Hungry Ghoul [ec0029] moved to Hallway.
+**R9 · Upkeep** — Upkeep phase began.
+**R9 · Upkeep** — All exhausted cards readied.
+**R9 · Upkeep** — Agnes Baker drew Forbidden Knowledge.
+**R9 · Upkeep** — Agnes Baker gained 1 resource.
+**R10 · Mythos** — Round 10 began.
+**R10 · Mythos** — Placed 1 doom on the agenda.
+**R10 · Mythos** — Agnes Baker drew encounter card Grave-Eater.
+**R10 · Mythos** — Grave-Eater [ec0007] spawned at Field of Graves.
+**R10 · Mythos** — Grave-Eater [ec0007] engaged Agnes Baker.
+**R10 · Mythos** — Agenda advanced to They're Getting Out!.
+**R10 · Mythos** — Agnes Baker drew encounter card Frozen in Fear.
+**R10 · Mythos** — Frozen in Fear entered Agnes Baker's threat area.
+[R10·Mythos | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R10 · Mythos** — Decision made: Use Arcane Initiate
+**R10 · Mythos** — free search
+**R10 · Mythos** — Arcane Initiate searched: Overpower, Emergency Cache, Leather Coat.
+[R10·Mythos | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: Arcane Initiate saw: Overpower, Emergency Cache, Leather Coat. Choose a Spell to draw.
+**R10 · Mythos** — Decision made: Draw no Spell
+[R10·Mythos | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Mythos** — Decision presented: [Round 10 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R10 · Mythos** — Decision made: Pass (continue)
+**R10 · Investigation** — Investigation phase began.
+[R10·Investigation a3/3 | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R10 · Investigation** — Decision made: Fight Grave-Eater with Shrivelling (4 charges) — test Willpower(5) vs 2, 2 dmg
+**R10 · Investigation** — Shrivelling 5v2 = 87.5%, 2dmg kills Grave-Eater outright
+**R10 · Investigation** — Spent 2 actions: Fight with Shrivelling (target: Grave-Eater).
+**R10 · Investigation** — Started willpower test 5 vs 2.
+[R10·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 2).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — 87.5% is fine, save resources
+**R10 · Investigation** — Revealed eldersign.
+**R10 · Investigation** — Fight with Shrivelling: success by 8 - willpower 5 + committed 0 + boosts 0 + token 5 = 10 vs 2.
+**R10 · Investigation** — Grave-Eater took 2 damage.
+**R10 · Investigation** — Grave-Eater was defeated.
+[R10·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R10 · Investigation** — Decision made: Investigate Field of Graves (shroud 2, 1 clue here) — test Intellect(2) vs 2
+**R10 · Investigation** — 44% shot at a needed clue beats a blind draw
+**R10 · Investigation** — Spent 1 action: Investigate Field of Graves.
+**R10 · Investigation** — Started intellect test 2 vs 2.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu0 res5 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2).
+**R10 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R10 · Investigation** — Arcane Studies also pumps Int — spend to reach 4v2
+**R10 · Investigation** — Spent 1 resource for +1 intellect.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu0 res4 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2).
+**R10 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 intellect)
+**R10 · Investigation** — one more: 4v2 = 81%
+**R10 · Investigation** — Spent 1 resource for +1 intellect.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu0 res3 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Revealed -2.
+**R10 · Investigation** — Investigate Field of Graves: success by 0 - intellect 2 + committed 0 + boosts 2 + token -2 = 2 vs 2.
+**R10 · Investigation** — Agnes Baker discovered 1 clue.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R10 · Investigation** — Decision made: Pass (continue)
+**R10 · Investigation** — Started willpower test 5 vs 3.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R10 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 willpower)
+**R10 · Investigation** — 6v3 = 87.5% to shed the action tax; 1 res well spent
+**R10 · Investigation** — Spent 1 resource for +1 willpower.
+[R10·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Revealed autofail.
+**R10 · Investigation** — Frozen in Fear: failure (autofail) by 3 - autofail (skill value 0) vs 3.
+**R10 · Enemy** — Enemy phase began.
+**R10 · Enemy** — Corpse-Hungry Ghoul [ec0029] moved to Attic.
+[R10·Enemy | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Enemy** — Decision presented: [Round 10 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R10 · Enemy** — Decision made: Pass (continue)
+[R10·Enemy | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Enemy** — Decision presented: [Round 10 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R10 · Enemy** — Decision made: Pass (continue)
+**R10 · Enemy** — Icy Ghoul [ec0002] moved to Hallway.
+**R10 · Enemy** — Corpse-Hungry Ghoul [ec0029] moved to Hallway.
+**R10 · Upkeep** — Upkeep phase began.
+[R10·Upkeep | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h5 d13 x10 | Act2 Agd3 doom0/10]
+**R10 · Upkeep** — Decision presented: [Round 10 · Upkeep · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R10 · Upkeep** — Decision made: Pass (continue)
+**R10 · Upkeep** — All exhausted cards readied.
+**R10 · Upkeep** — Agnes Baker drew Stray Cat.
+**R10 · Upkeep** — Agnes Baker gained 1 resource.
+**R10 · Upkeep** — Placed 2 doom on the agenda (They're Getting Out!).
+**R11 · Mythos** — Round 11 began.
+**R11 · Mythos** — Placed 1 doom on the agenda.
+**R11 · Mythos** — Agnes Baker drew encounter card Acolyte of Umôrdhoth.
+**R11 · Mythos** — Acolyte of Umôrdhoth [ec0009] spawned at Field of Graves.
+**R11 · Mythos** — Acolyte of Umôrdhoth [ec0009] engaged Agnes Baker.
+[R11·Mythos | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Mythos** — Decision presented: [Round 11 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R11 · Mythos** — Decision made: Use Arcane Initiate
+**R11 · Mythos** — free spell search first
+**R11 · Mythos** — Arcane Initiate searched: Leather Coat, Overpower, Flashlight.
+[R11·Mythos | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Mythos** — Decision presented: Arcane Initiate saw: Leather Coat, Overpower, Flashlight. Choose a Spell to draw.
+**R11 · Mythos** — Decision made: Draw no Spell
+[R11·Mythos | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Mythos** — Decision presented: [Round 11 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R11 · Mythos** — Decision made: Pass (continue)
+**R11 · Investigation** — Investigation phase began.
+[R11·Investigation a3/3 | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R11 · Investigation** — Decision made: Fight Acolyte of Umôrdhoth with Shrivelling (3 charges) — test Willpower(5) vs 3, 2 dmg
+**R11 · Investigation** — Shrivel Acolyte to 1hp; its enemy-phase attack feeds my reaction for the kill
+**R11 · Investigation** — Spent 2 actions: Fight with Shrivelling (target: Acolyte of Umôrdhoth).
+**R11 · Investigation** — Started willpower test 5 vs 3.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 3).
+**R11 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 willpower)
+**R11 · Investigation** — 6v3 = 87.5%; missing wastes 2 taxed actions and a charge
+**R11 · Investigation** — Spent 1 resource for +1 willpower.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 3).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Revealed -1.
+**R11 · Investigation** — Fight with Shrivelling: success by 2 - willpower 5 + committed 0 + boosts 1 + token -1 = 5 vs 3.
+**R11 · Investigation** — Acolyte of Umôrdhoth took 2 damage.
+[R11·Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h6 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R11 · Investigation** — Decision made: Play Emergency Cache (0 res)
+**R11 · Investigation** — deliberate AoO: its 1-horror hit triggers my snipe killing it now, and I bank +3 res
+**R11 · Investigation** — Spent 1 action: Play Emergency Cache.
+**R11 · Investigation** — Acolyte of Umôrdhoth [ec0009] attacked Agnes Baker.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h5 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Assign damage/horror from Acolyte of Umôrdhoth.
+**R11 · Investigation** — Decision made: Assign 1 damage to Agnes Baker
+**R11 · Investigation** — dmg to Agnes, keep Initiate
+**R11 · Investigation** — Assigned 1 damage to Agnes Baker.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg2/6 hor5/8 | h5 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Assign damage/horror from Acolyte of Umôrdhoth.
+**R11 · Investigation** — Decision made: Assign 1 horror to Agnes Baker
+**R11 · Investigation** — horror to Agnes for the killing snipe
+**R11 · Investigation** — Assigned 1 horror to Agnes Baker.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res2 | dmg3/6 hor6/8 | h5 d12 x10 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Use Agnes Baker reaction after horror was placed?
+**R11 · Investigation** — Decision made: Deal 1 damage to Acolyte of Umôrdhoth
+**R11 · Investigation** — Acolyte of Umôrdhoth took 1 damage.
+**R11 · Investigation** — Acolyte of Umôrdhoth was defeated.
+**R11 · Investigation** — Agnes dealt 1 damage after horror was placed.
+**R11 · Investigation** — Agnes Baker gained 3 resource.
+**R11 · Investigation** — Agnes Baker played Emergency Cache.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res5 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R11 · Investigation** — Decision made: Pass (continue)
+**R11 · Investigation** — Started willpower test 5 vs 3.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res5 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R11 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 willpower)
+**R11 · Investigation** — shedding Frozen is critical for the 3-move race to Parlor; pump to 6
+**R11 · Investigation** — Spent 1 resource for +1 willpower.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R11 · Investigation** — Decision made: Spend 1 resource with Arcane Studies (+1 willpower)
+**R11 · Investigation** — 7v3: only autofail misses
+**R11 · Investigation** — Spent 1 resource for +1 willpower.
+[R11·Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Revealed 0.
+**R11 · Investigation** — Frozen in Fear: success by 4 - willpower 5 + committed 0 + boosts 2 + token 0 = 7 vs 3.
+**R11 · Investigation** — Frozen in Fear was discarded.
+**R11 · Enemy** — Enemy phase began.
+**R11 · Enemy** — Corpse-Hungry Ghoul [ec0029] moved to Attic.
+[R11·Enemy | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Enemy** — Decision presented: [Round 11 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R11 · Enemy** — Decision made: Pass (continue)
+[R11·Enemy | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Enemy** — Decision presented: [Round 11 · Enemy · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R11 · Enemy** — Decision made: Pass (continue)
+**R11 · Enemy** — Icy Ghoul [ec0002] moved to Parlor.
+**R11 · Enemy** — Corpse-Hungry Ghoul [ec0029] moved to Hallway.
+**R11 · Upkeep** — Upkeep phase began.
+[R11·Upkeep | Agnes Baker 01004 | Field of Graves | clu1 res3 | dmg3/6 hor6/8 | h5 d12 x11 | Act2 Agd3 doom3/10]
+**R11 · Upkeep** — Decision presented: [Round 11 · Upkeep · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R11 · Upkeep** — Decision made: Pass (continue)
+**R11 · Upkeep** — All exhausted cards readied.
+**R11 · Upkeep** — Agnes Baker drew Heirloom of Hyperborea.
+**R11 · Upkeep** — Agnes Baker gained 1 resource.
+**R11 · Upkeep** — Placed 2 doom on the agenda (They're Getting Out!).
+**R12 · Mythos** — Round 12 began.
+**R12 · Mythos** — Placed 1 doom on the agenda.
+**R12 · Mythos** — Agnes Baker drew encounter card Swarm of Rats.
+**R12 · Mythos** — Swarm of Rats [ec0005] spawned at Field of Graves.
+**R12 · Mythos** — Swarm of Rats [ec0005] engaged Agnes Baker.
+[R12·Mythos | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Mythos** — Decision presented: [Round 12 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R12 · Mythos** — Decision made: Use Arcane Initiate
+**R12 · Mythos** — free search, why not
+**R12 · Mythos** — Arcane Initiate searched: Holy Rosary, Baseball Bat, Arcane Studies.
+[R12·Mythos | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Mythos** — Decision presented: Arcane Initiate saw: Holy Rosary, Baseball Bat, Arcane Studies. Choose a Spell to draw.
+**R12 · Mythos** — Decision made: Draw no Spell
+[R12·Mythos | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Mythos** — Decision presented: [Round 12 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R12 · Mythos** — Decision made: Pass (continue)
+**R12 · Investigation** — Investigation phase began.
+[R12·Investigation a3/3 | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R12 · Investigation** — Decision made: Fight Swarm of Rats with Baseball Bat — test Combat(4) vs 1, 2 dmg
+**R12 · Investigation** — Bat 4v1: 87.5% free kill, no AoO cost; Bat loss on skull acceptable
+**R12 · Investigation** — Spent 1 action: Fight with Baseball Bat (target: Swarm of Rats).
+**R12 · Investigation** — Started combat test 4 vs 1.
+[R12·Investigation a2/3 | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker] Commit cards to Fight with Baseball Bat (combat vs 1).
+**R12 · Investigation** — Decision made: Done
+**R12 · Investigation** — Revealed tablet.
+**R12 · Investigation** — Fight with Baseball Bat: success by 1 - combat 4 + committed 0 + boosts 0 + token -2 = 2 vs 1.
+**R12 · Investigation** — Swarm of Rats took 2 damage.
+**R12 · Investigation** — Swarm of Rats was defeated.
+[R12·Investigation a2/3 | Agnes Baker 01004 | Field of Graves | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker · 2 actions left] Choose an action:
+**R12 · Investigation** — Decision made: Move to Attic
+**R12 · Investigation** — head to Hallway; snipe Corpse-Hungry on arrival before it can attack
+**R12 · Investigation** — Spent 1 action: Move to Attic.
+**R12 · Investigation** — Agnes Baker moved to Attic.
+[R12·Investigation a1/3 | Agnes Baker 01004 | Attic | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R12 · Investigation** — Decision made: Move to Hallway
+**R12 · Investigation** — into Hallway with Corpse-Hungry (1hp): snipe kills it before enemy phase
+**R12 · Investigation** — Spent 1 action: Move to Hallway.
+**R12 · Investigation** — Agnes Baker moved to Hallway.
+**R12 · Investigation** — Corpse-Hungry Ghoul [ec0029] engaged Agnes Baker.
+[R12·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R12 · Investigation** — Decision made: Use Forbidden Knowledge (1 secrets)
+**R12 · Investigation** — FK: 1 horror to Agnes -> reaction kills 1hp Corpse-Hungry = VP1, before it ever attacks
+[R12·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu1 res4 | dmg3/6 hor6/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker] Assign damage/horror from Forbidden Knowledge.
+**R12 · Investigation** — Decision made: Assign 1 horror to Agnes Baker
+**R12 · Investigation** — Assigned 1 horror to Agnes Baker.
+[R12·Investigation a0/3 | Agnes Baker 01004 | Hallway | clu1 res4 | dmg3/6 hor7/8 | h6 d11 x11 | Act2 Agd3 doom6/10]
+**R12 · Investigation** — Decision presented: [Round 12 · Investigation · Agnes Baker] Use Agnes Baker reaction after horror was placed?
+**R12 · Investigation** — Decision made: Deal 1 damage to Corpse-Hungry Ghoul
+**R12 · Investigation** — Corpse-Hungry Ghoul took 1 damage.
+**R12 · Investigation** — Corpse-Hungry Ghoul was defeated.
+**R12 · Investigation** — Agnes dealt 1 damage after horror was placed.
+**R12 · Investigation** — Forbidden Knowledge moved 1 secret to the resource pool.
+**R12 · Investigation** — Forbidden Knowledge was discarded with no secrets.
+**R12 · Enemy** — Enemy phase began.
+**R12 · Upkeep** — Upkeep phase began.
+**R12 · Upkeep** — All exhausted cards readied.
+**R12 · Upkeep** — Agnes Baker drew Overpower.
+**R12 · Upkeep** — Agnes Baker gained 1 resource.
+**R12 · Upkeep** — Placed 1 doom on the agenda (They're Getting Out!).
+**R13 · Mythos** — Round 13 began.
+**R13 · Mythos** — Placed 1 doom on the agenda.
+**R13 · Mythos** — Agnes Baker drew encounter card Frozen in Fear.
+**R13 · Mythos** — Frozen in Fear entered Agnes Baker's threat area.
+[R13·Mythos | Agnes Baker 01004 | Hallway | clu1 res6 | dmg3/6 hor7/8 | h7 d10 x12 | Act2 Agd3 doom8/10]
+**R13 · Mythos** — Decision presented: [Round 13 · Mythos · Agnes Baker] Fast-ability window — use a fast ability or pass:
+**R13 · Mythos** — Decision made: Pass (continue)
+**R13 · Investigation** — Investigation phase began.
+[R13·Investigation a3/3 | Agnes Baker 01004 | Hallway | clu1 res6 | dmg3/6 hor7/8 | h7 d10 x12 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Agnes Baker · 3 actions left] Choose an action:
+**R13 · Investigation** — Decision made: Move to Cellar
+**R13 · Investigation** — to Cellar: entry damage will kill my doom-carrying Initiate (delays agenda 1 round) and its 2 clues are the only path to act 3
+**R13 · Investigation** — Spent 2 actions: Move to Cellar.
+**R13 · Investigation** — Agnes Baker moved to Cellar.
+**R13 · Investigation** — Cellar was revealed.
+[R13·Investigation a1/3 | Agnes Baker 01004 | Cellar | clu1 res6 | dmg3/6 hor7/8 | h7 d10 x12 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Agnes Baker] Assign damage/horror from Cellar.
+**R13 · Investigation** — Decision made: Assign 1 damage to Arcane Initiate
+**R13 · Investigation** — Initiate absorbs entry damage and dies — removing her doom from play is my only path off the score-0 rail
+**R13 · Investigation** — Assigned 1 damage to Arcane Initiate.
+**R13 · Investigation** — Arcane Initiate was discarded.
+[R13·Investigation a1/3 | Agnes Baker 01004 | Cellar | clu1 res6 | dmg3/6 hor7/8 | h7 d10 x13 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Agnes Baker · 1 action left] Choose an action:
+**R13 · Investigation** — Decision made: Investigate Cellar (shroud 4, 2 clues here) — test Intellect(2) vs 4
+**R13 · Investigation** — zero-stakes turn: game is decided; taking the 12.5% investigate for log completeness
+**R13 · Investigation** — Spent 1 action: Investigate Cellar.
+**R13 · Investigation** — Started intellect test 2 vs 4.
+[R13·Investigation a0/3 | Agnes Baker 01004 | Cellar | clu1 res6 | dmg3/6 hor7/8 | h7 d10 x13 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Agnes Baker] Commit cards to Investigate Cellar (intellect vs 4).
+**R13 · Investigation** — Decision made: Done
+**R13 · Investigation** — Revealed 0.
+**R13 · Investigation** — Investigate Cellar: failure by 2 - intellect 2 + committed 0 + boosts 0 + token 0 = 2 vs 4.
+**R13 · Investigation** — Started willpower test 5 vs 3.
+[R13·Investigation a0/3 | Agnes Baker 01004 | Cellar | clu1 res6 | dmg3/6 hor7/8 | h7 d10 x13 | Act2 Agd3 doom8/10]
+**R13 · Investigation** — Decision presented: [Round 13 · Investigation · Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3).
+**R13 · Investigation** — Decision made: Done
+**R13 · Investigation** — Revealed tablet.
+**R13 · Investigation** — Frozen in Fear: success by 0 - willpower 5 + committed 0 + boosts 0 + token -2 = 3 vs 3.
+**R13 · Investigation** — Frozen in Fear was discarded.
+**R13 · Enemy** — Enemy phase began.
+**R13 · Upkeep** — Upkeep phase began.
+**R13 · Upkeep** — All exhausted cards readied.
+**R13 · Upkeep** — Agnes Baker drew Shrivelling.
+**R13 · Upkeep** — Agnes Baker gained 1 resource.
+**R13 · Upkeep** — Placed 1 doom on the agenda (They're Getting Out!).
+**R14 · Mythos** — Round 14 began.
+**R14 · Mythos** — Placed 1 doom on the agenda.
+[R14·Mythos | Agnes Baker 01004 | Cellar | clu1 res7 | dmg3/6 hor7/8 | h8 d9 x13 | Act2 Agd3 doom0/10]
+**R14 · Mythos** — GAME OVER: R3: Agnes Baker was killed
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.
+**R14 · Mythos** — Note added.

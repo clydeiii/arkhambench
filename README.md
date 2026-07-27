@@ -165,6 +165,47 @@ $5/$30 (Sol), $2.50/$15 (Terra), $1/$6 (Luna) per Mtok with cached input at
 Cross-wave caveat: prior waves (b4/w6) ran older engines; within-wave
 comparisons are the controlled ones. The hy3 + K3 lanes' combined real-dollar cost, including probes: $43.84.
 
+## The learning bench — modern engine (2026-07-25/27, b6)
+
+The definitive version of the learning experiment: **thirty games of the same
+scenario per model**, identical shuffles (seeds 1001–1030), blank starting
+notebooks, on the frozen modern engine — with per-game token telemetry, so the
+cost of learning is measured alongside the curve. Ten models were invited;
+seven have finished (the three Chinese open-weights models are still playing).
+
+| Model | Thinking | Mean | Final-6 avg | Slope/game | Wins | Time | Tokens | API-equiv cost | $/game g1–10 → g21–30 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Fable 5 | adaptive | **4.30** | 4.50 | +0.014 | 13 | 41.0 h | 725 M | $1,259 | $39 → $45 |
+| GPT-5.6 Sol | high | 3.73 | 3.67 | −0.001 | 6 | 6.7 h | 406 M | $303 | $7.4 → $12.2 |
+| Opus 5 | adaptive | 3.40 | 3.67 | −0.020 | 8 | 23.3 h | 1,228 M | $1,082 | $33 → $39 |
+| GPT-5.6 Terra | high | 2.33 | 3.33 | +0.039 | 1 | 3.4 h | 212 M | $82 | $2.7 → $2.6 |
+| Sonnet 5 | adaptive | 2.03 | 2.00 | −0.032 | 2 | 11.2 h | 920 M | $264 | $9.0 → $8.1 |
+| GPT-5.6 Luna | high | 1.73 | 1.17 | −0.040 | 1 | 4.0 h | 295 M | $47 | $1.4 → $1.7 |
+| Haiku 4.5 | adaptive | 1.13 | 1.00 | −0.012 | 0 | 1.9 h | 557 M | $78 | $2.5 → $2.6 |
+
+Three findings, stated plainly:
+
+1. **Can they learn? Not measurably.** With three times the games of the
+   original experiment and a far cleaner engine, every learning curve is flat:
+   the steepest slope on the board (+0.039/game) is about one point of total
+   drift across thirty games on a 0–9 scale. Models play at their level from
+   game one. Notebooks still transport *recipes* — specific winning lines
+   reappear — but average skill does not rise. The n=10 conclusion survives
+   n=30 intact.
+2. **The single-scenario crown is Fable's, not Opus 5's.** Opus 5 dominated
+   full campaigns (35 points); on the one-scenario gauntlet Fable 5's 4.30
+   mean and 13 wins lead. Different formats reward different play — campaigns
+   reward carry-forward planning, the gauntlet rewards raw scenario mastery.
+3. **Experience makes games costlier, not cheaper.** Because each game's
+   lessons lengthen the notebook every later game must read, per-game cost
+   *rose* for most models (Fable $39 → $45; Sol $7.4 → $12.2). Nobody
+   amortizes their education.
+
+Caveats: Fable's games 16–30 were replayed after timeout zeros (raised
+continue budget; chronologically later plays, same seeds); one game each for
+Sonnet 5 and Opus 5 likewise. Chinese-model rows will be added when their
+lanes finish.
+
 ## Benchmark results — main run (2026-07-05)
 
 **Setup:** four agents, ten games each, *Return to The Gathering* on Standard,

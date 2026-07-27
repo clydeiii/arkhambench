@@ -542,6 +542,19 @@
       "uses": {},
       "zone": "discard"
     },
+    "setaside_ghoul_priest": {
+      "attachments": [],
+      "card_code": "01116",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "setaside_ghoul_priest",
+      "owner": "roland",
+      "uses": {},
+      "zone": "victory"
+    },
     "setaside_lita": {
       "attachments": [],
       "card_code": "01117",
@@ -577,32 +590,7 @@
     ]
   },
   "confirmations_enabled": false,
-  "decision_queue": [
-    {
-      "id": "agnes-after-horror",
-      "kind": "after_horror",
-      "options": [
-        {
-          "label": "Deal 1 damage to Ghoul Priest",
-          "payload": {
-            "enemy": "setaside_ghoul_priest",
-            "key": "agnes_horror:Investigation:16",
-            "kind": "agnes_horror_reaction"
-          }
-        },
-        {
-          "label": "Pass",
-          "payload": {
-            "enemy": "",
-            "key": "agnes_horror:Investigation:16",
-            "kind": "agnes_horror_reaction",
-            "pass": true
-          }
-        }
-      ],
-      "prompt": "[Round 16 \u00b7 Investigation \u00b7 Agnes Baker] Use Agnes Baker reaction after horror was placed?"
-    }
-  ],
+  "decision_queue": [],
   "difficulty": "standard",
   "encounter_deck": [],
   "encounter_deck_count": 22,
@@ -614,20 +602,7 @@
     "ec0018",
     "ec0021"
   ],
-  "enemies": {
-    "setaside_ghoul_priest": {
-      "attachments": [],
-      "card_code": "01116",
-      "clues": 0,
-      "damage": 4,
-      "doom": 0,
-      "engaged_with": "agnes",
-      "exhausted": false,
-      "horror": 0,
-      "id": "setaside_ghoul_priest",
-      "location_id": "hallway"
-    }
-  },
+  "enemies": {},
   "investigator": {
     "actions_remaining": 1,
     "agility": 3,
@@ -661,9 +636,7 @@
       "pc0006",
       "pc0010"
     ],
-    "engaged_enemies": [
-      "setaside_ghoul_priest"
-    ],
+    "engaged_enemies": [],
     "exhausted": false,
     "hand": [
       "pc0018",
@@ -691,6 +664,7 @@
   },
   "limits": {
     "actions_taken": 47,
+    "agnes_horror:Investigation:16": true,
     "deferred_damage_continuation": {
       "queue": [],
       "resumes": [
@@ -707,7 +681,7 @@
       ]
     },
     "encounter_cards_drawn": 17,
-    "enemies_defeated": 3,
+    "enemies_defeated": 4,
     "fastwin:enemy_post:15": true,
     "fastwin:enemy_pre:15": true,
     "fastwin:inv_end:15": true,
@@ -715,7 +689,7 @@
     "fastwin:mythos_end:16": true,
     "fastwin:upkeep_start:15": true,
     "hunters_moved:15": true,
-    "last_defeated_enemy_location": "cellar",
+    "last_defeated_enemy_location": "hallway",
     "last_skill_test": {
       "auto_success": false,
       "base": 5,
@@ -860,9 +834,7 @@
         "cellar",
         "parlor"
       ],
-      "enemy_ids": [
-        "setaside_ghoul_priest"
-      ],
+      "enemy_ids": [],
       "id": "hallway",
       "investigator_ids": [
         "agnes"
@@ -905,15 +877,44 @@
   "pending_damage": null,
   "phase": "Investigation",
   "removed_from_game": [],
-  "result": null,
+  "result": {
+    "actions_taken": 47,
+    "campaign_log": {
+      "ghoul_priest_still_alive": false,
+      "house": "standing",
+      "lita": "not_earned"
+    },
+    "damage_taken": 1,
+    "encounter_cards_drawn": 17,
+    "enemies_defeated": 4,
+    "ghoul_priest_defeated": true,
+    "horror_taken": 6,
+    "hospital_debts_xp_penalty": 0,
+    "investigator_insane": false,
+    "investigator_killed": false,
+    "lita_earned": false,
+    "lita_recruited": false,
+    "outcome": "R2",
+    "resolution": "R2",
+    "rounds_played": 16,
+    "scenario": "return_to_the_gathering",
+    "score": 6,
+    "summary": "R2: the house still stands",
+    "trauma": {},
+    "victory_points": 3,
+    "xp": 6
+  },
   "round": 16,
   "scenario": "return_to_the_gathering",
   "schema_version": 2,
-  "status": "in_progress",
+  "status": "ended",
   "trauma": {},
   "turn": {
     "action_index": 2,
     "investigator_id": "agnes"
   },
-  "victory_display": []
+  "victory_display": [
+    "setaside_ghoul_priest",
+    "ghoul_pits"
+  ]
 }

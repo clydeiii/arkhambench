@@ -1,0 +1,683 @@
+{
+  "act": {
+    "clues_required": 3,
+    "code": "50012",
+    "name": "Mysterious Gateway",
+    "stage": 1
+  },
+  "active_skill_test": {
+    "autofail": false,
+    "base": 4,
+    "base_boost": 0,
+    "boosts": [],
+    "committed": [
+      "pc0013"
+    ],
+    "difficulty": 4,
+    "extra_tokens": [],
+    "modifier": -2,
+    "on_failure": {
+      "enemy": "ec0029",
+      "kind": "fight"
+    },
+    "on_success": {
+      "damage": 2,
+      "enemy": "ec0029",
+      "kind": "fight"
+    },
+    "player_reveal_effects_applied": true,
+    "scenario_reveal_effects_applied": true,
+    "skill": "willpower",
+    "source": "Fight with Shrivelling",
+    "symbol_horror": {
+      "asset": "pc0008"
+    },
+    "token": "tablet"
+  },
+  "agenda": {
+    "code": "01106",
+    "doom": 4,
+    "name": "Rise of the Ghouls",
+    "stage": 2,
+    "threshold": 7
+  },
+  "card_instances": {
+    "ec0003": {
+      "attachments": [],
+      "card_code": "01159",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0003",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0009": {
+      "attachments": [],
+      "card_code": "50039",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0009",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0014": {
+      "attachments": [],
+      "card_code": "01163",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0014",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0017": {
+      "attachments": [],
+      "card_code": "01164",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0017",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0019": {
+      "attachments": [],
+      "card_code": "01165",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0019",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0026": {
+      "attachments": [],
+      "card_code": "01168",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0026",
+      "owner": "roland",
+      "uses": {},
+      "zone": "attachment"
+    },
+    "pc0003": {
+      "attachments": [],
+      "card_code": "01058",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0003",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0004": {
+      "attachments": [],
+      "card_code": "01058",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0004",
+      "owner": "agnes",
+      "uses": {
+        "secrets": 1
+      },
+      "zone": "play"
+    },
+    "pc0006": {
+      "attachments": [],
+      "card_code": "01059",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 2,
+      "id": "pc0006",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0008": {
+      "attachments": [],
+      "card_code": "01060",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0008",
+      "owner": "agnes",
+      "uses": {
+        "charges": 1
+      },
+      "zone": "play"
+    },
+    "pc0009": {
+      "attachments": [],
+      "card_code": "01062",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0009",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0011": {
+      "attachments": [],
+      "card_code": "01063",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0011",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0012": {
+      "attachments": [],
+      "card_code": "01063",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0012",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0014": {
+      "attachments": [],
+      "card_code": "01064",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0014",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0015": {
+      "attachments": [],
+      "card_code": "01067",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0015",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0016": {
+      "attachments": [],
+      "card_code": "01067",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0016",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0017": {
+      "attachments": [],
+      "card_code": "01072",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0017",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0018": {
+      "attachments": [],
+      "card_code": "01072",
+      "clues": 0,
+      "damage": 1,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0018",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "play"
+    },
+    "pc0020": {
+      "attachments": [],
+      "card_code": "01074",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0020",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0022": {
+      "attachments": [],
+      "card_code": "01076",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0022",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0023": {
+      "attachments": [],
+      "card_code": "01086",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0023",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0024": {
+      "attachments": [],
+      "card_code": "01086",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0024",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0026": {
+      "attachments": [],
+      "card_code": "01087",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0026",
+      "owner": "agnes",
+      "uses": {
+        "supplies": 3
+      },
+      "zone": "play"
+    },
+    "pc0027": {
+      "attachments": [],
+      "card_code": "01088",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0027",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "hand"
+    },
+    "pc0028": {
+      "attachments": [],
+      "card_code": "01088",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0028",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0030": {
+      "attachments": [],
+      "card_code": "01091",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0030",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0031": {
+      "attachments": [],
+      "card_code": "01093",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0031",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "discard"
+    },
+    "pc0033": {
+      "attachments": [],
+      "card_code": "01098",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0033",
+      "owner": "agnes",
+      "uses": {},
+      "zone": "threat"
+    }
+  },
+  "chaos_bag": {
+    "tokens": [
+      "+1",
+      "0",
+      "0",
+      "-1",
+      "-1",
+      "-1",
+      "-2",
+      "-2",
+      "-3",
+      "-4",
+      "skull",
+      "skull",
+      "cultist",
+      "tablet",
+      "autofail",
+      "eldersign"
+    ]
+  },
+  "confirmations_enabled": false,
+  "decision_queue": [],
+  "difficulty": "standard",
+  "encounter_deck": [],
+  "encounter_deck_count": 24,
+  "encounter_discard": [
+    "ec0003",
+    "ec0019",
+    "ec0017",
+    "ec0009",
+    "ec0014"
+  ],
+  "enemies": {
+    "ec0002": {
+      "attachments": [],
+      "card_code": "01119",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0002",
+      "location_id": "cellar"
+    },
+    "ec0029": {
+      "attachments": [],
+      "card_code": "50022",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": "agnes",
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0029",
+      "location_id": "guest_hall"
+    }
+  },
+  "investigator": {
+    "actions_remaining": 2,
+    "agility": 3,
+    "card_code": "01004",
+    "clues": 1,
+    "combat": 2,
+    "damage": 4,
+    "deck_count": 10,
+    "discard": [
+      "pc0014",
+      "pc0031",
+      "pc0015",
+      "pc0023",
+      "pc0030",
+      "pc0011",
+      "pc0028",
+      "pc0016",
+      "pc0017",
+      "pc0012",
+      "pc0022",
+      "pc0006",
+      "pc0009"
+    ],
+    "engaged_enemies": [
+      "ec0029"
+    ],
+    "exhausted": false,
+    "hand": [
+      "pc0027",
+      "pc0020",
+      "pc0024",
+      "pc0003"
+    ],
+    "health": 6,
+    "horror": 8,
+    "id": "agnes",
+    "intellect": 2,
+    "location_id": "guest_hall",
+    "name": "Agnes Baker",
+    "play_area": [
+      "pc0004",
+      "pc0008",
+      "pc0026",
+      "pc0018"
+    ],
+    "resources": 6,
+    "sanity": 8,
+    "threat_area": [
+      "pc0033"
+    ],
+    "willpower": 5
+  },
+  "limits": {
+    "actions_taken": 22,
+    "defeat_trauma_applied": true,
+    "deferred_skill_test_resolution": true,
+    "encounter_cards_drawn": 8,
+    "enemies_defeated": 2,
+    "fastwin:mythos_end:8": true,
+    "last_defeated_enemy_location": "study",
+    "last_skill_test": {
+      "auto_success": false,
+      "base": 4,
+      "boosts": 0,
+      "callback_kind": null,
+      "committed_icons": 1,
+      "difficulty": 3,
+      "extra_tokens": [],
+      "margin": 1,
+      "modifier": -1,
+      "reveal_effects_applied": true,
+      "skill": "willpower",
+      "source": "Rotting Remains",
+      "success": true,
+      "token": "skull",
+      "value": 4
+    },
+    "mythos_doom_placed:8": true,
+    "mythos_encounter_drawn:8": true,
+    "return_variant:attic": "return",
+    "return_variant:cellar": "original",
+    "temp_skill_boost:pc0008": 0
+  },
+  "locations": {
+    "bathroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50016",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bathroom",
+      "investigator_ids": [],
+      "name": "Bathroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "bedroom": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50015",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "bedroom",
+      "investigator_ids": [],
+      "name": "Bedroom",
+      "revealed": false,
+      "shroud": null
+    },
+    "cellar": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "01114",
+      "connections": [],
+      "enemy_ids": [
+        "ec0002"
+      ],
+      "id": "cellar",
+      "investigator_ids": [],
+      "name": "Cellar",
+      "revealed": false,
+      "shroud": null
+    },
+    "guest_hall": {
+      "attached_instance_ids": [],
+      "clues": 0,
+      "code": "50014",
+      "connections": [
+        "study",
+        "bedroom",
+        "bathroom"
+      ],
+      "enemy_ids": [
+        "ec0029"
+      ],
+      "id": "guest_hall",
+      "investigator_ids": [
+        "agnes"
+      ],
+      "name": "Guest Hall",
+      "revealed": true,
+      "shroud": 1
+    },
+    "study": {
+      "attached_instance_ids": [
+        "ec0026"
+      ],
+      "clues": 0,
+      "code": "50013",
+      "connections": [
+        "guest_hall"
+      ],
+      "enemy_ids": [],
+      "id": "study",
+      "investigator_ids": [],
+      "name": "Study (Aberrant Gateway)",
+      "revealed": true,
+      "shroud": 3
+    }
+  },
+  "pending_damage": null,
+  "phase": "Investigation",
+  "removed_from_game": [],
+  "result": {
+    "actions_taken": 22,
+    "campaign_log": {
+      "ghoul_priest_still_alive": true,
+      "house": "standing",
+      "lita": "earned"
+    },
+    "damage_taken": 4,
+    "encounter_cards_drawn": 8,
+    "enemies_defeated": 2,
+    "ghoul_priest_defeated": false,
+    "horror_taken": 8,
+    "hospital_debts_xp_penalty": 0,
+    "investigator_insane": false,
+    "investigator_killed": false,
+    "lita_earned": true,
+    "lita_recruited": false,
+    "outcome": "no_resolution",
+    "resolution": "no_resolution",
+    "rounds_played": 8,
+    "scenario": "return_to_the_gathering",
+    "score": 1,
+    "summary": "Agnes Baker was defeated",
+    "trauma": {
+      "mental": 1,
+      "physical": 0
+    },
+    "victory_points": 0,
+    "xp": 2
+  },
+  "round": 8,
+  "scenario": "return_to_the_gathering",
+  "schema_version": 2,
+  "status": "ended",
+  "trauma": {
+    "mental": 1,
+    "physical": 0
+  },
+  "turn": {
+    "action_index": 1,
+    "investigator_id": "agnes"
+  },
+  "victory_display": []
+}

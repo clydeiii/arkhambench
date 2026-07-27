@@ -1,6 +1,6 @@
 # ArkhamBench summary: fable5-b6
 
-Headline benchmark number: final-20% average = 0.00
+Headline benchmark number: final-20% average = 4.50
 Final window: last 6 game(s), starting at game 25.
 
 ## Per-game results
@@ -25,34 +25,34 @@ Final window: last 6 game(s), starting at game 25.
 | 16 | 1016 | roland | complete | no_resolution | no_resolution | 4 | 5 | 1 | 14 |
 | 17 | 1017 | daisy | complete | no_resolution | no_resolution | 1 | 2 | 1 | 6 |
 | 18 | 1018 | skids | complete | R2 | R2 | 7 | 7 | 0 | 12 |
-| 19 | 1019 | agnes | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 20 | 1020 | wendy | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 21 | 1021 | roland | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 22 | 1022 | daisy | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 23 | 1023 | skids | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 24 | 1024 | agnes | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 25 | 1025 | wendy | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 26 | 1026 | roland | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 27 | 1027 | daisy | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 28 | 1028 | skids | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 29 | 1029 | agnes | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
-| 30 | 1030 | wendy | incomplete | incomplete | incomplete | 0 | 0 | 0 | 0 |
+| 19 | 1019 | agnes | complete | R2 | R2 | 6 | 6 | 0 | 16 |
+| 20 | 1020 | wendy | complete | R2 | R2 | 6 | 6 | 0 | 12 |
+| 21 | 1021 | roland | complete | R2 | R2 | 8 | 8 | 0 | 15 |
+| 22 | 1022 | daisy | complete | no_resolution | no_resolution | 3 | 4 | 1 | 12 |
+| 23 | 1023 | skids | complete | R3 | R3 | 0 | 0 | 0 | 13 |
+| 24 | 1024 | agnes | complete | R3 | R3 | 0 | 0 | 0 | 13 |
+| 25 | 1025 | wendy | complete | R2 | R2 | 7 | 7 | 0 | 12 |
+| 26 | 1026 | roland | complete | no_resolution | no_resolution | 1 | 3 | 2 | 11 |
+| 27 | 1027 | daisy | complete | no_resolution | no_resolution | 3 | 4 | 1 | 13 |
+| 28 | 1028 | skids | complete | no_resolution | no_resolution | 2 | 3 | 1 | 11 |
+| 29 | 1029 | agnes | complete | R2 | R2 | 7 | 7 | 0 | 14 |
+| 30 | 1030 | wendy | complete | R2 | R2 | 7 | 7 | 0 | 13 |
 
 ## Aggregate stats
 
 - Games recorded: 30
-- Mean score: 2.63
+- Mean score: 4.30
 - First-half mean score: 4.47
-- Second-half mean score: 0.80
-- Final-20% average: 0.00
+- Second-half mean score: 4.13
+- Final-20% average: 4.50
 
 ## Per-investigator
 
-- agnes: mean 3.00 over 6 game(s)
-- daisy: mean 2.17 over 6 game(s)
-- roland: mean 3.83 over 6 game(s)
-- skids: mean 1.67 over 6 game(s)
-- wendy: mean 2.50 over 6 game(s)
+- agnes: mean 5.17 over 6 game(s)
+- daisy: mean 3.17 over 6 game(s)
+- roland: mean 5.33 over 6 game(s)
+- skids: mean 2.00 over 6 game(s)
+- wendy: mean 5.83 over 6 game(s)
 
 ## Safety note
 

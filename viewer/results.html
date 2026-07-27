@@ -168,15 +168,23 @@ footer .wrap{max-width:72ch; margin:0}
   <div class="scatter" id="scatter-time"></div>
 </section>
 
-<section id="learn-teaser">
-  <div class="exhibit">Question 2 · Can they learn?</div>
-  <h2>The learning bench is on the table now</h2>
-  <p class="note">Each model plays the same scenario thirty times over, starting with a
-  blank notebook — the only memory it keeps between games. If models can genuinely learn,
-  the late games should beat the early ones, and we measure the cost of every game to see
-  whether experience also makes them cheaper. That experiment is running as you read
-  this; results land here. Earlier, smaller versions of it are preserved in the archive
-  below.</p>
+<section id="learn">
+  <div class="exhibit">Question 2 · Can they learn? — Exhibit 0.5</div>
+  <h2>Not measurably — and experience isn't cheap</h2>
+  <p class="note">The learning bench: each model played the <b>same scenario thirty times
+  over</b>, starting from a blank notebook — the only memory carried between games. Same
+  thirty card shuffles for everyone. If models genuinely learned, late games would beat
+  early ones. They don't: every trend line is flat — the best and worst slopes across
+  seven models amount to about one point of drift over all thirty games, on a 0–9 scale.
+  Skill shows up in game one or not at all. And because each game's notes make the next
+  game's reading list longer, <b>per-game cost went up, not down</b>, for most models —
+  experience literally made the games more expensive. Each bar is one game; click any bar
+  to replay it. Three more models are still at the table; their rows land here when they
+  finish.</p>
+  <div class="board" id="b6-board"></div>
+  <div class="legend">bar height = game score 0–9<i style="background:var(--gold)"></i>win
+    <i style="background:#3a2c2a"></i>scoreless<i style="background:var(--line)"></i>scored
+    · hover a bar for game and score · number is the 30-game average (small: last-6-game average)</div>
 </section>
 
 <section id="archive">
@@ -366,6 +374,24 @@ fetch("data/results.json").then(r => r.json()).then(data => {
   renderScatter("scatter-time", data.wave7 || [], {
     x: r => r.hours, log: false, fmt: t => t + "h",
     label: "wall-clock time for all 5 campaigns \u2014 faster \u2192"});
+
+  // ---- Exhibit 0.5: b6 learning bench board ----
+  const b6b = document.getElementById("b6-board");
+  (data.b6 || []).forEach((r, i) => {
+    const pips = r.games.map(g => {
+      const cls = "pip" + (g.win ? " win" : g.score === 0 ? " zero" : " scored");
+      return `<a class="${cls}" style="height:${6 + Math.round(3.2 * g.score)}px" title="game ${g.n} \u00b7 ${g.investigator} \u00b7 ${g.score}${g.win ? " \u00b7 WIN" : ""}"
+        href="index.html#run=${g.slug}&step=0"><span>${g.n}</span></a>`;
+    }).join("");
+    const div = document.createElement("div");
+    div.className = "brow" + (i === 0 ? " first" : "");
+    div.innerHTML = `
+      <div class="rank">${i + 1}</div>
+      <div class="mname">${r.name}<span class="tag">${r.harness} \u00b7 ${r.thinking} \u00b7 $${Math.round(r.cost)} \u00b7 ${r.hours}h \u00b7 slope ${r.slope >= 0 ? "+" : ""}${r.slope}</span></div>
+      <div class="f20">${r.mean.toFixed(2)}<div style="font-size:11px;color:var(--muted)">${r.f20.toFixed(2)}</div></div>
+      <div class="pips">${pips}</div>`;
+    b6b.appendChild(div);
+  });
 
   // ---- Exhibit A: combined board ----
   const rows = [];

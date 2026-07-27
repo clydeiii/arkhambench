@@ -7,39 +7,13 @@
   },
   "active_skill_test": null,
   "agenda": {
-    "code": "01106",
-    "doom": 6,
-    "name": "Rise of the Ghouls",
-    "stage": 2,
-    "threshold": 7
+    "code": "01107",
+    "doom": 0,
+    "name": "They're Getting Out!",
+    "stage": 3,
+    "threshold": 10
   },
   "card_instances": {
-    "ec0010": {
-      "attachments": [],
-      "card_code": "50040",
-      "clues": 0,
-      "damage": 0,
-      "doom": 0,
-      "exhausted": false,
-      "horror": 0,
-      "id": "ec0010",
-      "owner": "roland",
-      "uses": {},
-      "zone": "encounter_discard"
-    },
-    "ec0012": {
-      "attachments": [],
-      "card_code": "50040",
-      "clues": 0,
-      "damage": 0,
-      "doom": 0,
-      "exhausted": false,
-      "horror": 0,
-      "id": "ec0012",
-      "owner": "roland",
-      "uses": {},
-      "zone": "encounter_discard"
-    },
     "ec0013": {
       "attachments": [],
       "card_code": "01163",
@@ -53,7 +27,7 @@
       "uses": {},
       "zone": "encounter_discard"
     },
-    "ec0014": {
+    "ec0015": {
       "attachments": [],
       "card_code": "01163",
       "clues": 0,
@@ -61,7 +35,7 @@
       "doom": 0,
       "exhausted": false,
       "horror": 0,
-      "id": "ec0014",
+      "id": "ec0015",
       "owner": "roland",
       "uses": {},
       "zone": "encounter_discard"
@@ -75,6 +49,45 @@
       "exhausted": false,
       "horror": 0,
       "id": "ec0017",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0018": {
+      "attachments": [],
+      "card_code": "01165",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0018",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0020": {
+      "attachments": [],
+      "card_code": "01166",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0020",
+      "owner": "roland",
+      "uses": {},
+      "zone": "encounter_discard"
+    },
+    "ec0023": {
+      "attachments": [],
+      "card_code": "01167",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0023",
       "owner": "roland",
       "uses": {},
       "zone": "encounter_discard"
@@ -181,7 +194,7 @@
       "id": "pc0008",
       "owner": "daisy",
       "uses": {},
-      "zone": "play"
+      "zone": "discard"
     },
     "pc0009": {
       "attachments": [],
@@ -208,6 +221,19 @@
       "owner": "daisy",
       "uses": {},
       "zone": "discard"
+    },
+    "pc0012": {
+      "attachments": [],
+      "card_code": "01035",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0012",
+      "owner": "daisy",
+      "uses": {},
+      "zone": "hand"
     },
     "pc0013": {
       "attachments": [],
@@ -287,6 +313,19 @@
       "uses": {},
       "zone": "discard"
     },
+    "pc0019": {
+      "attachments": [],
+      "card_code": "01065",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "exhausted": false,
+      "horror": 0,
+      "id": "pc0019",
+      "owner": "daisy",
+      "uses": {},
+      "zone": "hand"
+    },
     "pc0020": {
       "attachments": [],
       "card_code": "01065",
@@ -311,7 +350,7 @@
       "id": "pc0022",
       "owner": "daisy",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0023": {
       "attachments": [],
@@ -324,7 +363,7 @@
       "id": "pc0023",
       "owner": "daisy",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0026": {
       "attachments": [],
@@ -378,7 +417,7 @@
       "id": "pc0031",
       "owner": "daisy",
       "uses": {},
-      "zone": "hand"
+      "zone": "discard"
     },
     "pc0032": {
       "attachments": [],
@@ -410,10 +449,10 @@
       "attachments": [],
       "card_code": "01117",
       "clues": 0,
-      "damage": 0,
+      "damage": 2,
       "doom": 0,
       "exhausted": false,
-      "horror": 0,
+      "horror": 2,
       "id": "setaside_lita",
       "owner": "daisy",
       "uses": {},
@@ -441,42 +480,33 @@
     ]
   },
   "confirmations_enabled": false,
-  "decision_queue": [
-    {
-      "id": "slot-overflow-discard",
-      "kind": "slot_discard",
-      "options": [
-        {
-          "label": "Discard Dr. Milan Christopher",
-          "payload": {
-            "discard": "pc0008",
-            "kind": "slot_discard"
-          }
-        },
-        {
-          "label": "Discard Lita Chantler",
-          "payload": {
-            "discard": "setaside_lita",
-            "kind": "slot_discard"
-          }
-        }
-      ],
-      "prompt": "Choose a Ally asset to discard for slot capacity."
-    }
-  ],
+  "decision_queue": [],
   "difficulty": "standard",
   "encounter_deck": [],
-  "encounter_deck_count": 23,
+  "encounter_deck_count": 21,
   "encounter_discard": [
     "ec0017",
-    "ec0010",
-    "ec0014",
-    "ec0012",
+    "ec0020",
+    "ec0015",
     "ec0013",
+    "ec0018",
+    "ec0023",
     "ec0024"
   ],
   "enemies": {
-    "ec0005": {
+    "ec0002": {
+      "attachments": [],
+      "card_code": "01119",
+      "clues": 0,
+      "damage": 0,
+      "doom": 0,
+      "engaged_with": null,
+      "exhausted": false,
+      "horror": 0,
+      "id": "ec0002",
+      "location_id": "cellar"
+    },
+    "ec0003": {
       "attachments": [],
       "card_code": "01159",
       "clues": 0,
@@ -485,7 +515,7 @@
       "engaged_with": "daisy",
       "exhausted": false,
       "horror": 0,
-      "id": "ec0005",
+      "id": "ec0003",
       "location_id": "parlor"
     },
     "ec0009": {
@@ -506,21 +536,21 @@
       "clues": 0,
       "damage": 0,
       "doom": 0,
-      "engaged_with": null,
+      "engaged_with": "daisy",
       "exhausted": false,
       "horror": 0,
       "id": "setaside_ghoul_priest",
-      "location_id": "hallway"
+      "location_id": "parlor"
     }
   },
   "investigator": {
-    "actions_remaining": 2,
+    "actions_remaining": 1,
     "agility": 2,
     "card_code": "01002",
     "clues": 0,
     "combat": 2,
-    "damage": 2,
-    "deck_count": 10,
+    "damage": 3,
+    "deck_count": 8,
     "discard": [
       "pc0032",
       "pc0015",
@@ -537,17 +567,21 @@
       "pc0020",
       "pc0014",
       "pc0033",
-      "pc0001"
+      "pc0001",
+      "pc0008",
+      "pc0023",
+      "pc0031",
+      "pc0022"
     ],
     "engaged_enemies": [
-      "ec0005"
+      "setaside_ghoul_priest",
+      "ec0003"
     ],
     "exhausted": false,
     "hand": [
-      "pc0023",
       "pc0029",
-      "pc0031",
-      "pc0022"
+      "pc0012",
+      "pc0019"
     ],
     "health": 5,
     "horror": 6,
@@ -558,56 +592,38 @@
     "play_area": [
       "pc0026",
       "pc0004",
-      "pc0008",
       "setaside_lita"
     ],
-    "resources": 1,
+    "resources": 0,
     "sanity": 9,
     "threat_area": [],
     "willpower": 3
   },
   "limits": {
-    "actions_taken": 33,
-    "encounter_cards_drawn": 9,
-    "fastwin:mythos_end:10": true,
+    "actions_taken": 37,
+    "encounter_cards_drawn": 11,
+    "enemies_defeated": 1,
+    "fastwin:mythos_end:11": true,
+    "last_defeated_enemy_location": "parlor",
     "last_skill_test": {
       "auto_success": false,
-      "base": 6,
+      "base": 3,
       "boosts": 0,
-      "callback_kind": "lita_parley",
+      "callback_kind": "blinding_light",
       "committed_icons": 2,
       "difficulty": 4,
       "extra_tokens": [],
-      "margin": 5,
-      "modifier": 1,
+      "margin": 4,
+      "modifier": 0,
       "reveal_effects_applied": true,
-      "skill": "intellect",
-      "source": "Parley with Lita Chantler",
-      "success": true,
-      "token": "+1",
-      "value": 9
+      "skill": "willpower",
+      "source": "Blinding Light Ghoul Priest",
+      "success": false,
+      "token": "autofail",
+      "value": 0
     },
-    "mythos_doom_placed:10": true,
-    "mythos_encounter_drawn:10": true,
-    "pending_scenario_token_aftermath": [
-      {
-        "auto_success": false,
-        "base": 6,
-        "boosts": 0,
-        "callback_kind": "lita_parley",
-        "committed_icons": 2,
-        "difficulty": 4,
-        "extra_tokens": [],
-        "margin": 5,
-        "modifier": 1,
-        "reveal_effects_applied": true,
-        "skill": "intellect",
-        "source": "Parley with Lita Chantler",
-        "success": true,
-        "token": "+1",
-        "value": 9
-      }
-    ],
+    "mythos_doom_placed:11": true,
+    "mythos_encounter_drawn:11": true,
     "return_variant:attic": "original",
     "return_variant:cellar": "return"
   },
@@ -666,7 +682,9 @@
         "hallway",
         "ghoul_pits"
       ],
-      "enemy_ids": [],
+      "enemy_ids": [
+        "ec0002"
+      ],
       "id": "cellar",
       "investigator_ids": [],
       "name": "Cellar",
@@ -714,9 +732,7 @@
         "cellar",
         "parlor"
       ],
-      "enemy_ids": [
-        "setaside_ghoul_priest"
-      ],
+      "enemy_ids": [],
       "id": "hallway",
       "investigator_ids": [],
       "name": "Hallway",
@@ -731,7 +747,8 @@
         "hallway"
       ],
       "enemy_ids": [
-        "ec0005"
+        "setaside_ghoul_priest",
+        "ec0003"
       ],
       "id": "parlor",
       "investigator_ids": [
@@ -759,15 +776,43 @@
   "pending_damage": null,
   "phase": "Investigation",
   "removed_from_game": [],
-  "result": null,
-  "round": 10,
+  "result": {
+    "actions_taken": 37,
+    "campaign_log": {
+      "ghoul_priest_still_alive": true,
+      "house": "standing",
+      "lita": "earned"
+    },
+    "damage_taken": 3,
+    "encounter_cards_drawn": 11,
+    "enemies_defeated": 1,
+    "ghoul_priest_defeated": false,
+    "horror_taken": 6,
+    "hospital_debts_xp_penalty": 0,
+    "investigator_insane": false,
+    "investigator_killed": false,
+    "lita_earned": true,
+    "lita_recruited": true,
+    "outcome": "no_resolution",
+    "resolution": "no_resolution",
+    "rounds_played": 11,
+    "scenario": "return_to_the_gathering",
+    "score": 3,
+    "summary": "Daisy Walker resigned",
+    "trauma": {},
+    "victory_points": 1,
+    "xp": 3
+  },
+  "round": 11,
   "scenario": "return_to_the_gathering",
   "schema_version": 2,
-  "status": "in_progress",
+  "status": "ended",
   "trauma": {},
   "turn": {
     "action_index": 2,
     "investigator_id": "daisy"
   },
-  "victory_display": []
+  "victory_display": [
+    "attic"
+  ]
 }

@@ -605,3 +605,106 @@
 **R10 · Investigation** — Daisy Walker took control of Lita Chantler.
 [R10·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res1 | dmg2/5 hor6/9 | h4 d10 x16 | Act3 Agd2 doom6/7]
 **R10 · Investigation** — Decision presented: Choose a Ally asset to discard for slot capacity.
+**R10 · Investigation** — Decision made: Discard Dr. Milan Christopher
+**R10 · Investigation** — Keep Lita (mandatory +1dmg to reach 5 on Priest); Lita's own 3 health/3 sanity replaces Milan as soak for the incoming Priest attack
+**R10 · Investigation** — Dr. Milan Christopher was discarded for slot capacity.
+[R10·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res1 | dmg2/5 hor6/9 | h4 d10 x17 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Daisy Walker · 2 actions left (1 Tome-only)] Choose an action:
+**R10 · Investigation** — Decision made: Use Old Book of Lore
+**R10 · Investigation** — Dig top 3 for Mind over Matter - it is the only way Daisy fights a 4-fight/5hp Priest; leaving rats alive (Lita soaks its chip) to afford a second dig
+**R10 · Investigation** — Spent 1 action: Use Old Book of Lore.
+**R10 · Investigation** — Swarm of Rats [ec0005] attacked Daisy Walker.
+[R10·Investigation a1/4 | Daisy Walker 01002 | Parlor | clu0 res1 | dmg2/5 hor6/9 | h4 d10 x17 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Daisy Walker] Assign damage/horror from Swarm of Rats.
+**R10 · Investigation** — Decision made: Assign 1 damage to Daisy Walker
+**R10 · Investigation** — Daisy takes the rat chip (3/5); Lita must stay at 3 health to absorb the Priest's full 2dmg+2horror enemy-phase attack and survive
+**R10 · Investigation** — Assigned 1 damage to Daisy Walker.
+[R10·Investigation a1/4 | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h4 d10 x17 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: Choose 1 card to draw with Old Book of Lore.
+**R10 · Investigation** — Decision made: Draw Medical Texts
+**R10 · Investigation** — None of these help the kill; Medical Texts is at least discard fodder vs Chill/Grave-Eater effects. Digging again with the Tome action
+**R10 · Investigation** — Daisy Walker drew Medical Texts.
+[R10·Investigation a1/4 | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h5 d9 x17 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Daisy Walker · 1 action left] Choose an action:
+**R10 · Investigation** — Decision made: Fight Swarm of Rats (fight 1, 1 dmg) — test Combat(3)
+**R10 · Investigation** — Rats must die now (else AoO+enemy-phase chips force bad soak splits); commit Knife for +1 since it is unplayable next turn without provoking the Priest
+**R10 · Investigation** — Spent 1 action: Fight Swarm of Rats.
+**R10 · Investigation** — Started combat test 3 vs 1.
+[R10·Investigation a0/4 | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h5 d9 x17 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Daisy Walker] Commit cards to Fight Swarm of Rats (combat vs 1).
+**R10 · Investigation** — Decision made: Commit Knife (+1)
+**R10 · Investigation** — Knife +1 -> 4 vs 1, fails only on -4/autofail
+**R10 · Investigation** — Committed Knife.
+[R10·Investigation a0/4 | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h4 d9 x17 | Act3 Agd2 doom6/7]
+**R10 · Investigation** — Decision presented: [Round 10 · Investigation · Daisy Walker] Commit cards to Fight Swarm of Rats (combat vs 1).
+**R10 · Investigation** — Decision made: Done
+**R10 · Investigation** — Done - 4 vs 1
+**R10 · Investigation** — Revealed -1.
+**R10 · Investigation** — Fight Swarm of Rats: success by 2 - combat 3 + committed 1 + boosts 0 + token -1 = 3 vs 1.
+**R10 · Investigation** — Swarm of Rats took 1 damage.
+**R10 · Investigation** — Swarm of Rats was defeated.
+**R10 · Enemy** — Enemy phase began.
+**R10 · Enemy** — Ghoul Priest [setaside_ghoul_priest] moved to Parlor.
+**R10 · Enemy** — Ghoul Priest [setaside_ghoul_priest] engaged Daisy Walker.
+**R10 · Enemy** — Ghoul Priest [setaside_ghoul_priest] attacked Daisy Walker.
+[R10·Enemy | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h4 d9 x18 | Act3 Agd2 doom6/7]
+**R10 · Enemy** — Decision presented: [Round 10 · Enemy · Daisy Walker] Assign damage/horror from Ghoul Priest.
+**R10 · Enemy** — Decision made: Assign 1 damage to Lita Chantler
+**R10 · Enemy** — All to Lita: 2dmg+2horror leaves her at exactly 1/1; Daisy stays 3/5 6/9 for the kill turn
+**R10 · Enemy** — Assigned 1 damage to Lita Chantler.
+[R10·Enemy | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h4 d9 x18 | Act3 Agd2 doom6/7]
+**R10 · Enemy** — Decision presented: [Round 10 · Enemy · Daisy Walker] Assign damage/horror from Ghoul Priest.
+**R10 · Enemy** — Decision made: Assign 1 damage to Lita Chantler
+**R10 · Enemy** — second damage to Lita (now 2/3)
+**R10 · Enemy** — Assigned 1 damage to Lita Chantler.
+[R10·Enemy | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h4 d9 x18 | Act3 Agd2 doom6/7]
+**R10 · Enemy** — Decision presented: [Round 10 · Enemy · Daisy Walker] Assign damage/horror from Ghoul Priest.
+**R10 · Enemy** — Decision made: Assign 1 horror to Lita Chantler
+**R10 · Enemy** — horror to Lita (1/3 sanity left after this)
+**R10 · Enemy** — Assigned 1 horror to Lita Chantler.
+[R10·Enemy | Daisy Walker 01002 | Parlor | clu0 res1 | dmg3/5 hor6/9 | h4 d9 x18 | Act3 Agd2 doom6/7]
+**R10 · Enemy** — Decision presented: [Round 10 · Enemy · Daisy Walker] Assign damage/horror from Ghoul Priest.
+**R10 · Enemy** — Decision made: Assign 1 horror to Lita Chantler
+**R10 · Enemy** — last horror to Lita - she ends at 1 health/1 sanity, Daisy untouched
+**R10 · Enemy** — Assigned 1 horror to Lita Chantler.
+**R10 · Enemy** — Ghoul Priest [setaside_ghoul_priest] exhausted after attacking.
+**R10 · Upkeep** — Upkeep phase began.
+**R10 · Upkeep** — All exhausted cards readied.
+**R10 · Upkeep** — Daisy Walker drew Ward of Protection.
+**R10 · Upkeep** — Daisy Walker gained 1 resource.
+**R11 · Mythos** — Round 11 began.
+**R11 · Mythos** — Placed 1 doom on the agenda.
+**R11 · Mythos** — Daisy Walker drew encounter card Icy Ghoul.
+**R11 · Mythos** — Icy Ghoul [ec0002] spawned at Cellar.
+**R11 · Mythos** — Agenda advanced to They're Getting Out!.
+**R11 · Mythos** — Daisy Walker drew encounter card Swarm of Rats.
+**R11 · Mythos** — Swarm of Rats [ec0003] spawned at Parlor.
+**R11 · Mythos** — Swarm of Rats [ec0003] engaged Daisy Walker.
+**R11 · Investigation** — Investigation phase began.
+[R11·Investigation 4 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res2 | dmg3/5 hor6/9 | h5 d8 x18 | Act3 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker · 4 actions left (1 Tome-only)] Choose an action:
+**R11 · Investigation** — Decision made: Play Blinding Light to evade Ghoul Priest — test Willpower(3) vs 4, 1 dmg
+**R11 · Investigation** — Evade Priest via Blinding Light: exhausted enemy cannot retaliate/AoO, unlocking a safe OBOoL dig for Mind over Matter; also chips 1 dmg (Priest to 4hp)
+**R11 · Investigation** — Spent 1 action: Play Blinding Light on Ghoul Priest.
+**R11 · Investigation** — Started willpower test 3 vs 4.
+**R11 · Investigation** — Played Blinding Light.
+[R11·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res0 | dmg3/5 hor6/9 | h4 d8 x18 | Act3 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Blinding Light Ghoul Priest (willpower vs 4).
+**R11 · Investigation** — Decision made: Commit Unexpected Courage (+2)
+**R11 · Investigation** — UC +2 -> 5 vs 4 (56%); Ward stays in hand to cancel a bad R12 mythos treachery
+**R11 · Investigation** — Committed Unexpected Courage.
+[R11·Investigation 3 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res0 | dmg3/5 hor6/9 | h3 d8 x18 | Act3 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker] Commit cards to Blinding Light Ghoul Priest (willpower vs 4).
+**R11 · Investigation** — Decision made: Done
+**R11 · Investigation** — Done - 5 vs 4
+**R11 · Investigation** — Revealed autofail.
+**R11 · Investigation** — Blinding Light Ghoul Priest: failure (autofail) by 4 - autofail (skill value 0) vs 4.
+**R11 · Investigation** — Blinding Light caused Daisy Walker to lose 1 action.
+[R11·Investigation 2 actions left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res0 | dmg3/5 hor6/9 | h3 d8 x20 | Act3 Agd3 doom0/10]
+**R11 · Investigation** — Decision presented: [Round 11 · Investigation · Daisy Walker · 2 actions left (1 Tome-only)] Choose an action:
+**R11 · Investigation** — Decision made: Resign
+**R11 · Investigation** — Kill is dead: 0 res for MoM, dig would AoO-kill Lita (fists then 0% vs fight 4), evade is 0% at Agi2 vs 4. Resign banks the Attic VP instead of dying for 0
+**R11 · Investigation** — Spent 1 action: Resign.
+[R11·Investigation 1 action left (1 Tome-only) | Daisy Walker 01002 | Parlor | clu0 res0 | dmg3/5 hor6/9 | h3 d8 x20 | Act3 Agd3 doom0/10]
+**R11 · Investigation** — GAME OVER: Daisy Walker resigned
+**R11 · Investigation** — Note added.
