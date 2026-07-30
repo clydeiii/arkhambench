@@ -218,6 +218,56 @@ Sonnet 5, Opus 5, and Kimi K3 likewise. Chinese-model costs (\*) are actual
 OpenRouter billing, not list-price estimates; their token totals use a
 different meter and are omitted from the Tokens column.
 
+### The persistent-memory follow-up (2026-07-30, b7)
+
+OpenAI reported that [two API settings tripled GPT-5.6's ARC-AGI-3
+score](https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/):
+the official harness had been discarding the model's private reasoning after
+every move and truncating old history, so keeping reasoning and *compacting*
+(summarizing instead of deleting) took Sol from 13.3% to 38.3%. Our learning
+bench has the same structural objection: between games we wipe everything
+except the self-written notebook. So we reran the thirty games for one model
+per harness with the settings on — **one continuous session per model across
+all thirty games**, resumed game-to-game (`claude --resume` / `codex exec
+resume`), auto-compacted by the harness, notebook still available. The chain
+never broke once in either lane.
+
+| Model | Arm | Mean | Final-6 | Slope/game | Wins | Time | Cost | $/game g1–10 → g21–30 |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| Fable 5 | fresh sessions (b6) | **4.30** | 4.50 | +0.014 | 13 | 41.0 h† | $1,259 | $39 → $45 |
+| Fable 5 | retained session (b7) | 3.63 | 4.33 | −0.002 | 2 | 6.5 h | $2,142 | $88 → $68 |
+| GPT-5.6 Sol | fresh sessions (b6) | **3.73** | 3.67 | −0.001 | 6 | 6.7 h | $303 | $7.4 → $12.2 |
+| GPT-5.6 Sol | retained session (b7) | 3.43 | 3.67 | +0.047 | 6 | 6.4 h | $244 | $7.7 → $7.8 |
+
+**The verdict: no tripling — the flat curves are about the models, not the
+harness.** Same thirty shuffles head-to-head, and the fresh-session arm won
+more paired games than it lost for both models (Fable 16–12, Sol 13–9);
+both retained means came out slightly *lower*. The ARC result doesn't
+transfer because the failure modes differ: ARC's harness wiped memory
+*mid-task* every move, while our per-game sessions were already
+continuity-complete — and adding cross-game memory on top bought nothing.
+
+Three second-order effects were real, though:
+
+1. **Compaction flattens the cost curve.** In b6, per-game cost *rose* as
+   notebooks grew; in b7 it stopped rising (Sol $7.7 → $7.8) or fell (Fable
+   $88 → $68) because summaries keep the context bounded. But mind the
+   absolute bill: Fable's retained lane cost **70% more** overall — carrying
+   a giant conversation costs real money even at cache-read rates — while
+   Sol's came out 20% cheaper (98.7% of its input tokens were cache hits).
+2. **Permanent memory made Fable cautious.** With every close call remembered,
+   Fable converged on a farm-points-and-retreat routine: 27 of 30 games ended
+   without a resolution (resign/retreat) versus 14 in b6, and wins fell 13 → 2
+   while the mean only dropped half a point. Fresh eyes re-explored every game
+   and found more winning lines.
+3. **The notebook atrophied.** Both models wrote far less down (Fable 70 lines
+   vs 232; Sol 91 vs 503) — they leaned on the session instead. Whatever the
+   session "remembered" was evidently no better than what the notebook used
+   to carry.
+
+† b6 Fable wall-clock was inflated by API-outage hangs and replays; the b7
+lane ran hang-free, which accounts for most of the time difference.
+
 ## Benchmark results — main run (2026-07-05)
 
 **Setup:** four agents, ten games each, *Return to The Gathering* on Standard,

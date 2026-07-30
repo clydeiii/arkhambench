@@ -188,6 +188,33 @@ footer .wrap{max-width:72ch; margin:0}
   <div class="legend">bar height = game score 0–9<i style="background:var(--gold)"></i>win
     <i style="background:#3a2c2a"></i>scoreless<i style="background:var(--line)"></i>scored
     · hover a bar for game and score · number is the 30-game average (small: last-6-game average)</div>
+
+  <div class="exhibit" style="margin-top:44px">Question 2 · follow-up — the persistent-memory test</div>
+  <h2>Would a real memory help? We gave two models one — it didn't</h2>
+  <p class="note">A fair objection to the flat curves above: maybe the models never learned
+  because we kept wiping their memory. Between games, everything except the notebook is
+  erased — and OpenAI showed on a different benchmark (ARC-AGI-3) that exactly this kind of
+  memory-wiping harness was <a href="https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/">holding
+  its model back</a>: letting the model keep its private reasoning and summarizing old
+  history instead of deleting it <b>tripled</b> its score. So we reran the thirty games for
+  two models with those settings on. Each model played all thirty games in <b>one continuous
+  session</b> — never reset, automatically summarized whenever it grew too long, notebook
+  still available. The chain never broke once. The result: <b>no tripling — both models
+  scored slightly <i>worse</i></b> (comparing the same thirty shuffles head-to-head, the
+  fresh-session run won more games than it lost for both models), and the learning curves
+  stayed flat. The flat-curve finding is about the models, not the harness. Two side
+  effects were real, though. Per-game cost <b>stopped climbing</b> — summaries keep the
+  reading list bounded, where in the main bench each game's notes made the next game more
+  expensive (though the Claude lane's total bill still came out 70% higher, because
+  re-reading a month-long conversation every move costs real money even at cache rates).
+  And Fable changed personality: with a permanent memory of every close call, it settled
+  into a cautious farm-points-and-retreat routine and stopped playing for wins — 2 wins in
+  thirty games versus 13 with fresh eyes. Both models also nearly stopped writing notebooks
+  (70 and 91 lines versus 232 and 503 first time around) — they leaned on the session and
+  wrote less down.</p>
+  <div class="board" id="b7-board"></div>
+  <div class="legend">same encoding as the board above · big number is the 30-game average
+    (small: the same model's fresh-session average) · click any bar to replay that game</div>
 </section>
 
 <section id="archive">
@@ -394,6 +421,25 @@ fetch("data/results.json").then(r => r.json()).then(data => {
       <div class="f20">${r.mean.toFixed(2)}<div style="font-size:11px;color:var(--muted)">${r.f20.toFixed(2)}</div></div>
       <div class="pips">${pips}</div>`;
     b6b.appendChild(div);
+  });
+
+  // ---- Q2 follow-up: b7 retained-session arm ----
+  const b7b = document.getElementById("b7-board");
+  (data.b7 || []).forEach((r, i) => {
+    const pips = r.games.map(g => {
+      const cls = "pip" + (g.win ? " win" : g.score === 0 ? " zero" : " scored");
+      return `<a class="${cls}" style="height:${6 + Math.round(3.2 * g.score)}px" title="game ${g.n} · ${g.investigator} · ${g.score}${g.win ? " · WIN" : ""}"
+        href="index.html#run=${g.slug}&step=0"><span>${g.n}</span></a>`;
+    }).join("");
+    const div = document.createElement("div");
+    div.className = "brow";
+    const base = r.baseline;
+    div.innerHTML = `
+      <div class="rank">↔</div>
+      <div class="mname">${r.name}<span class="tag">retained session · ${r.harness} · $${Math.round(r.cost)} · ${r.hours}h · slope ${r.slope >= 0 ? "+" : ""}${r.slope}</span></div>
+      <div class="f20">${r.mean.toFixed(2)}<div style="font-size:11px;color:var(--muted)">${base ? base.mean.toFixed(2) + " fresh" : ""}</div></div>
+      <div class="pips">${pips}</div>`;
+    b7b.appendChild(div);
   });
 
   // ---- Exhibit A: combined board ----

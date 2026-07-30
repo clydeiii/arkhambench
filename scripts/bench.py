@@ -6,6 +6,7 @@ import csv
 import json
 import math
 import os
+import re
 import shlex
 import subprocess
 import sys
@@ -71,16 +72,26 @@ def notebook_line_count(path: Path) -> int:
     return len(path.read_text(encoding="utf-8").splitlines())
 
 
-def bench_header(label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str) -> str:
+def bench_header(label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str, retained: bool = False) -> str:
     final_count, first_final = final_window(n)
+    if retained:
+        memory_line = (
+            "learning: explore, take risks you can learn from. Your chat session PERSISTS across\n"
+            "games (older context may be auto-compacted into summaries), and your notebook also\n"
+            f"persists — use both. Your notebook currently has {notebook_lines} lines.\n"
+        )
+    else:
+        memory_line = (
+            "learning: explore, take risks you can learn from, and invest heavily in your notebook —\n"
+            f"it is the only memory that persists between games. Your notebook currently has {notebook_lines} lines.\n"
+        )
     return (
         f"=== ArkhamBench: playthrough {k} of {n} ===\n"
         f"This game you are playing {investigator.title()} in scenario '{scenario}'. Investigator-specific\n"
         "strategy notes are in docs_agent/decks_guide.md — read your investigator's section.\n"
         f"You are agent '{label}'. Your benchmark objective is to maximize your AVERAGE SCORE over\n"
         f"the FINAL {final_count} playthroughs (games {first_final}-{n}). Earlier games are for\n"
-        "learning: explore, take risks you can learn from, and invest heavily in your notebook —\n"
-        f"it is the only memory that persists between games. Your notebook currently has {notebook_lines} lines.\n"
+        + memory_line +
         "Your game has already been created (the current run). Play it to completion now, then\n"
         "record your lessons.\n\n"
     )
@@ -100,9 +111,9 @@ def bench_mission(mission: str) -> str:
     )
 
 
-def build_prompt(mission: str, label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str, note: str = "") -> str:
+def build_prompt(mission: str, label: str, k: int, n: int, notebook_lines: int, investigator: str, scenario: str, note: str = "", retained: bool = False) -> str:
     extra = f"\n{note.strip()}\n" if note.strip() else ""
-    return bench_header(label, k, n, notebook_lines, investigator, scenario) + extra + bench_mission(mission)
+    return bench_header(label, k, n, notebook_lines, investigator, scenario, retained) + extra + bench_mission(mission)
 
 
 def build_new_argv(
@@ -137,19 +148,29 @@ command output and docs_agent/ — do not read arkham/, data/, runs/, bench/, or
 state.json/log.jsonl."""
 
 
-def build_agent_argv(agent: str, label: str, prompt: str, max_turns: int) -> list[str]:
-    if agent == "codex":
-        return ["codex", "exec", "-s", "workspace-write", prompt]
-    if agent.startswith("codex:"):
-        # e.g. "codex:gpt-5.6-sol" — codex harness with an explicit model
-        return ["codex", "exec", "-s", "workspace-write", "-m", agent.split(":", 1)[1], prompt]
+def build_agent_argv(
+    agent: str, label: str, prompt: str, max_turns: int,
+    resume_id: str | None = None, retain: bool = False,
+) -> list[str]:
+    if agent == "codex" or agent.startswith("codex:"):
+        model = agent.split(":", 1)[1] if ":" in agent else None
+        if resume_id:
+            # `codex exec resume` has no -s flag; sandbox goes through -c.
+            argv = ["codex", "exec", "resume", resume_id, "-c", 'sandbox_mode="workspace-write"']
+        else:
+            argv = ["codex", "exec", "-s", "workspace-write"]
+        if model:
+            argv += ["-m", model]
+        return argv + [prompt]
     if agent.startswith("openrouter/"):
+        if retain:
+            raise ValueError("--retain-session is not supported for opencode lanes")
         opencode = str(Path.home() / ".opencode" / "bin" / "opencode")
         return [opencode, "run", "-m", agent, prompt + OPENCODE_HARNESS_RULES]
     allowed = f"Bash(./ahlcg:*),Read(docs_agent/**),Read(bench/{label}/notebook.md)"
     # Also hard-block creating new games: the assigned run is the only game.
     disallowed = "Bash(./ahlcg new:*),Read(arkham/**),Read(data/**),Read(tests/**),Read(specs/**),Read(runs/**),Read(bench/**)"
-    return [
+    argv = [
         "claude",
         "-p",
         prompt,
@@ -162,6 +183,12 @@ def build_agent_argv(agent: str, label: str, prompt: str, max_turns: int) -> lis
         "--max-turns",
         str(max_turns),
     ]
+    if retain:
+        # JSON output carries session_id, which the runner needs to chain games.
+        argv += ["--output-format", "json"]
+    if resume_id:
+        argv += ["--resume", resume_id]
+    return argv
 
 
 def build_continue_prompt() -> str:
@@ -443,6 +470,64 @@ def run_streamed(argv: list[str], log_path: Path | None = None, env: dict | None
         return process.wait()
 
 
+CODEX_SESSIONS_DIR = Path.home() / ".codex" / "sessions"
+ROLLOUT_UUID_RE = re.compile(
+    r"rollout-.*-([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.jsonl$"
+)
+
+
+def extract_claude_session(text: str) -> str | None:
+    # --output-format json puts a single JSON object on stdout.
+    try:
+        value = json.loads(text.strip()).get("session_id")
+        return str(value) if value else None
+    except (ValueError, AttributeError):
+        match = re.search(r'"session_id"\s*:\s*"([0-9a-f-]{36})"', text)
+        return match.group(1) if match else None
+
+
+def extract_codex_session(start_epoch: int) -> str | None:
+    # Newest rollout written since this invocation started. Only safe while a
+    # single codex lane is active on the machine — concurrent codex lanes would
+    # race and cross-link sessions.
+    best: tuple[float, str] | None = None
+    for path in CODEX_SESSIONS_DIR.glob("*/*/*/rollout-*.jsonl"):
+        try:
+            mtime = path.stat().st_mtime
+        except OSError:
+            continue
+        if mtime < start_epoch - 5:
+            continue
+        match = ROLLOUT_UUID_RE.search(path.name)
+        if match and (best is None or mtime > best[0]):
+            best = (mtime, match.group(1))
+    return best[1] if best else None
+
+
+def run_captured(argv: list[str], log_path: Path, env: dict | None = None) -> tuple[int, str]:
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    chunks: list[str] = []
+    with log_path.open("a", encoding="utf-8") as handle:
+        handle.write(f"$ {shlex.join(argv)}\n")
+        handle.flush()
+        process = subprocess.Popen(
+            argv,
+            cwd=ROOT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1,
+            env=env,
+        )
+        assert process.stdout is not None
+        for line in process.stdout:
+            handle.write(line)
+            handle.flush()
+            chunks.append(line)
+            print(line, end="")
+        return process.wait(), "".join(chunks)
+
+
 def run_bench(args: argparse.Namespace) -> int:
     games = int(args.games)
     seeds = read_seeds(Path(args.seeds_file), games) if args.seeds_file else default_seeds(games)
@@ -452,6 +537,62 @@ def run_bench(args: argparse.Namespace) -> int:
     label_dir = ROOT / "bench" / args.label
     notebook = label_dir / "notebook.md"
     mission = (ROOT / "docs_agent" / "mission.md").read_text(encoding="utf-8")
+    retain = bool(getattr(args, "retain_session", False))
+    session_path = label_dir / "session.json"
+    session_id: str | None = None
+    if retain and session_path.exists():
+        try:
+            session_id = load_json(session_path).get("session_id") or None
+        except (OSError, ValueError):
+            session_id = None
+
+    def save_session(value: str | None) -> None:
+        session_path.write_text(json.dumps({"session_id": value}) + "\n", encoding="utf-8")
+
+    def note_session_event(message: str) -> None:
+        with (label_dir / "session_events.log").open("a", encoding="utf-8") as handle:
+            handle.write(f"{int(time.time())} {message}\n")
+
+    def invoke_agent(prompt_text: str, log_path: Path, run_dir: Path) -> int:
+        nonlocal session_id
+        if not retain:
+            return run_streamed(
+                build_agent_argv(args.agent, args.label, prompt_text, args.max_turns),
+                log_path,
+                env=agent_env(args.agent, run_dir),
+            )
+        attempt_start = time.monotonic()
+        invoke_epoch = int(time.time())
+        argv = build_agent_argv(
+            args.agent, args.label, prompt_text, args.max_turns,
+            resume_id=session_id, retain=True,
+        )
+        rc, text = run_captured(argv, log_path, env=agent_env(args.agent, run_dir))
+        if rc != 0 and session_id and (time.monotonic() - attempt_start) < 60:
+            # Fast failure on resume = bad/overflowed session. Break the chain
+            # (logged — breaks matter when interpreting the results) and retry
+            # this invocation fresh so the lane keeps moving.
+            note_session_event(f"session-break: resume of {session_id} exited {rc} fast; retrying fresh")
+            session_id = None
+            save_session(None)
+            invoke_epoch = int(time.time())
+            argv = build_agent_argv(
+                args.agent, args.label, prompt_text, args.max_turns,
+                resume_id=None, retain=True,
+            )
+            rc, text = run_captured(argv, log_path, env=agent_env(args.agent, run_dir))
+        if args.agent == "codex" or args.agent.startswith("codex:"):
+            new_id = extract_codex_session(invoke_epoch)
+        else:
+            new_id = extract_claude_session(text)
+        if new_id:
+            session_id = new_id
+            save_session(session_id)
+        else:
+            # Keep the previous id: resuming the last known-good point beats
+            # a full wipe when capture fails (crash before JSON was emitted).
+            note_session_event(f"warning: no session id captured (rc={rc}); keeping {session_id}")
+        return rc
 
     if args.dry_run:
         print(f"label: {args.label}")
@@ -459,9 +600,9 @@ def run_bench(args: argparse.Namespace) -> int:
         for game, seed in enumerate(seeds, start=1):
             investigator = investigator_for_game(rotation, game)
             run_dir = label_dir / game_dir_name(game, games)
-            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note)
+            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note, retained=retain)
             print(shlex.join(build_new_argv(run_dir, seed, args.difficulty, notebook, args.scenario, investigator)))
-            print(shlex.join(build_agent_argv(args.agent, args.label, prompt, args.max_turns)))
+            print(shlex.join(build_agent_argv(args.agent, args.label, prompt, args.max_turns, resume_id=session_id, retain=retain)))
         return 0
 
     with BenchLock(label_dir / ".lock"):
@@ -493,19 +634,15 @@ def run_bench(args: argparse.Namespace) -> int:
                 if new_rc != 0:
                     raise RuntimeError(f"new failed for game {game} with exit {new_rc}")
 
-            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note)
-            rc = run_streamed(build_agent_argv(args.agent, args.label, prompt, args.max_turns), log_path, env=agent_env(args.agent, run_dir))
+            prompt = build_prompt(mission, args.label, game, games, notebook_line_count(notebook), investigator, args.scenario, args.prompt_note, retained=retain)
+            rc = invoke_agent(prompt, log_path, run_dir)
             if rc != 0:
                 print(f"warning: agent exited {rc} for game {game}", file=sys.stderr)
 
             continues = 0
             while not game_completed(run_dir) and run_status(run_dir) == "in_progress" and continues < args.max_continues:
                 continues += 1
-                rc = run_streamed(
-                    build_agent_argv(args.agent, args.label, build_continue_prompt(), args.max_turns),
-                    log_path,
-                    env=agent_env(args.agent, run_dir),
-                )
+                rc = invoke_agent(build_continue_prompt(), log_path, run_dir)
                 if rc != 0:
                     print(f"warning: continue {continues} exited {rc} for game {game}", file=sys.stderr)
 
@@ -546,6 +683,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--seeds-file")
     parser.add_argument("--max-continues", type=int, default=2)
+    parser.add_argument(
+        "--retain-session",
+        action="store_true",
+        help="chain games through one persistent agent session (claude --resume / codex exec resume) "
+        "instead of a fresh session per game; harness auto-compaction manages context",
+    )
     parser.add_argument("--max-turns", type=int, default=500)
     parser.add_argument("--dry-run", action="store_true")
     return parser

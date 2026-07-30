@@ -186,6 +186,27 @@ def cmd_opencode(argv: list[str]) -> int:
 
 
 
+_TS_RE = re.compile(r'"timestamp"\s*:\s*"(\d{4}-\d{2}-\d{2}T[0-9:.]+)(Z|[+-]\d{2}:?\d{2})?"')
+
+
+def _line_in_window(line: str, start: int, end: int) -> bool:
+    """True if the line's own timestamp falls in [start-5, end+300].
+    Lines without a parseable timestamp pass (conservative: old behavior)."""
+    m = _TS_RE.search(line)
+    if not m:
+        return True
+    from datetime import datetime, timezone
+    raw, tz = m.group(1), m.group(2)
+    try:
+        dt = datetime.fromisoformat(raw + ("+00:00" if tz in (None, "Z") else tz))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        epoch = dt.timestamp()
+    except ValueError:
+        return True
+    return start - 5 <= epoch <= end + 300
+
+
 def cmd_harvest(argv: list[str]) -> int:
     """harvest <start_epoch> <end_epoch> <agent> --meta k=v ...
     Generic per-game harvester: dispatches on agent string. Honors meta key
@@ -206,6 +227,10 @@ def cmd_harvest(argv: list[str]) -> int:
                 continue
             for line in text.splitlines():
                 if '"input_tokens"' not in line:
+                    continue
+                # Retained-session rollouts grow across games: filter each event
+                # by its own timestamp, or game N re-ingests games 1..N-1.
+                if not _line_in_window(line, start, end):
                     continue
                 vals = {}
                 for key in split:
@@ -265,6 +290,9 @@ def cmd_harvest(argv: list[str]) -> int:
         for line in f.read_text(encoding="utf-8", errors="replace").splitlines():
             # match dated ids too: "claude-haiku-4-5-20251001" starts with the alias
             if f'"{agent}' not in line or '"usage"' not in line:
+                continue
+            # Retained-session files grow across games (see codex note above).
+            if not _line_in_window(line, start, end):
                 continue
             try:
                 event = json.loads(line)

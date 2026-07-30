@@ -1,0 +1,723 @@
+{"data": {"prompt": "Opening hand: Holy Rosary, Fearless, Forbidden Knowledge, Arcane Studies, Baseball Bat. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 1, "status": "[R1\u00b7Investigation a3/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res5 | dmg0/6 hor0/8 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Set aside Baseball Bat", "option": 6}, "phase": "Investigation", "round": 1, "seq": 2, "type": "decision_made"}
+{"data": {"message": "Bat breaks on skull/autofail; fish for Shrivelling or Flashlight"}, "phase": "Investigation", "round": 1, "seq": 3, "type": "agent_reason"}
+{"data": {"prompt": "Opening hand: Holy Rosary, Fearless, Forbidden Knowledge, Arcane Studies, Baseball Bat. Set aside any number of cards, then draw replacements together."}, "phase": "Investigation", "round": 1, "seq": 4, "status": "[R1\u00b7Investigation a3/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res5 | dmg0/6 hor0/8 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "opening-mulligan", "label": "Keep hand and draw replacements", "option": 1}, "phase": "Investigation", "round": 1, "seq": 5, "type": "decision_made"}
+{"data": {"message": "Confirm"}, "phase": "Investigation", "round": 1, "seq": 6, "type": "agent_reason"}
+{"data": {"drew": ["pc0018"], "message": "Mulliganed Baseball Bat; drew Leather Coat.", "out": ["pc0019"]}, "phase": "Investigation", "round": 1, "seq": 7, "type": "mulligan"}
+{"data": {"message": "Opening hand finalized: Holy Rosary, Fearless, Forbidden Knowledge, Arcane Studies, Leather Coat."}, "phase": "Investigation", "round": 1, "seq": 8, "type": "setup_complete"}
+{"data": {"attic": "return", "cellar": "original", "message": "Setup chose the return Attic and the original Cellar."}, "phase": "Investigation", "round": 1, "seq": 9, "type": "setup_variants"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 10, "status": "[R1\u00b7Investigation a3/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res5 | dmg0/6 hor0/8 | h5 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Holy Rosary (2 res)", "option": 6}, "phase": "Investigation", "round": 1, "seq": 11, "type": "decision_made"}
+{"data": {"message": "Rosary: will 6 and 2-sanity soak ammo"}, "phase": "Investigation", "round": 1, "seq": 12, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Holy Rosary."}, "phase": "Investigation", "round": 1, "seq": 13, "type": "action_spent"}
+{"data": {"card": "pc0006", "message": "Agnes Baker played Holy Rosary."}, "phase": "Investigation", "round": 1, "seq": 14, "type": "card_played"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 1, "seq": 15, "status": "[R1\u00b7Investigation a2/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res3 | dmg0/6 hor0/8 | h4 d28 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Study (Aberrant Gateway): spend 2 actions to draw 3 cards", "option": 5}, "phase": "Investigation", "round": 1, "seq": 16, "type": "decision_made"}
+{"data": {"message": "Gateway draw-3: dig for Shrivelling/clue tech"}, "phase": "Investigation", "round": 1, "seq": 17, "type": "agent_reason"}
+{"data": {"action": "study_draw", "cost": 2, "message": "Spent 2 actions: Study (Aberrant Gateway) - draw 3 cards."}, "phase": "Investigation", "round": 1, "seq": 18, "type": "action_spent"}
+{"data": {"card": "pc0014", "message": "Agnes Baker drew Drawn to the Flame."}, "phase": "Investigation", "round": 1, "seq": 19, "type": "card_drawn"}
+{"data": {"card": "pc0031", "message": "Agnes Baker drew Unexpected Courage."}, "phase": "Investigation", "round": 1, "seq": 20, "type": "card_drawn"}
+{"data": {"card": "pc0002", "message": "Agnes Baker drew Dark Memory."}, "phase": "Investigation", "round": 1, "seq": 21, "type": "card_drawn"}
+{"data": {"message": "The Study's gateway ability drew 3 cards."}, "phase": "Investigation", "round": 1, "seq": 22, "type": "study_draw"}
+{"data": {"card": "pc0002", "message": "Dark Memory was revealed from hand at end of turn."}, "phase": "Investigation", "round": 1, "seq": 23, "type": "dark_memory_revealed"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Agnes Baker] Assign damage/horror from Dark Memory."}, "phase": "Investigation", "round": 1, "seq": 24, "status": "[R1\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res3 | dmg0/6 hor0/8 | h7 d25 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Agnes Baker", "option": 1}, "phase": "Investigation", "round": 1, "seq": 25, "type": "decision_made"}
+{"data": {"message": "1 on Agnes: elder-sign and reaction fuel"}, "phase": "Investigation", "round": 1, "seq": 26, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Agnes Baker.", "target": "roland"}, "phase": "Investigation", "round": 1, "seq": 27, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 1 \u00b7 Investigation \u00b7 Agnes Baker] Assign damage/horror from Dark Memory."}, "phase": "Investigation", "round": 1, "seq": 28, "status": "[R1\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res3 | dmg0/6 hor0/8 | h7 d25 x0 | Act1 Agd1 doom0/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Holy Rosary", "option": 2}, "phase": "Investigation", "round": 1, "seq": 29, "type": "decision_made"}
+{"data": {"message": "1 on Rosary"}, "phase": "Investigation", "round": 1, "seq": 30, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Holy Rosary.", "target": "pc0006"}, "phase": "Investigation", "round": 1, "seq": 31, "type": "damage_assigned"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 1, "seq": 32, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 1, "seq": 33, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 1, "seq": 34, "type": "ready_step"}
+{"data": {"card": "pc0022", "message": "Agnes Baker drew Stray Cat."}, "phase": "Upkeep", "round": 1, "seq": 35, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 1, "seq": 36, "type": "resource_gained"}
+{"data": {"message": "Round 2 began."}, "phase": "Mythos", "round": 2, "seq": 37, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 2, "seq": 38, "type": "doom_placed"}
+{"data": {"card": "ec0026", "message": "Agnes Baker drew encounter card Obscuring Fog."}, "phase": "Mythos", "round": 2, "seq": 39, "type": "encounter_drawn"}
+{"data": {"card": "ec0026", "location": "study", "message": "Obscuring Fog attached to Study (Aberrant Gateway)."}, "phase": "Mythos", "round": 2, "seq": 40, "type": "treachery_attached"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 2, "seq": 41, "type": "phase_started"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 42, "status": "[R2\u00b7Investigation a3/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res4 | dmg0/6 hor1/8 | h8 d24 x0 | Act1 Agd1 doom1/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Dark Memory (2 res)", "option": 10}, "phase": "Investigation", "round": 2, "seq": 43, "type": "decision_made"}
+{"data": {"message": "Stop the 2-horror/turn bleed; the early agenda-1 flip only costs a random discard"}, "phase": "Investigation", "round": 2, "seq": 44, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Dark Memory."}, "phase": "Investigation", "round": 2, "seq": 45, "type": "action_spent"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "Dark Memory"}, "phase": "Investigation", "round": 2, "seq": 46, "type": "doom_placed"}
+{"data": {"card": "pc0002", "message": "Agnes Baker played Dark Memory."}, "phase": "Investigation", "round": 2, "seq": 47, "type": "card_played"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 48, "status": "[R2\u00b7Investigation a2/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu0 res2 | dmg0/6 hor1/8 | h7 d24 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 2, "seq": 49, "type": "decision_made"}
+{"data": {"message": "Toward Bathroom clue"}, "phase": "Investigation", "round": 2, "seq": 50, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 51, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Agnes Baker moved to Guest Hall."}, "phase": "Investigation", "round": 2, "seq": 52, "type": "investigator_moved"}
+{"data": {"location": "guest_hall", "message": "Guest Hall was revealed."}, "phase": "Investigation", "round": 2, "seq": 53, "type": "location_revealed"}
+{"data": {"prompt": "[Round 2 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 2, "seq": 54, "status": "[R2\u00b7Investigation a1/3 | Agnes Baker 01004 | Guest Hall | clu0 res2 | dmg0/6 hor1/8 | h7 d24 x1 | Act1 Agd1 doom2/3]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bathroom", "option": 4}, "phase": "Investigation", "round": 2, "seq": 55, "type": "decision_made"}
+{"data": {"message": "Into Bathroom"}, "phase": "Investigation", "round": 2, "seq": 56, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bathroom."}, "phase": "Investigation", "round": 2, "seq": 57, "type": "action_spent"}
+{"data": {"location": "bathroom", "message": "Agnes Baker moved to Bathroom."}, "phase": "Investigation", "round": 2, "seq": 58, "type": "investigator_moved"}
+{"data": {"location": "bathroom", "message": "Bathroom was revealed."}, "phase": "Investigation", "round": 2, "seq": 59, "type": "location_revealed"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 2, "seq": 60, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 2, "seq": 61, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 2, "seq": 62, "type": "ready_step"}
+{"data": {"card": "pc0032", "message": "Agnes Baker drew Unexpected Courage."}, "phase": "Upkeep", "round": 2, "seq": 63, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 2, "seq": 64, "type": "resource_gained"}
+{"data": {"message": "Round 3 began."}, "phase": "Mythos", "round": 3, "seq": 65, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 3, "seq": 66, "type": "doom_placed"}
+{"data": {"prompt": "Agenda 1 advanced. Choose the back effect."}, "phase": "Mythos", "round": 3, "seq": 67, "status": "[R3\u00b7Mythos | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor1/8 | h8 d23 x1 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "agenda1-back", "label": "Take 2 horror", "option": 2}, "phase": "Mythos", "round": 3, "seq": 68, "type": "decision_made"}
+{"data": {"message": "Agnes horror is ammo: 8-sanity pool + reaction fuel; hand has key tech"}, "phase": "Mythos", "round": 3, "seq": 69, "type": "agent_reason"}
+{"data": {"prompt": "[Round 3 \u00b7 Mythos \u00b7 Agnes Baker] Assign damage/horror from What's Going On?!."}, "phase": "Mythos", "round": 3, "seq": 70, "status": "[R3\u00b7Mythos | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor1/8 | h8 d23 x1 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Holy Rosary", "option": 2}, "phase": "Mythos", "round": 3, "seq": 71, "type": "decision_made"}
+{"data": {"message": "Rosary soaks (2/2, full)"}, "phase": "Mythos", "round": 3, "seq": 72, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Holy Rosary.", "target": "pc0006"}, "phase": "Mythos", "round": 3, "seq": 73, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 3 \u00b7 Mythos \u00b7 Agnes Baker] Assign damage/horror from What's Going On?!."}, "phase": "Mythos", "round": 3, "seq": 74, "status": "[R3\u00b7Mythos | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor1/8 | h8 d23 x1 | Act1 Agd1 doom3/3]", "type": "decision_presented"}
+{"data": {"decision_id": "assign-damage", "label": "Assign 1 horror to Agnes Baker", "option": 1}, "phase": "Mythos", "round": 3, "seq": 75, "type": "decision_made"}
+{"data": {"message": "Second on Agnes (2/8)"}, "phase": "Mythos", "round": 3, "seq": 76, "type": "agent_reason"}
+{"data": {"message": "Assigned 1 horror to Agnes Baker.", "target": "roland"}, "phase": "Mythos", "round": 3, "seq": 77, "type": "damage_assigned"}
+{"data": {"card": "pc0006", "message": "Holy Rosary was discarded."}, "phase": "Mythos", "round": 3, "seq": 78, "type": "asset_discarded"}
+{"data": {"message": "Agenda advanced to Rise of the Ghouls."}, "phase": "Mythos", "round": 3, "seq": 79, "type": "agenda_advanced"}
+{"data": {"card": "ec0003", "message": "Agnes Baker drew encounter card Swarm of Rats."}, "phase": "Mythos", "round": 3, "seq": 80, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats [ec0003] spawned at Bathroom."}, "phase": "Mythos", "round": 3, "seq": 81, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats [ec0003] engaged Agnes Baker."}, "phase": "Mythos", "round": 3, "seq": 82, "type": "enemy_engaged"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 3, "seq": 83, "type": "phase_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 84, "status": "[R3\u00b7Investigation a3/3 | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor2/8 | h8 d23 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Swarm of Rats (fight 1, 1 dmg) \u2014 test Combat(2)", "option": 3}, "phase": "Investigation", "round": 3, "seq": 85, "type": "decision_made"}
+{"data": {"message": "2v1 (62%) kills the 1hp rat; FK line as backup if this misses"}, "phase": "Investigation", "round": 3, "seq": 86, "type": "agent_reason"}
+{"data": {"action": "fight", "cost": 1, "message": "Spent 1 action: Fight Swarm of Rats."}, "phase": "Investigation", "round": 3, "seq": 87, "type": "action_spent"}
+{"data": {"message": "Started combat test 2 vs 1.", "source": "Fight Swarm of Rats"}, "phase": "Investigation", "round": 3, "seq": 88, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight Swarm of Rats (combat vs 1)."}, "phase": "Investigation", "round": 3, "seq": 89, "status": "[R3\u00b7Investigation a2/3 | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor2/8 | h8 d23 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Leather Coat (+1)", "option": 1}, "phase": "Investigation", "round": 3, "seq": 90, "type": "decision_made"}
+{"data": {"message": "Leather Coat +1 (3v1, 81%); coat is low value, UCs are precious"}, "phase": "Investigation", "round": 3, "seq": 91, "type": "agent_reason"}
+{"data": {"card": "pc0018", "message": "Committed Leather Coat."}, "phase": "Investigation", "round": 3, "seq": 92, "type": "card_committed"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight Swarm of Rats (combat vs 1)."}, "phase": "Investigation", "round": 3, "seq": 93, "status": "[R3\u00b7Investigation a2/3 | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor2/8 | h7 d23 x2 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 3, "seq": 94, "type": "decision_made"}
+{"data": {"message": "3v1; reveal"}, "phase": "Investigation", "round": 3, "seq": 95, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Investigation", "round": 3, "seq": 96, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 1, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Fight Swarm of Rats: success by 1 - combat 2 + committed 1 + boosts 0 + token -1 = 2 vs 1.", "modifier": -1, "reveal_effects_applied": true, "skill": "combat", "source": "Fight Swarm of Rats", "success": true, "token": "-1", "value": 2}, "phase": "Investigation", "round": 3, "seq": 97, "type": "skill_test_result"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats took 1 damage."}, "phase": "Investigation", "round": 3, "seq": 98, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0003", "message": "Swarm of Rats was defeated."}, "phase": "Investigation", "round": 3, "seq": 99, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 3, "seq": 100, "status": "[R3\u00b7Investigation a2/3 | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor2/8 | h7 d23 x3 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bathroom (shroud 1, 1 clue here) \u2014 test Intellect(2) vs 1", "option": 1}, "phase": "Investigation", "round": 3, "seq": 101, "type": "decision_made"}
+{"data": {"message": "2v1 Bathroom clue; symbol ends turn but that's acceptable"}, "phase": "Investigation", "round": 3, "seq": 102, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bathroom."}, "phase": "Investigation", "round": 3, "seq": 103, "type": "action_spent"}
+{"data": {"message": "Started intellect test 2 vs 1.", "source": "Investigate Bathroom"}, "phase": "Investigation", "round": 3, "seq": 104, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 3 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Bathroom (intellect vs 1)."}, "phase": "Investigation", "round": 3, "seq": 105, "status": "[R3\u00b7Investigation a1/3 | Agnes Baker 01004 | Bathroom | clu0 res3 | dmg0/6 hor2/8 | h7 d23 x3 | Act1 Agd2 doom0/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 6}, "phase": "Investigation", "round": 3, "seq": 106, "type": "decision_made"}
+{"data": {"message": "62% bare; keep all tech"}, "phase": "Investigation", "round": 3, "seq": 107, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 3, "seq": 108, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 1, "extra_tokens": [], "margin": 1, "message": "Investigate Bathroom: success by 1 - intellect 2 + committed 0 + boosts 0 + token 0 = 2 vs 1.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Bathroom", "success": true, "token": "skull", "value": 2}, "phase": "Investigation", "round": 3, "seq": 109, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Agnes Baker discovered 1 clue."}, "phase": "Investigation", "round": 3, "seq": 110, "type": "clue_discovered"}
+{"data": {"message": "The Bathroom drained all remaining actions; the turn ends."}, "phase": "Investigation", "round": 3, "seq": 111, "type": "bathroom_forced"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 3, "seq": 112, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 3, "seq": 113, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 3, "seq": 114, "type": "ready_step"}
+{"data": {"card": "pc0003", "message": "Agnes Baker drew Forbidden Knowledge."}, "phase": "Upkeep", "round": 3, "seq": 115, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 3, "seq": 116, "type": "resource_gained"}
+{"data": {"message": "Round 4 began."}, "phase": "Mythos", "round": 4, "seq": 117, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 4, "seq": 118, "type": "doom_placed"}
+{"data": {"card": "ec0002", "message": "Agnes Baker drew encounter card Icy Ghoul."}, "phase": "Mythos", "round": 4, "seq": 119, "type": "encounter_drawn"}
+{"data": {"location": "cellar", "message": "Cellar was put into play."}, "phase": "Mythos", "round": 4, "seq": 120, "type": "location_added"}
+{"data": {"location": "cellar", "message": "The Study's gateway pulled Cellar into play."}, "phase": "Mythos", "round": 4, "seq": 121, "type": "study_forced"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul [ec0002] spawned at Cellar."}, "phase": "Mythos", "round": 4, "seq": 122, "type": "enemy_spawned"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 4, "seq": 123, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 124, "status": "[R4\u00b7Investigation a3/3 | Agnes Baker 01004 | Bathroom | clu1 res4 | dmg0/6 hor2/8 | h8 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Forbidden Knowledge (0 res)", "option": 5}, "phase": "Investigation", "round": 4, "seq": 125, "type": "decision_made"}
+{"data": {"message": "FK down: testless snipe engine"}, "phase": "Investigation", "round": 4, "seq": 126, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Forbidden Knowledge."}, "phase": "Investigation", "round": 4, "seq": 127, "type": "action_spent"}
+{"data": {"card": "pc0004", "message": "Agnes Baker played Forbidden Knowledge."}, "phase": "Investigation", "round": 4, "seq": 128, "type": "card_played"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 129, "status": "[R4\u00b7Investigation a2/3 | Agnes Baker 01004 | Bathroom | clu1 res4 | dmg0/6 hor2/8 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 4, "seq": 130, "type": "decision_made"}
+{"data": {"message": "Toward Bedroom"}, "phase": "Investigation", "round": 4, "seq": 131, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 132, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Agnes Baker moved to Guest Hall."}, "phase": "Investigation", "round": 4, "seq": 133, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 4, "seq": 134, "status": "[R4\u00b7Investigation a1/3 | Agnes Baker 01004 | Guest Hall | clu1 res4 | dmg0/6 hor2/8 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Bedroom", "option": 3}, "phase": "Investigation", "round": 4, "seq": 135, "type": "decision_made"}
+{"data": {"message": "Into Bedroom"}, "phase": "Investigation", "round": 4, "seq": 136, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Bedroom."}, "phase": "Investigation", "round": 4, "seq": 137, "type": "action_spent"}
+{"data": {"location": "bedroom", "message": "Agnes Baker moved to Bedroom."}, "phase": "Investigation", "round": 4, "seq": 138, "type": "investigator_moved"}
+{"data": {"location": "bedroom", "message": "Bedroom was revealed."}, "phase": "Investigation", "round": 4, "seq": 139, "type": "location_revealed"}
+{"data": {"prompt": "[Round 4 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 4, "seq": 140, "status": "[R4\u00b7Investigation a0/3 | Agnes Baker 01004 | Bedroom | clu1 res4 | dmg0/6 hor2/8 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 4, "seq": 141, "type": "decision_made"}
+{"data": {"message": "No enemy to snipe; save secrets"}, "phase": "Investigation", "round": 4, "seq": 142, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 4, "seq": 143, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 4, "seq": 144, "status": "[R4\u00b7Enemy | Agnes Baker 01004 | Bedroom | clu1 res4 | dmg0/6 hor2/8 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 4, "seq": 145, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 4, "seq": 146, "type": "agent_reason"}
+{"data": {"prompt": "[Round 4 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 4, "seq": 147, "status": "[R4\u00b7Enemy | Agnes Baker 01004 | Bedroom | clu1 res4 | dmg0/6 hor2/8 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 4, "seq": 148, "type": "decision_made"}
+{"data": {"message": "Pass again"}, "phase": "Enemy", "round": 4, "seq": 149, "type": "agent_reason"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 4, "seq": 150, "type": "phase_started"}
+{"data": {"prompt": "[Round 4 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 4, "seq": 151, "status": "[R4\u00b7Upkeep | Agnes Baker 01004 | Bedroom | clu1 res4 | dmg0/6 hor2/8 | h7 d22 x3 | Act1 Agd2 doom1/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 4, "seq": 152, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 4, "seq": 153, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 4, "seq": 154, "type": "ready_step"}
+{"data": {"card": "pc0010", "message": "Agnes Baker drew Arcane Studies."}, "phase": "Upkeep", "round": 4, "seq": 155, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 4, "seq": 156, "type": "resource_gained"}
+{"data": {"message": "Round 5 began."}, "phase": "Mythos", "round": 5, "seq": 157, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 5, "seq": 158, "type": "doom_placed"}
+{"data": {"card": "ec0019", "message": "Agnes Baker drew encounter card Dissonant Voices."}, "phase": "Mythos", "round": 5, "seq": 159, "type": "encounter_drawn"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices entered Agnes Baker's threat area."}, "phase": "Mythos", "round": 5, "seq": 160, "type": "treachery_threat"}
+{"data": {"prompt": "[Round 5 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 5, "seq": 161, "status": "[R5\u00b7Mythos | Agnes Baker 01004 | Bedroom | clu1 res5 | dmg0/6 hor2/8 | h8 d21 x3 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 5, "seq": 162, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Mythos", "round": 5, "seq": 163, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 5, "seq": 164, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 165, "status": "[R5\u00b7Investigation a3/3 | Agnes Baker 01004 | Bedroom | clu1 res5 | dmg0/6 hor2/8 | h8 d21 x3 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Bedroom (shroud 2, 1 clue here) \u2014 test Intellect(2) vs 2", "option": 1}, "phase": "Investigation", "round": 5, "seq": 166, "type": "decision_made"}
+{"data": {"message": "Bedroom clue; committing UC for 4v2"}, "phase": "Investigation", "round": 5, "seq": 167, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Bedroom."}, "phase": "Investigation", "round": 5, "seq": 168, "type": "action_spent"}
+{"data": {"message": "Started intellect test 2 vs 2.", "source": "Investigate Bedroom"}, "phase": "Investigation", "round": 5, "seq": 169, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Bedroom (intellect vs 2)."}, "phase": "Investigation", "round": 5, "seq": 170, "status": "[R5\u00b7Investigation a2/3 | Agnes Baker 01004 | Bedroom | clu1 res5 | dmg0/6 hor2/8 | h8 d21 x3 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Unexpected Courage (+2)", "option": 3}, "phase": "Investigation", "round": 5, "seq": 171, "type": "decision_made"}
+{"data": {"message": "UC: 4v2, fail = random discard so buy the margin"}, "phase": "Investigation", "round": 5, "seq": 172, "type": "agent_reason"}
+{"data": {"card": "pc0031", "message": "Committed Unexpected Courage."}, "phase": "Investigation", "round": 5, "seq": 173, "type": "card_committed"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Bedroom (intellect vs 2)."}, "phase": "Investigation", "round": 5, "seq": 174, "status": "[R5\u00b7Investigation a2/3 | Agnes Baker 01004 | Bedroom | clu1 res5 | dmg0/6 hor2/8 | h7 d21 x3 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 5}, "phase": "Investigation", "round": 5, "seq": 175, "type": "decision_made"}
+{"data": {"message": "Reveal at 4v2"}, "phase": "Investigation", "round": 5, "seq": 176, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 5, "seq": 177, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 2, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Investigate Bedroom: success by 0 - intellect 2 + committed 2 + boosts 0 + token -2 = 2 vs 2.", "modifier": -2, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Bedroom", "success": true, "token": "-2", "value": 2}, "phase": "Investigation", "round": 5, "seq": 178, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Agnes Baker discovered 1 clue."}, "phase": "Investigation", "round": 5, "seq": 179, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 180, "status": "[R5\u00b7Investigation a2/3 | Agnes Baker 01004 | Bedroom | clu2 res5 | dmg0/6 hor2/8 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 5, "seq": 181, "type": "decision_made"}
+{"data": {"message": "Toward Study for DttF"}, "phase": "Investigation", "round": 5, "seq": 182, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 5, "seq": 183, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Agnes Baker moved to Guest Hall."}, "phase": "Investigation", "round": 5, "seq": 184, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 5, "seq": 185, "status": "[R5\u00b7Investigation a1/3 | Agnes Baker 01004 | Guest Hall | clu2 res5 | dmg0/6 hor2/8 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Study (Aberrant Gateway)", "option": 2}, "phase": "Investigation", "round": 5, "seq": 186, "type": "decision_made"}
+{"data": {"message": "Into Study"}, "phase": "Investigation", "round": 5, "seq": 187, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Study (Aberrant Gateway)."}, "phase": "Investigation", "round": 5, "seq": 188, "type": "action_spent"}
+{"data": {"location": "study", "message": "Agnes Baker moved to Study (Aberrant Gateway)."}, "phase": "Investigation", "round": 5, "seq": 189, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 5 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 5, "seq": 190, "status": "[R5\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu2 res5 | dmg0/6 hor2/8 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 5, "seq": 191, "type": "decision_made"}
+{"data": {"message": "End turn at Study; DttF tomorrow (Dissonant Voices expires)"}, "phase": "Investigation", "round": 5, "seq": 192, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 5, "seq": 193, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 5, "seq": 194, "status": "[R5\u00b7Enemy | Agnes Baker 01004 | Study (Aberrant Gateway) | clu2 res5 | dmg0/6 hor2/8 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 5, "seq": 195, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 5, "seq": 196, "type": "agent_reason"}
+{"data": {"prompt": "[Round 5 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 5, "seq": 197, "status": "[R5\u00b7Enemy | Agnes Baker 01004 | Study (Aberrant Gateway) | clu2 res5 | dmg0/6 hor2/8 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 5, "seq": 198, "type": "decision_made"}
+{"data": {"message": "Pass upkeep window"}, "phase": "Enemy", "round": 5, "seq": 199, "type": "agent_reason"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 5, "seq": 200, "type": "phase_started"}
+{"data": {"prompt": "[Round 5 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 5, "seq": 201, "status": "[R5\u00b7Upkeep | Agnes Baker 01004 | Study (Aberrant Gateway) | clu2 res5 | dmg0/6 hor2/8 | h7 d21 x4 | Act1 Agd2 doom2/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 5, "seq": 202, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 5, "seq": 203, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 5, "seq": 204, "type": "ready_step"}
+{"data": {"card": "pc0029", "message": "Agnes Baker drew Overpower."}, "phase": "Upkeep", "round": 5, "seq": 205, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 5, "seq": 206, "type": "resource_gained"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices was discarded at end of round."}, "phase": "Upkeep", "round": 5, "seq": 207, "type": "treachery_discarded"}
+{"data": {"message": "Round 6 began."}, "phase": "Mythos", "round": 6, "seq": 208, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 6, "seq": 209, "type": "doom_placed"}
+{"data": {"card": "ec0017", "message": "Agnes Baker drew encounter card Frozen in Fear."}, "phase": "Mythos", "round": 6, "seq": 210, "type": "encounter_drawn"}
+{"data": {"card": "ec0017", "message": "Frozen in Fear entered Agnes Baker's threat area."}, "phase": "Mythos", "round": 6, "seq": 211, "type": "treachery_threat"}
+{"data": {"prompt": "[Round 6 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 6, "seq": 212, "status": "[R6\u00b7Mythos | Agnes Baker 01004 | Study (Aberrant Gateway) | clu2 res6 | dmg0/6 hor2/8 | h8 d20 x4 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 6, "seq": 213, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Mythos", "round": 6, "seq": 214, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 6, "seq": 215, "type": "phase_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 216, "status": "[R6\u00b7Investigation a3/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu2 res6 | dmg0/6 hor2/8 | h8 d20 x4 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Drawn to the Flame (0 res)", "option": 8}, "phase": "Investigation", "round": 6, "seq": 217, "type": "decision_made"}
+{"data": {"message": "DttF: testless Study clue through the shroud-5 fog; act 1 complete"}, "phase": "Investigation", "round": 6, "seq": 218, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Drawn to the Flame."}, "phase": "Investigation", "round": 6, "seq": 219, "type": "action_spent"}
+{"data": {"card": "ec0009", "message": "Agnes Baker drew encounter card Acolyte of Um\u00f4rdhoth."}, "phase": "Investigation", "round": 6, "seq": 220, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] spawned at Study (Aberrant Gateway)."}, "phase": "Investigation", "round": 6, "seq": 221, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] engaged Agnes Baker."}, "phase": "Investigation", "round": 6, "seq": 222, "type": "enemy_engaged"}
+{"data": {"card": "pc0014", "message": "Agnes Baker played Drawn to the Flame."}, "phase": "Investigation", "round": 6, "seq": 223, "type": "card_played"}
+{"data": {"amount": 1, "message": "Drawn to the Flame discovered 1 clue."}, "phase": "Investigation", "round": 6, "seq": 224, "type": "drawn_to_the_flame"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 6, "seq": 225, "status": "[R6\u00b7Investigation a2/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res6 | dmg0/6 hor2/8 | h7 d20 x5 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Evade Acolyte of Um\u00f4rdhoth (evade 2) \u2014 test Agility(3)", "option": 4}, "phase": "Investigation", "round": 6, "seq": 226, "type": "decision_made"}
+{"data": {"message": "Evade 3v2; fail costs only the action"}, "phase": "Investigation", "round": 6, "seq": 227, "type": "agent_reason"}
+{"data": {"action": "evade", "cost": 2, "message": "Spent 2 actions: Evade Acolyte of Um\u00f4rdhoth."}, "phase": "Investigation", "round": 6, "seq": 228, "type": "action_spent"}
+{"data": {"message": "Started agility test 3 vs 2.", "source": "Evade Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 6, "seq": 229, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Evade Acolyte of Um\u00f4rdhoth (agility vs 2)."}, "phase": "Investigation", "round": 6, "seq": 230, "status": "[R6\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res6 | dmg0/6 hor2/8 | h7 d20 x5 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Unexpected Courage (+2)", "option": 2}, "phase": "Investigation", "round": 6, "seq": 231, "type": "decision_made"}
+{"data": {"message": "Frozen ate 2 actions; make this evade stick at 5v2"}, "phase": "Investigation", "round": 6, "seq": 232, "type": "agent_reason"}
+{"data": {"card": "pc0032", "message": "Committed Unexpected Courage."}, "phase": "Investigation", "round": 6, "seq": 233, "type": "card_committed"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Evade Acolyte of Um\u00f4rdhoth (agility vs 2)."}, "phase": "Investigation", "round": 6, "seq": 234, "status": "[R6\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res6 | dmg0/6 hor2/8 | h6 d20 x5 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 6, "seq": 235, "type": "decision_made"}
+{"data": {"message": "5v2; reveal"}, "phase": "Investigation", "round": 6, "seq": 236, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 6, "seq": 237, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 3, "boosts": 0, "committed_icons": 2, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Evade Acolyte of Um\u00f4rdhoth: success by 0 - agility 3 + committed 2 + boosts 0 + token -3 = 2 vs 2.", "modifier": -3, "reveal_effects_applied": true, "skill": "agility", "source": "Evade Acolyte of Um\u00f4rdhoth", "success": true, "token": "-3", "value": 2}, "phase": "Investigation", "round": 6, "seq": 238, "type": "skill_test_result"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] disengaged."}, "phase": "Investigation", "round": 6, "seq": 239, "type": "enemy_disengaged"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] exhausted after being evaded."}, "phase": "Investigation", "round": 6, "seq": 240, "type": "enemy_exhausted"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 6, "seq": 241, "status": "[R6\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res6 | dmg0/6 hor2/8 | h6 d20 x6 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Use Forbidden Knowledge (4 secrets)", "option": 1}, "phase": "Investigation", "round": 6, "seq": 242, "type": "decision_made"}
+{"data": {"message": "FK snipe: 1 horror to me, reaction chips the exhausted Acolyte to 2/3, +1 res"}, "phase": "Investigation", "round": 6, "seq": 243, "type": "agent_reason"}
+{"data": {"message": "Agnes Baker took 0 damage and 1 horror.", "source": "Forbidden Knowledge"}, "phase": "Investigation", "round": 6, "seq": 244, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker] Use Agnes Baker reaction after horror was placed?"}, "phase": "Investigation", "round": 6, "seq": 245, "status": "[R6\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res6 | dmg0/6 hor3/8 | h6 d20 x6 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "agnes-after-horror", "label": "Deal 1 damage to Acolyte of Um\u00f4rdhoth", "option": 1}, "phase": "Investigation", "round": 6, "seq": 246, "type": "decision_made"}
+{"data": {"message": "Reaction snipe: Acolyte 1/3... wait 2/3 remaining"}, "phase": "Investigation", "round": 6, "seq": 247, "type": "agent_reason"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth took 1 damage."}, "phase": "Investigation", "round": 6, "seq": 248, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0009", "message": "Agnes dealt 1 damage after horror was placed."}, "phase": "Investigation", "round": 6, "seq": 249, "type": "agnes_reaction"}
+{"data": {"card": "pc0004", "message": "Forbidden Knowledge moved 1 secret to the resource pool."}, "phase": "Investigation", "round": 6, "seq": 250, "type": "forbidden_knowledge"}
+{"data": {"message": "Started willpower test 5 vs 3.", "source": "Frozen in Fear"}, "phase": "Investigation", "round": 6, "seq": 251, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 6 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Frozen in Fear (willpower vs 3)."}, "phase": "Investigation", "round": 6, "seq": 252, "status": "[R6\u00b7Investigation a0/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res7 | dmg0/6 hor3/8 | h6 d20 x6 | Act1 Agd2 doom3/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 4}, "phase": "Investigation", "round": 6, "seq": 253, "type": "decision_made"}
+{"data": {"message": "5v3 bare, 81%"}, "phase": "Investigation", "round": 6, "seq": 254, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 6, "seq": 255, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Frozen in Fear: success by 3 - willpower 5 + committed 0 + boosts 0 + token 1 = 6 vs 3.", "modifier": 1, "reveal_effects_applied": true, "skill": "willpower", "source": "Frozen in Fear", "success": true, "token": "+1", "value": 6}, "phase": "Investigation", "round": 6, "seq": 256, "type": "skill_test_result"}
+{"data": {"card": "ec0017", "message": "Frozen in Fear was discarded."}, "phase": "Investigation", "round": 6, "seq": 257, "type": "treachery_discarded"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 6, "seq": 258, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 6, "seq": 259, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 6, "seq": 260, "type": "ready_step"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] engaged Agnes Baker."}, "phase": "Upkeep", "round": 6, "seq": 261, "type": "enemy_engaged"}
+{"data": {"card": "pc0033", "message": "Agnes Baker drew Haunted."}, "phase": "Upkeep", "round": 6, "seq": 262, "type": "card_drawn"}
+{"data": {"card": "pc0033", "message": "Haunted entered the threat area."}, "phase": "Upkeep", "round": 6, "seq": 263, "type": "weakness_revealed"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 6, "seq": 264, "type": "resource_gained"}
+{"data": {"message": "Round 7 began."}, "phase": "Mythos", "round": 7, "seq": 265, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 7, "seq": 266, "type": "doom_placed"}
+{"data": {"card": "ec0029", "message": "Agnes Baker drew encounter card Corpse-Hungry Ghoul."}, "phase": "Mythos", "round": 7, "seq": 267, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul [ec0029] spawned at Bedroom."}, "phase": "Mythos", "round": 7, "seq": 268, "type": "enemy_spawned"}
+{"data": {"prompt": "[Round 7 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 7, "seq": 269, "status": "[R7\u00b7Mythos | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res8 | dmg0/6 hor3/8 | h6 d19 x6 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Use Forbidden Knowledge (3 secrets)", "option": 1}, "phase": "Mythos", "round": 7, "seq": 270, "type": "decision_made"}
+{"data": {"message": "FK snipe: Acolyte to 1/3"}, "phase": "Mythos", "round": 7, "seq": 271, "type": "agent_reason"}
+{"data": {"message": "Agnes Baker took 0 damage and 1 horror.", "source": "Forbidden Knowledge"}, "phase": "Mythos", "round": 7, "seq": 272, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 7 \u00b7 Mythos \u00b7 Agnes Baker] Use Agnes Baker reaction after horror was placed?"}, "phase": "Mythos", "round": 7, "seq": 273, "status": "[R7\u00b7Mythos | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res8 | dmg0/6 hor4/8 | h6 d19 x6 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "agnes-after-horror", "label": "Deal 1 damage to Acolyte of Um\u00f4rdhoth", "option": 1}, "phase": "Mythos", "round": 7, "seq": 274, "type": "decision_made"}
+{"data": {"message": "Snipe"}, "phase": "Mythos", "round": 7, "seq": 275, "type": "agent_reason"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth took 1 damage."}, "phase": "Mythos", "round": 7, "seq": 276, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0009", "message": "Agnes dealt 1 damage after horror was placed."}, "phase": "Mythos", "round": 7, "seq": 277, "type": "agnes_reaction"}
+{"data": {"card": "pc0004", "message": "Forbidden Knowledge moved 1 secret to the resource pool."}, "phase": "Mythos", "round": 7, "seq": 278, "type": "forbidden_knowledge"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 7, "seq": 279, "type": "phase_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 280, "status": "[R7\u00b7Investigation a3/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res9 | dmg0/6 hor4/8 | h6 d19 x6 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Discard Haunted (2 actions)", "option": 8}, "phase": "Investigation", "round": 7, "seq": 281, "type": "decision_made"}
+{"data": {"message": "Clear -1-all-skills; the AoO horror fuels my reaction to finish the 1hp Acolyte"}, "phase": "Investigation", "round": 7, "seq": 282, "type": "agent_reason"}
+{"data": {"action": "discard_haunted", "cost": 2, "message": "Spent 2 actions: Discard Haunted."}, "phase": "Investigation", "round": 7, "seq": 283, "type": "action_spent"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth [ec0009] attacked Agnes Baker.", "source": "attack of opportunity"}, "phase": "Investigation", "round": 7, "seq": 284, "type": "enemy_attack"}
+{"data": {"message": "Agnes Baker took 1 damage and 1 horror.", "source": "Acolyte of Um\u00f4rdhoth"}, "phase": "Investigation", "round": 7, "seq": 285, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Agnes Baker] Use Agnes Baker reaction after horror was placed?"}, "phase": "Investigation", "round": 7, "seq": 286, "status": "[R7\u00b7Investigation a1/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res9 | dmg1/6 hor5/8 | h6 d19 x6 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "agnes-after-horror", "label": "Deal 1 damage to Acolyte of Um\u00f4rdhoth", "option": 1}, "phase": "Investigation", "round": 7, "seq": 287, "type": "decision_made"}
+{"data": {"message": "Reaction kills the Acolyte"}, "phase": "Investigation", "round": 7, "seq": 288, "type": "agent_reason"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth took 1 damage."}, "phase": "Investigation", "round": 7, "seq": 289, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0009", "message": "Acolyte of Um\u00f4rdhoth was defeated."}, "phase": "Investigation", "round": 7, "seq": 290, "type": "enemy_defeated"}
+{"data": {"enemy": "ec0009", "message": "Agnes dealt 1 damage after horror was placed."}, "phase": "Investigation", "round": 7, "seq": 291, "type": "agnes_reaction"}
+{"data": {"card": "pc0033", "message": "Haunted was discarded."}, "phase": "Investigation", "round": 7, "seq": 292, "type": "treachery_discarded"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 7, "seq": 293, "status": "[R7\u00b7Investigation a1/3 | Agnes Baker 01004 | Study (Aberrant Gateway) | clu3 res9 | dmg1/6 hor5/8 | h6 d19 x7 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 2}, "phase": "Investigation", "round": 7, "seq": 294, "type": "decision_made"}
+{"data": {"message": "To Guest Hall; advance act in the free window"}, "phase": "Investigation", "round": 7, "seq": 295, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 7, "seq": 296, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Agnes Baker moved to Guest Hall."}, "phase": "Investigation", "round": 7, "seq": 297, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 7, "seq": 298, "status": "[R7\u00b7Investigation a0/3 | Agnes Baker 01004 | Guest Hall | clu3 res9 | dmg1/6 hor5/8 | h6 d19 x7 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Advance act by spending 3 clues", "option": 1}, "phase": "Investigation", "round": 7, "seq": 299, "type": "decision_made"}
+{"data": {"message": "Advance; wall test at will 5 with UC backup"}, "phase": "Investigation", "round": 7, "seq": 300, "type": "agent_reason"}
+{"data": {"amount": 3, "message": "Agnes Baker spent 3 clue."}, "phase": "Investigation", "round": 7, "seq": 301, "type": "clues_spent"}
+{"data": {"location": "hallway", "message": "Hole in the Wall was put into play."}, "phase": "Investigation", "round": 7, "seq": 302, "type": "location_added"}
+{"data": {"message": "Agnes Baker moved into the Hole in the Wall."}, "phase": "Investigation", "round": 7, "seq": 303, "type": "forced_move"}
+{"data": {"location": "hallway", "message": "Hallway was revealed."}, "phase": "Investigation", "round": 7, "seq": 304, "type": "location_revealed"}
+{"data": {"location": "attic", "message": "Attic was put into play."}, "phase": "Investigation", "round": 7, "seq": 305, "type": "location_added"}
+{"data": {"location": "parlor", "message": "Parlor was put into play."}, "phase": "Investigation", "round": 7, "seq": 306, "type": "location_added"}
+{"data": {"message": "Started willpower test 5 vs 4.", "source": "Breaking the Wall"}, "phase": "Investigation", "round": 7, "seq": 307, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 7 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Breaking the Wall (willpower vs 4)."}, "phase": "Investigation", "round": 7, "seq": 308, "status": "[R7\u00b7Investigation a0/3 | Agnes Baker 01004 | Hallway | clu0 res9 | dmg1/6 hor5/8 | h6 d19 x7 | Act1 Agd2 doom4/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 4}, "phase": "Investigation", "round": 7, "seq": 309, "type": "decision_made"}
+{"data": {"message": "5v4 (69%); fail only discards from a modest hand"}, "phase": "Investigation", "round": 7, "seq": 310, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 7, "seq": 311, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Breaking the Wall: failure by 1 - willpower 5 + committed 0 + boosts 0 + token -2 = 3 vs 4.", "modifier": -2, "reveal_effects_applied": true, "skill": "willpower", "source": "Breaking the Wall", "success": false, "token": "-2", "value": 3}, "phase": "Investigation", "round": 7, "seq": 312, "type": "skill_test_result"}
+{"data": {"card": "pc0029", "message": "Breaking the Wall forced a random discard of Overpower."}, "phase": "Investigation", "round": 7, "seq": 313, "type": "card_discarded"}
+{"data": {"message": "Act advanced to The Barrier."}, "phase": "Investigation", "round": 7, "seq": 314, "type": "act_advanced"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 7, "seq": 315, "type": "phase_started"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul [ec0029] moved to Guest Hall."}, "phase": "Enemy", "round": 7, "seq": 316, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 7, "seq": 317, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 7, "seq": 318, "type": "ready_step"}
+{"data": {"card": "pc0008", "message": "Agnes Baker drew Shrivelling."}, "phase": "Upkeep", "round": 7, "seq": 319, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 7, "seq": 320, "type": "resource_gained"}
+{"data": {"message": "Round 8 began."}, "phase": "Mythos", "round": 8, "seq": 321, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 8, "seq": 322, "type": "doom_placed"}
+{"data": {"card": "ec0014", "message": "Agnes Baker drew encounter card Rotting Remains."}, "phase": "Mythos", "round": 8, "seq": 323, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 5 vs 3.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 8, "seq": 324, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Mythos \u00b7 Agnes Baker] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 8, "seq": 325, "status": "[R8\u00b7Mythos | Agnes Baker 01004 | Hallway | clu0 res10 | dmg1/6 hor5/8 | h6 d18 x8 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Fearless (+1)", "option": 1}, "phase": "Mythos", "round": 8, "seq": 326, "type": "decision_made"}
+{"data": {"message": "Fearless: 6v3 and heals 1 horror on success"}, "phase": "Mythos", "round": 8, "seq": 327, "type": "agent_reason"}
+{"data": {"card": "pc0016", "message": "Committed Fearless."}, "phase": "Mythos", "round": 8, "seq": 328, "type": "card_committed"}
+{"data": {"prompt": "[Round 8 \u00b7 Mythos \u00b7 Agnes Baker] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 8, "seq": 329, "status": "[R8\u00b7Mythos | Agnes Baker 01004 | Hallway | clu0 res10 | dmg1/6 hor5/8 | h5 d18 x8 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Mythos", "round": 8, "seq": 330, "type": "decision_made"}
+{"data": {"message": "Reveal at 6v3"}, "phase": "Mythos", "round": 8, "seq": 331, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Mythos", "round": 8, "seq": 332, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Rotting Remains: success by 3 - willpower 5 + committed 1 + boosts 0 + token 0 = 6 vs 3.", "modifier": 0, "reveal_effects_applied": true, "skill": "willpower", "source": "Rotting Remains", "success": true, "token": "skull", "value": 6}, "phase": "Mythos", "round": 8, "seq": 333, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Agnes Baker healed 1 horror."}, "phase": "Mythos", "round": 8, "seq": 334, "type": "horror_healed"}
+{"data": {"prompt": "[Round 8 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 8, "seq": 335, "status": "[R8\u00b7Mythos | Agnes Baker 01004 | Hallway | clu0 res10 | dmg1/6 hor4/8 | h5 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 8, "seq": 336, "type": "decision_made"}
+{"data": {"message": "Pass window"}, "phase": "Mythos", "round": 8, "seq": 337, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 8, "seq": 338, "type": "phase_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 339, "status": "[R8\u00b7Investigation a3/3 | Agnes Baker 01004 | Hallway | clu0 res10 | dmg1/6 hor4/8 | h5 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Play Shrivelling (3 res)", "option": 11}, "phase": "Investigation", "round": 8, "seq": 340, "type": "decision_made"}
+{"data": {"message": "Shrivelling: fight at will 5, +1 dmg"}, "phase": "Investigation", "round": 8, "seq": 341, "type": "agent_reason"}
+{"data": {"action": "play", "cost": 1, "message": "Spent 1 action: Play Shrivelling."}, "phase": "Investigation", "round": 8, "seq": 342, "type": "action_spent"}
+{"data": {"card": "pc0008", "message": "Agnes Baker played Shrivelling."}, "phase": "Investigation", "round": 8, "seq": 343, "type": "card_played"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 344, "status": "[R8\u00b7Investigation a2/3 | Agnes Baker 01004 | Hallway | clu0 res7 | dmg1/6 hor4/8 | h4 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Guest Hall", "option": 3}, "phase": "Investigation", "round": 8, "seq": 345, "type": "decision_made"}
+{"data": {"message": "Intercept the hunter with a swing ready"}, "phase": "Investigation", "round": 8, "seq": 346, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Guest Hall."}, "phase": "Investigation", "round": 8, "seq": 347, "type": "action_spent"}
+{"data": {"location": "guest_hall", "message": "Agnes Baker moved to Guest Hall."}, "phase": "Investigation", "round": 8, "seq": 348, "type": "investigator_moved"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul [ec0029] engaged Agnes Baker."}, "phase": "Investigation", "round": 8, "seq": 349, "type": "enemy_engaged"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 8, "seq": 350, "status": "[R8\u00b7Investigation a1/3 | Agnes Baker 01004 | Guest Hall | clu0 res7 | dmg1/6 hor4/8 | h4 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Corpse-Hungry Ghoul with Shrivelling (4 charges) \u2014 test Willpower(5) vs 4, 2 dmg", "option": 9}, "phase": "Investigation", "round": 8, "seq": 351, "type": "decision_made"}
+{"data": {"message": "Shrivelling 5v4: 2 dmg, and symbol-horror would trigger reaction for the 3rd"}, "phase": "Investigation", "round": 8, "seq": 352, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Shrivelling (target: Corpse-Hungry Ghoul)."}, "phase": "Investigation", "round": 8, "seq": 353, "type": "action_spent"}
+{"data": {"message": "Started willpower test 5 vs 4.", "source": "Fight with Shrivelling"}, "phase": "Investigation", "round": 8, "seq": 354, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 4)."}, "phase": "Investigation", "round": 8, "seq": 355, "status": "[R8\u00b7Investigation a0/3 | Agnes Baker 01004 | Guest Hall | clu0 res7 | dmg1/6 hor4/8 | h4 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 8, "seq": 356, "type": "decision_made"}
+{"data": {"message": "62% bare; misses don't hurt (no retaliate)"}, "phase": "Investigation", "round": 8, "seq": 357, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed eldersign.", "modifier": 4, "token": "eldersign"}, "phase": "Investigation", "round": 8, "seq": 358, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 5, "message": "Fight with Shrivelling: success by 5 - willpower 5 + committed 0 + boosts 0 + token 4 = 9 vs 4.", "modifier": 4, "reveal_effects_applied": true, "skill": "willpower", "source": "Fight with Shrivelling", "success": true, "token": "eldersign", "value": 9}, "phase": "Investigation", "round": 8, "seq": 359, "type": "skill_test_result"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul took 2 damage."}, "phase": "Investigation", "round": 8, "seq": 360, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 8, "seq": 361, "status": "[R8\u00b7Investigation a0/3 | Agnes Baker 01004 | Guest Hall | clu0 res7 | dmg1/6 hor4/8 | h4 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Use Forbidden Knowledge (2 secrets)", "option": 1}, "phase": "Investigation", "round": 8, "seq": 362, "type": "decision_made"}
+{"data": {"message": "FK snipe to 3/4; its attack tonight triggers my fresh enemy-phase reaction = dead"}, "phase": "Investigation", "round": 8, "seq": 363, "type": "agent_reason"}
+{"data": {"message": "Agnes Baker took 0 damage and 1 horror.", "source": "Forbidden Knowledge"}, "phase": "Investigation", "round": 8, "seq": 364, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 8 \u00b7 Investigation \u00b7 Agnes Baker] Use Agnes Baker reaction after horror was placed?"}, "phase": "Investigation", "round": 8, "seq": 365, "status": "[R8\u00b7Investigation a0/3 | Agnes Baker 01004 | Guest Hall | clu0 res7 | dmg1/6 hor5/8 | h4 d18 x9 | Act2 Agd2 doom5/7]", "type": "decision_presented"}
+{"data": {"decision_id": "agnes-after-horror", "label": "Deal 1 damage to Corpse-Hungry Ghoul", "option": 1}, "phase": "Investigation", "round": 8, "seq": 366, "type": "decision_made"}
+{"data": {"message": "Snipe: CH 3/4"}, "phase": "Investigation", "round": 8, "seq": 367, "type": "agent_reason"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul took 1 damage."}, "phase": "Investigation", "round": 8, "seq": 368, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0029", "message": "Corpse-Hungry Ghoul was defeated."}, "phase": "Investigation", "round": 8, "seq": 369, "type": "enemy_defeated"}
+{"data": {"enemy": "ec0029", "message": "Agnes dealt 1 damage after horror was placed."}, "phase": "Investigation", "round": 8, "seq": 370, "type": "agnes_reaction"}
+{"data": {"card": "pc0004", "message": "Forbidden Knowledge moved 1 secret to the resource pool."}, "phase": "Investigation", "round": 8, "seq": 371, "type": "forbidden_knowledge"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 8, "seq": 372, "type": "phase_started"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 8, "seq": 373, "type": "phase_started"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 8, "seq": 374, "type": "ready_step"}
+{"data": {"card": "pc0017", "message": "Agnes Baker drew Leather Coat."}, "phase": "Upkeep", "round": 8, "seq": 375, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 8, "seq": 376, "type": "resource_gained"}
+{"data": {"message": "Round 9 began."}, "phase": "Mythos", "round": 9, "seq": 377, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 9, "seq": 378, "type": "doom_placed"}
+{"data": {"card": "ec0004", "message": "Agnes Baker drew encounter card Swarm of Rats."}, "phase": "Mythos", "round": 9, "seq": 379, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats [ec0004] spawned at Guest Hall."}, "phase": "Mythos", "round": 9, "seq": 380, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats [ec0004] engaged Agnes Baker."}, "phase": "Mythos", "round": 9, "seq": 381, "type": "enemy_engaged"}
+{"data": {"prompt": "[Round 9 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 9, "seq": 382, "status": "[R9\u00b7Mythos | Agnes Baker 01004 | Guest Hall | clu0 res9 | dmg1/6 hor5/8 | h5 d17 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 9, "seq": 383, "type": "decision_made"}
+{"data": {"message": "Sanity 5/8 is the endgame budget; fight the rat with actions instead"}, "phase": "Mythos", "round": 9, "seq": 384, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 9, "seq": 385, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 386, "status": "[R9\u00b7Investigation a3/3 | Agnes Baker 01004 | Guest Hall | clu0 res9 | dmg1/6 hor5/8 | h5 d17 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Swarm of Rats (fight 1, 1 dmg) \u2014 test Combat(2)", "option": 6}, "phase": "Investigation", "round": 9, "seq": 387, "type": "decision_made"}
+{"data": {"message": "Save Shrivelling charges for Victory targets; 2v1 bare"}, "phase": "Investigation", "round": 9, "seq": 388, "type": "agent_reason"}
+{"data": {"action": "fight", "cost": 1, "message": "Spent 1 action: Fight Swarm of Rats."}, "phase": "Investigation", "round": 9, "seq": 389, "type": "action_spent"}
+{"data": {"message": "Started combat test 2 vs 1.", "source": "Fight Swarm of Rats"}, "phase": "Investigation", "round": 9, "seq": 390, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight Swarm of Rats (combat vs 1)."}, "phase": "Investigation", "round": 9, "seq": 391, "status": "[R9\u00b7Investigation a2/3 | Agnes Baker 01004 | Guest Hall | clu0 res9 | dmg1/6 hor5/8 | h5 d17 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Leather Coat (+1)", "option": 1}, "phase": "Investigation", "round": 9, "seq": 392, "type": "decision_made"}
+{"data": {"message": "Coat +1 for 81%"}, "phase": "Investigation", "round": 9, "seq": 393, "type": "agent_reason"}
+{"data": {"card": "pc0017", "message": "Committed Leather Coat."}, "phase": "Investigation", "round": 9, "seq": 394, "type": "card_committed"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight Swarm of Rats (combat vs 1)."}, "phase": "Investigation", "round": 9, "seq": 395, "status": "[R9\u00b7Investigation a2/3 | Agnes Baker 01004 | Guest Hall | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x9 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 9, "seq": 396, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Investigation", "round": 9, "seq": 397, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 9, "seq": 398, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 1, "difficulty": 1, "extra_tokens": [], "margin": 2, "message": "Fight Swarm of Rats: success by 2 - combat 2 + committed 1 + boosts 0 + token 0 = 3 vs 1.", "modifier": 0, "reveal_effects_applied": true, "skill": "combat", "source": "Fight Swarm of Rats", "success": true, "token": "0", "value": 3}, "phase": "Investigation", "round": 9, "seq": 399, "type": "skill_test_result"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats took 1 damage."}, "phase": "Investigation", "round": 9, "seq": 400, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0004", "message": "Swarm of Rats was defeated."}, "phase": "Investigation", "round": 9, "seq": 401, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 402, "status": "[R9\u00b7Investigation a2/3 | Agnes Baker 01004 | Guest Hall | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Hallway", "option": 5}, "phase": "Investigation", "round": 9, "seq": 403, "type": "decision_made"}
+{"data": {"message": "Toward Return Attic for act clues"}, "phase": "Investigation", "round": 9, "seq": 404, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Hallway."}, "phase": "Investigation", "round": 9, "seq": 405, "type": "action_spent"}
+{"data": {"location": "hallway", "message": "Agnes Baker moved to Hallway."}, "phase": "Investigation", "round": 9, "seq": 406, "type": "investigator_moved"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 9, "seq": 407, "status": "[R9\u00b7Investigation a1/3 | Agnes Baker 01004 | Hallway | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Attic", "option": 4}, "phase": "Investigation", "round": 9, "seq": 408, "type": "decision_made"}
+{"data": {"message": "Into Attic - reveal the Return version"}, "phase": "Investigation", "round": 9, "seq": 409, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Attic."}, "phase": "Investigation", "round": 9, "seq": 410, "type": "action_spent"}
+{"data": {"location": "attic", "message": "Agnes Baker moved to Attic."}, "phase": "Investigation", "round": 9, "seq": 411, "type": "investigator_moved"}
+{"data": {"location": "attic", "message": "Attic was revealed."}, "phase": "Investigation", "round": 9, "seq": 412, "type": "location_revealed"}
+{"data": {"location": "field_of_graves", "message": "Far Above Your House was put into play."}, "phase": "Investigation", "round": 9, "seq": 413, "type": "location_added"}
+{"data": {"prompt": "[Round 9 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 9, "seq": 414, "status": "[R9\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 9, "seq": 415, "type": "decision_made"}
+{"data": {"message": "End turn"}, "phase": "Investigation", "round": 9, "seq": 416, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 9, "seq": 417, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 9, "seq": 418, "status": "[R9\u00b7Enemy | Agnes Baker 01004 | Attic | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 9, "seq": 419, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 9, "seq": 420, "type": "agent_reason"}
+{"data": {"prompt": "[Round 9 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 9, "seq": 421, "status": "[R9\u00b7Enemy | Agnes Baker 01004 | Attic | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 9, "seq": 422, "type": "decision_made"}
+{"data": {"message": "Pass upkeep"}, "phase": "Enemy", "round": 9, "seq": 423, "type": "agent_reason"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 9, "seq": 424, "type": "phase_started"}
+{"data": {"prompt": "[Round 9 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 9, "seq": 425, "status": "[R9\u00b7Upkeep | Agnes Baker 01004 | Attic | clu0 res9 | dmg1/6 hor5/8 | h4 d17 x10 | Act2 Agd2 doom6/7]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 9, "seq": 426, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 9, "seq": 427, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 9, "seq": 428, "type": "ready_step"}
+{"data": {"card": "pc0020", "message": "Agnes Baker drew Baseball Bat."}, "phase": "Upkeep", "round": 9, "seq": 429, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 9, "seq": 430, "type": "resource_gained"}
+{"data": {"message": "Round 10 began."}, "phase": "Mythos", "round": 10, "seq": 431, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 10, "seq": 432, "type": "doom_placed"}
+{"data": {"card": "ec0001", "message": "Agnes Baker drew encounter card Flesh-Eater."}, "phase": "Mythos", "round": 10, "seq": 433, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater [ec0001] spawned at Attic."}, "phase": "Mythos", "round": 10, "seq": 434, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater [ec0001] engaged Agnes Baker."}, "phase": "Mythos", "round": 10, "seq": 435, "type": "enemy_engaged"}
+{"data": {"message": "Agenda advanced to They're Getting Out!."}, "phase": "Mythos", "round": 10, "seq": 436, "type": "agenda_advanced"}
+{"data": {"card": "ec0006", "message": "Agnes Baker drew encounter card Grave-Eater."}, "phase": "Mythos", "round": 10, "seq": 437, "type": "encounter_drawn"}
+{"data": {"enemy": "ec0006", "message": "Grave-Eater [ec0006] spawned at Attic."}, "phase": "Mythos", "round": 10, "seq": 438, "type": "enemy_spawned"}
+{"data": {"enemy": "ec0006", "message": "Grave-Eater [ec0006] engaged Agnes Baker."}, "phase": "Mythos", "round": 10, "seq": 439, "type": "enemy_engaged"}
+{"data": {"prompt": "[Round 10 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 10, "seq": 440, "status": "[R10\u00b7Mythos | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h5 d16 x10 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 10, "seq": 441, "type": "decision_made"}
+{"data": {"message": "Pass to my turn"}, "phase": "Mythos", "round": 10, "seq": 442, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 10, "seq": 443, "type": "phase_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 444, "status": "[R10\u00b7Investigation a3/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h5 d16 x10 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Grave-Eater with Shrivelling (3 charges) \u2014 test Willpower(5) vs 2, 2 dmg", "option": 11}, "phase": "Investigation", "round": 10, "seq": 445, "type": "decision_made"}
+{"data": {"message": "Shrivel GE: 5v2 87%, 2 dmg kills it"}, "phase": "Investigation", "round": 10, "seq": 446, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Shrivelling (target: Grave-Eater)."}, "phase": "Investigation", "round": 10, "seq": 447, "type": "action_spent"}
+{"data": {"message": "Started willpower test 5 vs 2.", "source": "Fight with Shrivelling"}, "phase": "Investigation", "round": 10, "seq": 448, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 2)."}, "phase": "Investigation", "round": 10, "seq": 449, "status": "[R10\u00b7Investigation a2/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h5 d16 x10 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 3}, "phase": "Investigation", "round": 10, "seq": 450, "type": "decision_made"}
+{"data": {"message": "87% bare"}, "phase": "Investigation", "round": 10, "seq": 451, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 10, "seq": 452, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Fight with Shrivelling: success by 0 - willpower 5 + committed 0 + boosts 0 + token -3 = 2 vs 2.", "modifier": -3, "reveal_effects_applied": true, "skill": "willpower", "source": "Fight with Shrivelling", "success": true, "token": "-3", "value": 2}, "phase": "Investigation", "round": 10, "seq": 453, "type": "skill_test_result"}
+{"data": {"enemy": "ec0006", "message": "Grave-Eater took 2 damage."}, "phase": "Investigation", "round": 10, "seq": 454, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0006", "message": "Grave-Eater was defeated."}, "phase": "Investigation", "round": 10, "seq": 455, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 456, "status": "[R10\u00b7Investigation a2/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h5 d16 x10 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Flesh-Eater with Shrivelling (2 charges) \u2014 test Willpower(5) vs 4, 2 dmg", "option": 8}, "phase": "Investigation", "round": 10, "seq": 457, "type": "decision_made"}
+{"data": {"message": "Shrivel FE: 62%, 2 dmg; symbol horror would snipe a 3rd"}, "phase": "Investigation", "round": 10, "seq": 458, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Shrivelling (target: Flesh-Eater)."}, "phase": "Investigation", "round": 10, "seq": 459, "type": "action_spent"}
+{"data": {"message": "Started willpower test 5 vs 4.", "source": "Fight with Shrivelling"}, "phase": "Investigation", "round": 10, "seq": 460, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 4)."}, "phase": "Investigation", "round": 10, "seq": 461, "status": "[R10\u00b7Investigation a1/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h5 d16 x10 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Arcane Studies (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 462, "type": "decision_made"}
+{"data": {"message": "AS commit: 6v4 (81%); the evade fallback needs FE chipped"}, "phase": "Investigation", "round": 10, "seq": 463, "type": "agent_reason"}
+{"data": {"card": "pc0009", "message": "Committed Arcane Studies."}, "phase": "Investigation", "round": 10, "seq": 464, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 4)."}, "phase": "Investigation", "round": 10, "seq": 465, "status": "[R10\u00b7Investigation a1/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h4 d16 x10 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 10, "seq": 466, "type": "decision_made"}
+{"data": {"message": "6v4; reveal"}, "phase": "Investigation", "round": 10, "seq": 467, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 10, "seq": 468, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 0, "message": "Fight with Shrivelling: success by 0 - willpower 5 + committed 1 + boosts 0 + token -2 = 4 vs 4.", "modifier": -2, "reveal_effects_applied": true, "skill": "willpower", "source": "Fight with Shrivelling", "success": true, "token": "-2", "value": 4}, "phase": "Investigation", "round": 10, "seq": 469, "type": "skill_test_result"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater took 2 damage."}, "phase": "Investigation", "round": 10, "seq": 470, "type": "enemy_damaged"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 10, "seq": 471, "status": "[R10\u00b7Investigation a1/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h4 d16 x11 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Fight Flesh-Eater with Shrivelling (1 charges) \u2014 test Willpower(5) vs 4, 2 dmg", "option": 8}, "phase": "Investigation", "round": 10, "seq": 472, "type": "decision_made"}
+{"data": {"message": "Kill shot: banks Victory AND stops its ghoul-doom tick; committing AS for 81%"}, "phase": "Investigation", "round": 10, "seq": 473, "type": "agent_reason"}
+{"data": {"action": "asset_fight", "cost": 1, "message": "Spent 1 action: Fight with Shrivelling (target: Flesh-Eater)."}, "phase": "Investigation", "round": 10, "seq": 474, "type": "action_spent"}
+{"data": {"message": "Started willpower test 5 vs 4.", "source": "Fight with Shrivelling"}, "phase": "Investigation", "round": 10, "seq": 475, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 4)."}, "phase": "Investigation", "round": 10, "seq": 476, "status": "[R10\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h4 d16 x11 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Arcane Studies (+1)", "option": 1}, "phase": "Investigation", "round": 10, "seq": 477, "type": "decision_made"}
+{"data": {"message": "Commit AS: 6v4"}, "phase": "Investigation", "round": 10, "seq": 478, "type": "agent_reason"}
+{"data": {"card": "pc0010", "message": "Committed Arcane Studies."}, "phase": "Investigation", "round": 10, "seq": 479, "type": "card_committed"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Fight with Shrivelling (willpower vs 4)."}, "phase": "Investigation", "round": 10, "seq": 480, "status": "[R10\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor5/8 | h3 d16 x11 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 10, "seq": 481, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Investigation", "round": 10, "seq": 482, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": -1, "token": "skull"}, "phase": "Investigation", "round": 10, "seq": 483, "type": "chaos_token"}
+{"data": {"message": "Agnes Baker took 0 damage and 1 horror.", "source": "Shrivelling"}, "phase": "Investigation", "round": 10, "seq": 484, "type": "damage_assigned"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Use Agnes Baker reaction after horror was placed?"}, "phase": "Investigation", "round": 10, "seq": 485, "status": "[R10\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor6/8 | h3 d16 x11 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "agnes-after-horror", "label": "Deal 1 damage to Flesh-Eater", "option": 1}, "phase": "Investigation", "round": 10, "seq": 486, "type": "decision_made"}
+{"data": {"message": "Snipe: with the test's 2 dmg landing after, FE dies"}, "phase": "Investigation", "round": 10, "seq": 487, "type": "agent_reason"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater took 1 damage."}, "phase": "Investigation", "round": 10, "seq": 488, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0001", "message": "Agnes dealt 1 damage after horror was placed."}, "phase": "Investigation", "round": 10, "seq": 489, "type": "agnes_reaction"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 1, "difficulty": 4, "extra_tokens": [], "margin": 1, "message": "Fight with Shrivelling: success by 1 - willpower 5 + committed 1 + boosts 0 + token -1 = 5 vs 4.", "modifier": -1, "reveal_effects_applied": true, "skill": "willpower", "source": "Fight with Shrivelling", "success": true, "token": "skull", "value": 5}, "phase": "Investigation", "round": 10, "seq": 490, "type": "skill_test_result"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater took 2 damage."}, "phase": "Investigation", "round": 10, "seq": 491, "type": "enemy_damaged"}
+{"data": {"enemy": "ec0001", "message": "Flesh-Eater was defeated."}, "phase": "Investigation", "round": 10, "seq": 492, "type": "enemy_defeated"}
+{"data": {"prompt": "[Round 10 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 10, "seq": 493, "status": "[R10\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor6/8 | h3 d16 x12 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 10, "seq": 494, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Investigation", "round": 10, "seq": 495, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 10, "seq": 496, "type": "phase_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 10, "seq": 497, "status": "[R10\u00b7Enemy | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor6/8 | h3 d16 x12 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 10, "seq": 498, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 10, "seq": 499, "type": "agent_reason"}
+{"data": {"prompt": "[Round 10 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 10, "seq": 500, "status": "[R10\u00b7Enemy | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor6/8 | h3 d16 x12 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 10, "seq": 501, "type": "decision_made"}
+{"data": {"message": "Pass upkeep"}, "phase": "Enemy", "round": 10, "seq": 502, "type": "agent_reason"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul [ec0002] moved to Hallway."}, "phase": "Enemy", "round": 10, "seq": 503, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 10, "seq": 504, "type": "phase_started"}
+{"data": {"prompt": "[Round 10 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 10, "seq": 505, "status": "[R10\u00b7Upkeep | Agnes Baker 01004 | Attic | clu0 res10 | dmg1/6 hor6/8 | h3 d16 x12 | Act2 Agd3 doom0/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 10, "seq": 506, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 10, "seq": 507, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 10, "seq": 508, "type": "ready_step"}
+{"data": {"card": "pc0030", "message": "Agnes Baker drew Overpower."}, "phase": "Upkeep", "round": 10, "seq": 509, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 10, "seq": 510, "type": "resource_gained"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 10, "seq": 511, "type": "doom_placed"}
+{"data": {"message": "Round 11 began."}, "phase": "Mythos", "round": 11, "seq": 512, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 11, "seq": 513, "type": "doom_placed"}
+{"data": {"card": "ec0010", "message": "Agnes Baker drew encounter card Chill from Below."}, "phase": "Mythos", "round": 11, "seq": 514, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 5 vs 3.", "source": "Chill from Below"}, "phase": "Mythos", "round": 11, "seq": 515, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Mythos \u00b7 Agnes Baker] Commit cards to Chill from Below (willpower vs 3)."}, "phase": "Mythos", "round": 11, "seq": 516, "status": "[R11\u00b7Mythos | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 11, "seq": 517, "type": "decision_made"}
+{"data": {"message": "5v3 bare 81%"}, "phase": "Mythos", "round": 11, "seq": 518, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -1.", "modifier": -1, "token": "-1"}, "phase": "Mythos", "round": 11, "seq": 519, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 1, "message": "Chill from Below: success by 1 - willpower 5 + committed 0 + boosts 0 + token -1 = 4 vs 3.", "modifier": -1, "reveal_effects_applied": true, "skill": "willpower", "source": "Chill from Below", "success": true, "token": "-1", "value": 4}, "phase": "Mythos", "round": 11, "seq": 520, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 11 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 11, "seq": 521, "status": "[R11\u00b7Mythos | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 11, "seq": 522, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Mythos", "round": 11, "seq": 523, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 11, "seq": 524, "type": "phase_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 11, "seq": 525, "status": "[R11\u00b7Investigation a3/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 3, 1 clue here) \u2014 test Intellect(2) vs 3", "option": 1}, "phase": "Investigation", "round": 11, "seq": 526, "type": "decision_made"}
+{"data": {"message": "Attic clue try 1: 2v3"}, "phase": "Investigation", "round": 11, "seq": 527, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 11, "seq": 528, "type": "action_spent"}
+{"data": {"message": "Started intellect test 2 vs 3.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 11, "seq": 529, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Attic (intellect vs 3)."}, "phase": "Investigation", "round": 11, "seq": 530, "status": "[R11\u00b7Investigation a2/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 11, "seq": 531, "type": "decision_made"}
+{"data": {"message": "Hold FK; 25% try"}, "phase": "Investigation", "round": 11, "seq": 532, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -3.", "modifier": -3, "token": "-3"}, "phase": "Investigation", "round": 11, "seq": 533, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Investigate Attic: failure by 3 - intellect 2 + committed 0 + boosts 0 + token -3 = 0 vs 3.", "modifier": -3, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Attic", "success": false, "token": "-3", "value": 0}, "phase": "Investigation", "round": 11, "seq": 534, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 11, "seq": 535, "status": "[R11\u00b7Investigation a2/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 3, 1 clue here) \u2014 test Intellect(2) vs 3", "option": 1}, "phase": "Investigation", "round": 11, "seq": 536, "type": "decision_made"}
+{"data": {"message": "Try 2"}, "phase": "Investigation", "round": 11, "seq": 537, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 11, "seq": 538, "type": "action_spent"}
+{"data": {"message": "Started intellect test 2 vs 3.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 11, "seq": 539, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Attic (intellect vs 3)."}, "phase": "Investigation", "round": 11, "seq": 540, "status": "[R11\u00b7Investigation a1/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 2}, "phase": "Investigation", "round": 11, "seq": 541, "type": "decision_made"}
+{"data": {"message": "Bare again"}, "phase": "Investigation", "round": 11, "seq": 542, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Investigation", "round": 11, "seq": 543, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 3, "message": "Investigate Attic: failure by 3 - intellect 2 + committed 0 + boosts 0 + token -2 = 0 vs 3.", "modifier": -2, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Attic", "success": false, "token": "-2", "value": 0}, "phase": "Investigation", "round": 11, "seq": 544, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 11, "seq": 545, "status": "[R11\u00b7Investigation a1/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Attic (shroud 3, 1 clue here) \u2014 test Intellect(2) vs 3", "option": 1}, "phase": "Investigation", "round": 11, "seq": 546, "type": "decision_made"}
+{"data": {"message": "Try 3"}, "phase": "Investigation", "round": 11, "seq": 547, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Attic."}, "phase": "Investigation", "round": 11, "seq": 548, "type": "action_spent"}
+{"data": {"message": "Started intellect test 2 vs 3.", "source": "Investigate Attic"}, "phase": "Investigation", "round": 11, "seq": 549, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Attic (intellect vs 3)."}, "phase": "Investigation", "round": 11, "seq": 550, "status": "[R11\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h4 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Commit Forbidden Knowledge (+1)", "option": 1}, "phase": "Investigation", "round": 11, "seq": 551, "type": "decision_made"}
+{"data": {"message": "FK commit: 3v3, 44% - last action of turn deserves the boost"}, "phase": "Investigation", "round": 11, "seq": 552, "type": "agent_reason"}
+{"data": {"card": "pc0003", "message": "Committed Forbidden Knowledge."}, "phase": "Investigation", "round": 11, "seq": 553, "type": "card_committed"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Attic (intellect vs 3)."}, "phase": "Investigation", "round": 11, "seq": 554, "status": "[R11\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu0 res11 | dmg1/6 hor6/8 | h3 d15 x12 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 11, "seq": 555, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Investigation", "round": 11, "seq": 556, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed 0.", "modifier": 0, "token": "0"}, "phase": "Investigation", "round": 11, "seq": 557, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 1, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Investigate Attic: success by 0 - intellect 2 + committed 1 + boosts 0 + token 0 = 3 vs 3.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Attic", "success": true, "token": "0", "value": 3}, "phase": "Investigation", "round": 11, "seq": 558, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Agnes Baker discovered 1 clue."}, "phase": "Investigation", "round": 11, "seq": 559, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 11 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 11, "seq": 560, "status": "[R11\u00b7Investigation a0/3 | Agnes Baker 01004 | Attic | clu1 res11 | dmg1/6 hor6/8 | h3 d15 x13 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 11, "seq": 561, "type": "decision_made"}
+{"data": {"message": "Clue 1/3; end turn"}, "phase": "Investigation", "round": 11, "seq": 562, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 11, "seq": 563, "type": "phase_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 11, "seq": 564, "status": "[R11\u00b7Enemy | Agnes Baker 01004 | Attic | clu1 res11 | dmg1/6 hor6/8 | h3 d15 x13 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 11, "seq": 565, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 11, "seq": 566, "type": "agent_reason"}
+{"data": {"prompt": "[Round 11 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 11, "seq": 567, "status": "[R11\u00b7Enemy | Agnes Baker 01004 | Attic | clu1 res11 | dmg1/6 hor6/8 | h3 d15 x13 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 11, "seq": 568, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 11, "seq": 569, "type": "agent_reason"}
+{"data": {"enemy": "ec0002", "message": "Icy Ghoul [ec0002] moved to Parlor."}, "phase": "Enemy", "round": 11, "seq": 570, "type": "enemy_moved"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 11, "seq": 571, "type": "phase_started"}
+{"data": {"prompt": "[Round 11 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 11, "seq": 572, "status": "[R11\u00b7Upkeep | Agnes Baker 01004 | Attic | clu1 res11 | dmg1/6 hor6/8 | h3 d15 x13 | Act2 Agd3 doom2/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 11, "seq": 573, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 11, "seq": 574, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 11, "seq": 575, "type": "ready_step"}
+{"data": {"card": "pc0023", "message": "Agnes Baker drew Knife."}, "phase": "Upkeep", "round": 11, "seq": 576, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 11, "seq": 577, "type": "resource_gained"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 11, "seq": 578, "type": "doom_placed"}
+{"data": {"message": "Round 12 began."}, "phase": "Mythos", "round": 12, "seq": 579, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 12, "seq": 580, "type": "doom_placed"}
+{"data": {"card": "ec0025", "message": "Agnes Baker drew encounter card Obscuring Fog."}, "phase": "Mythos", "round": 12, "seq": 581, "type": "encounter_drawn"}
+{"data": {"card": "ec0025", "location": "attic", "message": "Obscuring Fog attached to Attic."}, "phase": "Mythos", "round": 12, "seq": 582, "type": "treachery_attached"}
+{"data": {"prompt": "[Round 12 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 12, "seq": 583, "status": "[R12\u00b7Mythos | Agnes Baker 01004 | Attic | clu1 res12 | dmg1/6 hor6/8 | h4 d14 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 12, "seq": 584, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Mythos", "round": 12, "seq": 585, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 12, "seq": 586, "type": "phase_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 12, "seq": 587, "status": "[R12\u00b7Investigation a3/3 | Agnes Baker 01004 | Attic | clu1 res12 | dmg1/6 hor6/8 | h4 d14 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Move to Far Above Your House", "option": 3}, "phase": "Investigation", "round": 12, "seq": 588, "type": "decision_made"}
+{"data": {"message": "Reveal Far Above Your House"}, "phase": "Investigation", "round": 12, "seq": 589, "type": "agent_reason"}
+{"data": {"action": "move", "cost": 1, "message": "Spent 1 action: Move to Far Above Your House."}, "phase": "Investigation", "round": 12, "seq": 590, "type": "action_spent"}
+{"data": {"location": "field_of_graves", "message": "Agnes Baker moved to Far Above Your House."}, "phase": "Investigation", "round": 12, "seq": 591, "type": "investigator_moved"}
+{"data": {"location": "field_of_graves", "message": "Field of Graves was revealed."}, "phase": "Investigation", "round": 12, "seq": 592, "type": "location_revealed"}
+{"data": {"message": "Started willpower test 5 vs 4.", "source": "Field of Graves"}, "phase": "Investigation", "round": 12, "seq": 593, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Field of Graves (willpower vs 4)."}, "phase": "Investigation", "round": 12, "seq": 594, "status": "[R12\u00b7Investigation a2/3 | Agnes Baker 01004 | Field of Graves | clu1 res12 | dmg1/6 hor6/8 | h4 d14 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 12, "seq": 595, "type": "decision_made"}
+{"data": {"message": "Entry test at will 5v4, 69%"}, "phase": "Investigation", "round": 12, "seq": 596, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed +1.", "modifier": 1, "token": "+1"}, "phase": "Investigation", "round": 12, "seq": 597, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 4, "extra_tokens": [], "margin": 2, "message": "Field of Graves: success by 2 - willpower 5 + committed 0 + boosts 0 + token 1 = 6 vs 4.", "modifier": 1, "reveal_effects_applied": true, "skill": "willpower", "source": "Field of Graves", "success": true, "token": "+1", "value": 6}, "phase": "Investigation", "round": 12, "seq": 598, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 12, "seq": 599, "status": "[R12\u00b7Investigation a2/3 | Agnes Baker 01004 | Field of Graves | clu1 res12 | dmg1/6 hor6/8 | h4 d14 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Investigate Field of Graves (shroud 2, 1 clue here) \u2014 test Intellect(2) vs 2", "option": 1}, "phase": "Investigation", "round": 12, "seq": 600, "type": "decision_made"}
+{"data": {"message": "2v2 for the Field of Graves clue"}, "phase": "Investigation", "round": 12, "seq": 601, "type": "agent_reason"}
+{"data": {"action": "investigate", "cost": 1, "message": "Spent 1 action: Investigate Field of Graves."}, "phase": "Investigation", "round": 12, "seq": 602, "type": "action_spent"}
+{"data": {"message": "Started intellect test 2 vs 2.", "source": "Investigate Field of Graves"}, "phase": "Investigation", "round": 12, "seq": 603, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 Agnes Baker] Commit cards to Investigate Field of Graves (intellect vs 2)."}, "phase": "Investigation", "round": 12, "seq": 604, "status": "[R12\u00b7Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu1 res12 | dmg1/6 hor6/8 | h4 d14 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Investigation", "round": 12, "seq": 605, "type": "decision_made"}
+{"data": {"message": "Reveal"}, "phase": "Investigation", "round": 12, "seq": 606, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed skull.", "modifier": 0, "token": "skull"}, "phase": "Investigation", "round": 12, "seq": 607, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 2, "boosts": 0, "committed_icons": 0, "difficulty": 2, "extra_tokens": [], "margin": 0, "message": "Investigate Field of Graves: success by 0 - intellect 2 + committed 0 + boosts 0 + token 0 = 2 vs 2.", "modifier": 0, "reveal_effects_applied": true, "skill": "intellect", "source": "Investigate Field of Graves", "success": true, "token": "skull", "value": 2}, "phase": "Investigation", "round": 12, "seq": 608, "type": "skill_test_result"}
+{"data": {"amount": 1, "message": "Agnes Baker discovered 1 clue."}, "phase": "Investigation", "round": 12, "seq": 609, "type": "clue_discovered"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 12, "seq": 610, "status": "[R12\u00b7Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu2 res12 | dmg1/6 hor6/8 | h4 d14 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 3}, "phase": "Investigation", "round": 12, "seq": 611, "type": "decision_made"}
+{"data": {"message": "Deck is weakness-free now (both drawn); dig for Fearless heals"}, "phase": "Investigation", "round": 12, "seq": 612, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 12, "seq": 613, "type": "action_spent"}
+{"data": {"card": "pc0028", "message": "Agnes Baker drew Emergency Cache."}, "phase": "Investigation", "round": 12, "seq": 614, "type": "card_drawn"}
+{"data": {"prompt": "[Round 12 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 12, "seq": 615, "status": "[R12\u00b7Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu2 res12 | dmg1/6 hor6/8 | h5 d13 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 12, "seq": 616, "type": "decision_made"}
+{"data": {"message": "End turn"}, "phase": "Investigation", "round": 12, "seq": 617, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 12, "seq": 618, "type": "phase_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 12, "seq": 619, "status": "[R12\u00b7Enemy | Agnes Baker 01004 | Field of Graves | clu2 res12 | dmg1/6 hor6/8 | h5 d13 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 12, "seq": 620, "type": "decision_made"}
+{"data": {"message": "Pass enemy window"}, "phase": "Enemy", "round": 12, "seq": 621, "type": "agent_reason"}
+{"data": {"prompt": "[Round 12 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 12, "seq": 622, "status": "[R12\u00b7Enemy | Agnes Baker 01004 | Field of Graves | clu2 res12 | dmg1/6 hor6/8 | h5 d13 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 12, "seq": 623, "type": "decision_made"}
+{"data": {"message": "Pass upkeep window"}, "phase": "Enemy", "round": 12, "seq": 624, "type": "agent_reason"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 12, "seq": 625, "type": "phase_started"}
+{"data": {"prompt": "[Round 12 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 12, "seq": 626, "status": "[R12\u00b7Upkeep | Agnes Baker 01004 | Field of Graves | clu2 res12 | dmg1/6 hor6/8 | h5 d13 x13 | Act2 Agd3 doom4/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 12, "seq": 627, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 12, "seq": 628, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 12, "seq": 629, "type": "ready_step"}
+{"data": {"card": "pc0019", "message": "Agnes Baker drew Baseball Bat."}, "phase": "Upkeep", "round": 12, "seq": 630, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 12, "seq": 631, "type": "resource_gained"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 12, "seq": 632, "type": "doom_placed"}
+{"data": {"message": "Round 13 began."}, "phase": "Mythos", "round": 13, "seq": 633, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 13, "seq": 634, "type": "doom_placed"}
+{"data": {"card": "ec0015", "message": "Agnes Baker drew encounter card Rotting Remains."}, "phase": "Mythos", "round": 13, "seq": 635, "type": "encounter_drawn"}
+{"data": {"message": "Started willpower test 5 vs 3.", "source": "Rotting Remains"}, "phase": "Mythos", "round": 13, "seq": 636, "type": "skill_test_started"}
+{"data": {"prompt": "[Round 13 \u00b7 Mythos \u00b7 Agnes Baker] Commit cards to Rotting Remains (willpower vs 3)."}, "phase": "Mythos", "round": 13, "seq": 637, "status": "[R13\u00b7Mythos | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h6 d12 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "commit-cards", "label": "Done", "option": 1}, "phase": "Mythos", "round": 13, "seq": 638, "type": "decision_made"}
+{"data": {"message": "No will icons; 5v3 with 12.5% death tail - pray"}, "phase": "Mythos", "round": 13, "seq": 639, "type": "agent_reason"}
+{"data": {"extra_tokens": [], "message": "Revealed -2.", "modifier": -2, "token": "-2"}, "phase": "Mythos", "round": 13, "seq": 640, "type": "chaos_token"}
+{"data": {"auto_success": false, "base": 5, "boosts": 0, "committed_icons": 0, "difficulty": 3, "extra_tokens": [], "margin": 0, "message": "Rotting Remains: success by 0 - willpower 5 + committed 0 + boosts 0 + token -2 = 3 vs 3.", "modifier": -2, "reveal_effects_applied": true, "skill": "willpower", "source": "Rotting Remains", "success": true, "token": "-2", "value": 3}, "phase": "Mythos", "round": 13, "seq": 641, "type": "skill_test_result"}
+{"data": {"prompt": "[Round 13 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 13, "seq": 642, "status": "[R13\u00b7Mythos | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h6 d12 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 13, "seq": 643, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Mythos", "round": 13, "seq": 644, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 13, "seq": 645, "type": "phase_started"}
+{"data": {"prompt": "[Round 13 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 13, "seq": 646, "status": "[R13\u00b7Investigation a3/3 | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h6 d12 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 3}, "phase": "Investigation", "round": 13, "seq": 647, "type": "decision_made"}
+{"data": {"message": "Dig for DttF #2 (testless Cellar) or Fearless"}, "phase": "Investigation", "round": 13, "seq": 648, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 13, "seq": 649, "type": "action_spent"}
+{"data": {"card": "pc0024", "message": "Agnes Baker drew Knife."}, "phase": "Investigation", "round": 13, "seq": 650, "type": "card_drawn"}
+{"data": {"prompt": "[Round 13 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 2 actions left] Choose an action:"}, "phase": "Investigation", "round": 13, "seq": 651, "status": "[R13\u00b7Investigation a2/3 | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h7 d11 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 3}, "phase": "Investigation", "round": 13, "seq": 652, "type": "decision_made"}
+{"data": {"message": "Dig 2"}, "phase": "Investigation", "round": 13, "seq": 653, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 13, "seq": 654, "type": "action_spent"}
+{"data": {"card": "pc0007", "message": "Agnes Baker drew Shrivelling."}, "phase": "Investigation", "round": 13, "seq": 655, "type": "card_drawn"}
+{"data": {"prompt": "[Round 13 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 1 action left] Choose an action:"}, "phase": "Investigation", "round": 13, "seq": 656, "status": "[R13\u00b7Investigation a1/3 | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h8 d10 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Draw 1 card", "option": 3}, "phase": "Investigation", "round": 13, "seq": 657, "type": "decision_made"}
+{"data": {"message": "Dig 3"}, "phase": "Investigation", "round": 13, "seq": 658, "type": "agent_reason"}
+{"data": {"action": "draw", "cost": 1, "message": "Spent 1 action: Draw 1 card."}, "phase": "Investigation", "round": 13, "seq": 659, "type": "action_spent"}
+{"data": {"card": "pc0027", "message": "Agnes Baker drew Emergency Cache."}, "phase": "Investigation", "round": 13, "seq": 660, "type": "card_drawn"}
+{"data": {"prompt": "[Round 13 \u00b7 Investigation \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Investigation", "round": 13, "seq": 661, "status": "[R13\u00b7Investigation a0/3 | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h9 d9 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-inv_end", "label": "Pass (continue)", "option": 2}, "phase": "Investigation", "round": 13, "seq": 662, "type": "decision_made"}
+{"data": {"message": "End turn"}, "phase": "Investigation", "round": 13, "seq": 663, "type": "agent_reason"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 13, "seq": 664, "type": "phase_started"}
+{"data": {"prompt": "[Round 13 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 13, "seq": 665, "status": "[R13\u00b7Enemy | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h9 d9 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 13, "seq": 666, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 13, "seq": 667, "type": "agent_reason"}
+{"data": {"prompt": "[Round 13 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 13, "seq": 668, "status": "[R13\u00b7Enemy | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h9 d9 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 13, "seq": 669, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 13, "seq": 670, "type": "agent_reason"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 13, "seq": 671, "type": "phase_started"}
+{"data": {"prompt": "[Round 13 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 13, "seq": 672, "status": "[R13\u00b7Upkeep | Agnes Baker 01004 | Field of Graves | clu2 res13 | dmg1/6 hor6/8 | h9 d9 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 13, "seq": 673, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Upkeep", "round": 13, "seq": 674, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 13, "seq": 675, "type": "ready_step"}
+{"data": {"card": "pc0001", "message": "Agnes Baker drew Heirloom of Hyperborea."}, "phase": "Upkeep", "round": 13, "seq": 676, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 13, "seq": 677, "type": "resource_gained"}
+{"data": {"prompt": "[Round 13 \u00b7 Upkeep \u00b7 Agnes Baker] Discard to hand size 8."}, "phase": "Upkeep", "round": 13, "seq": 678, "status": "[R13\u00b7Upkeep | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h10 d8 x13 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "discard-to-size", "label": "Discard Baseball Bat", "option": 2}, "phase": "Upkeep", "round": 13, "seq": 679, "type": "decision_made"}
+{"data": {"message": "Excess Bat"}, "phase": "Upkeep", "round": 13, "seq": 680, "type": "agent_reason"}
+{"data": {"card": "pc0020", "message": "Discarded Baseball Bat to hand size."}, "phase": "Upkeep", "round": 13, "seq": 681, "type": "card_discarded"}
+{"data": {"prompt": "[Round 13 \u00b7 Upkeep \u00b7 Agnes Baker] Discard to hand size 8."}, "phase": "Upkeep", "round": 13, "seq": 682, "status": "[R13\u00b7Upkeep | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h9 d8 x14 | Act2 Agd3 doom6/10]", "type": "decision_presented"}
+{"data": {"decision_id": "discard-to-size", "label": "Discard Baseball Bat", "option": 5}, "phase": "Upkeep", "round": 13, "seq": 683, "type": "decision_made"}
+{"data": {"message": "Excess Cache"}, "phase": "Upkeep", "round": 13, "seq": 684, "type": "agent_reason"}
+{"data": {"card": "pc0019", "message": "Discarded Baseball Bat to hand size."}, "phase": "Upkeep", "round": 13, "seq": 685, "type": "card_discarded"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 13, "seq": 686, "type": "doom_placed"}
+{"data": {"message": "Round 14 began."}, "phase": "Mythos", "round": 14, "seq": 687, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 14, "seq": 688, "type": "doom_placed"}
+{"data": {"card": "ec0019", "message": "Agnes Baker drew encounter card Dissonant Voices."}, "phase": "Mythos", "round": 14, "seq": 689, "type": "encounter_drawn"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices entered Agnes Baker's threat area."}, "phase": "Mythos", "round": 14, "seq": 690, "type": "treachery_threat"}
+{"data": {"prompt": "[Round 14 \u00b7 Mythos \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Mythos", "round": 14, "seq": 691, "status": "[R14\u00b7Mythos | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h8 d8 x15 | Act2 Agd3 doom8/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-mythos_end", "label": "Pass (continue)", "option": 2}, "phase": "Mythos", "round": 14, "seq": 692, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Mythos", "round": 14, "seq": 693, "type": "agent_reason"}
+{"data": {"message": "Investigation phase began."}, "phase": "Investigation", "round": 14, "seq": 694, "type": "phase_started"}
+{"data": {"prompt": "[Round 14 \u00b7 Investigation \u00b7 Agnes Baker \u00b7 3 actions left] Choose an action:"}, "phase": "Investigation", "round": 14, "seq": 695, "status": "[R14\u00b7Investigation a3/3 | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h8 d8 x15 | Act2 Agd3 doom8/10]", "type": "decision_presented"}
+{"data": {"decision_id": "choose-action", "label": "Pass (end turn)", "option": 6}, "phase": "Investigation", "round": 14, "seq": 696, "type": "decision_made"}
+{"data": {"message": "Nothing productive remains; end turn"}, "phase": "Investigation", "round": 14, "seq": 697, "type": "agent_reason"}
+{"data": {"message": "Agnes Baker ended their turn."}, "phase": "Investigation", "round": 14, "seq": 698, "type": "turn_passed"}
+{"data": {"message": "Enemy phase began."}, "phase": "Enemy", "round": 14, "seq": 699, "type": "phase_started"}
+{"data": {"prompt": "[Round 14 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 14, "seq": 700, "status": "[R14\u00b7Enemy | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h8 d8 x15 | Act2 Agd3 doom8/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_pre", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 14, "seq": 701, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 14, "seq": 702, "type": "agent_reason"}
+{"data": {"prompt": "[Round 14 \u00b7 Enemy \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Enemy", "round": 14, "seq": 703, "status": "[R14\u00b7Enemy | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h8 d8 x15 | Act2 Agd3 doom8/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-enemy_post", "label": "Pass (continue)", "option": 2}, "phase": "Enemy", "round": 14, "seq": 704, "type": "decision_made"}
+{"data": {"message": "Pass"}, "phase": "Enemy", "round": 14, "seq": 705, "type": "agent_reason"}
+{"data": {"message": "Upkeep phase began."}, "phase": "Upkeep", "round": 14, "seq": 706, "type": "phase_started"}
+{"data": {"prompt": "[Round 14 \u00b7 Upkeep \u00b7 Agnes Baker] Fast-ability window \u2014 use a fast ability or pass:"}, "phase": "Upkeep", "round": 14, "seq": 707, "status": "[R14\u00b7Upkeep | Agnes Baker 01004 | Field of Graves | clu2 res14 | dmg1/6 hor6/8 | h8 d8 x15 | Act2 Agd3 doom8/10]", "type": "decision_presented"}
+{"data": {"decision_id": "fast-window-upkeep_start", "label": "Pass (continue)", "option": 2}, "phase": "Upkeep", "round": 14, "seq": 708, "type": "decision_made"}
+{"data": {"message": "Pass to the final mythos"}, "phase": "Upkeep", "round": 14, "seq": 709, "type": "agent_reason"}
+{"data": {"message": "All exhausted cards readied."}, "phase": "Upkeep", "round": 14, "seq": 710, "type": "ready_step"}
+{"data": {"card": "pc0005", "message": "Agnes Baker drew Holy Rosary."}, "phase": "Upkeep", "round": 14, "seq": 711, "type": "card_drawn"}
+{"data": {"amount": 1, "message": "Agnes Baker gained 1 resource."}, "phase": "Upkeep", "round": 14, "seq": 712, "type": "resource_gained"}
+{"data": {"card": "ec0019", "message": "Dissonant Voices was discarded at end of round."}, "phase": "Upkeep", "round": 14, "seq": 713, "type": "treachery_discarded"}
+{"data": {"prompt": "[Round 14 \u00b7 Upkeep \u00b7 Agnes Baker] Discard to hand size 8."}, "phase": "Upkeep", "round": 14, "seq": 714, "status": "[R14\u00b7Upkeep | Agnes Baker 01004 | Field of Graves | clu2 res15 | dmg1/6 hor6/8 | h9 d7 x15 | Act2 Agd3 doom8/10]", "type": "decision_presented"}
+{"data": {"decision_id": "discard-to-size", "label": "Discard Emergency Cache", "option": 4}, "phase": "Upkeep", "round": 14, "seq": 715, "type": "decision_made"}
+{"data": {"message": "Cache excess"}, "phase": "Upkeep", "round": 14, "seq": 716, "type": "agent_reason"}
+{"data": {"card": "pc0028", "message": "Discarded Emergency Cache to hand size."}, "phase": "Upkeep", "round": 14, "seq": 717, "type": "card_discarded"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "They're Getting Out!"}, "phase": "Upkeep", "round": 14, "seq": 718, "type": "doom_placed"}
+{"data": {"message": "Round 15 began."}, "phase": "Mythos", "round": 15, "seq": 719, "type": "round_started"}
+{"data": {"message": "Placed 1 doom on the agenda.", "source": "mythos"}, "phase": "Mythos", "round": 15, "seq": 720, "type": "doom_placed"}
+{"data": {"message": "R3: Agnes Baker was killed", "summary": "R3: Agnes Baker was killed"}, "phase": "Mythos", "round": 15, "seq": 721, "type": "game_end"}
+{"data": {}, "phase": "Mythos", "round": 15, "seq": 722, "type": "note_added"}
+{"data": {}, "phase": "Mythos", "round": 15, "seq": 723, "type": "note_added"}

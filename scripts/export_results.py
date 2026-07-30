@@ -244,10 +244,41 @@ def main() -> int:
                        "games": games_b6})
         b6.sort(key=lambda r: (-r["mean"], -r["f20"]))
 
+    b7 = []
+    b7_path = ROOT / "results/b7_summary.json"
+    if b7_path.exists():
+        B7_META = {
+            "fable5-b7": ("Fable 5", "claude", "adaptive"),
+            "sol56-b7": ("GPT-5.6 Sol", "codex", "high"),
+        }
+        data_b7 = json.loads(b7_path.read_text())
+        for lab, meta in B7_META.items():
+            row = data_b7.get(lab)
+            if not row:
+                continue
+            games_b7 = []
+            bench_path = ROOT / "bench" / lab / "bench.json"
+            if bench_path.exists():
+                for g in sorted(json.loads(bench_path.read_text())["games"], key=lambda x: int(x["game"])):
+                    games_b7.append({
+                        "n": int(g["game"]), "score": g.get("score", 0),
+                        "win": str(g.get("resolution", "")).startswith("R") and g.get("resolution") != "R3",
+                        "investigator": g.get("investigator"),
+                        "slug": f"{lab}-game-{int(g['game']):02d}",
+                    })
+            baseline = next((r for r in b6 if r["name"] == meta[0]), None)
+            b7.append({"label": lab, "name": meta[0], "harness": meta[1], "thinking": meta[2],
+                       **{k: row[k] for k in ("mean", "f20", "slope", "wins", "hours", "cost", "c_first", "c_last")},
+                       "baseline": ({k: baseline[k] for k in ("mean", "f20", "slope", "wins", "cost", "c_first", "c_last")}
+                                    if baseline else None),
+                       "games": games_b7})
+        b7.sort(key=lambda r: -r["mean"])
+
     out = {
         "generated": "see git history",
         "waves": waves,
         "b6": b6,
+        "b7": b7,
         "wave7": wave7,
         "campaigns": camp_models,
         "findings": findings,
