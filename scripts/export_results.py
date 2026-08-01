@@ -194,6 +194,7 @@ def main() -> int:
             "k3":     ("Kimi K3", "opencode", "default", "show3-k3-"),
             "sonnet": ("Sonnet 5", "claude", "adaptive", "show3-sonnet-"),
             "hy3":    ("Hunyuan 3", "opencode", "default", "show3-hy3-"),
+            "dsv4f":  ("DeepSeek V4 Flash", "opencode", "default", "show3-dsv4f-"),
         }
         for lane, meta in W7_META.items():
             b = lanes.get(lane)
@@ -205,7 +206,7 @@ def main() -> int:
                 "score": b["score_total"],
                 "hours": round(b["seconds"] / 3600, 1),
                 "cost": round(b["cli_cost_usd"] or b["list_cost_usd"], 2),
-                "measured": lane in ("k3", "hy3"),
+                "measured": lane in ("k3", "hy3", "dsv4f"),
             })
         wave7.sort(key=lambda r: -r["score"])
 
@@ -223,6 +224,7 @@ def main() -> int:
             "k3-b6": ("Kimi K3", "opencode", "default"),
             "glm52-b6": ("GLM-5.2", "opencode", "default"),
             "hy3-b6": ("Hunyuan 3", "opencode", "default"),
+            "dsv4f-b6": ("DeepSeek V4 Flash", "opencode", "default"),
         }
         data_b6 = json.loads(b6_path.read_text())
         for lab, meta in B6_META.items():

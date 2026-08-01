@@ -91,6 +91,7 @@ list prices — both harnesses actually ran on subscriptions.
 |---|---|---|---:|---:|---:|---:|
 | **Opus 5** (claude) | adaptive | 12/3/7/7/6 | **35** | 6.9 h | 246.2 M | $194.63 |
 | GPT-5.6 Sol (codex) | high | 5/3/5/3/4 | **20** | 2.2 h | 110.3 M | $95.37 |
+| DeepSeek V4 Flash 0731 (opencode) | provider default | 8/0/3/4/4 | **19** | 6.4 h | 184.0 M | **$6.85**\* |
 | GPT-5.6 Terra (codex) | high | 5/3/1/4/3 | **16** | 1.1 h | 68.2 M | $29.01 |
 | GPT-5.6 Luna (codex) | high | 8/2/0/2/3 | **15** | 1.1 h | 81.6 M | **$15.05** |
 | Fable 5 (claude) | adaptive | 5/1/1/2/3 | **12** | 4.9 h | 80.2 M | $134.15 |
@@ -111,6 +112,16 @@ have charged for this volume — and even Opus 5 could not crack the Devourer
 finale: all five investigators died, extending the streak to 0-for-50.
 Anthropic's "near-Fable at half price" pitch undersells it on this task:
 it nearly tripled Fable's score.
+
+**Day-two addendum (Aug 1): DeepSeek V4 Flash 0731 is the value story of the
+board.** Benched the day its weights reached third-party hosts, the new Flash
+build scored **19** — statistically Sol's 20, one point behind — for **$6.85
+of actual OpenRouter billing**, fourteen times cheaper than Sol's API-equiv
+rate and the cheapest lane ever to crack the board's top three. Its Roland 8
+ties Luna's best single campaign. The pattern from the learning bench holds
+here too (see below): strong first-contact play, no measurable improvement
+across campaigns — but at $0.14/M input, this model moves the cost frontier
+by an order of magnitude.
 
 **Before that, the GPT-5.6 family had swept the podium.** Sol's 20 was the
 best campaign wave any model had posted on the modern engine, at a cost in
@@ -170,8 +181,9 @@ comparisons are the controlled ones. The hy3 + K3 lanes' combined real-dollar co
 The definitive version of the learning experiment: **thirty games of the same
 scenario per model**, identical shuffles (seeds 1001–1030), blank starting
 notebooks, on the frozen modern engine — with per-game token telemetry, so the
-cost of learning is measured alongside the curve. All ten invited models have
-finished: 300 games.
+cost of learning is measured alongside the curve. Eleven models have
+finished: 330 games (DeepSeek V4 Flash 0731 joined 2026-08-01, benched the
+day its weights reached third-party hosts).
 
 | Model | Thinking | Mean | Final-6 avg | Slope/game | Wins | Time | Tokens | API-equiv cost | $/game g1–10 → g21–30 |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---|
@@ -185,6 +197,7 @@ finished: 300 games.
 | Hunyuan 3 | default | **3.37** | **5.00** | **+0.067** | 5 | 13.7 h | — | $9.24* | $0.30 → $0.28 |
 | Kimi K3 | default | 2.83 | 3.50 | +0.011 | 4 | 21.8 h | — | $103.58* | $3.3 → $3.9 |
 | GLM-5.2 | default | 2.83 | 3.00 | +0.048 | 4 | 15.9 h | — | $44.77* | $1.5 → $1.7 |
+| DeepSeek V4 Flash 0731 | default | 2.50 | 2.50 | +0.001 | 3 | 11.1 h | — | $8.47* | $0.49 → $0.06 |
 
 Three findings, stated plainly:
 

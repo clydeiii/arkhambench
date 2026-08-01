@@ -162,6 +162,8 @@ const MODEL_GROUPS = [
   ["show3-hy3-", "Hunyuan 3"],
   ["show3-k3-", "Kimi K3"],
   ["show3-opus5-", "Opus 5"],
+  ["show3-dsv4f-", "DeepSeek V4 Flash"],
+  ["dsv4f-", "DeepSeek V4 Flash"],
   ["haiku45-", "Haiku 4.5"],
   ["opus5-", "Opus 5"],
   ["k3-", "Kimi K3"],

@@ -25,6 +25,7 @@ PRICES = {  # (input, output) USD per 1M tokens
     "gpt-5.6-luna": (1.0, 6.0),
     "openrouter/tencent/hy3": (0.2, 0.8),
     "openrouter/moonshotai/kimi-k3": (3.0, 15.0),
+    "openrouter/deepseek/deepseek-v4-flash-0731": (0.14, 0.28),
 }
 
 

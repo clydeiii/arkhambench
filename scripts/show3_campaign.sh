@@ -20,6 +20,7 @@ case "$LANE" in
   luna)   HARNESS=codex;  MODEL=gpt-5.6-luna;    REASONING="high (config.toml)";;
   hy3)    HARNESS=opencode; MODEL="openrouter/tencent/hy3"; MODEL_SUBSTR="hy3"; REASONING="provider default";;
   k3)     HARNESS=opencode; MODEL="openrouter/moonshotai/kimi-k3"; MODEL_SUBSTR="kimi-k3"; REASONING="provider default";;
+  dsv4f)  HARNESS=opencode; MODEL="openrouter/deepseek/deepseek-v4-flash-0731"; MODEL_SUBSTR="deepseek-v4-flash-0731"; REASONING="provider default";;
   *) echo "unknown lane: $LANE"; exit 1;;
 esac
 
@@ -40,6 +41,7 @@ openrouter_ready() {  # live 1-token probe: catches 429s, monthly budget caps, e
   case "$LANE" in
     hy3) slug="tencent/hy3";;
     k3)  slug="moonshotai/kimi-k3";;
+    dsv4f) slug="deepseek/deepseek-v4-flash-0731";;
     *) return 0;;
   esac
   curl -sS --max-time 60 https://openrouter.ai/api/v1/chat/completions \
